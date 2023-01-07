@@ -12,14 +12,22 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class PiazzaPanicGame extends Game {
 	SpriteBatch batch;
 	BitmapFont font;
-	
+
+	public PiazzaPanicGame() {
+		super();
+	}
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
+
 		setScreen(new IntroScreen(this));
 	}
 
