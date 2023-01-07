@@ -1,31 +1,36 @@
 package com.neves6.piazzapanic;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
-public class PiazzaPanicGame extends ApplicationAdapter {
+public class PiazzaPanicGame extends Game {
 	SpriteBatch batch;
-	Texture img;
-	
+	BitmapFont font;
+
+	public PiazzaPanicGame() {
+		super();
+	}
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		font = new BitmapFont();
+
+		setScreen(new IntroScreen(this));
+	}
+
+	public void resize(int width, int height) {
+		super.resize(width, height);
+	}
+
+	public void render(float delta) {
+		super.render();
 	}
 
 	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		font.dispose();
 	}
 }
