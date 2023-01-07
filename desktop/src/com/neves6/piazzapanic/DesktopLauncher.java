@@ -11,6 +11,8 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Piazza Panic!");
 		config.useVsync(true);
+		config.setWindowedMode(1280, 720); // 720p, 16:9
+		config.setWindowSizeLimits(1280, 720, 7680, 4320); // min 720p, max 8k
 		new Lwjgl3Application(new PiazzaPanicGame(), config);
 	}
 }
