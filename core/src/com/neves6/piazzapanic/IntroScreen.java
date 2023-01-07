@@ -16,16 +16,18 @@ public class IntroScreen extends ScreenAdapter {
     SpriteBatch batch;
     Animation<TextureRegion> introAnimation;
     Texture introSheet;
-    BitmapFont title;
+    BitmapFont font;
     float stateTime;
     int FRAME_COLS;
     int FRAME_ROWS;
+    int winWidth;
+    int winHeight;
 
     public IntroScreen(PiazzaPanicGame game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        title = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
+        font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     }
 
     public void show() {
@@ -53,6 +55,8 @@ public class IntroScreen extends ScreenAdapter {
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
         stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+        winWidth = Gdx.graphics.getWidth();
+        winHeight = Gdx.graphics.getHeight();
 
         // Get current frame of animation for the current stateTime
         TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);
@@ -61,8 +65,14 @@ public class IntroScreen extends ScreenAdapter {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(currentFrame, Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 100, 200, 200); // Drawz current frame at (50, 50)
+        game.batch.draw(currentFrame, winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/10f, winWidth/5f, winWidth/5f);
+        font.draw(game.batch, "NEVES6\nAssessment 1\nIndev Build", winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/9f, winWidth/5f, 1, false);
         game.batch.end();
+
+        if (stateTime > 3f) {
+            //dispose();
+            game.setScreen(new TitleScreen(game));
+        }
     }
 
     @Override
