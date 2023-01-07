@@ -9,7 +9,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("PiazzaPanic");
+		config.setTitle("Piazza Panic!");
+		config.useVsync(true);
 		new Lwjgl3Application(new PiazzaPanicGame(), config);
 	}
 }
