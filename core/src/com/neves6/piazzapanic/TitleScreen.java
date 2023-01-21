@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class TitleScreen extends ScreenAdapter {
     PiazzaPanicGame game;
@@ -17,6 +21,13 @@ public class TitleScreen extends ScreenAdapter {
     int winWidth;
     int winHeight;
     float bgScaleFactor;
+    Stage stage;
+    TextButton playButton;
+    TextButton settingsButton;
+    TextButton exitButton;
+    TextButton.TextButtonStyle buttonStyle;
+    Skin skin;
+    TextureAtlas atlas;
 
     public TitleScreen(PiazzaPanicGame game) {
         this.game = game;
@@ -38,6 +49,11 @@ public class TitleScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch = new SpriteBatch();
+
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        skin = new Skin();
+
     }
 
     @Override
