@@ -69,7 +69,7 @@ public class IntroScreen extends ScreenAdapter {
         font.draw(game.batch, "NEVES6\nAssessment 1\nIndev Build", winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/9f, winWidth/5f, 1, false);
         game.batch.end();
 
-        if (stateTime > 3f) {
+        if (stateTime > 2f) {
             //dispose();
             game.setScreen(new TitleScreen(game));
         }
