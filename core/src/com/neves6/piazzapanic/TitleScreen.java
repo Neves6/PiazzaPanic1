@@ -75,7 +75,7 @@ public class TitleScreen extends ScreenAdapter {
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "TITLE SCREEN", winWidth / 2f - winWidth/10f, winHeight / 2f + winWidth/5f, winWidth/5f, 1, false);
+        font.draw(game.batch, "TITLE SCREEN", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         game.batch.end();
     }
 
