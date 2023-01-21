@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class TitleScreen extends ScreenAdapter {
     PiazzaPanicGame game;
@@ -53,13 +55,46 @@ public class TitleScreen extends ScreenAdapter {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         skin = new Skin();
-
+        atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
+        skin.addRegions(atlas);
+        buttonStyle = new TextButton.TextButtonStyle();
+        buttonStyle.font = font;
+        buttonStyle.up = skin.getDrawable("black_alpha_mid");
+        buttonStyle.down = skin.getDrawable("black_alpha_mid");
+        buttonStyle.checked = skin.getDrawable("black_alpha_mid");
+        playButton = new TextButton("Play", buttonStyle);
+        playButton.setPosition(Gdx.graphics.getWidth()/2 - playButton.getWidth()/2, Gdx.graphics.getHeight()/2 + playButton.getHeight()/2);
+        settingsButton = new TextButton("Settings", buttonStyle);
+        settingsButton.setPosition(Gdx.graphics.getWidth()/2 - settingsButton.getWidth()/2, Gdx.graphics.getHeight()/2 - settingsButton.getHeight()/2);
+        exitButton = new TextButton("Exit", buttonStyle);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2, Gdx.graphics.getHeight()/2 - exitButton.getHeight()*3/2);
+        stage.addActor(playButton);
+        stage.addActor(settingsButton);
+        stage.addActor(exitButton);
+        playButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game));
+            }
+        });
+        settingsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         winWidth = Gdx.graphics.getWidth();
         winHeight = Gdx.graphics.getHeight();
@@ -77,6 +112,7 @@ public class TitleScreen extends ScreenAdapter {
                 bg.getHeight() * bgScaleFactor);
         font.draw(game.batch, "TITLE SCREEN", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         game.batch.end();
+        stage.draw();
     }
 
     @Override
@@ -90,5 +126,8 @@ public class TitleScreen extends ScreenAdapter {
         batch.dispose();
         font.dispose();
         bg.dispose();
+        stage.dispose();
+        skin.dispose();
+        atlas.dispose();
     }
 }
