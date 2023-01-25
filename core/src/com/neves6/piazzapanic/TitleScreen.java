@@ -34,7 +34,7 @@ public class TitleScreen extends ScreenAdapter {
     public TitleScreen(PiazzaPanicGame game) {
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
-        bg = new Texture(Gdx.files.internal("title_screen_large.png"));
+        bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
     }
 
     @Override
@@ -71,10 +71,11 @@ public class TitleScreen extends ScreenAdapter {
         stage.addActor(playButton);
         stage.addActor(settingsButton);
         stage.addActor(exitButton);
+
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new LevelSelectorScreen(game));
             }
         });
         settingsButton.addListener(new ChangeListener() {

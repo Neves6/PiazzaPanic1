@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class GameScreen extends ScreenAdapter {
     PiazzaPanicGame game;
+    int level;
     OrthographicCamera camera;
     SpriteBatch batch;
     BitmapFont font;
@@ -24,8 +25,9 @@ public class GameScreen extends ScreenAdapter {
     int winWidth;
     int winHeight;
 
-    public GameScreen(PiazzaPanicGame game) {
+    public GameScreen(PiazzaPanicGame game, int level) {
         this.game = game;
+        this.level = level;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         bg = new Texture(Gdx.files.internal("title_screen_large.png"));
     }
