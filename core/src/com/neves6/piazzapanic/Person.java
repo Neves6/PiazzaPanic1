@@ -1,9 +1,10 @@
 package com.neves6.piazzapanic;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.Stack;
 
 public class Person {
-    private String name;
+    private final String name;
     private int xCoord;
     private int yCoord;
     private Sprite sprite;
@@ -30,6 +31,12 @@ public class Person {
     public void setyCoord(int yCoord){
         this.xCoord = yCoord;
     }
+    public void alterxCoord(int xDelta){
+        this.xCoord += xDelta;
+    }
+    public void alteryCoord(int yDelta){
+        this.yCoord += yDelta;
+    }
 
     public void setSprite(Sprite sprite){
         this.sprite = sprite;
@@ -55,22 +62,33 @@ class Customer extends Person{
 }
 
 class Chef extends Person {
-    private boolean isChopping; private int chopSpeed;
-    private boolean isFrying; private int frySpeed; 
-    private boolean isBaking; private int bakeSpeed;
-    private boolean isServing;
-    private Stack inventory;
+    private int chopSpeed;
+    private int frySpeed;
+    private int bakeSpeed;
+    private boolean isStickied;
+    private Stack<String> inventory;
+    private String facing;
+    private final Texture txUp;
+    private final Texture txDown;
+    private final Texture txLeft;
+    private final Texture txRight;
+    private Texture txNow;
+    private boolean isInteracting;
 
-    public Chef(String name, int xCoord, int yCoord, Sprite sprite, boolean isChopping, boolean isFrying, boolean isBaking, boolean isServing, int chopSpeed, int frySpeed, int bakeSpeed, Stack inventory){
+    public Chef(String name, int xCoord, int yCoord, Sprite sprite, int chopSpeed, int frySpeed, int bakeSpeed, boolean isStickied, Stack inventory, int textureSet){
         super(name, xCoord, yCoord, sprite);
         this.chopSpeed = chopSpeed;
         this.frySpeed = frySpeed;
         this.bakeSpeed = bakeSpeed;
-        this.isChopping = false;
-        this.isFrying = false;
-        this.isBaking = false;
-        this.isServing = false;
+        this.isStickied = isStickied;
+        this.inventory = inventory;
         this.inventory = new Stack();
+        this.facing = "down";
+        this.txUp =    new Texture("people/chef" + textureSet + "up.png");
+        this.txDown =  new Texture("people/chef" + textureSet + "down.png");
+        this.txLeft =  new Texture("people/chef" + textureSet + "left.png");
+        this.txRight = new Texture("people/chef" + textureSet + "right.png");
+        this.txNow = txDown;
     }
     //Getters
     public int getChopSpeed(){
@@ -82,17 +100,11 @@ class Chef extends Person {
     public int getBakeSpeed(){
         return bakeSpeed;
     }
-    public boolean isChopping(){
-        return isChopping;
+    public boolean getIsStickied(){
+        return isStickied;
     }
-    public boolean isBaking(){
-        return isBaking;
-    }
-    public boolean isFrying(){
-        return isFrying;
-    }
-    public boolean isServing(){
-        return isServing;
+    public Texture getTxNow(){
+        return txNow;
     }
     //Setters
     public void setChopSpeed(int chopSpeed){
@@ -104,26 +116,47 @@ class Chef extends Person {
     public void setBakeSpeed(int bakeSpeed){
         this.bakeSpeed = bakeSpeed;
     }
-    public void setIsChopping(boolean flag){
-        this.isChopping = flag;
+    public void setIsStickied(boolean flag){
+        this.isStickied = flag;
     }
-    public void setIsBaking(boolean flag){
-        this.isBaking = flag;
-    }
-    public void setIsFrying(boolean flag){
-        this.isFrying = flag;
-    }
-    public void setIsServing(boolean flag){
-        this.isServing = flag;
+    public void setisInteracting(boolean flag){
+        this.isInteracting = flag;
     }
     //Inventory management
-    public Stack getInventory(){
+    public Stack<String> getInventory(){
         return inventory;
     }
     public void addToInventory(String item){
         this.inventory.push(item);
     }
-    public void removeTopFromInventory(String item){
+    public void removeTopFromInventory(){
         this.inventory.pop();
+    }
+    public void clearInventory(){
+        this.inventory.clear();
+    }
+    public boolean getisInteracting(){
+        return isInteracting;
+    }
+    //Facing
+    public String getFacing(){
+        return facing;
+    }
+    public void setFacing(String facing){
+        this.facing = facing;
+        switch (facing){
+            case "up":
+                this.txNow = txUp;
+                break;
+            case "down":
+                this.txNow = txDown;
+                break;
+            case "left":
+                this.txNow = txLeft;
+                break;
+            case "right":
+                this.txNow = txRight;
+                break;
+        }
     }
 }

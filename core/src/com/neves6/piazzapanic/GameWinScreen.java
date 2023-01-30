@@ -14,29 +14,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-public class LevelSelectorScreen extends ScreenAdapter {
+public class GameWinScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
     SpriteBatch batch;
     BitmapFont font;
     Texture bg;
-    Texture lock;
     int winWidth;
     int winHeight;
     float bgScaleFactor;
     Stage stage;
-    TextButton level1Button;
-    TextButton level2Button;
-    TextButton level3Button;
+    TextButton yesButton;
+    TextButton noButton;
     TextButton.TextButtonStyle buttonStyle;
     Skin skin;
     TextureAtlas atlas;
+    int completionTime;
 
-    public LevelSelectorScreen(PiazzaPanicGame game) {
+    public GameWinScreen(PiazzaPanicGame game, int completionTime) {
         this.game = game;
+        this.completionTime = completionTime;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
-        lock = new Texture(Gdx.files.internal("levellocked.png"));
     }
 
     @Override
@@ -48,40 +47,33 @@ public class LevelSelectorScreen extends ScreenAdapter {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         skin = new Skin();
-        atlas = new TextureAtlas(Gdx.files.internal("buttons/levelselector/levelselector.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
         skin.addRegions(atlas);
         buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.font = font;
-        buttonStyle.up = skin.getDrawable("black_alpha_square");
-        buttonStyle.down = skin.getDrawable("black_alpha_square");
-        buttonStyle.checked = skin.getDrawable("black_alpha_square");
-        level1Button = new TextButton("Level 1", buttonStyle);
-        level1Button.setPosition(Gdx.graphics.getWidth()/2 - level1Button.getWidth()/2 - level1Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2 - level1Button.getHeight()/2);
-        level2Button = new TextButton("Level 2", buttonStyle);
-        level2Button.setPosition(Gdx.graphics.getWidth()/2 - level1Button.getWidth()/2, Gdx.graphics.getHeight()/2 - level1Button.getHeight()/2);
-        level3Button = new TextButton("Level 3", buttonStyle);
-        level3Button.setPosition(Gdx.graphics.getWidth()/2 - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2 - level1Button.getHeight()/2);
-        stage.addActor(level1Button);
-        stage.addActor(level2Button);
-        stage.addActor(level3Button);
-        level1Button.addListener(new ChangeListener() {
+        buttonStyle.up = skin.getDrawable("black_alpha_mid");
+        buttonStyle.down = skin.getDrawable("black_alpha_mid");
+        buttonStyle.checked = skin.getDrawable("black_alpha_mid");
+
+        yesButton = new TextButton("Yes", buttonStyle);
+        yesButton.setPosition(Gdx.graphics.getWidth()/2f - yesButton.getWidth()/2, Gdx.graphics.getHeight()/3f + yesButton.getHeight()/2);
+        yesButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game, 1));
+                game.setScreen(new TitleScreen(game));
             }
         });
-        level1Button.addListener(new ChangeListener() {
+        stage.addActor(yesButton);
+
+        noButton = new TextButton("No", buttonStyle);
+        noButton.setPosition(Gdx.graphics.getWidth()/2f - noButton.getWidth()/2, Gdx.graphics.getHeight()/3f - noButton.getHeight()/2);
+        noButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // game.setScreen(new GameScreen(game, 2));
+                game.setScreen(new TitleScreen(game));
             }
         });
-        level1Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                // game.setScreen(new GameScreen(game, 3));
-            }
-        });
+        stage.addActor(noButton);
     }
 
     @Override
@@ -103,38 +95,30 @@ public class LevelSelectorScreen extends ScreenAdapter {
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "LEVEL SELECTION", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
-        stage.draw();
-        game.batch.draw(lock, level2Button.getX(), level2Button.getY(), level2Button.getWidth(), level2Button.getHeight());
-        game.batch.draw(lock, level3Button.getX(), level3Button.getY(), level3Button.getWidth(), level3Button.getHeight());
+        font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!\nWould you like to submit your time to the leaderboard?", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         game.batch.end();
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        level1Button.setPosition(width/2 - level1Button.getWidth()/2 - level1Button.getWidth()*1.5f, height/2 - level1Button.getHeight()/2);
-        level2Button.setPosition(width/2 - level1Button.getWidth()/2, height/2 - level1Button.getHeight()/2);
-        level3Button.setPosition(width/2 - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, height/2 - level1Button.getHeight()/2);
+        yesButton.setPosition(width/2f - yesButton.getWidth()/2, height/3f + yesButton.getHeight()/2);
+        noButton.setPosition(width/2f - noButton.getWidth()/2, height/3f - noButton.getHeight()/2);
         stage.clear();
-        stage.addActor(level1Button);
-        stage.addActor(level2Button);
-        stage.addActor(level3Button);
+        stage.addActor(yesButton);
+        stage.addActor(noButton);
         stage.getViewport().update(width, height);
         camera.setToOrtho(false, width, height);
     }
 
     @Override
-    public void hide() {
-        super.dispose();
-        game.dispose();
+    public void hide(){
         batch.dispose();
         font.dispose();
         bg.dispose();
-        lock.dispose();
         stage.dispose();
         skin.dispose();
         atlas.dispose();
     }
 }
-
