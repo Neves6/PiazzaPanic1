@@ -75,7 +75,7 @@ class ScenarioGameMaster extends GameMaster {
         forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
         trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
 
-        switch (settings.get(1)){
+        switch (settings.get(1).strip()){
             case "full":
                 soundVolume = 1f;
                 break;
