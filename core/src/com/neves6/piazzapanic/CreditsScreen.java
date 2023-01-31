@@ -1,7 +1,6 @@
 package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,14 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
-import java.util.ArrayList;
 
 public class CreditsScreen extends ScreenAdapter {
     PiazzaPanicGame game;
@@ -26,13 +17,9 @@ public class CreditsScreen extends ScreenAdapter {
     Texture credits;
     int winWidth;
     int winHeight;
-    ArrayList<String> settings;
-    String continueTo;
 
     public CreditsScreen(PiazzaPanicGame game) {
         this.game = game;
-        this.continueTo = continueTo;
-        settings = Utility.getSettings();
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         credits = new Texture(Gdx.files.internal("credits.png"));
     }
@@ -76,6 +63,8 @@ public class CreditsScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
+        super.dispose();
+        game.dispose();
         batch.dispose();
         font.dispose();
         credits.dispose();

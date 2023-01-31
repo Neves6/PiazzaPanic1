@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import java.util.ArrayList;
-
 public class TitleScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -34,11 +32,9 @@ public class TitleScreen extends ScreenAdapter {
     TextButton.TextButtonStyle buttonStyle;
     Skin skin;
     TextureAtlas atlas;
-    ArrayList<String> settings;
 
     public TitleScreen(PiazzaPanicGame game) {
         this.game = game;
-        settings = Utility.getSettings();
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
     }
@@ -158,6 +154,8 @@ public class TitleScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
+        super.dispose();
+        game.dispose();
         batch.dispose();
         font.dispose();
         bg.dispose();

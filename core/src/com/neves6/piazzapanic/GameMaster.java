@@ -17,7 +17,6 @@ class ScenarioGameMaster extends GameMaster {
     PiazzaPanicGame game;
     TiledMap map;
     TiledMapTileLayer collisionLayer;
-    TiledMapTileLayer objLayer;
     ArrayList<Chef> chefs = new ArrayList<>();
     Stack<Customer> customers = new Stack<>();
     ArrayList<Machine> machines = new ArrayList<>();
@@ -37,9 +36,8 @@ class ScenarioGameMaster extends GameMaster {
         settings = Utility.getSettings();
         this.map = map;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
-        objLayer = (TiledMapTileLayer) map.getLayers().get(2);
         for (int i = 0; i < chefno; i++) {
-            chefs.add(new Chef("Chef", 6+i, 5, null, 1, 1, 1, false, new Stack(), i+1));
+            chefs.add(new Chef("Chef", 6+i, 5, null, 1, 1, 1, false, new Stack<String>(), i+1));
         }
         for (int i = 0; i < custno; i++) {
             if (i % 2 == 0) {
@@ -75,7 +73,7 @@ class ScenarioGameMaster extends GameMaster {
         forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
         trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
 
-        switch (settings.get(1)){
+        switch (settings.get(1).strip()){
             case "full":
                 soundVolume = 1f;
                 break;
@@ -103,25 +101,25 @@ class ScenarioGameMaster extends GameMaster {
         Chef chef = chefs.get(selectedChef);
         switch (direction) {
             case "up":
-                if (!wouldCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {
+                if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {
                     chef.alteryCoord(+1);
                 }
                 chef.setFacing("up");
                 break;
             case "down":
-                if (!wouldCollide(chef.getxCoord(), chef.getyCoord() - 1, selectedChef)) {
+                if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() - 1, selectedChef)) {
                     chef.alteryCoord(-1);
                 }
                 chef.setFacing("down");
                 break;
             case "left":
-                if (!wouldCollide(chef.getxCoord() - 1, chef.getyCoord(), selectedChef)) {
+                if (wouldNotCollide(chef.getxCoord() - 1, chef.getyCoord(), selectedChef)) {
                     chef.alterxCoord(-1);
                 }
                 chef.setFacing("left");
                 break;
             case "right":
-                if (!wouldCollide(chef.getxCoord() + 1, chef.getyCoord(), selectedChef)) {
+                if (wouldNotCollide(chef.getxCoord() + 1, chef.getyCoord(), selectedChef)) {
                     chef.alterxCoord(+1);
                 }
                 chef.setFacing("right");
@@ -129,18 +127,15 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
-    private boolean wouldCollide(int x, int y, int chefno) {
+    private boolean wouldNotCollide(int x, int y, int chefno) {
         if (chefs.get(chefno).getIsStickied()) {
-            return true;
+            return false;
         }
         if ((chefno == 0 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y) || (chefno == 1 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y)) {
-            return true;
+            return false;
         }
         int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();
-        if (tempCellTileID == 37 || tempCellTileID == 39) {
-            return true;
-        }
-        return false;
+        return tempCellTileID != 37 && tempCellTileID != 39;
     }
 
     public String generateHoldingsText() {
@@ -175,10 +170,10 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public void tickUpdate(float delta) {
-        for (int i = 0; i < machines.size(); i++){
-            if (machines.get(i).getActive()) {
-                machines.get(i).incrementRuntime(delta);
-                machines.get(i).attemptGetOutput();
+        for (Machine machine : machines) {
+            if (machine.getActive()) {
+                machine.incrementRuntime(delta);
+                machine.attemptGetOutput();
             }
         }
         totalTimer += delta;
