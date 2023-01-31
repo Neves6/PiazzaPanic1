@@ -1,7 +1,6 @@
 package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PiazzaPanicGame extends Game {
