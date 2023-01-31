@@ -56,11 +56,11 @@ public class LevelSelectorScreen extends ScreenAdapter {
         buttonStyle.down = skin.getDrawable("black_alpha_square");
         buttonStyle.checked = skin.getDrawable("black_alpha_square");
         level1Button = new TextButton("Level 1", buttonStyle);
-        level1Button.setPosition(Gdx.graphics.getWidth()/2 - level1Button.getWidth()/2 - level1Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2 - level1Button.getHeight()/2);
+        level1Button.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2 - level1Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2f - level1Button.getHeight()/2);
         level2Button = new TextButton("Level 2", buttonStyle);
-        level2Button.setPosition(Gdx.graphics.getWidth()/2 - level1Button.getWidth()/2, Gdx.graphics.getHeight()/2 - level1Button.getHeight()/2);
+        level2Button.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2, Gdx.graphics.getHeight()/2f - level1Button.getHeight()/2);
         level3Button = new TextButton("Level 3", buttonStyle);
-        level3Button.setPosition(Gdx.graphics.getWidth()/2 - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2 - level1Button.getHeight()/2);
+        level3Button.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2f - level1Button.getHeight()/2);
         stage.addActor(level1Button);
         stage.addActor(level2Button);
         stage.addActor(level3Button);
@@ -114,9 +114,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        level1Button.setPosition(width/2 - level1Button.getWidth()/2 - level1Button.getWidth()*1.5f, height/2 - level1Button.getHeight()/2);
-        level2Button.setPosition(width/2 - level1Button.getWidth()/2, height/2 - level1Button.getHeight()/2);
-        level3Button.setPosition(width/2 - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, height/2 - level1Button.getHeight()/2);
+        level1Button.setPosition(width/2f - level1Button.getWidth()/2 - level1Button.getWidth()*1.5f, height/2f - level1Button.getHeight()/2);
+        level2Button.setPosition(width/2f - level1Button.getWidth()/2, height/2f - level1Button.getHeight()/2);
+        level3Button.setPosition(width/2f - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, height/2f - level1Button.getHeight()/2);
         stage.clear();
         stage.addActor(level1Button);
         stage.addActor(level2Button);

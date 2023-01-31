@@ -41,11 +41,11 @@ public final class Utility {
         try {
         BufferedWriter outputWriter = null;
         outputWriter = new BufferedWriter(new FileWriter(settingsFilepath));
-        for (int i = 0; i < settings.size(); i++) {
-            outputWriter.write(settings.get(i)+"");
-            //outputWriter.newLine();
-            outputWriter.write("\n");
-        }
+            for (String setting : settings) {
+                outputWriter.write(setting + "");
+                //outputWriter.newLine();
+                outputWriter.write("\n");
+            }
         outputWriter.flush();
         outputWriter.close();
         } catch (Exception e) {

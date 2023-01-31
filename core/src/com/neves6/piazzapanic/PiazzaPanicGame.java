@@ -26,7 +26,5 @@ public class PiazzaPanicGame extends Game {
 
 	@Override
 	public void dispose () {
-		//super.dispose();
-		//batch.dispose();
 	}
 }

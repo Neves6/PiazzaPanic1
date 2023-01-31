@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
-
 public class CreditsScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -19,13 +17,9 @@ public class CreditsScreen extends ScreenAdapter {
     Texture credits;
     int winWidth;
     int winHeight;
-    ArrayList<String> settings;
-    String continueTo;
 
     public CreditsScreen(PiazzaPanicGame game) {
         this.game = game;
-        this.continueTo = continueTo;
-        settings = Utility.getSettings();
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         credits = new Texture(Gdx.files.internal("credits.png"));
     }

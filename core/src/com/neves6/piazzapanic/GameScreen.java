@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class GameScreen extends ScreenAdapter {
     PiazzaPanicGame game;
-    int level;
     OrthographicCamera camera;
     SpriteBatch batch;
     BitmapFont font;
@@ -36,7 +35,6 @@ public class GameScreen extends ScreenAdapter {
     Texture recipes;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.game = game;
-        this.level = level;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
@@ -45,8 +43,6 @@ public class GameScreen extends ScreenAdapter {
             map = new TmxMapLoader().load("tilemaps/level1.tmx");
             gm = new ScenarioGameMaster(game, map, 2, 5);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
-            //wScale = (Gdx.graphics.getHeight() / (12f*32f)) * 21;
-            //hScale =  Gdx.graphics.getHeight() /      32f       ;
             wScale = unitScale * 32f;
             hScale = unitScale * 32f;
             renderer = new OrthogonalTiledMapRenderer(map, unitScale);
@@ -133,8 +129,6 @@ public class GameScreen extends ScreenAdapter {
             super.resize(width, height);
             camera.setToOrtho(false, width, height);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
-            //wScale = (Gdx.graphics.getHeight() / (12f*32f)) * 21;
-            //hScale =  Gdx.graphics.getHeight() /      32f       ;
             wScale = unitScale * 32f;
             hScale = unitScale * 32f;
             renderer = new OrthogonalTiledMapRenderer(map, unitScale);

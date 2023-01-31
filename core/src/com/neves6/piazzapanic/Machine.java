@@ -44,10 +44,6 @@ public class Machine {
         this.runtime += delta;
     }
 
-    public void resetRuntime(){
-        this.runtime = 0;
-    }
-
     public float getRuntime(){
         return runtime;
     }

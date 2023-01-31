@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.ArrayList;
-
 public class TutorialScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -19,13 +17,11 @@ public class TutorialScreen extends ScreenAdapter {
     Texture tutorial;
     int winWidth;
     int winHeight;
-    ArrayList<String> settings;
     String continueTo;
 
     public TutorialScreen(PiazzaPanicGame game, String continueTo) {
         this.game = game;
         this.continueTo = continueTo;
-        settings = Utility.getSettings();
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         tutorial = new Texture(Gdx.files.internal("tutorial.png"));
     }
@@ -35,16 +31,22 @@ public class TutorialScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int keyCode) {
-                if (continueTo.equals("title")) {
-                    game.setScreen(new TitleScreen(game));
-                } else if (continueTo.equals("game1")) {
-                    game.setScreen(new GameScreen(game, 1));
-                } else if (continueTo.equals("game2")) {
-                    game.setScreen(new GameScreen(game, 2));
-                } else if (continueTo.equals("game3")) {
-                    game.setScreen(new GameScreen(game, 3));
-                } else {
-                    game.setScreen(new TitleScreen(game));
+                switch (continueTo) {
+                    case "title":
+                        game.setScreen(new TitleScreen(game));
+                        break;
+                    case "game1":
+                        game.setScreen(new GameScreen(game, 1));
+                        break;
+                    case "game2":
+                        game.setScreen(new GameScreen(game, 2));
+                        break;
+                    case "game3":
+                        game.setScreen(new GameScreen(game, 3));
+                        break;
+                    default:
+                        game.setScreen(new TitleScreen(game));
+                        break;
                 }
                 return true;
             }

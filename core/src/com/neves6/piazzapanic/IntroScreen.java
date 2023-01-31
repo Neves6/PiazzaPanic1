@@ -10,8 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import java.util.ArrayList;
-
 public class IntroScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -24,11 +22,9 @@ public class IntroScreen extends ScreenAdapter {
     int FRAME_ROWS;
     int winWidth;
     int winHeight;
-    ArrayList<String> settings;
 
     public IntroScreen(PiazzaPanicGame game) {
         this.game = game;
-        settings = Utility.getSettings();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
