@@ -62,6 +62,8 @@ public class GameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
 
         stage = new Stage();
+
+        Gdx.graphics.setResizable(false);
     }
 
     @Override
@@ -151,5 +153,6 @@ public class GameScreen extends ScreenAdapter {
         renderer.dispose();
         selectedTexture.dispose();
         recipes.dispose();
+        Gdx.graphics.setResizable(true);
     }
 }
