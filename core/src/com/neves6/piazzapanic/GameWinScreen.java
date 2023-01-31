@@ -24,8 +24,8 @@ public class GameWinScreen extends ScreenAdapter {
     int winHeight;
     float bgScaleFactor;
     Stage stage;
-    TextButton yesButton;
-    TextButton noButton;
+    TextButton creditsButton;
+    TextButton titleButton;
     TextButton.TextButtonStyle buttonStyle;
     Skin skin;
     TextureAtlas atlas;
@@ -55,25 +55,25 @@ public class GameWinScreen extends ScreenAdapter {
         buttonStyle.down = skin.getDrawable("black_alpha_mid");
         buttonStyle.checked = skin.getDrawable("black_alpha_mid");
 
-        yesButton = new TextButton("Yes", buttonStyle);
-        yesButton.setPosition(Gdx.graphics.getWidth()/2f - yesButton.getWidth()/2, Gdx.graphics.getHeight()/3f + yesButton.getHeight()/2);
-        yesButton.addListener(new ChangeListener() {
+        creditsButton = new TextButton("Credits", buttonStyle);
+        creditsButton.setPosition(Gdx.graphics.getWidth()/2f - creditsButton.getWidth()/2, Gdx.graphics.getHeight()/3f + creditsButton.getHeight()/2);
+        creditsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new TitleScreen(game));
+                game.setScreen(new CreditsScreen(game));
             }
         });
-        stage.addActor(yesButton);
+        stage.addActor(creditsButton);
 
-        noButton = new TextButton("No", buttonStyle);
-        noButton.setPosition(Gdx.graphics.getWidth()/2f - noButton.getWidth()/2, Gdx.graphics.getHeight()/3f - noButton.getHeight()/2);
-        noButton.addListener(new ChangeListener() {
+        titleButton = new TextButton("Title", buttonStyle);
+        titleButton.setPosition(Gdx.graphics.getWidth()/2f - titleButton.getWidth()/2, Gdx.graphics.getHeight()/3f - titleButton.getHeight()/2);
+        titleButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new TitleScreen(game));
             }
         });
-        stage.addActor(noButton);
+        stage.addActor(titleButton);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class GameWinScreen extends ScreenAdapter {
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!\nWould you like to submit your time to the leaderboard?", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         game.batch.end();
         stage.draw();
     }
@@ -103,11 +103,11 @@ public class GameWinScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        yesButton.setPosition(width/2f - yesButton.getWidth()/2, height/3f + yesButton.getHeight()/2);
-        noButton.setPosition(width/2f - noButton.getWidth()/2, height/3f - noButton.getHeight()/2);
+        creditsButton.setPosition(width/2f - creditsButton.getWidth()/2, height/3f + creditsButton.getHeight()/2);
+        titleButton.setPosition(width/2f - titleButton.getWidth()/2, height/3f - titleButton.getHeight()/2);
         stage.clear();
-        stage.addActor(yesButton);
-        stage.addActor(noButton);
+        stage.addActor(creditsButton);
+        stage.addActor(titleButton);
         stage.getViewport().update(width, height);
         camera.setToOrtho(false, width, height);
     }
