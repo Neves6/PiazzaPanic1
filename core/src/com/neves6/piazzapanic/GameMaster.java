@@ -137,10 +137,7 @@ class ScenarioGameMaster extends GameMaster {
             return true;
         }
         int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();
-        if (tempCellTileID == 37 || tempCellTileID == 39) {
-            return true;
-        }
-        return false;
+        return tempCellTileID == 37 || tempCellTileID == 39;
     }
 
     public String generateHoldingsText() {

@@ -23,7 +23,6 @@ public class PiazzaPanicGame extends Game {
 	}
 
 	public void render(float delta) {
-		;
 	}
 
 	@Override

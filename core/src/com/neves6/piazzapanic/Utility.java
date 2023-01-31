@@ -10,7 +10,8 @@ public final class Utility {
 
     public static String settingsFilepath = "./settings.txt";
 
-    private Utility() {;} // not intended to be instantiated
+    private Utility() {
+    } // not intended to be instantiated
 
     public static ArrayList<String> getSettings() {
         settingsFileExistenceHandler();
@@ -55,7 +56,6 @@ public final class Utility {
     private static void settingsFileExistenceHandler() {
         File f = new File(settingsFilepath);
         if (f.isFile()) {
-            return;
         } else {
             try {
                 f.createNewFile();
