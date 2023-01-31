@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PiazzaPanicGame extends Game {
 	SpriteBatch batch;
-	BitmapFont font;
 
 	public PiazzaPanicGame() {
 		super();
@@ -15,7 +14,6 @@ public class PiazzaPanicGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		font = new BitmapFont();
 
 		setScreen(new IntroScreen(this));
 	}
@@ -25,12 +23,12 @@ public class PiazzaPanicGame extends Game {
 	}
 
 	public void render(float delta) {
-		super.render();
+		;
 	}
 
 	@Override
 	public void dispose () {
+		//super.dispose();
 		//batch.dispose();
-		font.dispose();
 	}
 }

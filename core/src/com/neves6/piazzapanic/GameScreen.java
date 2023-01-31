@@ -146,6 +146,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
+        super.dispose();
         game.dispose();
         batch.dispose();
         font.dispose();
@@ -154,6 +155,5 @@ public class GameScreen extends ScreenAdapter {
         renderer.dispose();
         selectedTexture.dispose();
         recipes.dispose();
-        Gdx.graphics.setResizable(true);
     }
 }

@@ -158,6 +158,8 @@ public class TitleScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
+        super.dispose();
+        game.dispose();
         batch.dispose();
         font.dispose();
         bg.dispose();

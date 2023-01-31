@@ -150,6 +150,13 @@ public class SettingsScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
-
+        super.dispose();
+        game.dispose();
+        batch.dispose();
+        font.dispose();
+        bg.dispose();
+        stage.dispose();
+        skin.dispose();
+        atlas.dispose();
     }
 }
