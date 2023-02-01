@@ -1,5 +1,9 @@
 package com.neves6.piazzapanic;
 
+/**
+ * Machine class.
+ * Represents a machine or station in the game.
+ */
 public class Machine {
     private final String type;
     private final String input;
@@ -10,6 +14,14 @@ public class Machine {
     private float runtime;
     private Chef operator;
 
+    /**
+     * Machine constructor.
+     * @param type Type of machine.
+     * @param input Input ingredient.
+     * @param output Output ingredient.
+     * @param processingTime Processing time.
+     * @param sticky Whether or not the machine locks the chef in place during use.
+     */
     public Machine(String type, String input, String output, float processingTime, Boolean sticky){
         this.type = type;
         this.input = input;
@@ -19,6 +31,10 @@ public class Machine {
         this.active = false;
     }
 
+    /**
+     * Begins the machine processing of the ingredient.
+     * @param chef Which chef is using the machine.
+     */
     public void process(Chef chef){
         if (input == "" && processingTime == 0) {
             chef.addToInventory(output);
@@ -31,6 +47,10 @@ public class Machine {
         }
     }
 
+    /**
+     * Checks if the machine is done processing and adds the output to the chef's inventory if it is.
+     * Handles unsticking the chef.
+     */
     public void attemptGetOutput(){
         Chef chef = operator;
         if (active && runtime >= processingTime) {

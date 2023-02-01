@@ -6,13 +6,25 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+/**
+ * Helper/convenience class.
+ * Currently only handles retrieving and saving settings.
+ */
 public final class Utility {
 
     public static String settingsFilepath = "./settings.txt";
 
+    /**
+     * Utility constructor.
+     * SHOULD NOT BE INITIALIZED!
+     */
     private Utility() {
     } // not intended to be instantiated
 
+    /**
+     * Retrieves settings from file.
+     * @return ArrayList of settings values.
+     */
     public static ArrayList<String> getSettings() {
         settingsFileExistenceHandler();
         ArrayList<String> settings = new ArrayList<String>();
@@ -36,6 +48,10 @@ public final class Utility {
         return settings;
     }
 
+    /**
+     * Saves settings to file.
+     * @param settings ArrayList of settings values to be saved.
+     */
     public static void setSettings(ArrayList<String> settings) {
         settingsFileExistenceHandler();
         try {
@@ -53,6 +69,9 @@ public final class Utility {
         }
     }
 
+    /**
+     * Checks if file exists, creates it if it doesn't and saves default values.
+     */
     private static void settingsFileExistenceHandler() {
         File f = new File(settingsFilepath);
         if (f.isFile()) {
