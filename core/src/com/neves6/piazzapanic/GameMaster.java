@@ -37,13 +37,13 @@ class ScenarioGameMaster extends GameMaster {
         this.map = map;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
         for (int i = 0; i < chefno; i++) {
-            chefs.add(new Chef("Chef", 6+i, 5, null, 1, 1, 1, false, new Stack<String>(), i+1));
+            chefs.add(new Chef("Chef", 6+i, 5, 1, 1, 1, false, new Stack<String>(), i+1));
         }
         for (int i = 0; i < custno; i++) {
             if (i % 2 == 0) {
-                customers.add(new Customer("Customer1", -1, -1, null, "salad"));
+                customers.add(new Customer("Customer"+i+1, -1, -1, "salad"));
             } else {
-                customers.add(new Customer("Customer2", -1, -1, null, "burger"));
+                customers.add(new Customer("Customer"+i+1, -1, -1, "burger"));
             }
         }
         totalTimer = 0f;
@@ -167,6 +167,24 @@ class ScenarioGameMaster extends GameMaster {
         comp += (int) totalTimer;
         comp += " s";
         return comp;
+    }
+
+    public String getMachineTimerForChef(int chefno) {
+        Chef chef = chefs.get(chefno);
+        if (chef.getMachineInteractingWith() != null) {
+            Machine machine = chef.getMachineInteractingWith();
+            return ((int) (machine.getProcessingTime() - machine.getRuntime() + 1)) + "";
+        } else {
+            return "";
+        }
+    }
+
+    public int getCustomersRemining(){
+        return customers.size();
+    }
+
+    public Customer getFirstCustomer() {
+        return customers.get(0);
     }
 
     public void tickUpdate(float delta) {

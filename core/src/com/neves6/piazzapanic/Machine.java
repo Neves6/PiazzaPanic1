@@ -26,6 +26,7 @@ public class Machine {
             active = true;
             chef.getInventory().pop();
             chef.setIsStickied(sticky);
+            chef.setMachineInteractingWith(this);
             operator = chef;
         }
     }
@@ -35,6 +36,7 @@ public class Machine {
         if (active && runtime >= processingTime) {
             chef.addToInventory(output);
             chef.setIsStickied(false);
+            chef.setMachineInteractingWith(null);
             active = false;
             runtime = 0;
         }
@@ -49,5 +51,8 @@ public class Machine {
     }
     public boolean getActive(){
         return active;
+    }
+    public float getProcessingTime(){
+        return processingTime;
     }
 }
