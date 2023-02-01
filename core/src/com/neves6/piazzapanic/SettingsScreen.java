@@ -64,15 +64,15 @@ public class SettingsScreen extends ScreenAdapter {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (settings.get(0).strip().equals("fullscreen")) {
-                    System.out.println("Toggling to windowed");
+                    //System.out.println("Toggling to windowed");
                     settings.set(0, "windowed");
                     Gdx.graphics.setWindowedMode(1280, 720);
                 } else if (settings.get(0).strip().equals("windowed")) {
-                    System.out.println("Toggling to fullscreen");
+                    //System.out.println("Toggling to fullscreen");
                     settings.set(0, "fullscreen");
                     Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
                 }
-                System.out.println("Win/FS Toggled?");
+                //System.out.println("Win/FS Toggled?");
                 Utility.setSettings(settings);
                 game.setScreen(new TitleScreen(game));
             }
