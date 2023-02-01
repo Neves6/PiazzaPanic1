@@ -4,11 +4,20 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.util.Stack;
 
+/**
+ * Base person class.
+ */
 public class Person {
     private final String name;
     private int xCoord;
     private int yCoord;
 
+    /**
+     * Person constructor.
+     * @param name Name of person.
+     * @param xCoord logical x coordinate of person.
+     * @param yCoord logical y coordinate of person.
+     */
     public Person(String name, int xCoord, int yCoord){
         this.name = name;
         this.xCoord = xCoord;
@@ -18,6 +27,7 @@ public class Person {
     public int getxCoord() {
         return xCoord;
     }
+
     public int getyCoord() {
         return yCoord;
     }
@@ -37,12 +47,22 @@ public class Person {
 
 }
 
+/**
+ * Customer subclass.
+ */
 class Customer extends Person{
 
     private String order;
     private final Texture txUp;
     private final Texture txLeft;
 
+    /**
+     * Customer constructor.
+     * @param name Name of customer.
+     * @param xCoord logical x coordinate of customer.
+     * @param yCoord logical y coordinate of customer.
+     * @param order Order of customer.
+     */
     public Customer(String name, int xCoord, int yCoord, String order){
         super(name, xCoord, yCoord);
         this.order = order;
@@ -64,6 +84,9 @@ class Customer extends Person{
 
 }
 
+/**
+ * Chef subclass.
+ */
 class Chef extends Person {
     private boolean isStickied;
     private Stack<String> inventory;
@@ -76,6 +99,18 @@ class Chef extends Person {
     private boolean isInteracting;
     private Machine machineInteractingWith;
 
+    /**
+     * Chef constructor.
+     * @param name
+     * @param xCoord
+     * @param yCoord
+     * @param chopSpeed
+     * @param frySpeed
+     * @param bakeSpeed
+     * @param isStickied
+     * @param inventory
+     * @param textureSet
+     */
     public Chef(String name, int xCoord, int yCoord, int chopSpeed, int frySpeed, int bakeSpeed, boolean isStickied, Stack<String> inventory, int textureSet){
         super(name, xCoord, yCoord);
         this.isStickied = isStickied;
@@ -120,6 +155,11 @@ class Chef extends Person {
     public String getFacing(){
         return facing;
     }
+
+    /**
+     * Sets the facing direction of the chef, then changes the current texture to match.
+     * @param facing sprite facing direction.
+     */
     public void setFacing(String facing){
         this.facing = facing;
         switch (facing){
