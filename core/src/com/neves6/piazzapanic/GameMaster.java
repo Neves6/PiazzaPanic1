@@ -8,11 +8,17 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * GameMaster class.
+ */
 public class GameMaster {
     public GameMaster() {
     }
 }
 
+/**
+ * ScenarioGameMaster subclass.
+ */
 class ScenarioGameMaster extends GameMaster {
     PiazzaPanicGame game;
     TiledMap map;
@@ -31,6 +37,14 @@ class ScenarioGameMaster extends GameMaster {
     Sound trash;
     float soundVolume;
     ArrayList<String> settings;
+
+    /**
+     * ScenarioGameMaster constructor.
+     * @param game PiazzaPanicGame instance.
+     * @param map TiledMap instance.
+     * @param chefno Number of chefs.
+     * @param custno Number of customers.
+     */
     public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno) {
         this.game = game;
         settings = Utility.getSettings();
@@ -97,6 +111,10 @@ class ScenarioGameMaster extends GameMaster {
         return chefs.get(i-1);
     }
 
+    /**
+     * Attempts to move the currently selected chef in a specified direction.
+     * @param direction Direction to move.
+     */
     public void tryMove(String direction){
         Chef chef = chefs.get(selectedChef);
         switch (direction) {
@@ -127,6 +145,13 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * Checks collision with the collision layer, other chefs, and being stickied.
+     * @param x x coordinate to check.
+     * @param y y coordinate to check.
+     * @param chefno chef number to check.
+     * @return true if the chef would not collide, false otherwise.
+     */
     private boolean wouldNotCollide(int x, int y, int chefno) {
         if (chefs.get(chefno).getIsStickied()) {
             return false;
@@ -138,6 +163,10 @@ class ScenarioGameMaster extends GameMaster {
         return tempCellTileID != 37 && tempCellTileID != 39;
     }
 
+    /**
+     * Generates the display text for the chefs' inventories.
+     * @return String containing the display text.
+     */
     public String generateHoldingsText() {
         String comp = "";
         comp += "Chef 1 is holding:\n";
@@ -147,6 +176,10 @@ class ScenarioGameMaster extends GameMaster {
         return comp;
     }
 
+    /**
+     * Generates the display text for the customers' tray and order.
+     * @return String containing the display text.
+     */
     public String generateCustomersTrayText() {
         String comp = "";
         comp += "Customers remaining: ";
@@ -161,6 +194,10 @@ class ScenarioGameMaster extends GameMaster {
         return comp;
     }
 
+    /**
+     * Generates the display text for the timer.
+     * @return String containing the display text.
+     */
     public String generateTimerText(){
         String comp = "";
         comp += "Time elapsed: ";
@@ -169,6 +206,11 @@ class ScenarioGameMaster extends GameMaster {
         return comp;
     }
 
+    /**
+     * Generates the display text for the chef's timer.
+     * @param chefno chef number to check.
+     * @return String containing the display text.
+     */
     public String getMachineTimerForChef(int chefno) {
         Chef chef = chefs.get(chefno);
         if (chef.getMachineInteractingWith() != null) {
@@ -187,6 +229,11 @@ class ScenarioGameMaster extends GameMaster {
         return customers.get(0);
     }
 
+    /**
+     * Updates timers on all machines and the total timer.
+     * To be called every frame render.
+     * @param delta time since last frame.
+     */
     public void tickUpdate(float delta) {
         for (Machine machine : machines) {
             if (machine.getActive()) {
@@ -197,6 +244,9 @@ class ScenarioGameMaster extends GameMaster {
         totalTimer += delta;
     }
 
+    /**
+     * Attempts to cause an interaction between the currently selected chef and the machine in front of them.
+     */
     public void tryInteract() {
         Chef chef = chefs.get(selectedChef);
         if (chef.getIsStickied()) {
@@ -295,6 +345,9 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * Adds the top item from the currently selected chef's inventory to the tray.
+     */
     private void addToTray() {
         Chef chef = chefs.get(selectedChef);
         Stack<String> inv = chef.getInventory();
