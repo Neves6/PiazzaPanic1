@@ -1,6 +1,5 @@
 package com.neves6.piazzapanic.tests;
 
-
 import com.badlogic.gdx.Gdx;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,14 @@ import static org.junit.Assert.assertTrue;
 public class AssetTests {
 
     @Test
+    public void testControlAssetExists() {
+        assertTrue("Controls.png must exist for the game to compile", Gdx.files
+                .internal("controls.png").exists());
+    }
+
+    @Test
     public void testShipAssetExists() {
-        assertTrue("TEST", 2 -1 == 1*1);
+        assertTrue("Credits.png must exist for the game to compile", Gdx.files
+                .internal("credits.png").exists());
     }
 }
