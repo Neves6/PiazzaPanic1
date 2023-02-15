@@ -1,6 +1,5 @@
 package com.neves6.piazzapanic.tests;
 
-import com.badlogic.gdx.Gdx;
 import com.neves6.piazzapanic.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
