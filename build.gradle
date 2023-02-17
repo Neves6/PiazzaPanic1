@@ -14,6 +14,11 @@ buildscript {
     }
 }
 
+plugins {
+    id 'java-library'
+    id 'jacoco'
+}
+
 allprojects {
     apply plugin: "eclipse"
 
