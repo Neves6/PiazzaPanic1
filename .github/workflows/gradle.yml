@@ -16,6 +16,8 @@ on:
     branches: main
 
 jobs:
+  run: chmod +x ./gradlew
+
   build:
     runs-on: ${{ matrix.os }}
     strategy:
