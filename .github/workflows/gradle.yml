@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: jacoco-report
-          path: lib/build/reports/jacoco/test/html
+          path: htmlReport
