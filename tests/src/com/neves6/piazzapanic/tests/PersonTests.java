@@ -39,7 +39,7 @@ public class PersonTests {
     @Test(expected = IllegalArgumentException.class)
     public void testXSetErroneous(){
         Person testPerson = new Person("Bob", 0, 0);
-        testPerson.setyCoord(-1);
+        testPerson.setxCoord(-1);
     }
 
     @Test(expected = IllegalArgumentException.class)
