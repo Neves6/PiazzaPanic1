@@ -84,12 +84,32 @@ project(":tests") {
 
     test {
         useJUnit()
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn test // tests are required to run before generating the report
+
+
+        jacocoTestReport {
+            reports {
+                xml.required = false
+                csv.required = false
+                html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+            }
+        }
+    }
+
+    jacoco {
+        toolVersion = "0.8.8"
+        reportsDirectory = layout.buildDirectory.dir('jacococoverage')
     }
 }
 
 project(":core") {
     apply plugin: "java-library"
 
+    sourceSets.main.java.srcDirs = ["src"]
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
