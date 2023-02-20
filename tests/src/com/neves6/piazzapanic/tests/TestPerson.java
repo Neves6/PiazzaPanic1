@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
-public class PersonTests {
+public class TestPerson {
     @Test
     public void testPersonConstructorValid(){
         int x = 20;

@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
-public class AssetTests {
+public class TestAsset {
 
     @Test
     public void testControlAssetExists() {
