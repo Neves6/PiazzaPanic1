@@ -9,7 +9,6 @@ buildscript {
         google()
     }
     dependencies {
-        
 
     }
 }
@@ -44,6 +43,17 @@ allprojects {
     }
 }
 
+processResources {
+    from sourceSets.main.java.srcDirs
+    exclude '**/*.java'
+}
+
+processResources {
+    from sourceSets.main.java.srcDirs
+    exclude '**/*.java'
+}
+
+
 project(":desktop") {
     apply plugin: "java-library"
 
@@ -53,6 +63,11 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         
+    }
+
+    processResources {
+        from sourceSets.main.java.srcDirs
+        exclude '**/*.java'
     }
 }
 
@@ -65,15 +80,15 @@ project(":tests") {
 
         implementation project(":core")
 
-        implementation "junit:junit:4.+"
         implementation "org.mockito:mockito-core:5.1.1"
 
         implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "org.junit.vintage:junit-vintage-engine:5.6.2"
 
-        testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-        testImplementation 'junit:junit:4.+'
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
         testImplementation "org.mockito:mockito-core:5.1.1"
+        testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
 
         testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -83,26 +98,28 @@ project(":tests") {
     }
 
     test {
-        useJUnit()
+        useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
 
-    jacocoTestReport {
-        dependsOn test // tests are required to run before generating the report
 
-
-        jacocoTestReport {
-            reports {
-                xml.required = false
-                csv.required = false
-                html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-            }
-        }
+    processTestResources {
+        from sourceSets.test.java.srcDirs
+        exclude '**/*.java'
     }
+}
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('jacococoverage')
+}
 
-    jacoco {
-        toolVersion = "0.8.8"
-        reportsDirectory = layout.buildDirectory.dir('jacococoverage')
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
 
@@ -114,5 +131,10 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    }
+
+    processResources {
+        from sourceSets.main.java.srcDirs
+        exclude '**/*.java'
     }
 }
