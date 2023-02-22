@@ -38,7 +38,7 @@ jobs:
       - name: Run JUnit Tests
         run: ./gradlew :tests:test
       - name: Desktop Jar generation
-        run: ./gradlew :desktop:dist
+        run: ./gradlew :desktop:dist --stack-trace
       - name: Upload Desktop jar
         uses: actions/upload-artifact@v3.1.1
         with:
