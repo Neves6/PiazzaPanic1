@@ -20,6 +20,7 @@ plugins {
 
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: "jacoco"
 
     version = '1.0'
     ext {
@@ -40,6 +41,16 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
+    }
+
+    jacocoTestReport {
+        dependsOn test // tests are required to run before generating the report
+
+        reports {
+            xml.required = false
+            csv.required = false
+            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        }
     }
 }
 
@@ -74,6 +85,7 @@ project(":desktop") {
 
 project(":tests") {
     apply plugin: "java"
+    apply plugin: "jacoco"
 
     sourceSets.test.java.srcDirs = ["src"]
 
@@ -108,21 +120,13 @@ project(":tests") {
         from sourceSets.test.java.srcDirs
         exclude '**/*.java'
     }
-}
-jacoco {
-    toolVersion = "0.8.8"
-    reportsDirectory = layout.buildDirectory.dir('jacococoverage')
-}
 
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
-
-    reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    jacoco {
+        toolVersion = "0.8.8"
+        reportsDirectory = layout.buildDirectory.dir('jacococoverage')
     }
 }
+
 
 project(":core") {
     apply plugin: "java-library"
@@ -138,4 +142,17 @@ project(":core") {
         from sourceSets.main.java.srcDirs
         exclude '**/*.java'
     }
+
+    jacocoTestReport {
+        dependsOn test // tests are required to run before generating the report
+
+        reports {
+            xml.required = false
+            csv.required = false
+            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        }
+    }
 }
+
+
+
