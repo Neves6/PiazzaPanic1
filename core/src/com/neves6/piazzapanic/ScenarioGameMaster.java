@@ -145,8 +145,10 @@ class ScenarioGameMaster extends GameMaster {
         if (chefs.get(chefno).getIsStickied()) {
             return false;
         }
-        if ((chefno == 0 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y) || (chefno == 1 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y)) {
-            return false;
+        for (int i = 0; i < chefs.size(); i++){
+            if (i != chefno && chefs.get(i).getxCoord() == x && chefs.get(i).getyCoord() == y){
+                return false;
+            }
         }
         int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();
         return tempCellTileID != 37 && tempCellTileID != 39;
@@ -158,10 +160,10 @@ class ScenarioGameMaster extends GameMaster {
      */
     public String generateHoldingsText() {
         String comp = "";
-        comp += "Chef 1 is holding:\n";
-        comp += chefs.get(0).getInventory().toString();
-        comp += "\nChef 2 is holding:\n";
-        comp += chefs.get(1).getInventory().toString();
+        for (int i = 0; i < chefs.size(); i++) {
+            comp += "Chef " + (i+1) +" is holding:\n";
+            comp += chefs.get(i).getInventory().toString() + "\n";
+        }
         return comp;
     }
 
