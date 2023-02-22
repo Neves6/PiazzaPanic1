@@ -51,12 +51,38 @@ project(":desktop") {
     }
 }
 
+project(":tests") {
+    apply plugin: "java"
+
+    sourceSets.main.java.srcDirs = ["src/"]
+
+    dependencies {
+
+        implementation project(":core")
+
+        implementation "junit:junit:4.+"
+        implementation "org.mockito:mockito-core:5.1.1"
+
+        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        testImplementation 'junit:junit:4.+'
+        testImplementation "org.mockito:mockito-core:5.1.1"
+
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    }
+}
+
 project(":core") {
     apply plugin: "java-library"
 
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }

@@ -58,7 +58,7 @@ public class SettingsScreen extends ScreenAdapter {
         buttonStyle.down = skin.getDrawable("black_alpha_mid");
         buttonStyle.checked = skin.getDrawable("black_alpha_mid");
 
-        fullscreenButton = new TextButton("Toggle Fullscreen", buttonStyle);
+        fullscreenButton = new TextButton("Toggle Screen: " + settings.get(0), buttonStyle);
         fullscreenButton.setPosition(Gdx.graphics.getWidth()/2f - fullscreenButton.getWidth()/2, Gdx.graphics.getHeight()/2f + fullscreenButton.getHeight()/2);
         fullscreenButton.addListener(new ChangeListener() {
             @Override
