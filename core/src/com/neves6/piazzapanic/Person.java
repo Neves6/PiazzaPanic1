@@ -31,12 +31,23 @@ public class Person {
     public int getyCoord() {
         return yCoord;
     }
+
+    public String getName(){ return name; }
     public void setxCoord(int xCoord){
-        this.xCoord = xCoord;
+        if (xCoord > -1) {
+            this.xCoord = xCoord;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void setyCoord(int yCoord){
-        this.xCoord = yCoord;
+        if (yCoord > -1) {
+            this.yCoord = yCoord;
+        } else {
+            throw new IllegalArgumentException();
+        }
+
     }
     public void alterxCoord(int xDelta){
         this.xCoord += xDelta;

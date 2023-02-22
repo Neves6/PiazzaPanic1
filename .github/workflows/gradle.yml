@@ -16,8 +16,11 @@ on:
     branches: main
 
 jobs:
-  build:
-    runs-on: windows-latest
+ build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
