@@ -36,7 +36,7 @@ jobs:
         with:
           arguments: build
       - name: Run JUnit Tests
-        run: ./gradlew :tests:test --stack-trace
+        run: ./gradlew :tests:test
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
       - name: Upload Desktop jar
