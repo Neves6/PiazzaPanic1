@@ -1,19 +1,13 @@
-import os
+from datetime import date
 
-env_file = os.getenv('GITHUB_ENV')
+base_date = date(2023, 3, 2)
+today_date = date.today()
 
-file = open(".github/workflows/releaseNumber.txt")
-number = file.read()
-file.close()
-
-dotIndex = number.rfind(".") + 1
-newNo = int(number[dotIndex:]) + 1
-
-with open(".github/workflows/releaseNumber.txt", "w+") as file:
-    file.write(format(number[:dotIndex] + str(newNo)))
+delta = today_date - base_date
+releaseNo = delta.days // 7 + 1
 
 
 with open(env_file, "a") as myfile:
-    myfile.write("STABLE_NAME={}".format(number[:dotIndex] + str(newNo)))
+    myfile.write("STABLE_NAME={{Stable/v1.1.{}}}".format(releaseNo))
 
 

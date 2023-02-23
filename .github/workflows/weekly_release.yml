@@ -36,16 +36,11 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-           automatic_release_tag: "Stable"
+           automatic_release_tag: "${{ env.STABLE_NAME }}"
            prerelease: true
            title: "Weekly Builds - ${{ env.STABLE_NAME }}"
            files: |
              desktop/build/libs/desktop-1.0.jar
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "Version tracker ${{ env.STABLE_NAME }}"
-          branch: CI
-          token: "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"
   
   
   
