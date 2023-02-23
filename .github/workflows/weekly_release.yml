@@ -20,16 +20,24 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Get Release Name
+        run: |
+          INPUT_STORE=$(python3 test.py)
+          echo $INPUT_STORE
       - uses: peterjgrainger/action-create-branch@v2.2.0
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-         branch: 'release-notes'
+         branch: echo $INPUT_STORE
          sha: '${{ github.event.pull_request.head.sha }}'
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-           automatic_release_tag: "latest"
+           automatic_release_tag: "Stable"
            prerelease: true
            title: "Development Build"
            files: |
