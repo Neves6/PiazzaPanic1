@@ -35,10 +35,10 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-    jacoco:
-     needs: build-test
-     runs-on: ubuntu-latest
-     steps:
+  jacoco:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
         - name: Clean directory for correct structure of test compilation for Jacoco Test
           run: bash tools/moveFolder.sh
         - name: Generate Jacoco Test
@@ -48,10 +48,10 @@ jobs:
           with:
             name: jacoco_report
             path: tests/build/jacocoHtml
-     jar:
-       runs-on: ubuntu-latest
-       needs: build-test
-       steps:
+    jar:
+      runs-on: ubuntu-latest
+      needs: build-test
+      steps:
         - name: Desktop Jar generation
           run: ./gradlew :desktop:dist
         - name: Upload Desktop jar
@@ -59,10 +59,10 @@ jobs:
           with:
             name: desktop_${{ matrix.os }}.jar
             path: desktop/build/libs/desktop-1.0.jar
-     checkstyle:
-        runs-on: ubuntu-latest
-        needs: jacoco
-        steps:
+    checkstyle:
+      runs-on: ubuntu-latest
+      needs: jacoco
+      steps:
           - name: Upload Core Checkstyle Report
             uses: actions/upload-artifact@v3.1.1
             with:
