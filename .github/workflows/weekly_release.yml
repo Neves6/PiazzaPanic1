@@ -1,9 +1,7 @@
-name: Deploy Weekly
+name: Weekly Build
 on:
-  push:
-    branches: main
-  pull_request:
-    branches: main
+  schedule:
+    - cron 45 22 * * 4
 
 jobs:
   release-weekly:
