@@ -31,7 +31,7 @@ jobs:
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-         branch: "${{ steps.name.output }}"
+         branch: "$ {{BRANCH_NAME}}"
          sha: '${{ github.event.pull_request.head.sha }}'
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
