@@ -35,8 +35,20 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+      - steps:
+          - uses: actions/checkout@master
+          - name: copy file
+            uses: canastro/copy-file-action@master
+            with:
+              source: "core/build/classes/java/main"
+              target: "test/build/classes/java/main"
       - name: Run JUnit Tests
         run: ./gradlew :tests:test
+      - name: Upload Jacoco Report
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: jacoco_${{ matrix.os }}
+          path: tests/build/jacocoHtml
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
       - name: Upload Desktop jar
@@ -44,3 +56,4 @@ jobs:
         with:
           name: desktop_${{ matrix.os }}.jar
           path: desktop/build/libs/desktop-1.0.jar
+
