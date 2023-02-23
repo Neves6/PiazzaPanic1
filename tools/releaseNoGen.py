@@ -1,4 +1,4 @@
-file = open("../.github/workflows/releaseNumber.txt")
+file = open(".github/workflows/releaseNumber.txt")
 number = file.read()
 
 dotIndex = number.rfind(".") + 1
