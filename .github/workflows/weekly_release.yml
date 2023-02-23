@@ -16,7 +16,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           architecture: 'x64'
-      - run: env
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Desktop Jar generation
@@ -44,8 +43,6 @@ jobs:
              desktop/build/libs/desktop-1.0.jar
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           commit_message: "Version tracker ${{ env.STABLE_NAME }}"
           branch: CI
           token: "${{ secrets.GITHUB_TOKEN }}"
