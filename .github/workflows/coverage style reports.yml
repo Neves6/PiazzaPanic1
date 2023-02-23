@@ -33,6 +33,7 @@ jobs:
         with:
           arguments: build
  jacoco:
+     runs-on: ubuntu-latest
      steps:
         - name: Clean directory for correct structure of test compilation for Jacoco Test
           run: bash tools/moveFolder.sh
@@ -46,6 +47,7 @@ jobs:
             name: jacoco report
             path: tests/build/jacocoHtml
  desktop-jar:
+     runs-on: ubuntu-latest
      steps:
         - name: Desktop Jar generation
           run: ./gradlew :desktop:dist
