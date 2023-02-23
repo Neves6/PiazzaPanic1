@@ -40,7 +40,7 @@ jobs:
       - name: Clean directory for correct structure of test compilation for Jacoco Test
         run: bash tools/moveFolder.sh
       - name: Generate Jacoco Test
-        run: ./gradlew
+        run: ./gradlew :tests:jacocoTestReport
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
