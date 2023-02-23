@@ -9,7 +9,7 @@ file.close()
 dotIndex = number.rfind(".") + 1
 newNo = int(number[dotIndex:]) + 1
 
-with open(".github/workflows/releaseNumber.txt") as file:
+with open(".github/workflows/releaseNumber.txt", "w+") as file:
     file.write(format(number[:dotIndex] + str(newNo)))
 
 
