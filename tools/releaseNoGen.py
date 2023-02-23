@@ -10,6 +10,6 @@ releaseNo = delta.days // 7 + 1
 
 
 with open(env_file, "a") as myfile:
-    myfile.write("STABLE_NAME={{Stable/v1.1.{}}}".format(releaseNo)))
+    myfile.write("STABLE_NAME={{Stable/v1.1.{}}}".format(releaseNo))
 
 
