@@ -35,13 +35,11 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-      - steps:
-          - uses: actions/checkout@master
-          - name: copy file
-            uses: canastro/copy-file-action@master
-            with:
-              source: "core/build/classes/java/main"
-              target: "test/build/classes/java/main"
+      - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "core/build/classes/java/main"
+          target: "test/build/classes/java/main"
       - name: Run JUnit Tests
         run: ./gradlew :tests:test
       - name: Upload Jacoco Report
