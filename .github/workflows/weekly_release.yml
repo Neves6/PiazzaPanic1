@@ -24,9 +24,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - name: Get Release Name
         env:
           BRANCH_NAME:
-            python3 "tools/releaseNoGen.py"
+            runs: python3 "tools/releaseNoGen.py"
       - uses: peterjgrainger/action-create-branch@v2.2.0
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
