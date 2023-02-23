@@ -45,8 +45,7 @@ jobs:
         with:
           commit_message: "Version tracker ${{ env.STABLE_NAME }}"
           branch: CI
-          token: "${{ secrets.GITHUB_TOKEN }}"
-          push_options: --force
+          token: "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"
   
   
   
