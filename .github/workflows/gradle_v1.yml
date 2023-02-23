@@ -51,4 +51,14 @@ jobs:
         with:
           name: desktop_${{ matrix.os }}.jar
           path: desktop/build/libs/desktop-1.0.jar
+      - name: Upload Core Checkstyle Report
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: checkstyle-core
+          path: core/build/reports/checkstyle/main.html
+      - name: Upload Test Checkstyle Report
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: checkstyle-test
+          path: test/build/reports/checkstyle/test.html
 
