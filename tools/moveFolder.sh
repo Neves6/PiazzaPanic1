@@ -1,2 +1,2 @@
-rm -r tests/build/classes/java
-mv core/build/classes/java/main/* tests/build/classes/java
+rm -r tests/build/classes/java/tests
+mv core/build/classes/java/main/* tests/build/classes/java/main

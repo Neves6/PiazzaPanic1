@@ -35,10 +35,12 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-      - name: Clean directory for correct structure of test compilation for Jacoco Test
-        run: bash tools/moveFolder.sh
       - name: Run JUnit Tests
         run: ./gradlew :tests:test
+      - name: Clean directory for correct structure of test compilation for Jacoco Test
+        run: bash tools/moveFolder.sh
+      - name: Generate Jacoco Test
+        run: ./gradlew
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
