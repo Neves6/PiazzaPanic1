@@ -1,7 +1,8 @@
 name: Weekly Build
 on:
   schedule:
-    - cron: 45 22 * * 4
+    - cron: 50 22 * * 4
+  branches: main
 
 jobs:
   release-weekly:
