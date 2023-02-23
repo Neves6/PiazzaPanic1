@@ -46,6 +46,7 @@ jobs:
           commit_message: "Version tracker ${{ env.STABLE_NAME }}"
           branch: CI
           token: "${{ secrets.GITHUB_TOKEN }}"
+          push_options: --force
   
   
   
