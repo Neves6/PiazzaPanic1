@@ -36,7 +36,7 @@ jobs:
         with:
           arguments: build
       - name: Clean directory for correct structure of test compilation for Jacoco Test
-        run: bash moveFolder.sh
+        run: bash tools/moveFolder.sh
       - name: Run JUnit Tests
         run: ./gradlew :tests:test
       - name: Upload Jacoco Report
