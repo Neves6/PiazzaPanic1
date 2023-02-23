@@ -38,7 +38,7 @@ jobs:
            repo_token: "${{ secrets.GITHUB_TOKEN }}"
            automatic_release_tag: "Stable"
            prerelease: true
-           title: "Development Build"
+           title: "Weekly Builds - ${{ env.STABLE_NAME }}"
            files: |
              desktop/build/libs/desktop-1.0.jar
   
