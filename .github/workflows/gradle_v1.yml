@@ -15,8 +15,8 @@ on:
   pull_request:
     branches: main
 
-jobs:
- build-test:
+
+build-test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -35,7 +35,7 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-  jacoco:
+jacoco:
     needs: build-test
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
           with:
             name: jacoco_report
             path: tests/build/jacocoHtml
-    jar:
+jar:
       runs-on: ubuntu-latest
       needs: build-test
       steps:
@@ -59,7 +59,7 @@ jobs:
           with:
             name: desktop_${{ matrix.os }}.jar
             path: desktop/build/libs/desktop-1.0.jar
-    checkstyle:
+checkstyle:
       runs-on: ubuntu-latest
       needs: jacoco
       steps:
