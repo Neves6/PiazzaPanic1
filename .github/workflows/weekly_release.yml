@@ -43,6 +43,8 @@ jobs:
            files: |
              desktop/build/libs/desktop-1.0.jar
       - uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         with:
           commit_message: "Version tracker ${{ env.STABLE_NAME }}"
           branch: CI
