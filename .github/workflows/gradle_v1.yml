@@ -15,7 +15,7 @@ on:
   pull_request:
     branches: main
 
-stages:
+jobs:
   build-test:
     runs-on: ${{ matrix.os }}
     strategy:
