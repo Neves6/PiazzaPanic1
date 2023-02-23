@@ -25,9 +25,9 @@ jobs:
         with:
           python-version: '3.10'
       - name: Get Release Name
-        run: |
-          INPUT_STORE=$(python3 "tools/releaseNoGen.py")
-          echo $INPUT_STORE
+        env:
+          BRANCH_NAME:
+            run: python3 "tools/releaseNoGen.py"
       - uses: peterjgrainger/action-create-branch@v2.2.0
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
