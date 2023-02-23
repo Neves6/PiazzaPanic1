@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Java CI (Gradle, Temurin, JDK 11)
+name: Coverage and Style Upload (Gradle, Temurin, JDK 11)
 
 on:
   push:
@@ -17,10 +17,7 @@ on:
 
 jobs:
  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -35,8 +32,6 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-      - name: Run JUnit Tests
-        run: ./gradlew :tests:test
       - name: Clean directory for correct structure of test compilation for Jacoco Test
         run: bash tools/moveFolder.sh
       - name: Generate Jacoco Test
@@ -44,13 +39,13 @@ jobs:
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: jacoco_${{ matrix.os }}
+          name: jacoco report
           path: tests/build/jacocoHtml
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
       - name: Upload Desktop jar
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: desktop_${{ matrix.os }}.jar
+          name: desktop.jar
           path: desktop/build/libs/desktop-1.0.jar
 
