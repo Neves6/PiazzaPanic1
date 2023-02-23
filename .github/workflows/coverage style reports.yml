@@ -16,7 +16,7 @@ on:
     branches: main
 
 jobs:
- build:
+ setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,15 +32,19 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+ jacoco:
       - name: Clean directory for correct structure of test compilation for Jacoco Test
         run: bash tools/moveFolder.sh
       - name: Generate Jacoco Test
         run: ./gradlew :tests:jacocoTestReport
+      - name: Remove jacoco report for test classes
+        run: bash rm -r tests\build\jacocoHtml\com.neves6.piazzapanic.tests
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
           name: jacoco report
           path: tests/build/jacocoHtml
+ desktop-jar:
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
       - name: Upload Desktop jar
