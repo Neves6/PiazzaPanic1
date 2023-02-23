@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Java CI - Artifacts (Gradle, Temurin, JDK 11)
+name: Java CI (Gradle, Temurin, JDK 11)
 
 on:
   push:
@@ -16,8 +16,8 @@ on:
     branches: main
 
 jobs:
-  build:
-    runs-on = ubuntu-latest
+ build:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -39,7 +39,7 @@ jobs:
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: jacoco_report
+          name: jacoco_${{ matrix.os }}
           path: tests/build/jacocoHtml
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
@@ -48,14 +48,6 @@ jobs:
         with:
           name: desktop_${{ matrix.os }}.jar
           path: desktop/build/libs/desktop-1.0.jar
-      - name: Upload Core Checkstyle Report
-        uses: actions/upload-artifact@v3.1.1
-        with:
-           name: checkstyle-core
-           path: core/build/reports/checkstyle/main.html
-      - name: Upload Test Checkstyle Report
-        uses: actions/upload-artifact@v3.1.1
-        with:
-           name: checkstyle-test
-           path: tests/build/reports/checkstyle/test.html
+
+
 
