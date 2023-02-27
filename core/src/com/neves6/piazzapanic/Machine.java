@@ -72,9 +72,11 @@ public class Machine {
     public boolean getActive(){
         return active;
     }
+
     public float getProcessingTime(){
         return processingTime;
     }
 
+    // Use this for auto cook and shorter cook.
     public void changeProcessingTime(float newTime){this.processingTime = newTime;}
 }

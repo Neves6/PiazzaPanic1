@@ -29,4 +29,8 @@ public class BasePowerUp {
     public Boolean getAquiredStatus() {
         return this.aquired;
     }
+
+    public void aquirePowerUp() {
+        this.aquired =true;
     }
+}
