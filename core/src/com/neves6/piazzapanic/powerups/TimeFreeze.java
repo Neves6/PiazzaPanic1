@@ -8,7 +8,7 @@ public class TimeFreeze extends BasePowerUp{
     public float getDelta(float delta){
         if (getAquiredStatus()){
             if (endTime() == false){
-                setTimeOfActivation();
+                setStartTime();
                 return 0;
             }
         }

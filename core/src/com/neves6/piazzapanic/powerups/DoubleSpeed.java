@@ -14,7 +14,7 @@ public class DoubleSpeed extends BasePowerUp{
         if (chefs.size() < 1){
             throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
         }
-        setTimeOfActivation();
+        setStartTime();
         for (Chef chef : chefs) {
             chef.alterSpeed(2);
         }
