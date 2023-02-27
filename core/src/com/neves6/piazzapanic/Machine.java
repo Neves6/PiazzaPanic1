@@ -8,7 +8,7 @@ public class Machine {
     private final String type;
     private final String input;
     private final String output;
-    private final float processingTime;
+    private float processingTime;
     private final Boolean sticky;
     private Boolean active;
     private float runtime;
@@ -75,4 +75,6 @@ public class Machine {
     public float getProcessingTime(){
         return processingTime;
     }
+
+    public void changeProcessingTime(float newTime){this.processingTime = newTime;}
 }

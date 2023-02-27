@@ -27,6 +27,7 @@ class ScenarioGameMaster extends GameMaster {
     float soundVolume;
     ArrayList<String> settings;
 
+
     /**
      * ScenarioGameMaster constructor.
      * @param game PiazzaPanicGame instance.
@@ -224,13 +225,16 @@ class ScenarioGameMaster extends GameMaster {
      * @param delta time since last frame.
      */
     public void tickUpdate(float delta) {
+        //TODO: Use increment variable to handle powerup -
+        // just use get delta everytime.
+        float increment = delta;
         for (Machine machine : machines) {
             if (machine.getActive()) {
                 machine.incrementRuntime(delta);
                 machine.attemptGetOutput();
             }
         }
-        totalTimer += delta;
+        totalTimer += increment;
     }
 
     /**
