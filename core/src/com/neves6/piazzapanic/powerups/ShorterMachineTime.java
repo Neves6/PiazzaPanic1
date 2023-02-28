@@ -5,7 +5,7 @@ import com.neves6.piazzapanic.Machine;
 import java.util.ArrayList;
 
 public class ShorterMachineTime extends BasePowerUp{
-    public ShorterMachineTime(String name, Long effectTime) {
+    public ShorterMachineTime(Long effectTime) {
         super(effectTime);
     }
 
