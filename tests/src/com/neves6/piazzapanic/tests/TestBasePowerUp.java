@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.neves6.piazzapanic.powerups.BasePowerUp;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class TestBasePowerUp {
-    BasePowerUp testPowerUp = new BasePowerUp(5000L);
+    BasePowerUp testPowerUp = new BasePowerUp(1L);
     @Test
     public void testConstructorI(){
         assertTrue(testPowerUp.getAquiredStatus() == false);
@@ -21,7 +24,7 @@ public class TestBasePowerUp {
 
     @Test
     public void testConstructorIII(){
-        assertTrue(testPowerUp.getEffectTime() == 5000L);
+        assertTrue(testPowerUp.getEffectTime() == 1L);
     }
 
     @Test
@@ -34,9 +37,16 @@ public class TestBasePowerUp {
     @Test
     public void validActivation(){
         testPowerUp.aquirePowerUp();
-        Long timeSet = System.currentTimeMillis();
         testPowerUp.setStartTime();
-        assertTrue(testPowerUp.getStartTime() > timeSet);
+        assertTrue(testPowerUp.getStartTime() != 0L);
+    }
+
+    @Test
+    public void validEndTime() throws InterruptedException {
+        testPowerUp.aquirePowerUp();
+        testPowerUp.setStartTime();
+        TimeUnit.MILLISECONDS.sleep(1);
+        assertTrue(testPowerUp.endTime() == true);
     }
 
     BasePowerUp testPowerUpII = new BasePowerUp(5000L);
@@ -45,6 +55,5 @@ public class TestBasePowerUp {
     public void invalidEndTime(){
         assertTrue(testPowerUpII.endTime() == false);
     }
-
 }
 

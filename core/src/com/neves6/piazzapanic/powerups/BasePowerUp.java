@@ -18,7 +18,7 @@ public class BasePowerUp {
     }
 
     public Boolean endTime() {
-        if (System.currentTimeMillis() - this.startTime > effectTime) {
+        if (System.currentTimeMillis() - this.startTime > effectTime && this.startTime != 0L) {
             this.aquired = false;
             return true;
         } else {
