@@ -5,13 +5,15 @@ public class TimeFreeze extends BasePowerUp{
         super(effectTime);
     }
 
-    public float getDelta(float delta){
-        if (getAquiredStatus()){
-            if (endTime() == false){
+    public float getDelta(float delta) {
+        if (getAquiredStatus()) {
+            if (endTime() == false) {
                 setStartTime();
                 return 0;
             }
         }
         return delta;
     }
+
 }
+
