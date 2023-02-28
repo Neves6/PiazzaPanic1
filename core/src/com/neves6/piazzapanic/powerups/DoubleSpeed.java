@@ -14,9 +14,11 @@ public class DoubleSpeed extends BasePowerUp{
         if (chefs.size() < 1){
             throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
         }
-        setStartTime();
-        for (Chef chef : chefs) {
-            chef.alterSpeed(2);
+        if (this.aquired) {
+            setStartTime();
+            for (Chef chef : chefs) {
+                chef.alterSpeed(2);
+            }
         }
         return chefs;
     }
@@ -25,7 +27,7 @@ public class DoubleSpeed extends BasePowerUp{
         if (chefs.size() < 1){
             throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
         }
-        if (endTime()){
+        if (this.aquired && endTime()) {
             for (Chef chef : chefs) {
                 chef.alterSpeed(1);
             }

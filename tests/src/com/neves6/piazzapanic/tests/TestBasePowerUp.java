@@ -45,7 +45,7 @@ public class TestBasePowerUp {
     public void validEndTime() throws InterruptedException {
         testPowerUp.aquirePowerUp();
         testPowerUp.setStartTime();
-        TimeUnit.MILLISECONDS.sleep(1);
+        TimeUnit.MILLISECONDS.sleep(5);
         assertTrue(testPowerUp.endTime() == true);
     }
 

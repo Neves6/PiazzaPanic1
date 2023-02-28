@@ -63,6 +63,10 @@ public class Person {
         this.deltaMultiplier = newMultipler;
     }
 
+    public int getSpeed(){
+        return this.deltaMultiplier;
+    }
+
 
 }
 
