@@ -1,6 +1,5 @@
 package com.neves6.piazzapanic.tests;
 
-import com.neves6.piazzapanic.Chef;
 import com.neves6.piazzapanic.Machine;
 import com.neves6.piazzapanic.powerups.ShorterMachineTime;
 import org.junit.Test;
@@ -14,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(GdxTestRunner.class)
 public class ShorterMachineTimeTests {
     ShorterMachineTime testMachineTime = new ShorterMachineTime(1L);
+
     @Test
     public void testConstructor(){
         assertTrue(testMachineTime.getEffectTime() == 1L);
