@@ -1,7 +1,6 @@
 package com.neves6.piazzapanic.tests;
 
 import com.neves6.piazzapanic.Chef;
-import com.neves6.piazzapanic.Person;
 import com.neves6.piazzapanic.Machine;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,19 +9,35 @@ import java.util.Stack;
 
 import static org.junit.Assert.assertTrue;
 
-//import static org.junit.api.Assertions.*;
 @RunWith(GdxTestRunner.class)
 public class MachineTest {
 
     @Test
-    void testProcess() {
+    public void testProcess() {
         //test chef inventory and if sticky
-        Stack<String> inventory = new Stack<String>();
+        Stack<String> inventory = new Stack<>();
         Chef testChef = new Chef("Xavier", 0, 0, 5,5,5,false,inventory,1);
-        Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 5, true);
+        Machine testMachine = new Machine("Grill", "", "Cooked Patty", 0, true);
         testMachine.process(testChef);
-        //assertTrue(testChef.getInventory().pop() =="Cooked Patty");
-        assertTrue(testChef.getIsStickied()==true);
+
+        Stack<String> inventory2 = new Stack<>();
+        inventory2.push("Burger");
+        inventory2.push("Lettuce");
+        Chef testChef2 = new Chef("Bill", 0, 0, 5,5,5,false,inventory2,1);
+        Machine testMachine2 = new Machine("Board", "Lettuce", "Chopped Lettuce", 0, true);
+        testMachine2.process(testChef2);
+        assertTrue(testChef.getInventory().peek() == "Cooked Patty" && testChef2.getIsStickied() == true && testChef2.getInventory().peek() == "Burger");
+    }
+
+    @Test
+    public void testAttemptGetOutput() {
+        Stack<String> inventory = new Stack<>();
+        inventory.push("Patty");
+        Chef testChef = new Chef("Xavier", 0, 0, 5,5,5,false,inventory,1);
+        Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 0, true);
+        testMachine.process(testChef);
+        testMachine.attemptGetOutput();
+        assertTrue(testChef.getInventory().peek() == "Cooked Patty" && testChef.getIsStickied() == false);
     }
 
     @Test
@@ -31,6 +46,6 @@ public class MachineTest {
         float delta = 5;
         Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 5, true);
         testMachine.incrementRuntime(delta);
-        assertTrue("Runtime", testMachine.getRuntime()==5);
+        assertTrue(testMachine.getRuntime()==5);
     }
 }
