@@ -11,6 +11,8 @@ public class Person {
     private final String name;
     private int xCoord;
     private int yCoord;
+    // For powerups.
+    private int deltaMultiplier;
 
     /**
      * Person constructor.
@@ -22,6 +24,7 @@ public class Person {
         this.name = name;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
+        this.deltaMultiplier = 1;
     }
 
     public int getxCoord() {
@@ -50,11 +53,20 @@ public class Person {
 
     }
     public void alterxCoord(int xDelta){
-        this.xCoord += xDelta;
+        this.xCoord += xDelta * deltaMultiplier;
     }
     public void alteryCoord(int yDelta){
-        this.yCoord += yDelta;
+        this.yCoord += yDelta * deltaMultiplier;
     }
+    //TODO: Power-ups.
+    public void alterSpeed(int newMultipler){
+        this.deltaMultiplier = newMultipler;
+    }
+
+    public int getSpeed(){
+        return this.deltaMultiplier;
+    }
+
 
 }
 
