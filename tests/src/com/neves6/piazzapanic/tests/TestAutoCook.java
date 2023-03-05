@@ -2,6 +2,7 @@ package com.neves6.piazzapanic.tests;
 
 import com.neves6.piazzapanic.Chef;
 import com.neves6.piazzapanic.Machine;
+import com.neves6.piazzapanic.Money;
 import com.neves6.piazzapanic.powerups.AutoCook;
 import org.junit.Test;
 import org.junit.runner.RunWith;

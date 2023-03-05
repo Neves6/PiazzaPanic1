@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 class ScenarioGameMaster extends GameMaster {
@@ -26,16 +27,20 @@ class ScenarioGameMaster extends GameMaster {
     Sound trash;
     float soundVolume;
     ArrayList<String> settings;
+    Money machineUnlockBalance;
 
 
     /**
      * ScenarioGameMaster constructor.
-     * @param game PiazzaPanicGame instance.
-     * @param map TiledMap instance.
-     * @param chefno Number of chefs.
-     * @param custno Number of customers.
+     *
+     * @param game                 PiazzaPanicGame instance.
+     * @param map                  TiledMap instance.
+     * @param chefno               Number of chefs.
+     * @param custno               Number of customers.
+     * @param machineUnlockBalance
      */
-    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno) {
+    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno, Money machineUnlockBalance) {
+        this.machineUnlockBalance = machineUnlockBalance;
         this.game = game;
         settings = Utility.getSettings();
         this.map = map;
@@ -62,12 +67,16 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
         machines.add(new Machine("forming1", "meat", "patty", 3, true));
         machines.add(new Machine("forming2", "meat", "patty", 3, true));
+
+
+        machineUnlockBalance.addGroup("chopping", 50);
+
         machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true, "chopping"));
         machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true, "chopping"));
         machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
-        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true, "chopping"));
         // disposal and tray/serving handled separately
 
         grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
@@ -88,6 +97,7 @@ class ScenarioGameMaster extends GameMaster {
                 soundVolume = 0f;
                 break;
         }
+
     }
 
     public void setSelectedChef(int selectedChef) {
@@ -274,63 +284,63 @@ class ScenarioGameMaster extends GameMaster {
         //System.out.println("Target: " + targetx + ", " + targety + "\nFacing: " + chef.getFacing());
         if (chef.getInventory().empty()) {
             if (targetx == 1 && targety == 10) {
-                machines.get(0).process(chef);
+                machines.get(0).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 2 && targety == 10) {
-                machines.get(1).process(chef);
+                machines.get(1).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 3 && targety == 10) {
-                machines.get(2).process(chef);
+                machines.get(2).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 4 && targety == 10) {
-                machines.get(3).process(chef);
+                machines.get(3).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 1 && targety == 8) {
-                machines.get(4).process(chef);
+                machines.get(4).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else { return; }
         }
         String invTop = chef.getInventory().peek();
         if (targetx == 6 && targety == 7) {
             if (invTop == "patty") {
-                machines.get(5).process(chef);
+                machines.get(5).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             } else if (invTop == "bun") {
-                machines.get(7).process(chef);
+                machines.get(7).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
         } else if (targetx == 7 && targety == 7) {
             if (invTop == "patty") {
-                machines.get(6).process(chef);
+                machines.get(6).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             } else if (invTop == "bun") {
-                machines.get(8).process(chef);
+                machines.get(8).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
         } else if (targetx == 9 && targety == 7) {
-            machines.get(9).process(chef);
+            machines.get(9).process(chef, machineUnlockBalance);
             forming.play(soundVolume);
         } else if (targetx == 10 && targety == 7) {
-            machines.get(10).process(chef);
+            machines.get(10).process(chef, machineUnlockBalance);
             forming.play(soundVolume);
         } else if (targetx == 11 && targety == 7) {
             if (invTop == "tomato") {
-                machines.get(11).process(chef);
+                machines.get(11).process(chef, machineUnlockBalance);
                 chopping.play(soundVolume);
             } else if (invTop == "lettuce") {
-                machines.get(13).process(chef);
+                machines.get(13).process(chef, machineUnlockBalance);
                 chopping.play(soundVolume);
             } else if (invTop == "onion") {
-                machines.get(15).process(chef);
+                machines.get(15).process(chef, machineUnlockBalance);
                 chopping.play(soundVolume);
             }
         } else if (targetx == 12 && targety == 7) {
             if (invTop == "tomato") {
-                machines.get(12).process(chef);
+                machines.get(12).process(chef, machineUnlockBalance);
             } else if (invTop == "lettuce") {
-                machines.get(14).process(chef);
+                machines.get(14).process(chef, machineUnlockBalance);
             } else if (invTop == "onion") {
-                machines.get(16).process(chef);
+                machines.get(16).process(chef, machineUnlockBalance);
             }
         } else if (targetx == 1 && targety == 5) {
             chef.removeTopFromInventory();
@@ -358,6 +368,7 @@ class ScenarioGameMaster extends GameMaster {
                 customers.remove(0);
                 tray.clear();
                 serving.play(soundVolume);
+                machineUnlockBalance.incrementBalance();
             }
         } else if (customers.get(0).getOrder() == "salad"){
             if (inv.peek() == "choppedtomato"){
@@ -374,6 +385,7 @@ class ScenarioGameMaster extends GameMaster {
                 customers.remove(0);
                 tray.clear();
                 serving.play(soundVolume);
+                machineUnlockBalance.incrementBalance();
             }
         }
         if (customers.size() == 0){
@@ -381,3 +393,4 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 }
+
