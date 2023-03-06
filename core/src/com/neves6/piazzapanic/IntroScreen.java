@@ -33,9 +33,9 @@ public class IntroScreen extends ScreenAdapter {
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         // Added to set screen size using settings from text file
         settings = Utility.getSettings();
-        if (settings.get(0).strip().equals("fullscreen")){
+        if (settings.get(0).trim().equals("fullscreen")){
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-        } else if (settings.get(0).strip().equals("windowed")) {
+        } else if (settings.get(0).trim().equals("windowed")) {
             Gdx.graphics.setWindowedMode(1280, 720);
         }
     }

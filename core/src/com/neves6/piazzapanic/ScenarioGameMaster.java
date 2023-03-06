@@ -7,6 +7,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.Arrays.asList;
 
 class ScenarioGameMaster extends GameMaster {
     PiazzaPanicGame game;
@@ -27,6 +30,7 @@ class ScenarioGameMaster extends GameMaster {
     Sound trash;
     float soundVolume;
     ArrayList<String> settings;
+    ArrayList<String> recipes = new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
 
     /**
      * ScenarioGameMaster constructor.
@@ -44,11 +48,8 @@ class ScenarioGameMaster extends GameMaster {
             chefs.add(new Chef("Chef", 6+i, 5, 1, 1, 1, false, new Stack<String>(), i+1));
         }
         for (int i = 0; i < custno; i++) {
-            if (i % 2 == 0) {
-                customers.add(new Customer("Customer"+i+1, -1, -1, "salad"));
-            } else {
-                customers.add(new Customer("Customer"+i+1, -1, -1, "hamburger"));
-            }
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 4);
+            customers.add(new Customer("Customer" + (i+1), -1, -1, recipes.get(randomNum)));
         }
         totalTimer = 0f;
         //Assessment 1 (index 0-16)
@@ -69,7 +70,7 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("chopping-lettuce-2", "lettuce", "chopped lettuce", 3, true));
         machines.add(new Machine("chopping-onion-1", "onion", "chopped onion", 3, true));
         machines.add(new Machine("chopping-onion-2", "onion", "chopped onion", 3, true));
-        //Assessment 2 (index 17-)
+        //Assessment 2 (index 17-24)
         machines.add(new Machine("fridge-dough", "", "dough", 0, false));
         machines.add(new Machine("fridge-cheese", "", "cheese", 0, false));
         machines.add(new Machine("fridge-potato", "", "potato", 0, false));
@@ -88,7 +89,7 @@ class ScenarioGameMaster extends GameMaster {
         forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
         trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
 
-        switch (settings.get(1).strip()){
+        switch (settings.get(1).trim()){
             case "full":
                 soundVolume = 1f;
                 break;
