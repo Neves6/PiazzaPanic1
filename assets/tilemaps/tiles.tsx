@@ -142,7 +142,7 @@
  <tile id="46">
   <image width="32" height="32" source="tiles/wallouterbottomrightinnertopleft.png"/>
  </tile>
- <tile id="47">
+ <tile id="48">
   <image width="32" height="32" source="tiles/walloutertopleftinnerbottom.png"/>
  </tile>
 </tileset>
