@@ -15,7 +15,8 @@ class ScenarioGameMaster extends GameMaster {
     ArrayList<Chef> chefs = new ArrayList<>();
     Stack<Customer> customers = new Stack<>();
     ArrayList<Machine> machines = new ArrayList<>();
-    ArrayList<String> tray = new ArrayList<>();
+    ArrayList<String> tray1 = new ArrayList<>();
+    ArrayList<String> tray2 = new ArrayList<>();
     int selectedChef;
     float totalTimer;
     Sound grill;
@@ -46,27 +47,38 @@ class ScenarioGameMaster extends GameMaster {
             if (i % 2 == 0) {
                 customers.add(new Customer("Customer"+i+1, -1, -1, "salad"));
             } else {
-                customers.add(new Customer("Customer"+i+1, -1, -1, "burger"));
+                customers.add(new Customer("Customer"+i+1, -1, -1, "hamburger"));
             }
         }
         totalTimer = 0f;
-        machines.add(new Machine("fridgemeat", "", "meat", 0, false));
-        machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
-        machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
-        machines.add(new Machine("fridgeonion", "", "onion", 0, false));
-        machines.add(new Machine("fridgebun", "", "bun", 0, false));
-        machines.add(new Machine("grill1patty", "patty", "burger", 3, true));
-        machines.add(new Machine("grill2patty", "patty", "burger", 3, true));
-        machines.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
-        machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
-        machines.add(new Machine("forming1", "meat", "patty", 3, true));
-        machines.add(new Machine("forming2", "meat", "patty", 3, true));
-        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
-        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+        //Assessment 1 (index 0-16)
+        machines.add(new Machine("fridge-meat", "", "meat", 0, false));
+        machines.add(new Machine("fridge-tomato", "", "tomato", 0, false));
+        machines.add(new Machine("fridge-lettuce", "", "lettuce", 0, false));
+        machines.add(new Machine("fridge-onion", "", "onion", 0, false));
+        machines.add(new Machine("fridge-bun", "", "bun", 0, false));
+        machines.add(new Machine("grill-patty-1", "patty", "burger", 3, true));
+        machines.add(new Machine("grill-patty-2", "patty", "burger", 3, true));
+        machines.add(new Machine("grill-bun-1", "bun", "toasted bun", 3, true));
+        machines.add(new Machine("grill-bun-2", "bun", "toasted bun", 3, true));
+        machines.add(new Machine("forming-1", "meat", "patty", 3, true));
+        machines.add(new Machine("forming-2", "meat", "patty", 3, true));
+        machines.add(new Machine("chopping-tomato-1", "tomato", "chopped tomato", 3, true));
+        machines.add(new Machine("chopping-tomato-2", "tomato", "chopped tomato", 3, true));
+        machines.add(new Machine("chopping-lettuce-1", "lettuce", "chopped lettuce", 3, true));
+        machines.add(new Machine("chopping-lettuce-2", "lettuce", "chopped lettuce", 3, true));
+        machines.add(new Machine("chopping-onion-1", "onion", "chopped onion", 3, true));
+        machines.add(new Machine("chopping-onion-2", "onion", "chopped onion", 3, true));
+        //Assessment 2 (index 17-)
+        machines.add(new Machine("fridge-dough", "", "dough", 0, false));
+        machines.add(new Machine("fridge-cheese", "", "cheese", 0, false));
+        machines.add(new Machine("fridge-potato", "", "potato", 0, false));
+        machines.add(new Machine("fridge-beans", "", "beans", 0, false));
+        machines.add(new Machine("oven-potato-1", "potato", "jacket", 3, true));
+        machines.add(new Machine("oven-potato-2", "potato", "jacket", 3, true));
+        machines.add(new Machine("oven-pizza-1", "raw pizza", "pizza", 3, true));
+        machines.add(new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true));
+
         // disposal and tray/serving handled separately
 
         grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
@@ -180,8 +192,10 @@ class ScenarioGameMaster extends GameMaster {
             comp += customers.get(0).getOrder();
 
         }
-        comp += "\nTray contents: ";
-        comp += tray.toString();
+        comp += "\nTray 1 contents: ";
+        comp += tray1.toString();
+        comp += "\nTray 2 contents: ";
+        comp += tray2.toString();
         return comp;
     }
 
@@ -212,7 +226,7 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
-    public int getCustomersRemining(){
+    public int getCustomersRemaining(){
         return customers.size();
     }
 
@@ -267,7 +281,7 @@ class ScenarioGameMaster extends GameMaster {
                 targety = chef.getyCoord();
                 break;
         }
-        //System.out.println("Target: " + targetx + ", " + targety + "\nFacing: " + chef.getFacing());
+        //Fridges
         if (chef.getInventory().empty()) {
             if (targetx == 1 && targety == 10) {
                 machines.get(0).process(chef);
@@ -284,8 +298,21 @@ class ScenarioGameMaster extends GameMaster {
             } else if (targetx == 1 && targety == 8) {
                 machines.get(4).process(chef);
                 fridge.play(soundVolume);
+            } else if (targetx == 4 && targety == 8) {
+                machines.get(17).process(chef);
+                fridge.play(soundVolume);
+            } else if (targetx == 5 && targety == 10) {
+                machines.get(18).process(chef);
+                fridge.play(soundVolume);
+            } else if (targetx == 6 && targety == 10) {
+                machines.get(19).process(chef);
+                fridge.play(soundVolume);
+            } else if (targetx == 7 && targety == 10) {
+                machines.get(20).process(chef);
+                fridge.play(soundVolume);
             } else { return; }
         }
+        //Work stations
         String invTop = chef.getInventory().peek();
         if (targetx == 6 && targety == 7) {
             if (invTop == "patty") {
@@ -328,50 +355,133 @@ class ScenarioGameMaster extends GameMaster {
             } else if (invTop == "onion") {
                 machines.get(16).process(chef);
             }
-        } else if (targetx == 1 && targety == 5) {
+        } else if (targetx == 14 && targety == 4) {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
         } else if (targetx == 8 && targety == 3) {
-            addToTray();
+            serveFood();
+        } else if (targetx == 2 && targety == 3) {
+            addToTray(1);
+        } else if (targetx == 3 && targety == 3) {
+            addToTray(2);
+        } else if (targetx == 14 && targety == 5) {
+            if (invTop == "potato") {
+                machines.get(21).process(chef);
+                grill.play(soundVolume);
+            }
+        } else if (targetx == 14 && targety == 6) {
+            if (invTop == "potato") {
+                machines.get(22).process(chef);
+                grill.play(soundVolume);
+            }
+        } else if (targetx == 1 && targety == 5) {
+            if (invTop == "raw pizza") {
+                machines.get(23).process(chef);
+                grill.play(soundVolume);
+            }
+        } else if (targetx == 1 && targety == 6) {
+            if (invTop == "raw pizza") {
+                machines.get(24).process(chef);
+                grill.play(soundVolume);
+            }
         }
     }
 
     /**
      * Adds the top item from the currently selected chef's inventory to the tray.
      */
-    private void addToTray() {
+    private void addToTray(int station) {
         Chef chef = chefs.get(selectedChef);
         Stack<String> inv = chef.getInventory();
-        if (customers.get(0).getOrder() == "burger"){
-            if (inv.peek() == "burger"){
+        ArrayList<String> tray = new ArrayList<String>();
+        if (station == 1){
+            tray = tray1;
+        } else if (station == 2){
+            tray = tray2;
+        } else {return;}
+
+        if (inv.size() > 0){
+             //Hamburger ingredients
+             if (tray.isEmpty() && inv.peek() == "toasted bun"){
+                 inv.pop();
+                 tray.add("toasted bun");
+             } else if (tray.contains("toasted bun") && inv.peek() == "burger" && !tray.contains("burger")){
+                 inv.pop();
+                 tray.add("burger");
+
+             //Salad ingredients
+             }else if (tray.isEmpty() && inv.peek() == "chopped lettuce"){
                 inv.pop();
-                tray.add("burger");
-            } else if (inv.peek() == "toastedbun"){
+                tray.add("chopped lettuce");
+            } else if (tray.contains("chopped lettuce") && inv.peek() == "chopped tomato" && !tray.contains("chopped tomato")){
                 inv.pop();
-                tray.add("toastedbun");
-            }
-            if (tray.contains("burger") && tray.contains("toastedbun")){
-                customers.remove(0);
-                tray.clear();
-                serving.play(soundVolume);
-            }
-        } else if (customers.get(0).getOrder() == "salad"){
-            if (inv.peek() == "choppedtomato"){
+                tray.add("chopped tomato");
+            } else if (tray.contains("chopped tomato") && inv.peek() == "chopped onion" && !tray.contains("chopped onion")){
                 inv.pop();
-                tray.add("choppedtomato");
-            } else if (inv.peek() == "choppedlettuce"){
-                inv.pop();
-                tray.add("choppedlettuce");
-            } else if (inv.peek() == "choppedonion"){
-                inv.pop();
-                tray.add("choppedonion");
-            }
-            if (tray.contains("choppedtomato") && tray.contains("choppedlettuce") && tray.contains("choppedonion")){
-                customers.remove(0);
-                tray.clear();
-                serving.play(soundVolume);
+                tray.add("chopped onion");
+
+            //Jacket potato ingredients
+            } else if (tray.isEmpty() && inv.peek() == "jacket"){
+                 inv.pop();
+                 tray.add("jacket");
+            } else if (tray.contains("jacket") && inv.peek() == "beans" && !tray.contains("beans")){
+                 inv.pop();
+                 tray.add("beans");
+
+            //Raw pizza ingredients
+            } else if (tray.isEmpty() && inv.peek() == "dough"){
+                 inv.pop();
+                 tray.add("dough");
+            } else if (tray.contains("dough") && inv.peek() == "chopped tomato" && !tray.contains("chopped tomato")){
+                 inv.pop();
+                 tray.add("chopped tomato");
+            } else if (tray.contains("chopped tomato") && inv.peek() == "cheese" && !tray.contains("cheese")){
+                 inv.pop();
+                 tray.add("cheese");
             }
         }
+        //Hamburger assembly
+        if (tray.contains("burger") && tray.contains("toasted bun")){
+            tray.clear();
+            inv.add("hamburger");
+            serving.play(soundVolume);
+        }
+        //Salad assembly
+        if (tray.contains("chopped lettuce") && tray.contains("chopped tomato") && tray.contains("chopped onion")){
+            tray.clear();
+            inv.add("salad");
+            serving.play(soundVolume);
+        }
+        //Jacket potato assembly
+        if (tray.contains("jacket") && tray.contains("beans")){
+            tray.clear();
+            inv.add("jacket potato");
+            serving.play(soundVolume);
+        }
+        //Raw pizza assembly
+        if (tray.contains("dough") && tray.contains("chopped tomato") && tray.contains("cheese")){
+            tray.clear();
+            inv.add("raw pizza");
+            serving.play(soundVolume);
+        }
+        if (station == 1){
+            tray1 = tray;
+
+        } else if (station == 2){
+            tray2 = tray;
+        }
+    }
+
+    private void serveFood(){
+        Chef chef = chefs.get(selectedChef);
+        Stack<String> inv = chef.getInventory();
+
+        if (customers.get(0).getOrder() == inv.peek()){
+            inv.pop();
+            customers.remove(0);
+            serving.play(soundVolume);
+        }
+
         if (customers.size() == 0){
             game.setScreen(new GameWinScreen(game, (int) totalTimer));
         }
