@@ -141,6 +141,10 @@ public class GameScreen extends ScreenAdapter {
             game.batch.draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("grill"))) {
             game.batch.draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("potato"))) {
+            game.batch.draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("pizza"))) {
+            game.batch.draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         }
         game.batch.end();
 
