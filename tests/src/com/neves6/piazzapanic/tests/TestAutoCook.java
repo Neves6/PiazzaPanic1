@@ -39,7 +39,7 @@ public class TestAutoCook {
         Chef t1 = new Chef("Test 1", 1, 1, 1, 1, 1, false,
                 new Stack<>(), 1);
         t1.addToInventory("test");
-        m1.process(t1);
+        m1.process(t1, new Money());
         testMachines.add(m1);
         testAutoCook.aquirePowerUp();
         testAutoCook.applyPowerUp(testMachines);

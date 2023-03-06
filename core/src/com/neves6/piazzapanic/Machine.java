@@ -70,6 +70,7 @@ public class Machine {
         }
     }
 
+
     /**
      * Checks if the machine is done processing and adds the output to the chef's inventory if it is.
      * Handles unsticking the chef.

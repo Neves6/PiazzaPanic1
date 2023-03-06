@@ -54,4 +54,15 @@ public class Money {
         ArrayList<Integer> i = unlockDetails.get(unlockID);
         return i.get(1) == 1;
     }
+
+    public boolean unlockMachine(String unlockID){
+        ArrayList<Integer> i = unlockDetails.get(unlockID);
+        if (this.balance >= i.get(0)){
+            this.balance -= i.get(0);
+            i.set(1, 1);
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

@@ -33,6 +33,7 @@ public class GameScreen extends ScreenAdapter {
     int[] renderableLayers = { 0, 1, 2 };
     Texture selectedTexture;
     Texture recipes;
+    Texture lock;
     Money machineUnlockBalance;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.machineUnlockBalance = new Money();
@@ -52,6 +53,7 @@ public class GameScreen extends ScreenAdapter {
         }
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
         recipes = new Texture(Gdx.files.internal("recipes.png"));
+        lock = new Texture(Gdx.files.internal("levellocked.png"));
     }
 
     @Override
@@ -131,6 +133,15 @@ public class GameScreen extends ScreenAdapter {
         font.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         font.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
         font.draw(game.batch, machineUnlockBalance.displayBalance(), winWidth - (winWidth/3f), 60, (winWidth/3f), -1, false);
+
+        // Any machines that are unlockable add here to draw a lock on top of it.
+        if (!(machineUnlockBalance.isUnlocked("chopping"))){
+            game.batch.draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("forming"))) {
+            game.batch.draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("grill"))) {
+            game.batch.draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        }
         game.batch.end();
 
         stage.draw();

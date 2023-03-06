@@ -6,7 +6,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
 
 class ScenarioGameMaster extends GameMaster {
@@ -61,16 +60,19 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
         machines.add(new Machine("fridgeonion", "", "onion", 0, false));
         machines.add(new Machine("fridgebun", "", "bun", 0, false));
+
+        machineUnlockBalance.addGroup("grill", 100);
         machines.add(new Machine("grill1patty", "patty", "burger", 3, true));
-        machines.add(new Machine("grill2patty", "patty", "burger", 3, true));
+        machines.add(new Machine("grill2patty", "patty", "burger", 3, true, "grill"));
         machines.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
-        machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
+        machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true, "grill"));
+
+        machineUnlockBalance.addGroup("forming", 50);
         machines.add(new Machine("forming1", "meat", "patty", 3, true));
-        machines.add(new Machine("forming2", "meat", "patty", 3, true));
+        machines.add(new Machine("forming2", "meat", "patty", 3, true, "forming"));
 
 
         machineUnlockBalance.addGroup("chopping", 50);
-
         machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
         machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true, "chopping"));
         machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
@@ -281,6 +283,17 @@ class ScenarioGameMaster extends GameMaster {
                 targety = chef.getyCoord();
                 break;
         }
+        // Unlock machines even if you don't have anything in your stack.
+        if (targetx == 10 && targety == 7) {
+            machineUnlockBalance.unlockMachine("forming");
+            return;
+        } else if (targetx == 12 && targety == 7) {
+            machineUnlockBalance.unlockMachine("chopping");
+            return;
+        } else if (targetx == 7 && targety == 7) {
+            machineUnlockBalance.unlockMachine("grill");
+            return;
+        }
         //System.out.println("Target: " + targetx + ", " + targety + "\nFacing: " + chef.getFacing());
         if (chef.getInventory().empty()) {
             if (targetx == 1 && targety == 10) {
@@ -317,6 +330,7 @@ class ScenarioGameMaster extends GameMaster {
                 machines.get(8).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
+            // Forming stations.
         } else if (targetx == 9 && targety == 7) {
             machines.get(9).process(chef, machineUnlockBalance);
             forming.play(soundVolume);
