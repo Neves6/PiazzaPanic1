@@ -57,7 +57,7 @@ public class Money {
 
     public boolean unlockMachine(String unlockID){
         ArrayList<Integer> i = unlockDetails.get(unlockID);
-        if (this.balance >= i.get(0)){
+        if (this.balance >= i.get(0) && i.get(1) == 0){
             this.balance -= i.get(0);
             i.set(1, 1);
             return true;
