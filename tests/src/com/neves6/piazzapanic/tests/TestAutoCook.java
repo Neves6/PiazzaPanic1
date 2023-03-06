@@ -2,6 +2,7 @@ package com.neves6.piazzapanic.tests;
 
 import com.neves6.piazzapanic.Chef;
 import com.neves6.piazzapanic.Machine;
+import com.neves6.piazzapanic.Money;
 import com.neves6.piazzapanic.powerups.AutoCook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +39,7 @@ public class TestAutoCook {
         Chef t1 = new Chef("Test 1", 1, 1, 1, 1, 1, false,
                 new Stack<>(), 1);
         t1.addToInventory("test");
-        m1.process(t1);
+        m1.process(t1, new Money());
         testMachines.add(m1);
         testAutoCook.aquirePowerUp();
         testAutoCook.applyPowerUp(testMachines);

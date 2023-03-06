@@ -33,7 +33,10 @@ public class GameScreen extends ScreenAdapter {
     int[] renderableLayers = { 0, 1, 2 };
     Texture selectedTexture;
     Texture recipes;
+    Texture lock;
+    Money machineUnlockBalance;
     public GameScreen(PiazzaPanicGame game, int level) {
+        this.machineUnlockBalance = new Money();
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
         font.getData().setScale(0.75F);
@@ -42,7 +45,7 @@ public class GameScreen extends ScreenAdapter {
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
         if (level == 1) {
             map = new TmxMapLoader().load("tilemaps/level1.tmx");
-            gm = new ScenarioGameMaster(game, map, 3, 5);
+            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
             wScale = unitScale * 32f;
             hScale = unitScale * 32f;
@@ -50,6 +53,7 @@ public class GameScreen extends ScreenAdapter {
         }
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
         recipes = new Texture(Gdx.files.internal("recipes.png"));
+        lock = new Texture(Gdx.files.internal("levellocked.png"));
     }
 
     @Override
@@ -128,6 +132,20 @@ public class GameScreen extends ScreenAdapter {
         font.draw(game.batch, gm.generateHoldingsText(), winWidth - (4.75f*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         font.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         font.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
+        font.draw(game.batch, machineUnlockBalance.displayBalance(), winWidth - (winWidth/3f), 60, (winWidth/3f), -1, false);
+
+        // Any machines that are unlockable add here to draw a lock on top of it.
+        if (!(machineUnlockBalance.isUnlocked("chopping"))){
+            game.batch.draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("forming"))) {
+            game.batch.draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("grill"))) {
+            game.batch.draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("potato"))) {
+            game.batch.draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("pizza"))) {
+            game.batch.draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+        }
         game.batch.end();
 
         stage.draw();

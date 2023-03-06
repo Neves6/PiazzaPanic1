@@ -13,6 +13,25 @@ public class Machine {
     private Boolean active;
     private float runtime;
     private Chef operator;
+    private String unlockID;
+
+    /**
+     * Machine constructor.
+     * @param type Type of machine.
+     * @param input Input ingredient.
+     * @param output Output ingredient.
+     * @param processingTime Processing time.
+     * @param sticky Whether or not the machine locks the chef in place during use.
+     */
+    public Machine(String type, String input, String output, float processingTime, Boolean sticky, String unlockID){
+        this.type = type;
+        this.input = input;
+        this.output = output;
+        this.processingTime = processingTime;
+        this.sticky = sticky;
+        this.active = false;
+        this.unlockID = unlockID;
+    }
 
     /**
      * Machine constructor.
@@ -29,13 +48,17 @@ public class Machine {
         this.processingTime = processingTime;
         this.sticky = sticky;
         this.active = false;
+        this.unlockID = "auto";
     }
 
     /**
      * Begins the machine processing of the ingredient.
      * @param chef Which chef is using the machine.
      */
-    public void process(Chef chef){
+    public void process(Chef chef, Money currency){
+        if (!(currency.isUnlocked(this.unlockID))){
+            return;
+        }
         if (input == "" && processingTime == 0) {
             chef.addToInventory(output);
         } else if (chef.getInventory().peek() == input) {
@@ -46,6 +69,7 @@ public class Machine {
             operator = chef;
         }
     }
+
 
     /**
      * Checks if the machine is done processing and adds the output to the chef's inventory if it is.

@@ -30,17 +30,20 @@ class ScenarioGameMaster extends GameMaster {
     Sound trash;
     float soundVolume;
     ArrayList<String> settings;
+    Money machineUnlockBalance;
     ArrayList<String> recipes = new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
-
 
     /**
      * ScenarioGameMaster constructor.
-     * @param game PiazzaPanicGame instance.
-     * @param map TiledMap instance.
-     * @param chefno Number of chefs.
-     * @param custno Number of customers.
+     *
+     * @param game                 PiazzaPanicGame instance.
+     * @param map                  TiledMap instance.
+     * @param chefno               Number of chefs.
+     * @param custno               Number of customers.
+     * @param machineUnlockBalance
      */
-    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno) {
+    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno, Money machineUnlockBalance) {
+        this.machineUnlockBalance = machineUnlockBalance;
         this.game = game;
         settings = Utility.getSettings();
         this.map = map;
@@ -53,33 +56,45 @@ class ScenarioGameMaster extends GameMaster {
             customers.add(new Customer("Customer" + (i+1), -1, -1, recipes.get(randomNum)));
         }
         totalTimer = 0f;
+        
         //Assessment 1 (index 0-16)
         machines.add(new Machine("fridge-meat", "", "meat", 0, false));
         machines.add(new Machine("fridge-tomato", "", "tomato", 0, false));
         machines.add(new Machine("fridge-lettuce", "", "lettuce", 0, false));
         machines.add(new Machine("fridge-onion", "", "onion", 0, false));
         machines.add(new Machine("fridge-bun", "", "bun", 0, false));
+        
+        machineUnlockBalance.addGroup("grill", 100);
         machines.add(new Machine("grill-patty-1", "patty", "burger", 3, true));
-        machines.add(new Machine("grill-patty-2", "patty", "burger", 3, true));
+        machines.add(new Machine("grill-patty-2", "patty", "burger", 3, true, "grill"));
         machines.add(new Machine("grill-bun-1", "bun", "toasted bun", 3, true));
-        machines.add(new Machine("grill-bun-2", "bun", "toasted bun", 3, true));
+        machines.add(new Machine("grill-bun-2", "bun", "toasted bun", 3, true, "grill"));
+        
+        machineUnlockBalance.addGroup("forming", 50);
         machines.add(new Machine("forming-1", "meat", "patty", 3, true));
-        machines.add(new Machine("forming-2", "meat", "patty", 3, true));
+        machines.add(new Machine("forming-2", "meat", "patty", 3, true, "forming"));
+        
+        machineUnlockBalance.addGroup("chopping", 50);
         machines.add(new Machine("chopping-tomato-1", "tomato", "chopped tomato", 3, true));
-        machines.add(new Machine("chopping-tomato-2", "tomato", "chopped tomato", 3, true));
+        machines.add(new Machine("chopping-tomato-2", "tomato", "chopped tomato", 3, true, "chopping"));
         machines.add(new Machine("chopping-lettuce-1", "lettuce", "chopped lettuce", 3, true));
-        machines.add(new Machine("chopping-lettuce-2", "lettuce", "chopped lettuce", 3, true));
+        machines.add(new Machine("chopping-lettuce-2", "lettuce", "chopped lettuce", 3, true, "chopping"));
         machines.add(new Machine("chopping-onion-1", "onion", "chopped onion", 3, true));
-        machines.add(new Machine("chopping-onion-2", "onion", "chopped onion", 3, true));
+        machines.add(new Machine("chopping-onion-2", "onion", "chopped onion", 3, true, "chopping"));
+        
         //Assessment 2 (index 17-24)
         machines.add(new Machine("fridge-dough", "", "dough", 0, false));
         machines.add(new Machine("fridge-cheese", "", "cheese", 0, false));
         machines.add(new Machine("fridge-potato", "", "potato", 0, false));
         machines.add(new Machine("fridge-beans", "", "beans", 0, false));
+
+        machineUnlockBalance.addGroup("potato", 150);
         machines.add(new Machine("oven-potato-1", "potato", "jacket", 3, true));
-        machines.add(new Machine("oven-potato-2", "potato", "jacket", 3, true));
+        machines.add(new Machine("oven-potato-2", "potato", "jacket", 3, true, "potato"));
+
+        machineUnlockBalance.addGroup("pizza", 150);
         machines.add(new Machine("oven-pizza-1", "raw pizza", "pizza", 3, true));
-        machines.add(new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true));
+        machines.add(new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true, "pizza"));
 
         // disposal and tray/serving handled separately
 
@@ -101,6 +116,7 @@ class ScenarioGameMaster extends GameMaster {
                 soundVolume = 0f;
                 break;
         }
+
     }
 
     public void setSelectedChef(int selectedChef) {
@@ -286,34 +302,50 @@ class ScenarioGameMaster extends GameMaster {
                 targety = chef.getyCoord();
                 break;
         }
-        //Fridges
+        // Unlock machines even if you don't have anything in your stack.
+        if (targetx == 10 && targety == 7) {
+            machineUnlockBalance.unlockMachine("forming");
+            return;
+        } else if (targetx == 12 && targety == 7) {
+            machineUnlockBalance.unlockMachine("chopping");
+            return;
+        } else if (targetx == 7 && targety == 7) {
+            machineUnlockBalance.unlockMachine("grill");
+            return;
+        } else if (targetx == 14 && targety == 6) {
+            machineUnlockBalance.unlockMachine("potato");
+            return;
+        } else if (targetx == 1 && targety == 6) {
+            machineUnlockBalance.unlockMachine("pizza");
+            return;
+        }
         if (chef.getInventory().empty()) {
             if (targetx == 1 && targety == 10) {
-                machines.get(0).process(chef);
+                machines.get(0).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 2 && targety == 10) {
-                machines.get(1).process(chef);
+                machines.get(1).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 3 && targety == 10) {
-                machines.get(2).process(chef);
+                machines.get(2).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 4 && targety == 10) {
-                machines.get(3).process(chef);
+                machines.get(3).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 1 && targety == 8) {
-                machines.get(4).process(chef);
+                machines.get(4).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 4 && targety == 8) {
-                machines.get(17).process(chef);
+                machines.get(17).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 5 && targety == 10) {
-                machines.get(18).process(chef);
+                machines.get(18).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 6 && targety == 10) {
-                machines.get(19).process(chef);
+                machines.get(19).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else if (targetx == 7 && targety == 10) {
-                machines.get(20).process(chef);
+                machines.get(20).process(chef, machineUnlockBalance);
                 fridge.play(soundVolume);
             } else { return; }
         }
@@ -321,44 +353,45 @@ class ScenarioGameMaster extends GameMaster {
         String invTop = chef.getInventory().peek();
         if (targetx == 6 && targety == 7) {
             if (invTop == "patty") {
-                machines.get(5).process(chef);
+                machines.get(5).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             } else if (invTop == "bun") {
-                machines.get(7).process(chef);
+                machines.get(7).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
         } else if (targetx == 7 && targety == 7) {
             if (invTop == "patty") {
-                machines.get(6).process(chef);
+                machines.get(6).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             } else if (invTop == "bun") {
-                machines.get(8).process(chef);
+                machines.get(8).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
+            // Forming stations.
         } else if (targetx == 9 && targety == 7) {
-            machines.get(9).process(chef);
+            machines.get(9).process(chef, machineUnlockBalance);
             forming.play(soundVolume);
         } else if (targetx == 10 && targety == 7) {
-            machines.get(10).process(chef);
+            machines.get(10).process(chef, machineUnlockBalance);
             forming.play(soundVolume);
         } else if (targetx == 11 && targety == 7) {
             if (invTop == "tomato") {
-                machines.get(11).process(chef);
+                machines.get(11).process(chef, machineUnlockBalance);
                 chopping.play(soundVolume);
             } else if (invTop == "lettuce") {
-                machines.get(13).process(chef);
+                machines.get(13).process(chef, machineUnlockBalance);
                 chopping.play(soundVolume);
             } else if (invTop == "onion") {
-                machines.get(15).process(chef);
+                machines.get(15).process(chef, machineUnlockBalance);
                 chopping.play(soundVolume);
             }
         } else if (targetx == 12 && targety == 7) {
             if (invTop == "tomato") {
-                machines.get(12).process(chef);
+                machines.get(12).process(chef, machineUnlockBalance);
             } else if (invTop == "lettuce") {
-                machines.get(14).process(chef);
+                machines.get(14).process(chef, machineUnlockBalance);
             } else if (invTop == "onion") {
-                machines.get(16).process(chef);
+                machines.get(16).process(chef, machineUnlockBalance);
             }
         } else if (targetx == 14 && targety == 4) {
             chef.removeTopFromInventory();
@@ -371,22 +404,22 @@ class ScenarioGameMaster extends GameMaster {
             addToTray(2);
         } else if (targetx == 14 && targety == 5) {
             if (invTop == "potato") {
-                machines.get(21).process(chef);
+                machines.get(21).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
         } else if (targetx == 14 && targety == 6) {
             if (invTop == "potato") {
-                machines.get(22).process(chef);
+                machines.get(22).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
         } else if (targetx == 1 && targety == 5) {
             if (invTop == "raw pizza") {
-                machines.get(23).process(chef);
+                machines.get(23).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
         } else if (targetx == 1 && targety == 6) {
             if (invTop == "raw pizza") {
-                machines.get(24).process(chef);
+                machines.get(24).process(chef, machineUnlockBalance);
                 grill.play(soundVolume);
             }
         }
@@ -406,16 +439,16 @@ class ScenarioGameMaster extends GameMaster {
         } else {return;}
 
         if (inv.size() > 0){
-             //Hamburger ingredients
-             if (tray.isEmpty() && inv.peek() == "toasted bun"){
-                 inv.pop();
-                 tray.add("toasted bun");
-             } else if (tray.contains("toasted bun") && inv.peek() == "burger" && !tray.contains("burger")){
-                 inv.pop();
-                 tray.add("burger");
+            //Hamburger ingredients
+            if (tray.isEmpty() && inv.peek() == "toasted bun"){
+                inv.pop();
+                tray.add("toasted bun");
+            } else if (tray.contains("toasted bun") && inv.peek() == "burger" && !tray.contains("burger")){
+                inv.pop();
+                tray.add("burger");
 
-             //Salad ingredients
-             }else if (tray.isEmpty() && inv.peek() == "chopped lettuce"){
+                //Salad ingredients
+            }else if (tray.isEmpty() && inv.peek() == "chopped lettuce"){
                 inv.pop();
                 tray.add("chopped lettuce");
             } else if (tray.contains("chopped lettuce") && inv.peek() == "chopped tomato" && !tray.contains("chopped tomato")){
@@ -425,24 +458,24 @@ class ScenarioGameMaster extends GameMaster {
                 inv.pop();
                 tray.add("chopped onion");
 
-            //Jacket potato ingredients
+                //Jacket potato ingredients
             } else if (tray.isEmpty() && inv.peek() == "jacket"){
-                 inv.pop();
-                 tray.add("jacket");
+                inv.pop();
+                tray.add("jacket");
             } else if (tray.contains("jacket") && inv.peek() == "beans" && !tray.contains("beans")){
-                 inv.pop();
-                 tray.add("beans");
+                inv.pop();
+                tray.add("beans");
 
-            //Raw pizza ingredients
+                //Raw pizza ingredients
             } else if (tray.isEmpty() && inv.peek() == "dough"){
-                 inv.pop();
-                 tray.add("dough");
+                inv.pop();
+                tray.add("dough");
             } else if (tray.contains("dough") && inv.peek() == "chopped tomato" && !tray.contains("chopped tomato")){
-                 inv.pop();
-                 tray.add("chopped tomato");
+                inv.pop();
+                tray.add("chopped tomato");
             } else if (tray.contains("chopped tomato") && inv.peek() == "cheese" && !tray.contains("cheese")){
-                 inv.pop();
-                 tray.add("cheese");
+                inv.pop();
+                tray.add("cheese");
             }
         }
         //Hamburger assembly
@@ -485,6 +518,7 @@ class ScenarioGameMaster extends GameMaster {
             inv.pop();
             customers.remove(0);
             serving.play(soundVolume);
+            machineUnlockBalance.incrementBalance();
         }
 
         if (customers.size() == 0){
@@ -492,3 +526,4 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 }
+
