@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static java.util.Arrays.asList;
 
 class ScenarioGameMaster extends GameMaster {
+    IngredientsStaff staffOne;
     PiazzaPanicGame game;
     TiledMap map;
     TiledMapTileLayer collisionLayer;
@@ -117,6 +118,8 @@ class ScenarioGameMaster extends GameMaster {
                 break;
         }
 
+        staffOne = new IngredientsStaff();
+
     }
 
     public void setSelectedChef(int selectedChef) {
@@ -128,6 +131,10 @@ class ScenarioGameMaster extends GameMaster {
 
     public Chef getChef(int i){
         return chefs.get(i-1);
+    }
+
+    public void setRecipeToStaff(){
+        staffOne.setCurrentRecipe(customers.get(0).getOrder());
     }
 
     /**
@@ -302,6 +309,14 @@ class ScenarioGameMaster extends GameMaster {
                 targety = chef.getyCoord();
                 break;
         }
+
+        //Staff collects items.
+        if (targetx == 2 && targety == 7){
+            String item = staffOne.collectItem();
+            Machine tempMachine = new Machine("staff", item, item, 0, true);
+            tempMachine.processStaffInteraction(chef, machineUnlockBalance);
+        }
+
         // Unlock machines even if you don't have anything in your stack.
         if (targetx == 10 && targety == 7) {
             machineUnlockBalance.unlockMachine("forming");
@@ -349,6 +364,7 @@ class ScenarioGameMaster extends GameMaster {
                 fridge.play(soundVolume);
             } else { return; }
         }
+
         //Work stations
         String invTop = chef.getInventory().peek();
         if (targetx == 6 && targety == 7) {
@@ -519,6 +535,7 @@ class ScenarioGameMaster extends GameMaster {
             customers.remove(0);
             serving.play(soundVolume);
             machineUnlockBalance.incrementBalance();
+            staffOne.setGenerate(true);
         }
 
         if (customers.size() == 0){

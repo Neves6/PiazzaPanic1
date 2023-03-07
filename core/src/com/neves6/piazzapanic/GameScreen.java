@@ -102,6 +102,8 @@ public class GameScreen extends ScreenAdapter {
 
         gm.tickUpdate(delta);
 
+        gm.setRecipeToStaff();
+
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

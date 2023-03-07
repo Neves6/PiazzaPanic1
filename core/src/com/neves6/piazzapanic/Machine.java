@@ -70,6 +70,14 @@ public class Machine {
         }
     }
 
+    public void processStaffInteraction(Chef chef, Money currency){
+        if (!(currency.isUnlocked(this.unlockID))){
+            return;
+        }
+        chef.addToInventory(output);
+    }
+
+
 
     /**
      * Checks if the machine is done processing and adds the output to the chef's inventory if it is.
