@@ -311,28 +311,27 @@ class ScenarioGameMaster extends GameMaster {
         }
 
         //Staff collects items.
-        if (targetx == 2 && targety == 7){
+        if (targetx == 2 && targety == 7 && chefs.get(selectedChef).getInventory().size() == 0){
             String item = staffOne.collectItem();
-            Machine tempMachine = new Machine("staff", item, item, 0, true);
-            tempMachine.processStaffInteraction(chef, machineUnlockBalance);
+            // Don't add a null pointer onto the chefs stack.
+            if (item != null) {
+                Machine tempMachine = new Machine("staff", item, item, 0, true);
+                tempMachine.processStaffInteraction(chef, machineUnlockBalance);
+            }
         }
 
         // Unlock machines even if you don't have anything in your stack.
         if (targetx == 10 && targety == 7) {
             machineUnlockBalance.unlockMachine("forming");
-            return;
         } else if (targetx == 12 && targety == 7) {
             machineUnlockBalance.unlockMachine("chopping");
-            return;
         } else if (targetx == 7 && targety == 7) {
             machineUnlockBalance.unlockMachine("grill");
-            return;
         } else if (targetx == 14 && targety == 6) {
             machineUnlockBalance.unlockMachine("potato");
-            return;
         } else if (targetx == 1 && targety == 6) {
             machineUnlockBalance.unlockMachine("pizza");
-            return;
+
         }
         if (chef.getInventory().empty()) {
             if (targetx == 1 && targety == 10) {
