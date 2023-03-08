@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TestPerson</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.neves6.piazzapanic.tests</a>
+</div>
+
+<h1>Coverage Summary for Class: TestPerson (com.neves6.piazzapanic.tests)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TestPerson</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.3%
+  </span>
+  <span class="absValue">
+    (41/43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.neves6.piazzapanic.tests;
+&nbsp;
+&nbsp;import com.neves6.piazzapanic.Person;
+&nbsp;import org.junit.Test;
+&nbsp;import org.junit.runner.RunWith;
+&nbsp;import static org.junit.Assert.assertTrue;
+&nbsp;
+&nbsp;@RunWith(GdxTestRunner.class)
+<b class="fc">&nbsp;public class TestPerson {</b>
+&nbsp;    @Test
+&nbsp;    public void testPersonConstructorValid(){
+<b class="fc">&nbsp;        int x = 20;</b>
+<b class="fc">&nbsp;        int y = 50;</b>
+<b class="fc">&nbsp;        String name = &quot;Bob&quot;;</b>
+<b class="fc">&nbsp;        Person testPerson = new Person(name, x, y);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;&quot;, testPerson.getxCoord() == x &amp;&amp;</b>
+<b class="fc">&nbsp;            testPerson.getyCoord() == y &amp;&amp;</b>
+<b class="fc">&nbsp;            testPerson.getName() == name);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testXSet(){
+<b class="fc">&nbsp;        int xOld = 0;</b>
+<b class="fc">&nbsp;        int yOld = 0;</b>
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, xOld, yOld);</b>
+<b class="fc">&nbsp;        testPerson.setxCoord(50);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;**&quot;,  50 == testPerson.getxCoord() &amp;&amp; testPerson.getyCoord() == yOld);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testYSet(){
+<b class="fc">&nbsp;        int xOld = 0;</b>
+<b class="fc">&nbsp;        int yOld = 0;</b>
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, xOld, yOld);</b>
+<b class="fc">&nbsp;        testPerson.setyCoord(50);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;**&quot;,  50 == testPerson.getyCoord() &amp;&amp; testPerson.getxCoord() == xOld);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test(expected = IllegalArgumentException.class)
+&nbsp;    public void testXSetErroneous(){
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, 0, 0);</b>
+<b class="fc">&nbsp;        testPerson.setxCoord(-1);</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test(expected = IllegalArgumentException.class)
+&nbsp;    public void testYSetErronous(){
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, 0, 0);</b>
+<b class="fc">&nbsp;        testPerson.setyCoord(-1);</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testMoveRight(){
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, 5, 5);</b>
+<b class="fc">&nbsp;        testPerson.alteryCoord(1);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;&quot;, testPerson.getyCoord() == 6 &amp;&amp; testPerson.getxCoord() == 5);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testMoveLeft(){
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, 5, 5);</b>
+<b class="fc">&nbsp;        testPerson.alteryCoord(-1);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;&quot;, testPerson.getyCoord() == 4 &amp;&amp; testPerson.getxCoord() == 5);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testMoveForward(){
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, 5, 5);</b>
+<b class="fc">&nbsp;        testPerson.alterxCoord(1);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;&quot;, testPerson.getxCoord() == 6 &amp;&amp; testPerson.getyCoord() == 5);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testMoveBackwards(){
+<b class="fc">&nbsp;        Person testPerson = new Person(&quot;Bob&quot;, 5, 5);</b>
+<b class="fc">&nbsp;        testPerson.alterxCoord(-1);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;&quot;, testPerson.getxCoord() == 4 &amp;&amp; testPerson.getyCoord() == 5);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 11:09</div>
+</div>
+</body>
+</html>

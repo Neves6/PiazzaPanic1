@@ -66,11 +66,11 @@ public class TutorialScreen extends ScreenAdapter {
         winHeight = Gdx.graphics.getHeight();
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.batch.draw(tutorial, 0, 0, winWidth, winHeight);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getBatch().draw(tutorial, 0, 0, winWidth, winHeight);
+        game.getBatch().end();
     }
 
     @Override

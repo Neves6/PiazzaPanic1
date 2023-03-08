@@ -1,0 +1,348 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SettingsScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.neves6.piazzapanic</a>
+</div>
+
+<h1>Coverage Summary for Class: SettingsScreen (com.neves6.piazzapanic)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SettingsScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/63)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SettingsScreen$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SettingsScreen$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SettingsScreen$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SettingsScreen$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/84)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.neves6.piazzapanic;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.ScreenAdapter;
+&nbsp;import com.badlogic.gdx.graphics.GL20;
+&nbsp;import com.badlogic.gdx.graphics.OrthographicCamera;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+&nbsp;import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Actor;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;public class SettingsScreen extends ScreenAdapter {
+&nbsp;    PiazzaPanicGame game;
+&nbsp;    OrthographicCamera camera;
+&nbsp;    SpriteBatch batch;
+&nbsp;    BitmapFont font;
+&nbsp;    Texture bg;
+&nbsp;    Stage stage;
+&nbsp;    TextButton fullscreenButton;
+&nbsp;    TextButton volumeFullButton;
+&nbsp;    TextButton volumeHalfButton;
+&nbsp;    TextButton volumeNoneButton;
+&nbsp;    TextButton.TextButtonStyle buttonStyle;
+&nbsp;    Skin skin;
+&nbsp;    TextureAtlas atlas;
+&nbsp;    int winWidth;
+&nbsp;    int winHeight;
+&nbsp;    ArrayList&lt;String&gt; settings;
+&nbsp;
+<b class="nc">&nbsp;    public SettingsScreen(PiazzaPanicGame game) {</b>
+<b class="nc">&nbsp;        this.game = game;</b>
+<b class="nc">&nbsp;        settings = Utility.getSettings();</b>
+<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</b>
+<b class="nc">&nbsp;        bg = new Texture(Gdx.files.internal(&quot;title_screen_large-min.png&quot;));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void show(){
+<b class="nc">&nbsp;        camera = new OrthographicCamera();</b>
+<b class="nc">&nbsp;        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</b>
+<b class="nc">&nbsp;        batch = new SpriteBatch();</b>
+&nbsp;
+<b class="nc">&nbsp;        stage = new Stage();</b>
+<b class="nc">&nbsp;        Gdx.input.setInputProcessor(stage);</b>
+<b class="nc">&nbsp;        skin = new Skin();</b>
+<b class="nc">&nbsp;        atlas = new TextureAtlas(Gdx.files.internal(&quot;buttons/title/unnamed.atlas&quot;));</b>
+<b class="nc">&nbsp;        skin.addRegions(atlas);</b>
+<b class="nc">&nbsp;        buttonStyle = new TextButton.TextButtonStyle();</b>
+<b class="nc">&nbsp;        buttonStyle.font = font;</b>
+<b class="nc">&nbsp;        buttonStyle.up = skin.getDrawable(&quot;black_alpha_mid&quot;);</b>
+<b class="nc">&nbsp;        buttonStyle.down = skin.getDrawable(&quot;black_alpha_mid&quot;);</b>
+<b class="nc">&nbsp;        buttonStyle.checked = skin.getDrawable(&quot;black_alpha_mid&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        fullscreenButton = new TextButton(&quot;Toggle Screen: &quot; + settings.get(0), buttonStyle);</b>
+<b class="nc">&nbsp;        fullscreenButton.setPosition(Gdx.graphics.getWidth()/2f - fullscreenButton.getWidth()/2, Gdx.graphics.getHeight()/2f + fullscreenButton.getHeight()/2);</b>
+<b class="nc">&nbsp;        fullscreenButton.addListener(new ChangeListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void changed(ChangeEvent event, Actor actor) {
+<b class="nc">&nbsp;                if (settings.get(0).trim().equals(&quot;fullscreen&quot;)) {</b>
+&nbsp;                    //System.out.println(&quot;Toggling to windowed&quot;);
+<b class="nc">&nbsp;                    settings.set(0, &quot;windowed&quot;);</b>
+<b class="nc">&nbsp;                    Gdx.graphics.setWindowedMode(1280, 720);</b>
+<b class="nc">&nbsp;                } else if (settings.get(0).trim().equals(&quot;windowed&quot;)) {</b>
+&nbsp;                    //System.out.println(&quot;Toggling to fullscreen&quot;);
+<b class="nc">&nbsp;                    settings.set(0, &quot;fullscreen&quot;);</b>
+<b class="nc">&nbsp;                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());</b>
+&nbsp;                }
+&nbsp;                //System.out.println(&quot;Win/FS Toggled?&quot;);
+<b class="nc">&nbsp;                Utility.setSettings(settings);</b>
+<b class="nc">&nbsp;                game.setScreen(new TitleScreen(game));</b>
+&nbsp;            }
+&nbsp;        });
+<b class="nc">&nbsp;        stage.addActor(fullscreenButton);</b>
+&nbsp;
+<b class="nc">&nbsp;        volumeFullButton = new TextButton(&quot;Volume: Full&quot;, buttonStyle);</b>
+<b class="nc">&nbsp;        volumeFullButton.setPosition(Gdx.graphics.getWidth()/2f - volumeFullButton.getWidth()/2, Gdx.graphics.getHeight()/2f - volumeFullButton.getHeight()/2);</b>
+<b class="nc">&nbsp;        volumeFullButton.addListener(new ChangeListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void changed(ChangeEvent event, Actor actor) {
+<b class="nc">&nbsp;                settings.set(1, &quot;full&quot;);</b>
+<b class="nc">&nbsp;                Utility.setSettings(settings);</b>
+<b class="nc">&nbsp;                game.setScreen(new TitleScreen(game));</b>
+&nbsp;            }
+&nbsp;        });
+<b class="nc">&nbsp;        stage.addActor(volumeFullButton);</b>
+&nbsp;
+<b class="nc">&nbsp;        volumeHalfButton = new TextButton(&quot;Volume: Half&quot;, buttonStyle);</b>
+<b class="nc">&nbsp;        volumeHalfButton.setPosition(Gdx.graphics.getWidth()/2f - volumeHalfButton.getWidth()/2, Gdx.graphics.getHeight()/2f - volumeHalfButton.getHeight()*3/2);</b>
+<b class="nc">&nbsp;        volumeHalfButton.addListener(new ChangeListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void changed(ChangeEvent event, Actor actor) {
+<b class="nc">&nbsp;                settings.set(1, &quot;half&quot;);</b>
+<b class="nc">&nbsp;                Utility.setSettings(settings);</b>
+<b class="nc">&nbsp;                game.setScreen(new TitleScreen(game));</b>
+&nbsp;            }
+&nbsp;        });
+<b class="nc">&nbsp;        stage.addActor(volumeHalfButton);</b>
+&nbsp;
+<b class="nc">&nbsp;        volumeNoneButton = new TextButton(&quot;Volume: None&quot;, buttonStyle);</b>
+<b class="nc">&nbsp;        volumeNoneButton.setPosition(Gdx.graphics.getWidth()/2f - volumeNoneButton.getWidth()/2, Gdx.graphics.getHeight()/2f - volumeNoneButton.getHeight()*5/2);</b>
+<b class="nc">&nbsp;        volumeNoneButton.addListener(new ChangeListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void changed(ChangeEvent event, Actor actor) {
+<b class="nc">&nbsp;                settings.set(1, &quot;none&quot;);</b>
+<b class="nc">&nbsp;                Utility.setSettings(settings);</b>
+<b class="nc">&nbsp;                game.setScreen(new TitleScreen(game));</b>
+&nbsp;            }
+&nbsp;        });
+<b class="nc">&nbsp;        stage.addActor(volumeNoneButton);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void render(float delta) {
+<b class="nc">&nbsp;        Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );</b>
+<b class="nc">&nbsp;        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</b>
+&nbsp;
+<b class="nc">&nbsp;        winWidth = Gdx.graphics.getWidth();</b>
+<b class="nc">&nbsp;        winHeight = Gdx.graphics.getHeight();</b>
+&nbsp;
+<b class="nc">&nbsp;        camera.update();</b>
+<b class="nc">&nbsp;        game.getBatch().setProjectionMatrix(camera.combined);</b>
+&nbsp;
+<b class="nc">&nbsp;        game.getBatch().begin();</b>
+<b class="nc">&nbsp;        font.draw(game.getBatch(), &quot;SETTINGS&quot;, 0, winHeight/2f + font.getLineHeight()*3, winWidth, 1, false);</b>
+<b class="nc">&nbsp;        game.getBatch().end();</b>
+<b class="nc">&nbsp;        stage.draw();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void resize(int width, int height) {
+<b class="nc">&nbsp;        super.resize(width, height);</b>
+<b class="nc">&nbsp;        fullscreenButton.setPosition(Gdx.graphics.getWidth()/2f - fullscreenButton.getWidth()/2, Gdx.graphics.getHeight()/2f + fullscreenButton.getHeight()/2);</b>
+<b class="nc">&nbsp;        volumeFullButton.setPosition(Gdx.graphics.getWidth()/2f - volumeFullButton.getWidth()/2, Gdx.graphics.getHeight()/2f - volumeFullButton.getHeight()/2);</b>
+<b class="nc">&nbsp;        volumeHalfButton.setPosition(Gdx.graphics.getWidth()/2f - volumeHalfButton.getWidth()/2, Gdx.graphics.getHeight()/2f - volumeHalfButton.getHeight()*3/2);</b>
+<b class="nc">&nbsp;        volumeNoneButton.setPosition(Gdx.graphics.getWidth()/2f - volumeNoneButton.getWidth()/2, Gdx.graphics.getHeight()/2f - volumeNoneButton.getHeight()*5/2);</b>
+<b class="nc">&nbsp;        stage.clear();</b>
+<b class="nc">&nbsp;        stage.addActor(fullscreenButton);</b>
+<b class="nc">&nbsp;        stage.addActor(volumeFullButton);</b>
+<b class="nc">&nbsp;        stage.addActor(volumeHalfButton);</b>
+<b class="nc">&nbsp;        stage.addActor(volumeNoneButton);</b>
+<b class="nc">&nbsp;        camera.setToOrtho(false, width, height);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void hide(){
+<b class="nc">&nbsp;        super.dispose();</b>
+<b class="nc">&nbsp;        game.dispose();</b>
+<b class="nc">&nbsp;        batch.dispose();</b>
+<b class="nc">&nbsp;        font.dispose();</b>
+<b class="nc">&nbsp;        bg.dispose();</b>
+<b class="nc">&nbsp;        stage.dispose();</b>
+<b class="nc">&nbsp;        skin.dispose();</b>
+<b class="nc">&nbsp;        atlas.dispose();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 11:09</div>
+</div>
+</body>
+</html>

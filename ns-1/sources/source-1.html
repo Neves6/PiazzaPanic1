@@ -1,0 +1,203 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Chef</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.neves6.piazzapanic</a>
+</div>
+
+<h1>Coverage Summary for Class: Chef (com.neves6.piazzapanic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Chef</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.9%
+  </span>
+  <span class="absValue">
+    (10/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.1%
+  </span>
+  <span class="absValue">
+    (33/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.neves6.piazzapanic;
+&nbsp;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;
+&nbsp;import java.util.Stack;
+&nbsp;
+&nbsp;/**
+&nbsp; * Chef subclass.
+&nbsp; */
+&nbsp;public class Chef extends Person {
+&nbsp;    private boolean isStickied;
+&nbsp;    private Stack&lt;String&gt; inventory;
+&nbsp;    private String facing;
+&nbsp;    private final Texture txUp;
+&nbsp;    private final Texture txDown;
+&nbsp;    private final Texture txLeft;
+&nbsp;    private final Texture txRight;
+&nbsp;    private Texture txNow;
+&nbsp;    private boolean isInteracting;
+&nbsp;    private Machine machineInteractingWith;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Chef constructor.
+&nbsp;     * @param name
+&nbsp;     * @param xCoord
+&nbsp;     * @param yCoord
+&nbsp;     * @param chopSpeed
+&nbsp;     * @param frySpeed
+&nbsp;     * @param bakeSpeed
+&nbsp;     * @param isStickied
+&nbsp;     * @param inventory
+&nbsp;     * @param textureSet
+&nbsp;     */
+&nbsp;    public Chef(String name, int xCoord, int yCoord, int chopSpeed, int frySpeed, int bakeSpeed, boolean isStickied, Stack&lt;String&gt; inventory, int textureSet){
+<b class="fc">&nbsp;        super(name, xCoord, yCoord);</b>
+<b class="fc">&nbsp;        this.isStickied = isStickied;</b>
+<b class="fc">&nbsp;        if (inventory.size() == 0){ this.inventory = new Stack&lt;String&gt;();}</b>
+<b class="fc">&nbsp;        else {this.inventory = inventory;}</b>
+<b class="fc">&nbsp;        this.facing = &quot;down&quot;;</b>
+<b class="fc">&nbsp;        this.txUp =    new Texture(&quot;people/chef&quot; + textureSet + &quot;up.png&quot;);</b>
+<b class="fc">&nbsp;        this.txDown =  new Texture(&quot;people/chef&quot; + textureSet + &quot;down.png&quot;);</b>
+<b class="fc">&nbsp;        this.txLeft =  new Texture(&quot;people/chef&quot; + textureSet + &quot;left.png&quot;);</b>
+<b class="fc">&nbsp;        this.txRight = new Texture(&quot;people/chef&quot; + textureSet + &quot;right.png&quot;);</b>
+<b class="fc">&nbsp;        this.txNow = txDown;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    public boolean getIsStickied(){
+<b class="fc">&nbsp;        return isStickied;</b>
+&nbsp;    }
+&nbsp;    public Texture getTxNow(){
+<b class="nc">&nbsp;        return txNow;</b>
+&nbsp;    }
+&nbsp;    public void setIsStickied(boolean flag){
+<b class="fc">&nbsp;        this.isStickied = flag;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;    public void setMachineInteractingWith(Machine machine){
+<b class="fc">&nbsp;        this.machineInteractingWith = machine;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;    public Machine getMachineInteractingWith(){
+<b class="fc">&nbsp;        return machineInteractingWith;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Inventory management
+&nbsp;    public Stack&lt;String&gt; getInventory(){
+<b class="fc">&nbsp;        return inventory;</b>
+&nbsp;    }
+&nbsp;    public void addToInventory(String item){
+<b class="fc">&nbsp;        this.inventory.push(item);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;    public void removeTopFromInventory(){
+<b class="fc">&nbsp;        this.inventory.pop();</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    //Facing
+&nbsp;    public String getFacing(){
+<b class="fc">&nbsp;        return facing;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the facing direction of the chef, then changes the current texture to match.
+&nbsp;     * @param facing sprite facing direction.
+&nbsp;     */
+&nbsp;    public void setFacing(String facing){
+<b class="fc">&nbsp;        this.facing = facing;</b>
+<b class="fc">&nbsp;        switch (facing){</b>
+&nbsp;            case &quot;up&quot;:
+<b class="fc">&nbsp;                this.txNow = txUp;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            case &quot;down&quot;:
+<b class="fc">&nbsp;                this.txNow = txDown;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            case &quot;left&quot;:
+<b class="fc">&nbsp;                this.txNow = txLeft;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            case &quot;right&quot;:
+<b class="fc">&nbsp;                this.txNow = txRight;</b>
+&nbsp;                break;
+&nbsp;        }
+<b class="fc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 11:09</div>
+</div>
+</body>
+</html>

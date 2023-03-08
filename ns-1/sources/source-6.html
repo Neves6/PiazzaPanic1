@@ -1,0 +1,309 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GameScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.neves6.piazzapanic</a>
+</div>
+
+<h1>Coverage Summary for Class: GameScreen (com.neves6.piazzapanic)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/77)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GameScreen$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/95)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.neves6.piazzapanic;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.Input;
+&nbsp;import com.badlogic.gdx.InputAdapter;
+&nbsp;import com.badlogic.gdx.ScreenAdapter;
+&nbsp;import com.badlogic.gdx.graphics.GL20;
+&nbsp;import com.badlogic.gdx.graphics.OrthographicCamera;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+&nbsp;import com.badlogic.gdx.maps.tiled.TiledMap;
+&nbsp;import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+&nbsp;import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;
+&nbsp;public class GameScreen extends ScreenAdapter {
+&nbsp;    PiazzaPanicGame game;
+&nbsp;    OrthographicCamera camera;
+&nbsp;    SpriteBatch batch;
+&nbsp;    BitmapFont font;
+&nbsp;    Stage stage;
+&nbsp;    int winWidth;
+&nbsp;    int winHeight;
+&nbsp;    TiledMap map;
+&nbsp;    OrthogonalTiledMapRenderer renderer;
+&nbsp;    ScenarioGameMaster gm;
+&nbsp;    float unitScale;
+&nbsp;    float wScale;
+&nbsp;    float hScale;
+&nbsp;    int INITIAL_WIDTH;
+&nbsp;    int INITIAL_HEIGHT;
+<b class="nc">&nbsp;    int[] renderableLayers = { 0, 1, 2 };</b>
+&nbsp;    Texture selectedTexture;
+&nbsp;    Texture recipes;
+&nbsp;    Texture lock;
+&nbsp;    Money machineUnlockBalance;
+<b class="nc">&nbsp;    public GameScreen(PiazzaPanicGame game, int level) {</b>
+<b class="nc">&nbsp;        this.machineUnlockBalance = new Money();</b>
+<b class="nc">&nbsp;        this.game = game;</b>
+<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold_Black.fnt&quot;));</b>
+<b class="nc">&nbsp;        font.getData().setScale(0.75F);</b>
+&nbsp;        //bg = new Texture(Gdx.files.internal(&quot;title_screen_large.png&quot;));
+<b class="nc">&nbsp;        this.INITIAL_WIDTH = Gdx.graphics.getWidth();</b>
+<b class="nc">&nbsp;        this.INITIAL_HEIGHT = Gdx.graphics.getHeight();</b>
+<b class="nc">&nbsp;        if (level == 1) {</b>
+<b class="nc">&nbsp;            map = new TmxMapLoader().load(&quot;tilemaps/level1.tmx&quot;);</b>
+<b class="nc">&nbsp;            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance);</b>
+<b class="nc">&nbsp;            unitScale = Gdx.graphics.getHeight() / (12f*32f);</b>
+<b class="nc">&nbsp;            wScale = unitScale * 32f;</b>
+<b class="nc">&nbsp;            hScale = unitScale * 32f;</b>
+<b class="nc">&nbsp;            renderer = new OrthogonalTiledMapRenderer(map, unitScale);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        selectedTexture = new Texture(Gdx.files.internal(&quot;people/selected.png&quot;));</b>
+<b class="nc">&nbsp;        recipes = new Texture(Gdx.files.internal(&quot;recipes.png&quot;));</b>
+<b class="nc">&nbsp;        lock = new Texture(Gdx.files.internal(&quot;levellocked.png&quot;));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void show(){
+<b class="nc">&nbsp;        camera = new OrthographicCamera();</b>
+<b class="nc">&nbsp;        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</b>
+<b class="nc">&nbsp;        batch = new SpriteBatch();</b>
+&nbsp;
+<b class="nc">&nbsp;        stage = new Stage();</b>
+&nbsp;
+<b class="nc">&nbsp;        Gdx.graphics.setResizable(false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void render(float delta) {
+<b class="nc">&nbsp;        Gdx.input.setInputProcessor(new InputAdapter() {</b>
+&nbsp;            @Override
+&nbsp;            public boolean keyDown(int keyCode) {
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.W) {</b>
+<b class="nc">&nbsp;                    gm.tryMove(&quot;up&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.A) {</b>
+<b class="nc">&nbsp;                    gm.tryMove(&quot;left&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.S) {</b>
+<b class="nc">&nbsp;                    gm.tryMove(&quot;down&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.D) {</b>
+<b class="nc">&nbsp;                    gm.tryMove(&quot;right&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.NUM_1) {</b>
+<b class="nc">&nbsp;                    gm.setSelectedChef(1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.NUM_2) {</b>
+<b class="nc">&nbsp;                    gm.setSelectedChef(2);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.NUM_3) {</b>
+<b class="nc">&nbsp;                    gm.setSelectedChef(3);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (keyCode == Input.Keys.E) {</b>
+<b class="nc">&nbsp;                    gm.tryInteract();</b>
+&nbsp;                }
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        gm.tickUpdate(delta);</b>
+&nbsp;
+<b class="nc">&nbsp;        Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );</b>
+<b class="nc">&nbsp;        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</b>
+&nbsp;
+<b class="nc">&nbsp;        winWidth = Gdx.graphics.getWidth();</b>
+<b class="nc">&nbsp;        winHeight = Gdx.graphics.getHeight();</b>
+&nbsp;
+<b class="nc">&nbsp;        camera.update();</b>
+&nbsp;        //game.batch.setProjectionMatrix(camera.combined);
+&nbsp;
+<b class="nc">&nbsp;        renderer.setView(camera);</b>
+<b class="nc">&nbsp;        renderer.render(renderableLayers);</b>
+&nbsp;
+<b class="nc">&nbsp;        game.getBatch().begin();</b>
+<b class="nc">&nbsp;        game.getBatch().draw(gm.getChef(1).getTxNow(), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;        game.getBatch().draw(gm.getChef(2).getTxNow(), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;        game.getBatch().draw(gm.getChef(3).getTxNow(), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;        game.getBatch().draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale, gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (gm.getCustomersRemaining() &gt;= 1) {</b>
+<b class="nc">&nbsp;            game.getBatch().draw(gm.getFirstCustomer().getTxUp(), 8 * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;            for (int i = 1; i &lt; gm.getCustomersRemaining(); i++) {</b>
+<b class="nc">&nbsp;                game.getBatch().draw(gm.getFirstCustomer().getTxLeft(), (8+i) * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        font.draw(game.getBatch(), gm.getMachineTimerForChef(0), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);</b>
+<b class="nc">&nbsp;        font.draw(game.getBatch(), gm.getMachineTimerForChef(1), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);</b>
+<b class="nc">&nbsp;        game.getBatch().draw(recipes, 20, 20);</b>
+<b class="nc">&nbsp;        font.draw(game.getBatch(), gm.generateHoldingsText(), winWidth - (4.75f*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);</b>
+<b class="nc">&nbsp;        font.draw(game.getBatch(), gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);</b>
+<b class="nc">&nbsp;        font.draw(game.getBatch(), gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);</b>
+<b class="nc">&nbsp;        font.draw(game.getBatch(), machineUnlockBalance.displayBalance(), winWidth - (winWidth/3f), 60, (winWidth/3f), -1, false);</b>
+&nbsp;
+&nbsp;        // Any machines that are unlockable add here to draw a lock on top of it.
+<b class="nc">&nbsp;        if (!(machineUnlockBalance.isUnlocked(&quot;chopping&quot;))){</b>
+<b class="nc">&nbsp;            game.getBatch().draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;        } if (!(machineUnlockBalance.isUnlocked(&quot;forming&quot;))) {</b>
+<b class="nc">&nbsp;            game.getBatch().draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;        } if (!(machineUnlockBalance.isUnlocked(&quot;grill&quot;))) {</b>
+<b class="nc">&nbsp;            game.getBatch().draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;        } if (!(machineUnlockBalance.isUnlocked(&quot;potato&quot;))) {</b>
+<b class="nc">&nbsp;            game.getBatch().draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);</b>
+<b class="nc">&nbsp;        } if (!(machineUnlockBalance.isUnlocked(&quot;pizza&quot;))) {</b>
+<b class="nc">&nbsp;            game.getBatch().draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        game.getBatch().end();</b>
+&nbsp;
+<b class="nc">&nbsp;        stage.draw();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void resize(int width, int height) {
+<b class="nc">&nbsp;        if (width == INITIAL_WIDTH &amp;&amp; height == INITIAL_HEIGHT) {</b>
+<b class="nc">&nbsp;            super.resize(width, height);</b>
+<b class="nc">&nbsp;            camera.setToOrtho(false, width, height);</b>
+<b class="nc">&nbsp;            unitScale = Gdx.graphics.getHeight() / (12f*32f);</b>
+<b class="nc">&nbsp;            wScale = unitScale * 32f;</b>
+<b class="nc">&nbsp;            hScale = unitScale * 32f;</b>
+<b class="nc">&nbsp;            renderer = new OrthogonalTiledMapRenderer(map, unitScale);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            Gdx.graphics.setWindowedMode(INITIAL_WIDTH, INITIAL_HEIGHT);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void hide(){
+<b class="nc">&nbsp;        super.dispose();</b>
+<b class="nc">&nbsp;        game.dispose();</b>
+<b class="nc">&nbsp;        batch.dispose();</b>
+<b class="nc">&nbsp;        font.dispose();</b>
+<b class="nc">&nbsp;        stage.dispose();</b>
+<b class="nc">&nbsp;        map.dispose();</b>
+<b class="nc">&nbsp;        renderer.dispose();</b>
+<b class="nc">&nbsp;        selectedTexture.dispose();</b>
+<b class="nc">&nbsp;        recipes.dispose();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 11:09</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,152 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TestAutoCook</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.neves6.piazzapanic.tests</a>
+</div>
+
+<h1>Coverage Summary for Class: TestAutoCook (com.neves6.piazzapanic.tests)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TestAutoCook</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.neves6.piazzapanic.tests;
+&nbsp;
+&nbsp;import com.neves6.piazzapanic.Chef;
+&nbsp;import com.neves6.piazzapanic.Machine;
+&nbsp;import com.neves6.piazzapanic.Money;
+&nbsp;import com.neves6.piazzapanic.powerups.AutoCook;
+&nbsp;import org.junit.Test;
+&nbsp;import org.junit.runner.RunWith;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Stack;
+&nbsp;
+&nbsp;import static org.junit.Assert.assertSame;
+&nbsp;import static org.junit.Assert.assertTrue;
+&nbsp;
+&nbsp;@RunWith(GdxTestRunner.class)
+<b class="fc">&nbsp;public class TestAutoCook {</b>
+<b class="fc">&nbsp;    AutoCook testAutoCook = new AutoCook(1L);</b>
+&nbsp;    @Test
+&nbsp;    public void testConstructor(){
+<b class="fc">&nbsp;        assertTrue(testAutoCook.getEffectTime() == 1L);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+<b class="fc">&nbsp;    Machine m1 = new Machine(&quot;test&quot;, &quot;test&quot;, &quot;test&quot;, 5, false);</b>
+<b class="fc">&nbsp;    Machine m2 = new Machine(&quot;test&quot;, &quot;test&quot;, &quot;test&quot;, 10, true);</b>
+<b class="fc">&nbsp;    ArrayList&lt;Machine&gt; testMachines = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testApplyPowerUpNoRunningMachine(){
+<b class="fc">&nbsp;        testMachines.add(m1);</b>
+<b class="fc">&nbsp;        testMachines.add(m2);</b>
+<b class="fc">&nbsp;        testAutoCook.aquirePowerUp();</b>
+<b class="fc">&nbsp;        testAutoCook.applyPowerUp(testMachines);</b>
+<b class="fc">&nbsp;        assertTrue(testAutoCook.getAquiredStatus() == true);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void testApplyPowerUpCompleteMachine(){
+<b class="fc">&nbsp;        Chef t1 = new Chef(&quot;Test 1&quot;, 1, 1, 1, 1, 1, false,</b>
+&nbsp;                new Stack&lt;&gt;(), 1);
+<b class="fc">&nbsp;        t1.addToInventory(&quot;test&quot;);</b>
+<b class="fc">&nbsp;        m1.process(t1, new Money());</b>
+<b class="fc">&nbsp;        testMachines.add(m1);</b>
+<b class="fc">&nbsp;        testAutoCook.aquirePowerUp();</b>
+<b class="fc">&nbsp;        testAutoCook.applyPowerUp(testMachines);</b>
+<b class="fc">&nbsp;        assertTrue(testAutoCook.getAquiredStatus() == false);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 11:09</div>
+</div>
+</body>
+</html>

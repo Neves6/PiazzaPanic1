@@ -114,39 +114,39 @@ public class GameScreen extends ScreenAdapter {
         renderer.setView(camera);
         renderer.render(renderableLayers);
 
-        game.batch.begin();
-        game.batch.draw(gm.getChef(1).getTxNow(), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        game.batch.draw(gm.getChef(2).getTxNow(), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        game.batch.draw(gm.getChef(3).getTxNow(), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        game.batch.draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale, gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+        game.getBatch().begin();
+        game.getBatch().draw(gm.getChef(1).getTxNow(), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+        game.getBatch().draw(gm.getChef(2).getTxNow(), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+        game.getBatch().draw(gm.getChef(3).getTxNow(), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+        game.getBatch().draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale, gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
 
         if (gm.getCustomersRemaining() >= 1) {
-            game.batch.draw(gm.getFirstCustomer().getTxUp(), 8 * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(gm.getFirstCustomer().getTxUp(), 8 * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
             for (int i = 1; i < gm.getCustomersRemaining(); i++) {
-                game.batch.draw(gm.getFirstCustomer().getTxLeft(), (8+i) * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
+                game.getBatch().draw(gm.getFirstCustomer().getTxLeft(), (8+i) * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
             }
         }
-        font.draw(game.batch, gm.getMachineTimerForChef(0), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
-        font.draw(game.batch, gm.getMachineTimerForChef(1), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
-        game.batch.draw(recipes, 20, 20);
-        font.draw(game.batch, gm.generateHoldingsText(), winWidth - (4.75f*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
-        font.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
-        font.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
-        font.draw(game.batch, machineUnlockBalance.displayBalance(), winWidth - (winWidth/3f), 60, (winWidth/3f), -1, false);
+        font.draw(game.getBatch(), gm.getMachineTimerForChef(0), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
+        font.draw(game.getBatch(), gm.getMachineTimerForChef(1), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
+        game.getBatch().draw(recipes, 20, 20);
+        font.draw(game.getBatch(), gm.generateHoldingsText(), winWidth - (4.75f*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        font.draw(game.getBatch(), gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        font.draw(game.getBatch(), gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
+        font.draw(game.getBatch(), machineUnlockBalance.displayBalance(), winWidth - (winWidth/3f), 60, (winWidth/3f), -1, false);
 
         // Any machines that are unlockable add here to draw a lock on top of it.
         if (!(machineUnlockBalance.isUnlocked("chopping"))){
-            game.batch.draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("forming"))) {
-            game.batch.draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("grill"))) {
-            game.batch.draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("potato"))) {
-            game.batch.draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("pizza"))) {
-            game.batch.draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         }
-        game.batch.end();
+        game.getBatch().end();
 
         stage.draw();
     }

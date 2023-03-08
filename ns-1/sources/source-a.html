@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Machine</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.neves6.piazzapanic</a>
+</div>
+
+<h1>Coverage Summary for Class: Machine (com.neves6.piazzapanic)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Machine</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.7%
+  </span>
+  <span class="absValue">
+    (42/43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.neves6.piazzapanic;
+&nbsp;
+&nbsp;/**
+&nbsp; * Machine class.
+&nbsp; * Represents a machine or station in the game.
+&nbsp; */
+&nbsp;public class Machine {
+&nbsp;    private final String type;
+&nbsp;    private final String input;
+&nbsp;    private final String output;
+&nbsp;    private float processingTime;
+&nbsp;    private final Boolean sticky;
+&nbsp;    private Boolean active;
+&nbsp;    private float runtime;
+&nbsp;    private Chef operator;
+&nbsp;    private String unlockID;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Machine constructor.
+&nbsp;     * @param type Type of machine.
+&nbsp;     * @param input Input ingredient.
+&nbsp;     * @param output Output ingredient.
+&nbsp;     * @param processingTime Processing time.
+&nbsp;     * @param sticky Whether or not the machine locks the chef in place during use.
+&nbsp;     */
+<b class="fc">&nbsp;    public Machine(String type, String input, String output, float processingTime, Boolean sticky, String unlockID){</b>
+<b class="fc">&nbsp;        this.type = type;</b>
+<b class="fc">&nbsp;        this.input = input;</b>
+<b class="fc">&nbsp;        this.output = output;</b>
+<b class="fc">&nbsp;        this.processingTime = processingTime;</b>
+<b class="fc">&nbsp;        this.sticky = sticky;</b>
+<b class="fc">&nbsp;        this.active = false;</b>
+<b class="fc">&nbsp;        this.unlockID = unlockID;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Machine constructor.
+&nbsp;     * @param type Type of machine.
+&nbsp;     * @param input Input ingredient.
+&nbsp;     * @param output Output ingredient.
+&nbsp;     * @param processingTime Processing time.
+&nbsp;     * @param sticky Whether or not the machine locks the chef in place during use.
+&nbsp;     */
+<b class="fc">&nbsp;    public Machine(String type, String input, String output, float processingTime, Boolean sticky){</b>
+<b class="fc">&nbsp;        this.type = type;</b>
+<b class="fc">&nbsp;        this.input = input;</b>
+<b class="fc">&nbsp;        this.output = output;</b>
+<b class="fc">&nbsp;        this.processingTime = processingTime;</b>
+<b class="fc">&nbsp;        this.sticky = sticky;</b>
+<b class="fc">&nbsp;        this.active = false;</b>
+<b class="fc">&nbsp;        this.unlockID = &quot;auto&quot;;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Begins the machine processing of the ingredient.
+&nbsp;     * @param chef Which chef is using the machine.
+&nbsp;     */
+&nbsp;    public void process(Chef chef, Money currency){
+<b class="fc">&nbsp;        if (!(currency.isUnlocked(this.unlockID))){</b>
+<b class="nc">&nbsp;            return;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (input == &quot;&quot; &amp;&amp; processingTime == 0) {</b>
+<b class="fc">&nbsp;            chef.addToInventory(output);</b>
+<b class="fc">&nbsp;        } else if (chef.getInventory().peek() == input) {</b>
+<b class="fc">&nbsp;            active = true;</b>
+<b class="fc">&nbsp;            chef.getInventory().pop();</b>
+<b class="fc">&nbsp;            chef.setIsStickied(sticky);</b>
+<b class="fc">&nbsp;            chef.setMachineInteractingWith(this);</b>
+<b class="fc">&nbsp;            operator = chef;</b>
+&nbsp;        }
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the machine is done processing and adds the output to the chef&#39;s inventory if it is.
+&nbsp;     * Handles unsticking the chef.
+&nbsp;     */
+&nbsp;    public void attemptGetOutput(){
+<b class="fc">&nbsp;        Chef chef = operator;</b>
+<b class="fc">&nbsp;        if (active &amp;&amp; runtime &gt;= processingTime) {</b>
+<b class="fc">&nbsp;            chef.addToInventory(output);</b>
+<b class="fc">&nbsp;            chef.setIsStickied(false);</b>
+<b class="fc">&nbsp;            chef.setMachineInteractingWith(null);</b>
+<b class="fc">&nbsp;            active = false;</b>
+<b class="fc">&nbsp;            runtime = 0;</b>
+&nbsp;        }
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    public void incrementRuntime(float delta){
+<b class="fc">&nbsp;        this.runtime += delta;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    public float getRuntime(){
+<b class="fc">&nbsp;        return runtime;</b>
+&nbsp;    }
+&nbsp;    public boolean getActive(){
+<b class="fc">&nbsp;        return active;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getProcessingTime(){
+<b class="fc">&nbsp;        return processingTime;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Use this for auto cook and shorter cook.
+<b class="fc">&nbsp;    public void changeProcessingTime(float newTime){this.processingTime = newTime;}</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-03-08 11:09</div>
+</div>
+</body>
+</html>

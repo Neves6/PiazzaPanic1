@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static java.util.Arrays.asList;
 
-class ScenarioGameMaster extends GameMaster {
+public class ScenarioGameMaster extends GameMaster {
     PiazzaPanicGame game;
     TiledMap map;
     TiledMapTileLayer collisionLayer;

@@ -125,11 +125,11 @@ public class SettingsScreen extends ScreenAdapter {
         winHeight = Gdx.graphics.getHeight();
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        font.draw(game.batch, "SETTINGS", 0, winHeight/2f + font.getLineHeight()*3, winWidth, 1, false);
-        game.batch.end();
+        game.getBatch().begin();
+        font.draw(game.getBatch(), "SETTINGS", 0, winHeight/2f + font.getLineHeight()*3, winWidth, 1, false);
+        game.getBatch().end();
         stage.draw();
     }
 
