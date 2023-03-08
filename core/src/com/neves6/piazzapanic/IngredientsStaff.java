@@ -1,15 +1,26 @@
 package com.neves6.piazzapanic;
 
+import javax.swing.plaf.IconUIResource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 public class IngredientsStaff{
     private String currentRecipe;
     private Stack<String> stack;
     private boolean generate;
+    private ArrayList<Integer> xSequence;
+    private ArrayList<Integer> ySequence;
+    private Integer counter;
+    private Long fridgeTime = 0L;
+    private boolean collect;
 
-    public IngredientsStaff() {
+    public IngredientsStaff(ArrayList<Integer> xSequence, ArrayList<Integer> ySequence) {
         this.stack = new Stack<>();
         this.generate = true;
+        this.xSequence = xSequence;
+        this.ySequence = ySequence;
+        this.counter = 0;
     }
 
     public void generateStack(){
@@ -50,5 +61,34 @@ public class IngredientsStaff{
 
     public void setGenerate(boolean generate){
         this.generate = generate;
+
+    }
+
+    public boolean runSequence(){
+        if (counter > 0){
+            return false;
+        } else{
+            counter = 0;
+            return true;
+        }
+    }
+
+    public ArrayList<Integer> getCoordInSeq(){
+       if (counter + 1 >= xSequence.size()){
+           counter = 0;
+           this.collect = false;
+       } else if (System.currentTimeMillis() - fridgeTime > 400){
+           counter ++;
+           fridgeTime = System.currentTimeMillis();
+       }
+       return new ArrayList<>(Arrays.asList(xSequence.get(counter), ySequence.get(counter)));
+    }
+
+    public void setCollect(boolean collect) {
+        this.collect = collect;
+    }
+
+    public boolean getCollect() {
+        return this.collect;
     }
 }

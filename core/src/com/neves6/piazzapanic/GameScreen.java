@@ -14,6 +14,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class GameScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -35,6 +38,7 @@ public class GameScreen extends ScreenAdapter {
     Texture recipes;
     Texture lock;
     Money machineUnlockBalance;
+    IngredientsStaff ingredientsHelper;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.machineUnlockBalance = new Money();
         this.game = game;
@@ -43,9 +47,11 @@ public class GameScreen extends ScreenAdapter {
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
+        this.ingredientsHelper = new IngredientsStaff(new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
+                (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9 ,9, 9, 8, 9))));
         if (level == 1) {
             map = new TmxMapLoader().load("tilemaps/level1.tmx");
-            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance);
+            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance, ingredientsHelper);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
             wScale = unitScale * 32f;
             hScale = unitScale * 32f;
@@ -147,10 +153,24 @@ public class GameScreen extends ScreenAdapter {
             game.batch.draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("pizza"))) {
             game.batch.draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+        }  if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
+            game.batch.draw(lock,  2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
         }
         game.batch.end();
 
         stage.draw();
+
+        drawSequence(ingredientsHelper);
+
+    }
+
+    public void drawSequence(IngredientsStaff ob){
+        if (ob.getCollect()) {
+            ArrayList<Integer> pairCoord = ob.getCoordInSeq();
+            game.batch.begin();
+            game.batch.draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
+            game.batch.end();
+        }
     }
 
     @Override
