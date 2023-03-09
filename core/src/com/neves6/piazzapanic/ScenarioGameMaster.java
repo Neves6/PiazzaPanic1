@@ -11,7 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static java.util.Arrays.asList;
 
-class ScenarioGameMaster extends GameMaster {
+public class ScenarioGameMaster extends GameMaster {
+    DeliveryStaff deliveryStaff;
     IngredientsStaff staffOne;
     PiazzaPanicGame game;
     TiledMap map;
@@ -44,9 +45,10 @@ class ScenarioGameMaster extends GameMaster {
      * @param machineUnlockBalance
      * @param ingredientsHelper
      */
-    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno, Money machineUnlockBalance, IngredientsStaff ingredientsHelper) {
+    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno, Money machineUnlockBalance, IngredientsStaff ingredientsHelper, DeliveryStaff deliveryStaff) {
         this.machineUnlockBalance = machineUnlockBalance;
         this.staffOne = ingredientsHelper;
+        this.deliveryStaff = deliveryStaff;
         this.game = game;
         settings = Utility.getSettings();
         this.map = map;
@@ -121,7 +123,8 @@ class ScenarioGameMaster extends GameMaster {
         }
 
         machineUnlockBalance.addGroup("ingredients-staff", 150);
-
+        machineUnlockBalance.addGroup("server-staff", 0);
+        machineUnlockBalance.unlockMachine("server-staff");
     }
 
     public void setSelectedChef(int selectedChef) {
@@ -136,7 +139,9 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public void setRecipeToStaff(){
-        staffOne.setCurrentRecipe(customers.get(0).getOrder());
+        if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
+            staffOne.setCurrentRecipe(customers.get(0).getOrder());
+        }
     }
 
     /**
@@ -328,9 +333,8 @@ class ScenarioGameMaster extends GameMaster {
             Boolean value = machineUnlockBalance.unlockMachine("ingredients-staff");
             if (machineUnlockBalance.isUnlocked("ingredients-staff") &&
                 value != machineUnlockBalance.isUnlocked("ingredients-staff")){
-                staffOne.setCollect(true);
             }
-           ;
+
         }
 
         //Staff collects items.
@@ -506,19 +510,34 @@ class ScenarioGameMaster extends GameMaster {
         //Hamburger assembly
         if (tray.contains("burger") && tray.contains("toasted bun")){
             tray.clear();
-            inv.add("hamburger");
+            if (machineUnlockBalance.isUnlocked("server-staff")) {
+                deliveryStaff.collectItem("hamburger");
+                serveFood();
+            } else{
+                inv.add("hamburger");
+            }
             serving.play(soundVolume);
         }
         //Salad assembly
         if (tray.contains("chopped lettuce") && tray.contains("chopped tomato") && tray.contains("chopped onion")){
             tray.clear();
-            inv.add("salad");
+            if (machineUnlockBalance.isUnlocked("server-staff")) {
+                deliveryStaff.collectItem("salad");
+                serveFood();
+            } else {
+                inv.add("salad");
+            }
             serving.play(soundVolume);
         }
         //Jacket potato assembly
         if (tray.contains("jacket") && tray.contains("beans")){
             tray.clear();
-            inv.add("jacket potato");
+            if (machineUnlockBalance.isUnlocked("server-staff")) {
+                deliveryStaff.collectItem("jacket potato");
+                serveFood();
+            } else{
+                inv.add("jacket potato");
+            }
             serving.play(soundVolume);
         }
         //Raw pizza assembly
@@ -537,7 +556,13 @@ class ScenarioGameMaster extends GameMaster {
 
     private void serveFood(){
         Chef chef = chefs.get(selectedChef);
-        Stack<String> inv = chef.getInventory();
+        Stack<String> inv = new Stack<>();
+        if (machineUnlockBalance.isUnlocked("server-staff")) {
+            inv = deliveryStaff.getItems();
+        } else{
+            inv = chef.getInventory();
+        }
+
 
         if (customers.get(0).getOrder() == inv.peek()){
             inv.pop();
@@ -545,9 +570,6 @@ class ScenarioGameMaster extends GameMaster {
             serving.play(soundVolume);
             machineUnlockBalance.incrementBalance();
             staffOne.setGenerate(true);
-            if (machineUnlockBalance.isUnlocked("ingredients-staff")){
-                staffOne.setCollect(true);
-            }
         }
 
         if (customers.size() == 0){

@@ -1,6 +1,5 @@
 package com.neves6.piazzapanic;
 
-import javax.swing.plaf.IconUIResource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
@@ -47,6 +46,7 @@ public class IngredientsStaff{
         if (this.generate) {
             this.currentRecipe = recipe;
             generateStack();
+            this.collect = true;
             this.generate = false;
         }
     }
@@ -64,15 +64,6 @@ public class IngredientsStaff{
 
     }
 
-    public boolean runSequence(){
-        if (counter > 0){
-            return false;
-        } else{
-            counter = 0;
-            return true;
-        }
-    }
-
     public ArrayList<Integer> getCoordInSeq(){
        if (counter + 1 >= xSequence.size()){
            counter = 0;
@@ -84,9 +75,6 @@ public class IngredientsStaff{
        return new ArrayList<>(Arrays.asList(xSequence.get(counter), ySequence.get(counter)));
     }
 
-    public void setCollect(boolean collect) {
-        this.collect = collect;
-    }
 
     public boolean getCollect() {
         return this.collect;

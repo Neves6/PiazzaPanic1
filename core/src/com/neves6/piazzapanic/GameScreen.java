@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameScreen extends ScreenAdapter {
+    DeliveryStaff deliveryStaff;
     PiazzaPanicGame game;
     OrthographicCamera camera;
     SpriteBatch batch;
@@ -41,6 +42,8 @@ public class GameScreen extends ScreenAdapter {
     IngredientsStaff ingredientsHelper;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.machineUnlockBalance = new Money();
+        this.deliveryStaff = new DeliveryStaff(new ArrayList<>(Arrays.asList(2, 3)),
+                (new ArrayList<>(Arrays.asList(3, 3))));
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
         font.getData().setScale(0.75F);
@@ -51,7 +54,7 @@ public class GameScreen extends ScreenAdapter {
                 (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9 ,9, 9, 8, 9))));
         if (level == 1) {
             map = new TmxMapLoader().load("tilemaps/level1.tmx");
-            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance, ingredientsHelper);
+            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance, ingredientsHelper, deliveryStaff);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
             wScale = unitScale * 32f;
             hScale = unitScale * 32f;
@@ -161,10 +164,20 @@ public class GameScreen extends ScreenAdapter {
         stage.draw();
 
         drawSequence(ingredientsHelper);
+        drawSequence(deliveryStaff);
 
     }
 
     public void drawSequence(IngredientsStaff ob){
+        if (ob.getCollect()) {
+            ArrayList<Integer> pairCoord = ob.getCoordInSeq();
+            game.batch.begin();
+            game.batch.draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
+            game.batch.end();
+        }
+    }
+
+    public void drawSequence(DeliveryStaff ob){
         if (ob.getCollect()) {
             ArrayList<Integer> pairCoord = ob.getCoordInSeq();
             game.batch.begin();
