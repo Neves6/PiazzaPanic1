@@ -42,8 +42,8 @@ public class GameScreen extends ScreenAdapter {
     IngredientsStaff ingredientsHelper;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.machineUnlockBalance = new Money();
-        this.deliveryStaff = new DeliveryStaff(new ArrayList<>(Arrays.asList(2, 3)),
-                (new ArrayList<>(Arrays.asList(3, 3))));
+        this.deliveryStaff = new DeliveryStaff(new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
+                (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
         font.getData().setScale(0.75F);

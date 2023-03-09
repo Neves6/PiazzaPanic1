@@ -68,7 +68,7 @@ public class IngredientsStaff{
        if (counter + 1 >= xSequence.size()){
            counter = 0;
            this.collect = false;
-       } else if (System.currentTimeMillis() - fridgeTime > 400){
+       } else if (System.currentTimeMillis() - fridgeTime > 5000){
            counter ++;
            fridgeTime = System.currentTimeMillis();
        }

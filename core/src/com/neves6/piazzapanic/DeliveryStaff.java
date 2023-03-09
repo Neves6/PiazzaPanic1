@@ -10,7 +10,7 @@ public class DeliveryStaff {
     private Stack<String> items;
     private int counter;
     private boolean collect;
-    private long time;
+    private Long time = 0L;
 
     public DeliveryStaff(ArrayList<Integer> xSequence, ArrayList<Integer> ySequence) {
         this.items = new Stack<>();
@@ -34,7 +34,7 @@ public class DeliveryStaff {
         if (counter + 1 >= xSequence.size()){
             counter = 0;
             this.collect = false;
-        } else if (System.currentTimeMillis() - time > 400){
+        } else if (System.currentTimeMillis() - time > 500){
             counter ++;
             time = System.currentTimeMillis();
         }
