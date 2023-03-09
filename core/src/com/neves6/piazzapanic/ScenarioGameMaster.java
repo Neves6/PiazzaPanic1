@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -123,8 +125,7 @@ public class ScenarioGameMaster extends GameMaster {
         }
 
         machineUnlockBalance.addGroup("ingredients-staff", 150);
-        machineUnlockBalance.addGroup("server-staff", 0);
-        machineUnlockBalance.unlockMachine("server-staff");
+        machineUnlockBalance.addGroup("server-staff", 50);
     }
 
     public void setSelectedChef(int selectedChef) {
@@ -331,10 +332,12 @@ public class ScenarioGameMaster extends GameMaster {
             machineUnlockBalance.unlockMachine("pizza");
         } else if (targetx == 2 && targety == 7){
             Boolean value = machineUnlockBalance.unlockMachine("ingredients-staff");
+            // Need to do it this way to not break boolean values.
             if (machineUnlockBalance.isUnlocked("ingredients-staff") &&
                 value != machineUnlockBalance.isUnlocked("ingredients-staff")){
             }
-
+        } else if (targetx == 1 && targety == 3) {
+            machineUnlockBalance.unlockMachine("server-staff");
         }
 
         //Staff collects items.
@@ -557,7 +560,7 @@ public class ScenarioGameMaster extends GameMaster {
     private void serveFood(){
         Chef chef = chefs.get(selectedChef);
         Stack<String> inv = new Stack<>();
-        if (machineUnlockBalance.isUnlocked("server-staff")) {
+        if (machineUnlockBalance.isUnlocked("server-staff") && !(customers.get(0).getOrder() == "pizza")) {
             inv = deliveryStaff.getItems();
         } else{
             inv = chef.getInventory();

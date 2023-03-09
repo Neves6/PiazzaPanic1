@@ -13,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -158,7 +160,10 @@ public class GameScreen extends ScreenAdapter {
             game.batch.draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         }  if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
             game.batch.draw(lock,  2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("server-staff"))) {
+            game.batch.draw(lock,  1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);
         }
+
         game.batch.end();
 
         stage.draw();

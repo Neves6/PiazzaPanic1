@@ -1,27 +1,35 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.staff;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
 
-public class IngredientsStaff{
-    private String currentRecipe;
-    private Stack<String> stack;
-    private boolean generate;
-    private ArrayList<Integer> xSequence;
-    private ArrayList<Integer> ySequence;
-    private Integer counter;
-    private Long fridgeTime = 0L;
-    private boolean collect;
+public class IngredientsStaff extends BaseStaff{
+    Stack<String> stack;
+    String currentRecipe;
+    boolean generate;
 
+    /**
+     * Constructor method that takes 2 arrays which must be of the
+     * same length. Each index represent the nth value in the sequence of
+     * movement which must take place.
+     *
+     * Generate tells the class that all the ingredients needs adding to the
+     * stack.
+     *
+     * @param xSequence List of x coordinates in order.
+     * @param ySequence List of y coordinates in order.
+     */
     public IngredientsStaff(ArrayList<Integer> xSequence, ArrayList<Integer> ySequence) {
+        super(xSequence, ySequence);
         this.stack = new Stack<>();
-        this.generate = true;
-        this.xSequence = xSequence;
-        this.ySequence = ySequence;
-        this.counter = 0;
+        this.generate = false;
     }
 
+    /***
+     * Depending on what recipe is needed, the stack is generated and designed to put the ingredients
+     * you need last first. This allows the LIFO structure to optimise the way it gives ingredients
+     * to the user for maximum time saving.
+     */
     public void generateStack(){
         if (currentRecipe == "salad"){
             this.stack.push("onion");
@@ -42,6 +50,10 @@ public class IngredientsStaff{
         }
     }
 
+    /***
+     * Sets current recipe if the flag is set.
+     * @param recipe The recipe that is currently being processed.
+     */
     public void setCurrentRecipe(String recipe){
         if (this.generate) {
             this.currentRecipe = recipe;
@@ -51,6 +63,10 @@ public class IngredientsStaff{
         }
     }
 
+    /***
+     * Collect ingredients that have been collected by the staff member.
+     * @return The ingredients at the top of the stack.
+     */
     public String collectItem(){
         if (this.stack.size() > 0){
             return this.stack.pop();
@@ -59,24 +75,12 @@ public class IngredientsStaff{
         }
     }
 
+    /***
+     * Getter method.
+     * @param generate Whether a new recipes ingredients needs to be collected yet.
+     */
     public void setGenerate(boolean generate){
         this.generate = generate;
 
-    }
-
-    public ArrayList<Integer> getCoordInSeq(){
-       if (counter + 1 >= xSequence.size()){
-           counter = 0;
-           this.collect = false;
-       } else if (System.currentTimeMillis() - fridgeTime > 5000){
-           counter ++;
-           fridgeTime = System.currentTimeMillis();
-       }
-       return new ArrayList<>(Arrays.asList(xSequence.get(counter), ySequence.get(counter)));
-    }
-
-
-    public boolean getCollect() {
-        return this.collect;
     }
 }
