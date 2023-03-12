@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -11,7 +13,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static java.util.Arrays.asList;
 
-class ScenarioGameMaster extends GameMaster {
+public class ScenarioGameMaster extends GameMaster {
+    DeliveryStaff deliveryStaff;
+    IngredientsStaff staffOne;
     PiazzaPanicGame game;
     TiledMap map;
     TiledMapTileLayer collisionLayer;
@@ -41,9 +45,12 @@ class ScenarioGameMaster extends GameMaster {
      * @param chefno               Number of chefs.
      * @param custno               Number of customers.
      * @param machineUnlockBalance
+     * @param ingredientsHelper
      */
-    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno, Money machineUnlockBalance) {
+    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno, Money machineUnlockBalance, IngredientsStaff ingredientsHelper, DeliveryStaff deliveryStaff) {
         this.machineUnlockBalance = machineUnlockBalance;
+        this.staffOne = ingredientsHelper;
+        this.deliveryStaff = deliveryStaff;
         this.game = game;
         settings = Utility.getSettings();
         this.map = map;
@@ -117,6 +124,8 @@ class ScenarioGameMaster extends GameMaster {
                 break;
         }
 
+        machineUnlockBalance.addGroup("ingredients-staff", 150);
+        machineUnlockBalance.addGroup("server-staff", 50);
     }
 
     public void setSelectedChef(int selectedChef) {
@@ -128,6 +137,12 @@ class ScenarioGameMaster extends GameMaster {
 
     public Chef getChef(int i){
         return chefs.get(i-1);
+    }
+
+    public void setRecipeToStaff(){
+        if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
+            staffOne.setCurrentRecipe(customers.get(0).getOrder());
+        }
     }
 
     /**
@@ -302,23 +317,39 @@ class ScenarioGameMaster extends GameMaster {
                 targety = chef.getyCoord();
                 break;
         }
+
+
         // Unlock machines even if you don't have anything in your stack.
         if (targetx == 10 && targety == 7) {
             machineUnlockBalance.unlockMachine("forming");
-            return;
         } else if (targetx == 12 && targety == 7) {
             machineUnlockBalance.unlockMachine("chopping");
-            return;
         } else if (targetx == 7 && targety == 7) {
             machineUnlockBalance.unlockMachine("grill");
-            return;
         } else if (targetx == 14 && targety == 6) {
             machineUnlockBalance.unlockMachine("potato");
-            return;
         } else if (targetx == 1 && targety == 6) {
             machineUnlockBalance.unlockMachine("pizza");
-            return;
+        } else if (targetx == 2 && targety == 7){
+            Boolean value = machineUnlockBalance.unlockMachine("ingredients-staff");
+            // Need to do it this way to not break boolean values.
+            if (machineUnlockBalance.isUnlocked("ingredients-staff") &&
+                value != machineUnlockBalance.isUnlocked("ingredients-staff")){
+            }
+        } else if (targetx == 1 && targety == 3) {
+            machineUnlockBalance.unlockMachine("server-staff");
         }
+
+        //Staff collects items.
+        if (targetx == 2 && targety == 7 && chefs.get(selectedChef).getInventory().size() == 0){
+            String item = staffOne.collectItem();
+            // Don't add a null pointer onto the chefs stack.
+            if (item != null) {
+                Machine tempMachine = new Machine("staff", item, item, 0, true, "ingredients-staff");
+                tempMachine.processStaffInteraction(chef, machineUnlockBalance);
+            }
+        }
+
         if (chef.getInventory().empty()) {
             if (targetx == 1 && targety == 10) {
                 machines.get(0).process(chef, machineUnlockBalance);
@@ -349,6 +380,7 @@ class ScenarioGameMaster extends GameMaster {
                 fridge.play(soundVolume);
             } else { return; }
         }
+
         //Work stations
         String invTop = chef.getInventory().peek();
         if (targetx == 6 && targety == 7) {
@@ -481,19 +513,34 @@ class ScenarioGameMaster extends GameMaster {
         //Hamburger assembly
         if (tray.contains("burger") && tray.contains("toasted bun")){
             tray.clear();
-            inv.add("hamburger");
+            if (machineUnlockBalance.isUnlocked("server-staff")) {
+                deliveryStaff.collectItem("hamburger");
+                serveFood();
+            } else{
+                inv.add("hamburger");
+            }
             serving.play(soundVolume);
         }
         //Salad assembly
         if (tray.contains("chopped lettuce") && tray.contains("chopped tomato") && tray.contains("chopped onion")){
             tray.clear();
-            inv.add("salad");
+            if (machineUnlockBalance.isUnlocked("server-staff")) {
+                deliveryStaff.collectItem("salad");
+                serveFood();
+            } else {
+                inv.add("salad");
+            }
             serving.play(soundVolume);
         }
         //Jacket potato assembly
         if (tray.contains("jacket") && tray.contains("beans")){
             tray.clear();
-            inv.add("jacket potato");
+            if (machineUnlockBalance.isUnlocked("server-staff")) {
+                deliveryStaff.collectItem("jacket potato");
+                serveFood();
+            } else{
+                inv.add("jacket potato");
+            }
             serving.play(soundVolume);
         }
         //Raw pizza assembly
@@ -512,13 +559,20 @@ class ScenarioGameMaster extends GameMaster {
 
     private void serveFood(){
         Chef chef = chefs.get(selectedChef);
-        Stack<String> inv = chef.getInventory();
+        Stack<String> inv = new Stack<>();
+        if (machineUnlockBalance.isUnlocked("server-staff") && !(customers.get(0).getOrder() == "pizza")) {
+            inv = deliveryStaff.getItems();
+        } else{
+            inv = chef.getInventory();
+        }
+
 
         if (customers.get(0).getOrder() == inv.peek()){
             inv.pop();
             customers.remove(0);
             serving.play(soundVolume);
             machineUnlockBalance.incrementBalance();
+            staffOne.setGenerate(true);
         }
 
         if (customers.size() == 0){

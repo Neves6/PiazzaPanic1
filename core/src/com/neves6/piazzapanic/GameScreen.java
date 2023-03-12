@@ -13,8 +13,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameScreen extends ScreenAdapter {
+    DeliveryStaff deliveryStaff;
     PiazzaPanicGame game;
     OrthographicCamera camera;
     SpriteBatch batch;
@@ -35,17 +41,22 @@ public class GameScreen extends ScreenAdapter {
     Texture recipes;
     Texture lock;
     Money machineUnlockBalance;
+    IngredientsStaff ingredientsHelper;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.machineUnlockBalance = new Money();
+        this.deliveryStaff = new DeliveryStaff(new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
+                (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
         font.getData().setScale(0.75F);
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
+        this.ingredientsHelper = new IngredientsStaff(new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
+                (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9 ,9, 9, 8, 9))));
         if (level == 1) {
             map = new TmxMapLoader().load("tilemaps/level1.tmx");
-            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance);
+            gm = new ScenarioGameMaster(game, map, 3, 5, machineUnlockBalance, ingredientsHelper, deliveryStaff);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
             wScale = unitScale * 32f;
             hScale = unitScale * 32f;
@@ -102,6 +113,8 @@ public class GameScreen extends ScreenAdapter {
 
         gm.tickUpdate(delta);
 
+        gm.setRecipeToStaff();
+
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -145,10 +158,37 @@ public class GameScreen extends ScreenAdapter {
             game.batch.draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("pizza"))) {
             game.batch.draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+        }  if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
+            game.batch.draw(lock,  2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+        } if (!(machineUnlockBalance.isUnlocked("server-staff"))) {
+            game.batch.draw(lock,  1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);
         }
+
         game.batch.end();
 
         stage.draw();
+
+        drawSequence(ingredientsHelper);
+        drawSequence(deliveryStaff);
+
+    }
+
+    public void drawSequence(IngredientsStaff ob){
+        if (ob.getCollect()) {
+            ArrayList<Integer> pairCoord = ob.getCoordInSeq();
+            game.batch.begin();
+            game.batch.draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
+            game.batch.end();
+        }
+    }
+
+    public void drawSequence(DeliveryStaff ob){
+        if (ob.getCollect()) {
+            ArrayList<Integer> pairCoord = ob.getCoordInSeq();
+            game.batch.begin();
+            game.batch.draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
+            game.batch.end();
+        }
     }
 
     @Override
