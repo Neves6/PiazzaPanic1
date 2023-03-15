@@ -288,9 +288,15 @@ public class ScenarioGameMaster extends GameMaster {
             }
         }
         totalTimer += increment;
-        waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
         createCustomers();
-        //Checks if time allowed to complete order has elapsed
+        checkOrderExpired();
+    }
+
+    /**
+     * Checks if time allowed to complete any customer orders has elapsed
+     * Removes customers whose order expired and removes a reputation point
+     */
+    private void checkOrderExpired() {
         timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);
         for (int i = 0; i < customers.size(); i++) {
             if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
@@ -300,7 +306,12 @@ public class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of customers served increases
+     * Will occasionally 0.5s stalls to vary customer arrival times
+     */
     private void createCustomers() {
+        waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
         if (lastCustomer + waitTime <= totalTimer) {
             float randomFloat = ThreadLocalRandom.current().nextFloat();
             if (randomFloat > 0.90 && customers.size() != 0) {
@@ -321,6 +332,11 @@ public class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * Randomly generates a value 1 to 3 dependent on the number of customers served to be used as group sizes
+     * Initially biased towards 1 but gradually shifts in favour of 3
+     * @return integer value 1 to 3
+     */
     private int generatePartySize() {
         /*
         Creates a random party size of 1-3 customers

@@ -18,6 +18,7 @@ public class Customer extends Person{
      * @param xCoord logical x coordinate of customer.
      * @param yCoord logical y coordinate of customer.
      * @param order Order of customer.
+     * @param timeArrived in game time the customer was created.
      */
     public Customer(String name, int xCoord, int yCoord, String order, float timeArrived){
         super(name, xCoord, yCoord);
