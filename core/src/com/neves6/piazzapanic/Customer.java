@@ -10,6 +10,7 @@ public class Customer extends Person{
     private String order;
     private final Texture txUp;
     private final Texture txLeft;
+    private float timeArrived;
 
     /**
      * Customer constructor.
@@ -18,11 +19,12 @@ public class Customer extends Person{
      * @param yCoord logical y coordinate of customer.
      * @param order Order of customer.
      */
-    public Customer(String name, int xCoord, int yCoord, String order){
+    public Customer(String name, int xCoord, int yCoord, String order, float timeArrived){
         super(name, xCoord, yCoord);
         this.order = order;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
+        this.timeArrived = timeArrived;
     }
 
     public String getOrder(){
@@ -37,4 +39,5 @@ public class Customer extends Person{
         return txLeft;
     }
 
+    public float getTimeArrived() {return timeArrived;}
 }

@@ -25,7 +25,8 @@ public class CustomerTests {
         int y=9;
         String name="39";
         String order="chronological";
-        Customer testCustomer=new Customer(name, x, y, order);
+        float time = 100;
+        Customer testCustomer=new Customer(name, x, y, order, time);
         assertTrue("Customer Constructor Valid :D",
         testCustomer.getxCoord()==x &&
         testCustomer.getxCoord()==6 &&
@@ -34,7 +35,8 @@ public class CustomerTests {
         testCustomer.getName()==name &&
         testCustomer.getName()=="39" &&
         testCustomer.getOrder()==order &&
-        testCustomer.getOrder()=="chronological"
+        testCustomer.getOrder()=="chronological" &&
+        testCustomer.getTimeArrived() == time
         );
     }
 }

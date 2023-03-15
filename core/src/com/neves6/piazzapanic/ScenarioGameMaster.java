@@ -8,6 +8,8 @@ import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,7 +22,7 @@ public class ScenarioGameMaster extends GameMaster {
     TiledMap map;
     TiledMapTileLayer collisionLayer;
     ArrayList<Chef> chefs = new ArrayList<>();
-    Stack<Customer> customers = new Stack<>();
+    Queue<Customer> customers = new LinkedList<>();
     ArrayList<Machine> machines = new ArrayList<>();
     ArrayList<String> tray1 = new ArrayList<>();
     ArrayList<String> tray2 = new ArrayList<>();
@@ -36,6 +38,11 @@ public class ScenarioGameMaster extends GameMaster {
     ArrayList<String> settings;
     Money machineUnlockBalance;
     ArrayList<String> recipes = new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
+    int customersServed;
+    int maxCustomers;
+    int timeAllowed;
+    float lastCustomer;
+    float waitTime;
 
     /**
      * ScenarioGameMaster constructor.
@@ -55,13 +62,11 @@ public class ScenarioGameMaster extends GameMaster {
         settings = Utility.getSettings();
         this.map = map;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+        this.maxCustomers = custno;
         for (int i = 0; i < chefno; i++) {
             chefs.add(new Chef("Chef", 6+i, 5, 1, 1, 1, false, new Stack<String>(), i+1));
         }
-        for (int i = 0; i < custno; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, 4);
-            customers.add(new Customer("Customer" + (i+1), -1, -1, recipes.get(randomNum)));
-        }
+
         totalTimer = 0f;
         
         //Assessment 1 (index 0-16)
@@ -141,7 +146,7 @@ public class ScenarioGameMaster extends GameMaster {
 
     public void setRecipeToStaff(){
         if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
-            staffOne.setCurrentRecipe(customers.get(0).getOrder());
+            staffOne.setCurrentRecipe(customers.peek().getOrder());
         }
     }
 
@@ -222,7 +227,7 @@ public class ScenarioGameMaster extends GameMaster {
         comp += customers.size();
         if (customers.size() > 0) {
             comp += "\nOrder: ";
-            comp += customers.get(0).getOrder();
+            comp += customers.peek().getOrder();
 
         }
         comp += "\nTray 1 contents: ";
@@ -264,7 +269,7 @@ public class ScenarioGameMaster extends GameMaster {
     }
 
     public Customer getFirstCustomer() {
-        return customers.get(0);
+        return customers.peek();
     }
 
     /**
@@ -283,6 +288,60 @@ public class ScenarioGameMaster extends GameMaster {
             }
         }
         totalTimer += increment;
+        tryCreateCustomers();
+        //Checks if time allowed to complete order has elapsed
+        timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
+                //TODO: add reputation point decrement and fail message
+                System.out.println("here " + i);
+                customers.poll();
+            }
+        }
+    }
+
+    private void tryCreateCustomers() {
+        if (lastCustomer + waitTime <= totalTimer) {
+            float randomFloat = ThreadLocalRandom.current().nextFloat();
+            if (randomFloat > 0.90 && customers.size() != 0) {
+                lastCustomer += 3;
+            } else {
+                int partySize = generatePartySize();
+                for (int i = 0; i < partySize; i++) {
+                    //Max number of customers in the queue starts at 5, increases by 1 every 5 served, caps at 10
+                    if (customers.size() < Math.min(5 + (customersServed / 5), 10)) {
+                        int randomInt = ThreadLocalRandom.current().nextInt(0, 4);
+                        customers.add(new Customer("Customer" + (customers.size() + 1), -1, -1, recipes.get(randomInt), totalTimer));
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private int generatePartySize() {
+        /*
+        Creates a random party size of 1-3 customers
+        The more customers that have been served, the more likely a larger group becomes
+        Probabilities of group size for each interval of customers served:
+            0-4:    1 = 80%,    2 = 20%,    3 = 0%
+            5-9:    1 = 40%,    2 = 40%,    3 = 20%
+            10-14:  1 = 0%,     2 = 60%,    3 = 40%
+            15-19:  1 = 0%,     2 = 40%,    3 = 60%
+            20-24:  1 = 0%,     2 = 20%,    3 = 80%
+            25+:    1 = 0%,     2 = 0%,     3 = 100%
+        */
+        float randomFloat = ThreadLocalRandom.current().nextFloat();
+        int partySize;
+        if (randomFloat <= (0.8 - 0.4 * (customersServed / 5))) {
+            partySize = 1;
+        } else if (randomFloat > (0.8 - 0.4 * (customersServed / 5)) && randomFloat <= (1 - 0.2 * (customersServed / 5))) {
+            partySize = 2;
+        } else {
+            partySize = 3;
+        }
+        return partySize;
     }
 
     /**
@@ -560,19 +619,20 @@ public class ScenarioGameMaster extends GameMaster {
     private void serveFood(){
         Chef chef = chefs.get(selectedChef);
         Stack<String> inv = new Stack<>();
-        if (machineUnlockBalance.isUnlocked("server-staff") && !(customers.get(0).getOrder() == "pizza")) {
+        if (machineUnlockBalance.isUnlocked("server-staff") && !(customers.peek().getOrder() == "pizza")) {
             inv = deliveryStaff.getItems();
         } else{
             inv = chef.getInventory();
         }
 
 
-        if (customers.get(0).getOrder() == inv.peek()){
+        if (customers.peek().getOrder() == inv.peek()){
             inv.pop();
-            customers.remove(0);
+            customers.poll();
             serving.play(soundVolume);
             machineUnlockBalance.incrementBalance();
             staffOne.setGenerate(true);
+            customersServed ++;
         }
 
         if (customers.size() == 0){
