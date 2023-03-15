@@ -288,23 +288,23 @@ public class ScenarioGameMaster extends GameMaster {
             }
         }
         totalTimer += increment;
-        tryCreateCustomers();
+        waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
+        createCustomers();
         //Checks if time allowed to complete order has elapsed
         timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);
         for (int i = 0; i < customers.size(); i++) {
             if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
                 //TODO: add reputation point decrement and fail message
-                System.out.println("here " + i);
                 customers.poll();
             }
         }
     }
 
-    private void tryCreateCustomers() {
+    private void createCustomers() {
         if (lastCustomer + waitTime <= totalTimer) {
             float randomFloat = ThreadLocalRandom.current().nextFloat();
             if (randomFloat > 0.90 && customers.size() != 0) {
-                lastCustomer += 3;
+                lastCustomer += 0.5;
             } else {
                 int partySize = generatePartySize();
                 for (int i = 0; i < partySize; i++) {
@@ -316,6 +316,7 @@ public class ScenarioGameMaster extends GameMaster {
                         break;
                     }
                 }
+                lastCustomer = totalTimer;
             }
         }
     }
