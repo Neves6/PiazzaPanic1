@@ -13,7 +13,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
 public class GameScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -95,6 +94,11 @@ public class GameScreen extends ScreenAdapter {
                 }
                 if (keyCode == Input.Keys.E) {
                     gm.tryInteract();
+                }
+                if (keyCode==Input.Keys.G){
+                    boolean bool=Utility.isHighScore(false, false, 0, 8, 11);
+                    boolean bool1=Utility.isHighScore(false, false, 0, 8, 10);
+                    boolean bool2=Utility.isHighScore(false, false, 0, 8, 8);
                 }
                 return true;
             }

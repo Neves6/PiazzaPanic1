@@ -1,62 +1,20 @@
 package com.neves6.piazzapanic;
 
 public class ReputationPoint {
-    boolean isEndless;
-    int highScoreEndless;
-    int highScoreScenario;
-    int points;
-    public ReputationPoint (boolean isEndless, int highScoreEndless, int highScoreScenario, int points){
-        this.isEndless=isEndless;
-        this.highScoreEndless=getHighScoreEndless();
-        this.highScoreScenario=getHighScoreScenario();
-        this.points=3;
+    private ReputationPoint (){ //DO NOT INSTANTIATE
     }
-    public int getHighScoreEndless(){
-        return 0; //for now
-    }
-    public int getHighScoreScenario(){
-        return 0; //for now
-    }
-    public void incrementPoints(){
+    public int incrementPoints(int points){
         points+=1;
-        return;
+        return points;
     }
-    public void decrementPoints(){
+    public int decrementPoints(int points, PiazzaPanicGame game, int totalTimer, int custNum, boolean isEndless, boolean isPowerUp, int difficulty){
         points-=1;
-        return;
-    }
-    public void isHighScore(){ //call at end of game
-        if (isEndless==true){
-            int prevHighEndless=getHighScoreEndless();
-            if (points>prevHighEndless){
-                setHighScoreEndless(points); //add congrats screen or smthn
-            }
-            else{
-                setHighScoreEndless(prevHighEndless);
-            }
+        if (points==0){
+            
+            //check if highscore
+            //save etc
+            game.setScreen(new GameWinScreen(game, (int) totalTimer, false, isEndless, isPowerUp, difficulty));
         }
-        else{
-            int prevHighScenario=getHighScoreScenario();
-            if (points>prevHighScenario){
-                setHighScoreScenario(points); //congrats
-            }
-            else{
-                setHighScoreScenario(prevHighScenario);
-            }
-        }
-
-    }
-    public void setHighScoreEndless(int points){
-        //store high score for endless mode
-        //isEndless MUST be true
-        return;
-    }
-    public void setHighScoreScenario(int points){
-        //store high score for scenario mode
-        //isEndless MUST be false
-        return;
-    }
-    public int getPoints(){
         return points;
     }
 }

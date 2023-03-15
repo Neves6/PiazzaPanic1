@@ -522,7 +522,7 @@ class ScenarioGameMaster extends GameMaster {
         }
 
         if (customers.size() == 0){
-            game.setScreen(new GameWinScreen(game, (int) totalTimer));
+            game.setScreen(new GameWinScreen(game, (int) totalTimer, true, false, false, 0)); //defaults
         }
     }
 }

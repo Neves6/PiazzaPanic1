@@ -30,12 +30,20 @@ public class GameWinScreen extends ScreenAdapter {
     Skin skin;
     TextureAtlas atlas;
     int completionTime;
+    boolean winOrLose;
+    boolean isEndless;
+    boolean isPowerUp;
+    int difficulty;
 
-    public GameWinScreen(PiazzaPanicGame game, int completionTime) {
+    public GameWinScreen(PiazzaPanicGame game, int completionTime, boolean winOrLose, boolean isEndless, boolean isPowerUp, int difficulty) {
         this.game = game;
         this.completionTime = completionTime;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
+        this.winOrLose=winOrLose;
+        this.isEndless=isEndless;
+        this.isPowerUp=isPowerUp;
+        this.difficulty=difficulty;
     }
 
     @Override
@@ -95,7 +103,12 @@ public class GameWinScreen extends ScreenAdapter {
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        
+        if (winOrLose){
+            font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        }else{
+            font.draw(game.batch, "Unlucky!\nYou lost the game in " + completionTime + " seconds!", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        }
         game.batch.end();
         stage.draw();
     }

@@ -1,0 +1,20 @@
+
+unnamed.png
+size: 512, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+black_alpha_low
+  rotate: false
+  xy: 2, 2
+  size: 200, 50
+  orig: 200, 50
+  offset: 0, 0
+  index: -1
+black_alpha_mid
+  rotate: false
+  xy: 204, 2
+  size: 200, 50
+  orig: 200, 50
+  offset: 0, 0
+  index: -1
