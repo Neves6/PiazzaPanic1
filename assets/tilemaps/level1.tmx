@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="21" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="44">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="21" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="49">
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="turf" width="21" height="12">
   <data encoding="csv">
@@ -102,5 +102,12 @@
   <object id="41" name="oven-pizza-1" x="30.6667" y="190.667" width="32.6667" height="33.3333"/>
   <object id="42" name="oven-pizza-2" x="32.6667" y="160" width="30" height="25.3333"/>
   <object id="43" name="forming-1" x="286" y="126" width="32.6667" height="33.3333"/>
+ </objectgroup>
+ <objectgroup id="13" name="Misc Layer">
+  <object id="44" name="serving" x="255.333" y="255.333" width="33.3333" height="30.6667"/>
+  <object id="45" name="tray-2" x="60.6667" y="255.333" width="35.3333" height="32.6667"/>
+  <object id="46" name="tray-1" x="96.6667" y="256" width="30.6667" height="30.6667"/>
+  <object id="47" name="fast-track-collect" x="64" y="128.667" width="32" height="28.6667"/>
+  <object id="48" name="bin" x="444.667" y="225.333" width="34" height="27.3333"/>
  </objectgroup>
 </map>

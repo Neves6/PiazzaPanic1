@@ -388,15 +388,6 @@ public class ScenarioGameMaster extends GameMaster {
     }
 
     // Staff collects items.
-    if (targetx == 2 && targety == 7 && chefs.get(selectedChef).getInventory().size() == 0) {
-      String item = staffOne.collectItem();
-      // Don't add a null pointer onto the chefs stack.
-      if (item != null) {
-        Machine tempMachine = new Machine("staff", item, item, 0, true, "ingredients-staff");
-        tempMachine.processStaffInteraction(chef, machineUnlockBalance);
-      }
-    }
-
     MapObjects fridgeObjects = getObjectLayers("Fridge Layer");
     for (MapObject ob : fridgeObjects) {
       if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
@@ -419,15 +410,24 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
-    if (targetx == 14 && targety == 4) {
+    MapObjects miscObjects = getObjectLayers("Misc Layer");
+
+    if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       chef.removeTopFromInventory();
       trash.play(soundVolume);
-    } else if (targetx == 8 && targety == 3) {
+    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("serving")), targetx, targety)) {
       serveFood();
-    } else if (targetx == 2 && targety == 3) {
+    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
       addToTray(1);
-    } else if (targetx == 3 && targety == 3) {
+    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
       addToTray(2);
+    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
+      String item = staffOne.collectItem();
+      // Don't add a null pointer onto the chefs stack.
+      if (item != null) {
+        Machine tempMachine = new Machine("staff", item, item, 0, true, "ingredients-staff");
+        tempMachine.processStaffInteraction(chef, machineUnlockBalance);
+      }
     }
   }
 
@@ -444,100 +444,30 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
+    //Force user to order in the correct way (The Easiest difficulty):
     if (inv.size() > 0) {
-      // Hamburger ingredients
-      if (tray.isEmpty() && inv.peek() == "toasted bun") {
-        inv.pop();
-        tray.add("toasted bun");
-      } else if (tray.contains("toasted bun")
-          && inv.peek() == "burger"
-          && !tray.contains("burger")) {
-        inv.pop();
-        tray.add("burger");
+      if (customers.get(0).helper(inv.peek())){
+        tray.add(inv.pop());
+      }
+    }
 
-        // Salad ingredients
-      } else if (tray.isEmpty() && inv.peek() == "chopped lettuce") {
-        inv.pop();
-        tray.add("chopped lettuce");
-      } else if (tray.contains("chopped lettuce")
-          && inv.peek() == "chopped tomato"
-          && !tray.contains("chopped tomato")) {
-        inv.pop();
-        tray.add("chopped tomato");
-      } else if (tray.contains("chopped tomato")
-          && inv.peek() == "chopped onion"
-          && !tray.contains("chopped onion")) {
-        inv.pop();
-        tray.add("chopped onion");
-
-        // Jacket potato ingredients
-      } else if (tray.isEmpty() && inv.peek() == "jacket") {
-        inv.pop();
-        tray.add("jacket");
-      } else if (tray.contains("jacket") && inv.peek() == "beans" && !tray.contains("beans")) {
-        inv.pop();
-        tray.add("beans");
-
-        // Raw pizza ingredients
-      } else if (tray.isEmpty() && inv.peek() == "dough") {
-        inv.pop();
-        tray.add("dough");
-      } else if (tray.contains("dough")
-          && inv.peek() == "chopped tomato"
-          && !tray.contains("chopped tomato")) {
-        inv.pop();
-        tray.add("chopped tomato");
-      } else if (tray.contains("chopped tomato")
-          && inv.peek() == "cheese"
-          && !tray.contains("cheese")) {
-        inv.pop();
-        tray.add("cheese");
-      }
-    }
-    // Hamburger assembly
-    if (tray.contains("burger") && tray.contains("toasted bun")) {
-      tray.clear();
-      if (machineUnlockBalance.isUnlocked("server-staff")) {
-        deliveryStaff.collectItem("hamburger");
-        serveFood();
-      } else {
-        inv.add("hamburger");
-      }
-      serving.play(soundVolume);
-    }
-    // Salad assembly
-    if (tray.contains("chopped lettuce")
-        && tray.contains("chopped tomato")
-        && tray.contains("chopped onion")) {
-      tray.clear();
-      if (machineUnlockBalance.isUnlocked("server-staff")) {
-        deliveryStaff.collectItem("salad");
-        serveFood();
-      } else {
-        inv.add("salad");
-      }
-      serving.play(soundVolume);
-    }
-    // Jacket potato assembly
-    if (tray.contains("jacket") && tray.contains("beans")) {
-      tray.clear();
-      if (machineUnlockBalance.isUnlocked("server-staff")) {
-        deliveryStaff.collectItem("jacket potato");
-        serveFood();
-      } else {
-        inv.add("jacket potato");
-      }
-      serving.play(soundVolume);
-    }
-    // Raw pizza assembly
     if (tray.contains("dough") && tray.contains("chopped tomato") && tray.contains("cheese")) {
       tray.clear();
       inv.add("raw pizza");
       serving.play(soundVolume);
+    } else if (customers.get(0).finishedRecipe()){
+      tray.clear();
+      if (machineUnlockBalance.isUnlocked("server-staff")) {
+        deliveryStaff.collectItem(customers.get(0).getOrder());
+        serveFood();
+      } else {
+        inv.add(customers.get(0).getOrder());
+      }
+      serving.play(soundVolume);
     }
+
     if (station == 1) {
       tray1 = tray;
-
     } else if (station == 2) {
       tray2 = tray;
     }
@@ -545,12 +475,16 @@ public class ScenarioGameMaster extends GameMaster {
 
   private void serveFood() {
     Chef chef = chefs.get(selectedChef);
-    Stack<String> inv = new Stack<>();
+    Stack<String> inv;
     if (machineUnlockBalance.isUnlocked("server-staff")
         && !(customers.get(0).getOrder() == "pizza")) {
       inv = deliveryStaff.getItems();
     } else {
       inv = chef.getInventory();
+    }
+
+    if (inv.size() == 0){
+      return;
     }
 
     if (customers.get(0).getOrder() == inv.peek()) {
