@@ -4,15 +4,16 @@ import static java.util.Arrays.asList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.MapLayer;import com.badlogic.gdx.maps.MapObject;import com.badlogic.gdx.maps.MapObjects;import com.badlogic.gdx.maps.objects.RectangleMapObject;import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.badlogic.gdx.math.Rectangle;import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import java.util.ArrayList;
+import javax.sound.midi.Receiver;import java.util.ArrayList;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ScenarioGameMaster extends GameMaster {
+  int tilewidth;
   DeliveryStaff deliveryStaff;
   IngredientsStaff staffOne;
   PiazzaPanicGame game;
@@ -136,6 +137,9 @@ public class ScenarioGameMaster extends GameMaster {
 
     machineUnlockBalance.addGroup("ingredients-staff", 150);
     machineUnlockBalance.addGroup("server-staff", 50);
+
+    //It is a square hence, width = height, just get one.
+    tilewidth = (int) map.getProperties().get("tilewidth");
   }
 
   public void setSelectedChef(int selectedChef) {
@@ -303,6 +307,22 @@ public class ScenarioGameMaster extends GameMaster {
     totalTimer += increment;
   }
 
+  public MapObjects getObjectLayers(String key){
+    MapLayer unlockLayer = map.getLayers().get(key);
+    return unlockLayer.getObjects();
+  }
+
+  public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord){
+    return xcoord == Math.round(object.getX() / tilewidth) && ycoord == Math.round(object.getY() / tilewidth);
+  }
+
+  public Rectangle loadRectangle(MapObject object){
+    RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
+    // now you can get the position of the rectangle like this:
+    return rectangleMapObject.getRectangle();
+  }
+
+
   /**
    * Attempts to cause an interaction between the currently selected chef and the machine in front
    * of them.
@@ -337,21 +357,14 @@ public class ScenarioGameMaster extends GameMaster {
         break;
     }
 
-    // Unlock machines even if you don't have anything in your stack.
-    if (targetx == 10 && targety == 7) {
-      machineUnlockBalance.unlockMachine("forming");
-    } else if (targetx == 12 && targety == 7) {
-      machineUnlockBalance.unlockMachine("chopping");
-    } else if (targetx == 7 && targety == 7) {
-      machineUnlockBalance.unlockMachine("grill");
-    } else if (targetx == 14 && targety == 6) {
-      machineUnlockBalance.unlockMachine("potato");
-    } else if (targetx == 1 && targety == 6) {
-      machineUnlockBalance.unlockMachine("pizza");
-    } else if (targetx == 2 && targety == 7) {
-      machineUnlockBalance.unlockMachine("ingredients-staff");
-    } else if (targetx == 1 && targety == 3) {
-      machineUnlockBalance.unlockMachine("server-staff");
+    //Unlock layer - interactions with any stations that need to be
+    // purchased using credits.
+    MapObjects unlockObjects = getObjectLayers("Unlock Layer");
+
+    for (MapObject ob: unlockObjects){
+      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)){
+        machineUnlockBalance.unlockMachine(ob.getName());
+      }
     }
 
     // Staff collects items.
