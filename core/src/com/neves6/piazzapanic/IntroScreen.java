@@ -71,12 +71,13 @@ public class IntroScreen extends ScreenAdapter {
     game.getBatch().setProjectionMatrix(camera.combined);
 
     game.getBatch().begin();
-    game.getBatch().draw(
-        currentFrame,
-        winWidth / 2f - winWidth / 10f,
-        winHeight / 2f - winWidth / 10f,
-        winWidth / 5f,
-        winWidth / 5f);
+    game.getBatch()
+        .draw(
+            currentFrame,
+            winWidth / 2f - winWidth / 10f,
+            winHeight / 2f - winWidth / 10f,
+            winWidth / 5f,
+            winWidth / 5f);
     font.draw(
         game.getBatch(),
         "NEVES6\nAssessment 1\nIndev Build",

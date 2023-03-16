@@ -107,12 +107,13 @@ public class LevelSelectorScreen extends ScreenAdapter {
     game.getBatch().setProjectionMatrix(camera.combined);
 
     game.getBatch().begin();
-    game.getBatch().draw(
-        bg,
-        -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
-        0,
-        bg.getWidth() * bgScaleFactor,
-        bg.getHeight() * bgScaleFactor);
+    game.getBatch()
+        .draw(
+            bg,
+            -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
+            0,
+            bg.getWidth() * bgScaleFactor,
+            bg.getHeight() * bgScaleFactor);
     font.draw(
         game.getBatch(),
         "LEVEL SELECTION",
@@ -122,18 +123,20 @@ public class LevelSelectorScreen extends ScreenAdapter {
         1,
         false);
     stage.draw();
-    game.getBatch().draw(
-        lock,
-        level2Button.getX(),
-        level2Button.getY(),
-        level2Button.getWidth(),
-        level2Button.getHeight());
-    game.getBatch().draw(
-        lock,
-        level3Button.getX(),
-        level3Button.getY(),
-        level3Button.getWidth(),
-        level3Button.getHeight());
+    game.getBatch()
+        .draw(
+            lock,
+            level2Button.getX(),
+            level2Button.getY(),
+            level2Button.getWidth(),
+            level2Button.getHeight());
+    game.getBatch()
+        .draw(
+            lock,
+            level3Button.getX(),
+            level3Button.getY(),
+            level3Button.getWidth(),
+            level3Button.getHeight());
     game.getBatch().end();
   }
 

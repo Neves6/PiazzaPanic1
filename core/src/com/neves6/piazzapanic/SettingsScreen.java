@@ -140,7 +140,13 @@ public class SettingsScreen extends ScreenAdapter {
 
     game.getBatch().begin();
     font.draw(
-        game.getBatch(), "SETTINGS", 0, winHeight / 2f + font.getLineHeight() * 3, winWidth, 1, false);
+        game.getBatch(),
+        "SETTINGS",
+        0,
+        winHeight / 2f + font.getLineHeight() * 3,
+        winWidth,
+        1,
+        false);
     game.getBatch().end();
     stage.draw();
   }

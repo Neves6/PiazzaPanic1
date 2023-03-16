@@ -95,12 +95,13 @@ public class GameWinScreen extends ScreenAdapter {
     game.getBatch().setProjectionMatrix(camera.combined);
 
     game.getBatch().begin();
-    game.getBatch().draw(
-        bg,
-        -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
-        0,
-        bg.getWidth() * bgScaleFactor,
-        bg.getHeight() * bgScaleFactor);
+    game.getBatch()
+        .draw(
+            bg,
+            -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
+            0,
+            bg.getWidth() * bgScaleFactor,
+            bg.getHeight() * bgScaleFactor);
     font.draw(
         game.getBatch(),
         "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!",

@@ -13,7 +13,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.neves6.piazzapanic.staff.BaseStaff;import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.BaseStaff;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -133,41 +134,51 @@ public class GameScreen extends ScreenAdapter {
     renderer.render(renderableLayers);
 
     game.getBatch().begin();
-    game.getBatch().draw(
-        gm.getChef(1).getTxNow(),
-        gm.getChef(1).getxCoord() * wscale,
-        gm.getChef(1).getyCoord() * hscale,
-        32 * unitScale,
-        32 * unitScale);
-    game.getBatch().draw(
-        gm.getChef(2).getTxNow(),
-        gm.getChef(2).getxCoord() * wscale,
-        gm.getChef(2).getyCoord() * hscale,
-        32 * unitScale,
-        32 * unitScale);
-    game.getBatch().draw(
-        gm.getChef(3).getTxNow(),
-        gm.getChef(3).getxCoord() * wscale,
-        gm.getChef(3).getyCoord() * hscale,
-        32 * unitScale,
-        32 * unitScale);
-    game.getBatch().draw(
-        selectedTexture,
-        gm.getChef(gm.getSelectedChef()).getxCoord() * wscale,
-        gm.getChef(gm.getSelectedChef()).getyCoord() * hscale,
-        32 * unitScale,
-        32 * unitScale);
-
-    if (gm.getCustomersRemaining() >= 1) {
-      game.getBatch().draw(
-          gm.getFirstCustomer().getTxUp(), 8 * wscale, 2 * hscale, 32 * unitScale, 32 * unitScale);
-      for (int i = 1; i < gm.getCustomersRemaining(); i++) {
-        game.getBatch().draw(
-            gm.getFirstCustomer().getTxLeft(),
-            (8 + i) * wscale,
-            2 * hscale,
+    game.getBatch()
+        .draw(
+            gm.getChef(1).getTxNow(),
+            gm.getChef(1).getxCoord() * wscale,
+            gm.getChef(1).getyCoord() * hscale,
             32 * unitScale,
             32 * unitScale);
+    game.getBatch()
+        .draw(
+            gm.getChef(2).getTxNow(),
+            gm.getChef(2).getxCoord() * wscale,
+            gm.getChef(2).getyCoord() * hscale,
+            32 * unitScale,
+            32 * unitScale);
+    game.getBatch()
+        .draw(
+            gm.getChef(3).getTxNow(),
+            gm.getChef(3).getxCoord() * wscale,
+            gm.getChef(3).getyCoord() * hscale,
+            32 * unitScale,
+            32 * unitScale);
+    game.getBatch()
+        .draw(
+            selectedTexture,
+            gm.getChef(gm.getSelectedChef()).getxCoord() * wscale,
+            gm.getChef(gm.getSelectedChef()).getyCoord() * hscale,
+            32 * unitScale,
+            32 * unitScale);
+
+    if (gm.getCustomersRemaining() >= 1) {
+      game.getBatch()
+          .draw(
+              gm.getFirstCustomer().getTxUp(),
+              8 * wscale,
+              2 * hscale,
+              32 * unitScale,
+              32 * unitScale);
+      for (int i = 1; i < gm.getCustomersRemaining(); i++) {
+        game.getBatch()
+            .draw(
+                gm.getFirstCustomer().getTxLeft(),
+                (8 + i) * wscale,
+                2 * hscale,
+                32 * unitScale,
+                32 * unitScale);
       }
     }
     font.draw(
@@ -255,12 +266,13 @@ public class GameScreen extends ScreenAdapter {
     if (ob.getCollect()) {
       ArrayList<Integer> pairCoord = ob.getCoordInSeq();
       game.getBatch().begin();
-      game.getBatch().draw(
-          new Texture(Gdx.files.internal("people/chef1down.png")),
-          pairCoord.get(0) * wscale,
-          pairCoord.get(1) * hscale,
-          32 * unitScale,
-          32 * unitScale);
+      game.getBatch()
+          .draw(
+              new Texture(Gdx.files.internal("people/chef1down.png")),
+              pairCoord.get(0) * wscale,
+              pairCoord.get(1) * hscale,
+              32 * unitScale,
+              32 * unitScale);
       game.getBatch().end();
     }
   }
