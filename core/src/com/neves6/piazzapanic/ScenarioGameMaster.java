@@ -298,8 +298,6 @@ public class ScenarioGameMaster extends GameMaster {
     } else {
       return "";
     }
-
-
   }
 
   public int getCustomersRemaining() {
