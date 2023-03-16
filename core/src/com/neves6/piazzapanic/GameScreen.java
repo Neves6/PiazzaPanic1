@@ -13,7 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.BaseStaff;import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -132,26 +132,26 @@ public class GameScreen extends ScreenAdapter {
     renderer.setView(camera);
     renderer.render(renderableLayers);
 
-    game.batch.begin();
-    game.batch.draw(
+    game.getBatch().begin();
+    game.getBatch().draw(
         gm.getChef(1).getTxNow(),
         gm.getChef(1).getxCoord() * wscale,
         gm.getChef(1).getyCoord() * hscale,
         32 * unitScale,
         32 * unitScale);
-    game.batch.draw(
+    game.getBatch().draw(
         gm.getChef(2).getTxNow(),
         gm.getChef(2).getxCoord() * wscale,
         gm.getChef(2).getyCoord() * hscale,
         32 * unitScale,
         32 * unitScale);
-    game.batch.draw(
+    game.getBatch().draw(
         gm.getChef(3).getTxNow(),
         gm.getChef(3).getxCoord() * wscale,
         gm.getChef(3).getyCoord() * hscale,
         32 * unitScale,
         32 * unitScale);
-    game.batch.draw(
+    game.getBatch().draw(
         selectedTexture,
         gm.getChef(gm.getSelectedChef()).getxCoord() * wscale,
         gm.getChef(gm.getSelectedChef()).getyCoord() * hscale,
@@ -159,10 +159,10 @@ public class GameScreen extends ScreenAdapter {
         32 * unitScale);
 
     if (gm.getCustomersRemaining() >= 1) {
-      game.batch.draw(
+      game.getBatch().draw(
           gm.getFirstCustomer().getTxUp(), 8 * wscale, 2 * hscale, 32 * unitScale, 32 * unitScale);
       for (int i = 1; i < gm.getCustomersRemaining(); i++) {
-        game.batch.draw(
+        game.getBatch().draw(
             gm.getFirstCustomer().getTxLeft(),
             (8 + i) * wscale,
             2 * hscale,
@@ -171,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
       }
     }
     font.draw(
-        game.batch,
+        game.getBatch(),
         gm.getMachineTimerForChef(0),
         gm.getChef(1).getxCoord() * wscale,
         gm.getChef(1).getyCoord() * hscale + 2 * (hscale / 3f),
@@ -179,16 +179,16 @@ public class GameScreen extends ScreenAdapter {
         1,
         false);
     font.draw(
-        game.batch,
+        game.getBatch(),
         gm.getMachineTimerForChef(1),
         gm.getChef(2).getxCoord() * wscale,
         gm.getChef(2).getyCoord() * hscale + 2 * (hscale / 3f),
         32 * unitScale,
         1,
         false);
-    game.batch.draw(recipes, 20, 20);
+    game.getBatch().draw(recipes, 20, 20);
     font.draw(
-        game.batch,
+        game.getBatch(),
         gm.generateHoldingsText(),
         winWidth - (4.75f * (winWidth / 8f)),
         winHeight - 20,
@@ -196,7 +196,7 @@ public class GameScreen extends ScreenAdapter {
         -1,
         true);
     font.draw(
-        game.batch,
+        game.getBatch(),
         gm.generateCustomersTrayText(),
         winWidth - (3 * (winWidth / 8f)),
         winHeight - 20,
@@ -204,7 +204,7 @@ public class GameScreen extends ScreenAdapter {
         -1,
         true);
     font.draw(
-        game.batch,
+        game.getBatch(),
         gm.generateTimerText(),
         winWidth - (winWidth / 3f),
         40,
@@ -212,7 +212,7 @@ public class GameScreen extends ScreenAdapter {
         -1,
         false);
     font.draw(
-        game.batch,
+        game.getBatch(),
         machineUnlockBalance.displayBalance(),
         winWidth - (winWidth / 3f),
         60,
@@ -222,28 +222,28 @@ public class GameScreen extends ScreenAdapter {
 
     // Any machines that are unlockable add here to draw a lock on top of it.
     if (!(machineUnlockBalance.isUnlocked("chopping"))) {
-      game.batch.draw(lock, 12 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 12 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
     }
     if (!(machineUnlockBalance.isUnlocked("forming"))) {
-      game.batch.draw(lock, 10 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 10 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
     }
     if (!(machineUnlockBalance.isUnlocked("grill"))) {
-      game.batch.draw(lock, 7 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 7 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
     }
     if (!(machineUnlockBalance.isUnlocked("potato"))) {
-      game.batch.draw(lock, 14 * wscale, 6 * hscale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 14 * wscale, 6 * hscale, 32 * unitScale, 32 * unitScale);
     }
     if (!(machineUnlockBalance.isUnlocked("pizza"))) {
-      game.batch.draw(lock, 1 * wscale, 6 * hscale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 1 * wscale, 6 * hscale, 32 * unitScale, 32 * unitScale);
     }
     if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
-      game.batch.draw(lock, 2 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 2 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
     }
     if (!(machineUnlockBalance.isUnlocked("server-staff"))) {
-      game.batch.draw(lock, 1 * wscale, 3 * hscale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 1 * wscale, 3 * hscale, 32 * unitScale, 32 * unitScale);
     }
 
-    game.batch.end();
+    game.getBatch().end();
 
     stage.draw();
 
@@ -251,31 +251,17 @@ public class GameScreen extends ScreenAdapter {
     drawSequence(deliveryStaff);
   }
 
-  public void drawSequence(IngredientsStaff ob) {
+  public void drawSequence(BaseStaff ob) {
     if (ob.getCollect()) {
       ArrayList<Integer> pairCoord = ob.getCoordInSeq();
-      game.batch.begin();
-      game.batch.draw(
+      game.getBatch().begin();
+      game.getBatch().draw(
           new Texture(Gdx.files.internal("people/chef1down.png")),
           pairCoord.get(0) * wscale,
           pairCoord.get(1) * hscale,
           32 * unitScale,
           32 * unitScale);
-      game.batch.end();
-    }
-  }
-
-  public void drawSequence(DeliveryStaff ob) {
-    if (ob.getCollect()) {
-      ArrayList<Integer> pairCoord = ob.getCoordInSeq();
-      game.batch.begin();
-      game.batch.draw(
-          new Texture(Gdx.files.internal("people/chef1down.png")),
-          pairCoord.get(0) * wscale,
-          pairCoord.get(1) * hscale,
-          32 * unitScale,
-          32 * unitScale);
-      game.batch.end();
+      game.getBatch().end();
     }
   }
 

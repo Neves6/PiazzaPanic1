@@ -92,24 +92,24 @@ public class GameWinScreen extends ScreenAdapter {
     bgScaleFactor = (float) winHeight / (float) bg.getHeight();
 
     camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
+    game.getBatch().setProjectionMatrix(camera.combined);
 
-    game.batch.begin();
-    game.batch.draw(
+    game.getBatch().begin();
+    game.getBatch().draw(
         bg,
         -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
         0,
         bg.getWidth() * bgScaleFactor,
         bg.getHeight() * bgScaleFactor);
     font.draw(
-        game.batch,
+        game.getBatch(),
         "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!",
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f + winHeight / 5f,
         winWidth / 5f,
         1,
         false);
-    game.batch.end();
+    game.getBatch().end();
     stage.draw();
   }
 

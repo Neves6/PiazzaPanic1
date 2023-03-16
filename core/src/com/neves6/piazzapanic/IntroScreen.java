@@ -53,7 +53,6 @@ public class IntroScreen extends ScreenAdapter {
       }
     }
     introAnimation = new Animation<TextureRegion>(0.125f, walkFrames);
-    batch = new SpriteBatch();
     stateTime = 0f;
   }
 
@@ -69,24 +68,24 @@ public class IntroScreen extends ScreenAdapter {
     final TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);
 
     camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
+    game.getBatch().setProjectionMatrix(camera.combined);
 
-    game.batch.begin();
-    game.batch.draw(
+    game.getBatch().begin();
+    game.getBatch().draw(
         currentFrame,
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f - winWidth / 10f,
         winWidth / 5f,
         winWidth / 5f);
     font.draw(
-        game.batch,
+        game.getBatch(),
         "NEVES6\nAssessment 1\nIndev Build",
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f - winWidth / 9f,
         winWidth / 5f,
         1,
         false);
-    game.batch.end();
+    game.getBatch().end();
 
     if (stateTime > 2f) {
       // dispose();
@@ -104,7 +103,7 @@ public class IntroScreen extends ScreenAdapter {
   public void hide() {
     super.dispose();
     game.dispose();
-    batch.dispose();
+    game.getBatch().dispose();
     introSheet.dispose();
     font.dispose();
   }
