@@ -415,13 +415,17 @@ public class ScenarioGameMaster extends GameMaster {
     if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       chef.removeTopFromInventory();
       trash.play(soundVolume);
-    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("serving")), targetx, targety)) {
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("serving")), targetx, targety)) {
       serveFood();
-    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
       addToTray(1);
-    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
       addToTray(2);
-    } else if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
       String item = staffOne.collectItem();
       // Don't add a null pointer onto the chefs stack.
       if (item != null) {
@@ -444,9 +448,9 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    //Force user to order in the correct way (The Easiest difficulty):
+    // Force user to order in the correct way (The Easiest difficulty):
     if (inv.size() > 0) {
-      if (customers.get(0).helper(inv.peek())){
+      if (customers.get(0).helper(inv.peek())) {
         tray.add(inv.pop());
       }
     }
@@ -455,7 +459,7 @@ public class ScenarioGameMaster extends GameMaster {
       tray.clear();
       inv.add("raw pizza");
       serving.play(soundVolume);
-    } else if (customers.get(0).finishedRecipe()){
+    } else if (customers.get(0).finishedRecipe()) {
       tray.clear();
       if (machineUnlockBalance.isUnlocked("server-staff")) {
         deliveryStaff.collectItem(customers.get(0).getOrder());
@@ -483,7 +487,7 @@ public class ScenarioGameMaster extends GameMaster {
       inv = chef.getInventory();
     }
 
-    if (inv.size() == 0){
+    if (inv.size() == 0) {
       return;
     }
 
