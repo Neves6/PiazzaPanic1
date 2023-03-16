@@ -405,51 +405,21 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
-    // Work stations
-    String invTop = chef.getInventory().peek();
-    if (targetx == 6 && targety == 7) {
-      if (invTop == "patty") {
-        machines.get(5).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
-      } else if (invTop == "bun") {
-        machines.get(7).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
+    MapObjects cookingObjects = getObjectLayers("Cooking Layer");
+
+    if (chef.getInventory().size() != 0){
+      // Work stations
+      String invTop = chef.getInventory().peek();
+
+      for (MapObject ob : cookingObjects) {
+        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety) &&
+          machines.get(ob.getName()).getInput() == invTop) {
+          machines.get(ob.getName()).process(chef, machineUnlockBalance);
+        }
       }
-    } else if (targetx == 7 && targety == 7) {
-      if (invTop == "patty") {
-        machines.get(6).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
-      } else if (invTop == "bun") {
-        machines.get(8).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
-      }
-      // Forming stations.
-    } else if (targetx == 9 && targety == 7) {
-      machines.get(9).process(chef, machineUnlockBalance);
-      forming.play(soundVolume);
-    } else if (targetx == 10 && targety == 7) {
-      machines.get(10).process(chef, machineUnlockBalance);
-      forming.play(soundVolume);
-    } else if (targetx == 11 && targety == 7) {
-      if (invTop == "tomato") {
-        machines.get(11).process(chef, machineUnlockBalance);
-        chopping.play(soundVolume);
-      } else if (invTop == "lettuce") {
-        machines.get(13).process(chef, machineUnlockBalance);
-        chopping.play(soundVolume);
-      } else if (invTop == "onion") {
-        machines.get(15).process(chef, machineUnlockBalance);
-        chopping.play(soundVolume);
-      }
-    } else if (targetx == 12 && targety == 7) {
-      if (invTop == "tomato") {
-        machines.get(12).process(chef, machineUnlockBalance);
-      } else if (invTop == "lettuce") {
-        machines.get(14).process(chef, machineUnlockBalance);
-      } else if (invTop == "onion") {
-        machines.get(16).process(chef, machineUnlockBalance);
-      }
-    } else if (targetx == 14 && targety == 4) {
+    }
+
+    if (targetx == 14 && targety == 4) {
       chef.removeTopFromInventory();
       trash.play(soundVolume);
     } else if (targetx == 8 && targety == 3) {
@@ -458,26 +428,6 @@ public class ScenarioGameMaster extends GameMaster {
       addToTray(1);
     } else if (targetx == 3 && targety == 3) {
       addToTray(2);
-    } else if (targetx == 14 && targety == 5) {
-      if (invTop == "potato") {
-        machines.get(21).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
-      }
-    } else if (targetx == 14 && targety == 6) {
-      if (invTop == "potato") {
-        machines.get(22).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
-      }
-    } else if (targetx == 1 && targety == 5) {
-      if (invTop == "raw pizza") {
-        machines.get(23).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
-      }
-    } else if (targetx == 1 && targety == 6) {
-      if (invTop == "raw pizza") {
-        machines.get(24).process(chef, machineUnlockBalance);
-        grill.play(soundVolume);
-      }
     }
   }
 

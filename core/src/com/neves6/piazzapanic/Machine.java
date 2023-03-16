@@ -98,6 +98,11 @@ public class Machine {
     }
   }
 
+  public String getInput(){
+    return input;
+  }
+
+
   public void incrementRuntime(float delta) {
     this.runtime += delta;
   }
