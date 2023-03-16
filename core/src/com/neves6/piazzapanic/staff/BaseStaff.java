@@ -29,10 +29,10 @@ public class BaseStaff {
   }
 
   /**
-   * Gets the coordinate based upon the time since the last movement (to
-   * ensure smoothness), as well as whether you have reached the end.
-   * Once the end is reached, reset the collect flag so that no transition takes
-   * place anymore.
+   * Gets the coordinate based upon the time since the last movement (to ensure smoothness), as well
+   * as whether you have reached the end. Once the end is reached, reset the collect flag so that no
+   * transition takes place anymore.
+   *
    * @return A pair of coordinates in the format [x, y].
    */
   public ArrayList<Integer> getCoordInSeq() {

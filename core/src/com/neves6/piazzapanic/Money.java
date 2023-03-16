@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Class to handle money which can be used to unlocked machines.
- */
+/** Class to handle money which can be used to unlocked machines. */
 public class Money {
   private int balance;
   private Map<String, ArrayList> unlockDetails;
 
-  /**
-   * Constructor where you always start with 0 balance.
-   */
+  /** Constructor where you always start with 0 balance. */
   public Money() {
     this.balance = 0;
     this.unlockDetails = new HashMap();
@@ -28,15 +24,14 @@ public class Money {
 
   /**
    * Pretty print method to display the balance.
+   *
    * @return A message that states what the balance is.
    */
   public String displayBalance() {
     return "Balance: $" + this.balance;
   }
 
-  /**
-   * Increments balance by a fixed amount.
-   */
+  /** Increments balance by a fixed amount. */
   public void incrementBalance() {
     this.balance += 100;
   }

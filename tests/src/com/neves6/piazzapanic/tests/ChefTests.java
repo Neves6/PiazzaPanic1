@@ -52,7 +52,14 @@ public class ChefTests {
     inv.push("m");
     Chef testChef =
         new Chef(
-            "Bob", 6, 9, 4, 2, 0, true, inv,
+            "Bob",
+            6,
+            9,
+            4,
+            2,
+            0,
+            true,
+            inv,
             /** texture set int */
             1);
     testChef.setMachineInteractingWith(testMachine);
@@ -68,7 +75,14 @@ public class ChefTests {
     inv.push("m");
     Chef testChef =
         new Chef(
-            "Bob", 6, 9, 4, 2, 0, true, inv,
+            "Bob",
+            6,
+            9,
+            4,
+            2,
+            0,
+            true,
+            inv,
             /** texture set int */
             1);
     boolean stickiness = true;
@@ -87,7 +101,14 @@ public class ChefTests {
     inv.push("m");
     Chef testChef =
         new Chef(
-            "Bob", 6, 9, 4, 2, 0, true, inv,
+            "Bob",
+            6,
+            9,
+            4,
+            2,
+            0,
+            true,
+            inv,
             /** texture set int */
             1);
     Stack<String> testInvA = testChef.getInventory();
@@ -105,7 +126,14 @@ public class ChefTests {
     inv.push("m");
     Chef testChef =
         new Chef(
-            "Bob", 6, 9, 4, 2, 0, true, inv,
+            "Bob",
+            6,
+            9,
+            4,
+            2,
+            0,
+            true,
+            inv,
             /** texture set int */
             1);
     Stack<String> testInvP = testChef.getInventory();
@@ -123,12 +151,19 @@ public class ChefTests {
     inv.push("m");
     Chef testChef =
         new Chef(
-            "Bob", 6, 9, 4, 2, 0, true, inv,
+            "Bob",
+            6,
+            9,
+            4,
+            2,
+            0,
+            true,
+            inv,
             /** texture set int */
             1);
     String facing =
         "down"; // i think should be testChef.facing="" //on further reading might not need it at
-                // all, textures are confusing
+    // all, textures are confusing
     testChef.setFacing("up");
     assertTrue("Set Facing Works :D", testChef.getFacing() == "up");
   }

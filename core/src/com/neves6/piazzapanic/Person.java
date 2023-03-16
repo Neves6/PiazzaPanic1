@@ -1,7 +1,5 @@
 package com.neves6.piazzapanic;
 
-
-
 /** Base person class. */
 public class Person {
   private final String name;

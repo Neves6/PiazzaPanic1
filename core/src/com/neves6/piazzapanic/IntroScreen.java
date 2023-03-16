@@ -25,7 +25,6 @@ public class IntroScreen extends ScreenAdapter {
   int winHeight;
   ArrayList<String> settings;
 
-
   public IntroScreen(PiazzaPanicGame game) {
     this.game = game;
     camera = new OrthographicCamera();

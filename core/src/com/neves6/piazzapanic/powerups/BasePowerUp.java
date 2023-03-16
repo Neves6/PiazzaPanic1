@@ -10,7 +10,7 @@ public class BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
-   * */
+   */
   public BasePowerUp(Long effectTime) {
     this.aquired = false;
     this.startTime = 0L;
@@ -25,8 +25,7 @@ public class BasePowerUp {
   }
 
   /**
-   * If the time that the power up last for is over, it sets
-   * the end time.
+   * If the time that the power up last for is over, it sets the end time.
    *
    * @return Whether the time has been stopped or not.
    */
@@ -41,21 +40,21 @@ public class BasePowerUp {
 
   /**
    * Getter method.
+   *
    * @return whether you have the power-up or not
    */
   public Boolean getAquiredStatus() {
     return this.aquired;
   }
 
-  /**
-   * Set boolean value if the power up has just been attained.
-   */
+  /** Set boolean value if the power up has just been attained. */
   public void aquirePowerUp() {
     this.aquired = true;
   }
 
   /**
    * Getter method.
+   *
    * @return the time the power up was applied.
    */
   public Long getStartTime() {
@@ -64,6 +63,7 @@ public class BasePowerUp {
 
   /**
    * Getter method.
+   *
    * @return how long the power up lasts.
    */
   public Long getEffectTime() {

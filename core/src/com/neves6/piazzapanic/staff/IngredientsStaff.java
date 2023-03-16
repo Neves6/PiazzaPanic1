@@ -25,8 +25,8 @@ public class IngredientsStaff extends BaseStaff {
 
   /**
    * Depending on what recipe is needed, the stack is generated and designed to put the ingredients
-   * you need last first. This allows the LIFO structure to optimise the way it gives ingredients
-   * to the user for maximum time saving.
+   * you need last first. This allows the LIFO structure to optimise the way it gives ingredients to
+   * the user for maximum time saving.
    */
   public void generateStack() {
     if (currentRecipe == "salad") {
@@ -50,6 +50,7 @@ public class IngredientsStaff extends BaseStaff {
 
   /**
    * Sets current recipe if the flag is set.
+   *
    * @param recipe The recipe that is currently being processed.
    */
   public void setCurrentRecipe(String recipe) {
@@ -63,6 +64,7 @@ public class IngredientsStaff extends BaseStaff {
 
   /**
    * Collect ingredients that have been collected by the staff member.
+   *
    * @return The ingredients at the top of the stack.
    */
   public String collectItem() {
@@ -75,6 +77,7 @@ public class IngredientsStaff extends BaseStaff {
 
   /**
    * Getter method.
+   *
    * @param generate Whether a new recipes ingredients needs to be collected yet.
    */
   public void setGenerate(boolean generate) {
