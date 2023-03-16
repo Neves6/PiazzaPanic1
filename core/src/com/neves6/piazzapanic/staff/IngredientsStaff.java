@@ -3,7 +3,11 @@ package com.neves6.piazzapanic.staff;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class IngredientsStaff extends BaseStaff{
+/**
+ * A class to configure unlockable staff which collects item
+ * from fridges for the user.
+ */
+public class IngredientsStaff extends BaseStaff {
     Stack<String> stack;
     String currentRecipe;
     boolean generate;
@@ -12,13 +16,13 @@ public class IngredientsStaff extends BaseStaff{
      * Constructor method that takes 2 arrays which must be of the
      * same length. Each index represent the nth value in the sequence of
      * movement which must take place.
-     *
      * Generate tells the class that all the ingredients needs adding to the
      * stack.
      *
      * @param xSequence List of x coordinates in order.
      * @param ySequence List of y coordinates in order.
      */
+    @SuppressWarnings("checkstyle:ParameterName")
     public IngredientsStaff(ArrayList<Integer> xSequence, ArrayList<Integer> ySequence) {
         super(xSequence, ySequence);
         this.stack = new Stack<>();
