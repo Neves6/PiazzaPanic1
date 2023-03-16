@@ -95,20 +95,20 @@ public class LevelSelectorScreen extends ScreenAdapter {
         bgScaleFactor = (float) winHeight / (float) bg.getHeight();
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.batch.draw(
+        game.getBatch().begin();
+        game.getBatch().draw(
                 bg,
                 -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "LEVEL SELECTION", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        font.draw(game.getBatch(), "LEVEL SELECTION", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         stage.draw();
-        game.batch.draw(lock, level2Button.getX(), level2Button.getY(), level2Button.getWidth(), level2Button.getHeight());
-        game.batch.draw(lock, level3Button.getX(), level3Button.getY(), level3Button.getWidth(), level3Button.getHeight());
-        game.batch.end();
+        game.getBatch().draw(lock, level2Button.getX(), level2Button.getY(), level2Button.getWidth(), level2Button.getHeight());
+        game.getBatch().draw(lock, level3Button.getX(), level3Button.getY(), level3Button.getWidth(), level3Button.getHeight());
+        game.getBatch().end();
     }
 
     @Override

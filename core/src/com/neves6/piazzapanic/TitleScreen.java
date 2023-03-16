@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 public class TitleScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
-    SpriteBatch batch;
     BitmapFont font;
     Texture bg;
     int winWidth;
@@ -43,7 +42,6 @@ public class TitleScreen extends ScreenAdapter {
     public void show(){
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch = new SpriteBatch();
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -120,17 +118,17 @@ public class TitleScreen extends ScreenAdapter {
         bgScaleFactor = (float) winHeight / (float) bg.getHeight();
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.batch.draw(
+        game.getBatch().begin();
+        game.getBatch().draw(
                 bg,
                 -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "PIAZZA PANIC 1", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
-        game.batch.end();
+        font.draw(game.getBatch(), "PIAZZA PANIC 1", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        game.getBatch().end();
         stage.draw();
     }
 
@@ -156,7 +154,7 @@ public class TitleScreen extends ScreenAdapter {
     public void hide(){
         super.dispose();
         game.dispose();
-        batch.dispose();
+
         font.dispose();
         bg.dispose();
         stage.dispose();
