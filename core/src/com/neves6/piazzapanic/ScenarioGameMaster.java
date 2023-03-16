@@ -407,13 +407,13 @@ public class ScenarioGameMaster extends GameMaster {
 
     MapObjects cookingObjects = getObjectLayers("Cooking Layer");
 
-    if (chef.getInventory().size() != 0){
+    if (chef.getInventory().size() != 0) {
       // Work stations
       String invTop = chef.getInventory().peek();
 
       for (MapObject ob : cookingObjects) {
-        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety) &&
-          machines.get(ob.getName()).getInput() == invTop) {
+        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+            && machines.get(ob.getName()).getInput() == invTop) {
           machines.get(ob.getName()).process(chef, machineUnlockBalance);
         }
       }
