@@ -4,27 +4,25 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PiazzaPanicGame extends Game {
-	SpriteBatch batch;
+  SpriteBatch batch;
 
-	public PiazzaPanicGame() {
-		super();
-	}
+  public PiazzaPanicGame() {
+    super();
+  }
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
+  @Override
+  public void create() {
+    batch = new SpriteBatch();
 
-		setScreen(new IntroScreen(this));
-	}
+    setScreen(new IntroScreen(this));
+  }
 
-	public void resize(int width, int height) {
-		super.resize(width, height);
-	}
+  public void resize(int width, int height) {
+    super.resize(width, height);
+  }
 
-	public void render(float delta) {
-	}
+  public void render(float delta) {}
 
-	@Override
-	public void dispose () {
-	}
+  @Override
+  public void dispose() {}
 }
