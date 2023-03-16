@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
-import java.util.Stack;
+import java.util.HashMap;import java.util.Map;import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ScenarioGameMaster extends GameMaster {
@@ -26,7 +26,7 @@ public class ScenarioGameMaster extends GameMaster {
   TiledMapTileLayer collisionLayer;
   ArrayList<Chef> chefs = new ArrayList<>();
   Stack<Customer> customers = new Stack<>();
-  ArrayList<Machine> machines = new ArrayList<>();
+  Map<String, Machine> machines = new HashMap();
   ArrayList<String> tray1 = new ArrayList<>();
   ArrayList<String> tray2 = new ArrayList<>();
   int selectedChef;
@@ -78,44 +78,44 @@ public class ScenarioGameMaster extends GameMaster {
     totalTimer = 0f;
 
     // Assessment 1 (index 0-16)
-    machines.add(new Machine("fridge-meat", "", "meat", 0, false));
-    machines.add(new Machine("fridge-tomato", "", "tomato", 0, false));
-    machines.add(new Machine("fridge-lettuce", "", "lettuce", 0, false));
-    machines.add(new Machine("fridge-onion", "", "onion", 0, false));
-    machines.add(new Machine("fridge-bun", "", "bun", 0, false));
+    machines.put("fridge-meat", new Machine("fridge-meat", "", "meat", 0, false));
+    machines.put("fridge-tomato", new Machine("fridge-tomato", "", "tomato", 0, false));
+    machines.put("fridge-lettuce", new Machine("fridge-lettuce", "", "lettuce", 0, false));
+    machines.put("fridge-onion", new Machine("fridge-onion", "", "onion", 0, false));
+    machines.put("fridge-bun", new Machine("fridge-bun", "", "bun", 0, false));
 
     machineUnlockBalance.addGroup("grill", 100);
-    machines.add(new Machine("grill-patty-1", "patty", "burger", 3, true));
-    machines.add(new Machine("grill-patty-2", "patty", "burger", 3, true, "grill"));
-    machines.add(new Machine("grill-bun-1", "bun", "toasted bun", 3, true));
-    machines.add(new Machine("grill-bun-2", "bun", "toasted bun", 3, true, "grill"));
+    machines.put("grill-patty-1", new Machine("grill-patty-1", "patty", "burger", 3, true));
+    machines.put("grill-patty-2", new Machine("grill-patty-2", "patty", "burger", 3, true, "grill"));
+    machines.put("grill-bun-1", new Machine("grill-bun-1", "bun", "toasted bun", 3, true));
+    machines.put("grill-bun-2", new Machine("grill-bun-2", "bun", "toasted bun", 3, true, "grill"));
 
     machineUnlockBalance.addGroup("forming", 50);
-    machines.add(new Machine("forming-1", "meat", "patty", 3, true));
-    machines.add(new Machine("forming-2", "meat", "patty", 3, true, "forming"));
+    machines.put("forming-1", new Machine("forming-1", "meat", "patty", 3, true));
+    machines.put("forming-2", new Machine("forming-2", "meat", "patty", 3, true, "forming"));
 
     machineUnlockBalance.addGroup("chopping", 50);
-    machines.add(new Machine("chopping-tomato-1", "tomato", "chopped tomato", 3, true));
-    machines.add(new Machine("chopping-tomato-2", "tomato", "chopped tomato", 3, true, "chopping"));
-    machines.add(new Machine("chopping-lettuce-1", "lettuce", "chopped lettuce", 3, true));
-    machines.add(
+    machines.put("chopping-tomato-1", new Machine("chopping-tomato-1", "tomato", "chopped tomato", 3, true));
+    machines.put("chopping-tomato-2", new Machine("chopping-tomato-2", "tomato", "chopped tomato", 3, true, "chopping"));
+    machines.put("chopping-lettuce-1", new Machine("chopping-lettuce-1", "lettuce", "chopped lettuce", 3, true));
+    machines.put("chopping-lettuce-2",
         new Machine("chopping-lettuce-2", "lettuce", "chopped lettuce", 3, true, "chopping"));
-    machines.add(new Machine("chopping-onion-1", "onion", "chopped onion", 3, true));
-    machines.add(new Machine("chopping-onion-2", "onion", "chopped onion", 3, true, "chopping"));
+    machines.put("chopping-onion-1", new Machine("chopping-onion-1", "onion", "chopped onion", 3, true));
+    machines.put("chopping-onion-2", new Machine("chopping-onion-2", "onion", "chopped onion", 3, true, "chopping"));
 
     // Assessment 2 (index 17-24)
-    machines.add(new Machine("fridge-dough", "", "dough", 0, false));
-    machines.add(new Machine("fridge-cheese", "", "cheese", 0, false));
-    machines.add(new Machine("fridge-potato", "", "potato", 0, false));
-    machines.add(new Machine("fridge-beans", "", "beans", 0, false));
+    machines.put("fridge-dough", new Machine("fridge-dough", "", "dough", 0, false));
+    machines.put("fridge-cheese", new Machine("fridge-cheese", "", "cheese", 0, false));
+    machines.put("fridge-potato", new Machine("fridge-potato", "", "potato", 0, false));
+    machines.put("fridge-beans", new Machine("fridge-beans", "", "beans", 0, false));
 
     machineUnlockBalance.addGroup("potato", 150);
-    machines.add(new Machine("oven-potato-1", "potato", "jacket", 3, true));
-    machines.add(new Machine("oven-potato-2", "potato", "jacket", 3, true, "potato"));
+    machines.put("oven-potato-1", new Machine("oven-potato-1", "potato", "jacket", 3, true));
+    machines.put("oven-potato-2", new Machine("oven-potato-2", "potato", "jacket", 3, true, "potato"));
 
     machineUnlockBalance.addGroup("pizza", 150);
-    machines.add(new Machine("oven-pizza-1", "raw pizza", "pizza", 3, true));
-    machines.add(new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true, "pizza"));
+    machines.put("oven-pizza-1", new Machine("oven-pizza-1", "raw pizza", "pizza", 3, true));
+    machines.put("oven-pizza-2", new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true, "pizza"));
 
     // disposal and tray/serving handled separately
 
@@ -303,10 +303,11 @@ public class ScenarioGameMaster extends GameMaster {
     // TODO: Use increment variable to handle powerup -
     // just use get delta everytime.
     float increment = delta;
-    for (Machine machine : machines) {
-      if (machine.getActive()) {
-        machine.incrementRuntime(delta);
-        machine.attemptGetOutput();
+    for (String machine : machines.keySet()) {
+      Machine tempMachine = machines.get(machine);
+      if (tempMachine.getActive()) {
+        tempMachine.incrementRuntime(delta);
+        tempMachine.attemptGetOutput();
       }
     }
     totalTimer += increment;
@@ -382,36 +383,11 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
-    if (chef.getInventory().empty()) {
-      if (targetx == 1 && targety == 10) {
-        machines.get(0).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 2 && targety == 10) {
-        machines.get(1).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 3 && targety == 10) {
-        machines.get(2).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 4 && targety == 10) {
-        machines.get(3).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 1 && targety == 8) {
-        machines.get(4).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 4 && targety == 8) {
-        machines.get(17).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 5 && targety == 10) {
-        machines.get(18).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 6 && targety == 10) {
-        machines.get(19).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else if (targetx == 7 && targety == 10) {
-        machines.get(20).process(chef, machineUnlockBalance);
-        fridge.play(soundVolume);
-      } else {
-        return;
+    MapObjects fridgeObjects = getObjectLayers("Fridge Layer");
+    for (MapObject ob : fridgeObjects) {
+      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
+         machines.get(ob.getName()).process(chef, machineUnlockBalance);
+         fridge.play(soundVolume);
       }
     }
 

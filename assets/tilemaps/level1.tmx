@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="21" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="15">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="21" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="24">
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="turf" width="21" height="12">
   <data encoding="csv">
@@ -74,5 +74,15 @@
   <object id="13" name="chopping" x="382" y="127.333" width="35.3333" height="30.6667"/>
   <object id="14" name="potato" x="445.333" y="160" width="33.3333" height="31.3333"/>
  </objectgroup>
- <objectgroup id="9" name="Machine Layer"/>
+ <objectgroup id="9" name="Fridge Layer">
+  <object id="15" name="fridge-bun" x="32.6667" y="96" width="29.3333" height="29.3333"/>
+  <object id="16" name="fridge-meat" x="31.3333" y="32" width="32" height="30"/>
+  <object id="17" name="fridge-tomato" x="64" y="32.6667" width="32" height="29.3333"/>
+  <object id="18" name="fridge-lettuce" x="96" y="32.6667" width="31.3333" height="28"/>
+  <object id="19" name="fridge-onion" x="128.667" y="32.6667" width="29.3333" height="28"/>
+  <object id="20" name="fridge-cheese" x="159.333" y="34.6667" width="30" height="26.6667"/>
+  <object id="21" name="fridge-potato" x="192" y="34.6667" width="32.6667" height="29.3333"/>
+  <object id="22" name="fridge-beans" x="224.667" y="35.3333" width="30" height="26.6667"/>
+  <object id="23" name="fridge-dough" x="127.333" y="96.6667" width="30.6667" height="29.3333"/>
+ </objectgroup>
 </map>
