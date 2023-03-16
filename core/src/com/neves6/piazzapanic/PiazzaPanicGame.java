@@ -21,8 +21,10 @@ public class PiazzaPanicGame extends Game {
     super.resize(width, height);
   }
 
-  public void render(float delta) {}
+  public void render(float delta) {
+  }
 
   @Override
-  public void dispose() {}
+  public void dispose() {
+  }
 }

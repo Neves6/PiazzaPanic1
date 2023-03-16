@@ -13,12 +13,12 @@ public class Customer extends Person {
    * Customer constructor.
    *
    * @param name Name of customer.
-   * @param xCoord logical x coordinate of customer.
-   * @param yCoord logical y coordinate of customer.
+   * @param xcoord logical x coordinate of customer.
+   * @param ycoord logical y coordinate of customer.
    * @param order Order of customer.
    */
-  public Customer(String name, int xCoord, int yCoord, String order) {
-    super(name, xCoord, yCoord);
+  public Customer(String name, int xcoord, int ycoord, String order) {
+    super(name, xcoord, ycoord);
     this.order = order;
     this.txUp = new Texture("people/cust1up.png");
     this.txLeft = new Texture("people/cust1left.png");

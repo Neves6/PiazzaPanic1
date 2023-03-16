@@ -44,8 +44,8 @@ public class ScenarioGameMaster extends GameMaster {
    * @param map TiledMap instance.
    * @param chefno Number of chefs.
    * @param custno Number of customers.
-   * @param machineUnlockBalance
-   * @param ingredientsHelper
+   * @param machineUnlockBalance A class that controls the in game currency.
+   * @param ingredientsHelper Staff member which can get ingredients.
    */
   public ScenarioGameMaster(
       PiazzaPanicGame game,
@@ -130,6 +130,8 @@ public class ScenarioGameMaster extends GameMaster {
       case "none":
         soundVolume = 0f;
         break;
+      default:
+        break;
     }
 
     machineUnlockBalance.addGroup("ingredients-staff", 150);
@@ -185,6 +187,8 @@ public class ScenarioGameMaster extends GameMaster {
           chef.alterxCoord(+1);
         }
         chef.setFacing("right");
+        break;
+      default:
         break;
     }
   }
@@ -345,10 +349,7 @@ public class ScenarioGameMaster extends GameMaster {
     } else if (targetx == 1 && targety == 6) {
       machineUnlockBalance.unlockMachine("pizza");
     } else if (targetx == 2 && targety == 7) {
-      Boolean value = machineUnlockBalance.unlockMachine("ingredients-staff");
-      // Need to do it this way to not break boolean values.
-      if (machineUnlockBalance.isUnlocked("ingredients-staff")
-          && value != machineUnlockBalance.isUnlocked("ingredients-staff")) {}
+      machineUnlockBalance.unlockMachine("ingredients-staff");
     } else if (targetx == 1 && targety == 3) {
       machineUnlockBalance.unlockMachine("server-staff");
     }

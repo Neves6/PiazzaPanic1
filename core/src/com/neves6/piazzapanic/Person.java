@@ -5,8 +5,8 @@ package com.neves6.piazzapanic;
 /** Base person class. */
 public class Person {
   private final String name;
-  private int xCoord;
-  private int yCoord;
+  private int xcoord;
+  private int ycoord;
   // For powerups.
   private int deltaMultiplier;
 
@@ -14,51 +14,52 @@ public class Person {
    * Person constructor.
    *
    * @param name Name of person.
-   * @param xCoord logical x coordinate of person.
-   * @param yCoord logical y coordinate of person.
+   * @param xcoord logical x coordinate of person.
+   * @param ycoord logical y coordinate of person.
    */
-  public Person(String name, int xCoord, int yCoord) {
+  public Person(String name, int xcoord, int ycoord) {
     this.name = name;
-    this.xCoord = xCoord;
-    this.yCoord = yCoord;
+    this.xcoord = xcoord;
+    this.ycoord = ycoord;
     this.deltaMultiplier = 1;
   }
 
   public int getxCoord() {
-    return xCoord;
+    return xcoord;
   }
 
   public int getyCoord() {
-    return yCoord;
+    return ycoord;
   }
 
   public String getName() {
     return name;
   }
 
-  public void setxCoord(int xCoord) {
-    if (xCoord > -1) {
-      this.xCoord = xCoord;
+  public void setxCoord(int xcoord) {
+    if (xcoord > -1) {
+      this.xcoord = xcoord;
     } else {
       throw new IllegalArgumentException();
     }
   }
 
-  public void setyCoord(int yCoord) {
-    if (yCoord > -1) {
-      this.yCoord = yCoord;
+  public void setyCoord(int ycoord) {
+    if (ycoord > -1) {
+      this.ycoord = ycoord;
     } else {
       throw new IllegalArgumentException();
     }
   }
 
-  public void alterxCoord(int xDelta) {
-    this.xCoord += xDelta * deltaMultiplier;
+  public void alterxCoord(int xdelta) {
+    this.xcoord += xdelta * deltaMultiplier;
   }
 
-  public void alteryCoord(int yDelta) {
-    this.yCoord += yDelta * deltaMultiplier;
+  public void alteryCoord(int ydelta) {
+    this.ycoord += ydelta * deltaMultiplier;
   }
+
   // TODO: Power-ups.
   public void alterSpeed(int newMultipler) {
     this.deltaMultiplier = newMultipler;

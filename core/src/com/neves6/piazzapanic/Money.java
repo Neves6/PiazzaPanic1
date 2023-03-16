@@ -1,15 +1,17 @@
 package com.neves6.piazzapanic;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-/***
+/**
  * Class to handle money which can be used to unlocked machines.
  */
 public class Money {
   private int balance;
   private Map<String, ArrayList> unlockDetails;
 
-  /***
+  /**
    * Constructor where you always start with 0 balance.
    */
   public Money() {
@@ -24,7 +26,7 @@ public class Money {
     unlockDetails.put("auto", tempNull);
   }
 
-  /***
+  /**
    * Pretty print method to display the balance.
    * @return A message that states what the balance is.
    */
@@ -32,7 +34,7 @@ public class Money {
     return "Balance: $" + this.balance;
   }
 
-  /***
+  /**
    * Increments balance by a fixed amount.
    */
   public void incrementBalance() {

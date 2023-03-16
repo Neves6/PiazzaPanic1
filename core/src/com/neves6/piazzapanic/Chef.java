@@ -19,27 +19,27 @@ public class Chef extends Person {
   /**
    * Chef constructor.
    *
-   * @param name
-   * @param xCoord
-   * @param yCoord
-   * @param chopSpeed
-   * @param frySpeed
-   * @param bakeSpeed
-   * @param isStickied
-   * @param inventory
-   * @param textureSet
+   * @param name A label for chefs
+   * @param xcoord X coordinate of the chef.
+   * @param ycoord Y coordinate of the chef.
+   * @param chopSpeed Amount of time taken for the chef to chop an item.
+   * @param frySpeed Amount of time taken for the chef to fry an item.
+   * @param bakeSpeed Amount of time taken for the chef to bake an item.
+   * @param isStickied Whether the chef can move or not.
+   * @param inventory What items are in the chefs stack.
+   * @param textureSet What set of images are used to display the chef.
    */
   public Chef(
       String name,
-      int xCoord,
-      int yCoord,
+      int xcoord,
+      int ycoord,
       int chopSpeed,
       int frySpeed,
       int bakeSpeed,
       boolean isStickied,
       Stack<String> inventory,
       int textureSet) {
-    super(name, xCoord, yCoord);
+    super(name, xcoord, ycoord);
     this.isStickied = isStickied;
     if (inventory.size() == 0) {
       this.inventory = new Stack<String>();
@@ -111,6 +111,8 @@ public class Chef extends Person {
         break;
       case "right":
         this.txNow = txRight;
+        break;
+      default:
         break;
     }
   }

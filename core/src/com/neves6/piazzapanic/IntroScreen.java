@@ -19,11 +19,12 @@ public class IntroScreen extends ScreenAdapter {
   Texture introSheet;
   BitmapFont font;
   float stateTime;
-  int FRAME_COLS;
-  int FRAME_ROWS;
+  static final int FRAME_COLS = 8;
+  static final int FRAME_ROWS = 1;
   int winWidth;
   int winHeight;
   ArrayList<String> settings;
+
 
   public IntroScreen(PiazzaPanicGame game) {
     this.game = game;
@@ -41,8 +42,6 @@ public class IntroScreen extends ScreenAdapter {
 
   public void show() {
     // INTRO ANIMATION
-    FRAME_COLS = 8;
-    FRAME_ROWS = 1;
     introSheet = new Texture(Gdx.files.internal("intro_sheet.png"));
     TextureRegion[][] tmp =
         TextureRegion.split(
@@ -68,7 +67,7 @@ public class IntroScreen extends ScreenAdapter {
     winHeight = Gdx.graphics.getHeight();
 
     // Get current frame of animation for the current stateTime
-    TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);
+    final TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);
 
     camera.update();
     game.batch.setProjectionMatrix(camera.combined);

@@ -3,12 +3,12 @@ package com.neves6.piazzapanic.powerups;
 import com.neves6.piazzapanic.Chef;
 import java.util.ArrayList;
 
-/***
+/**
  * Allows the chefs to go double speed for a given time.
  */
 public class DoubleSpeed extends BasePowerUp {
 
-  /***
+  /**
    * Constructor.
    * @param effectTime How long the effect will last for.
    */
@@ -16,7 +16,7 @@ public class DoubleSpeed extends BasePowerUp {
     super(effectTime);
   }
 
-  /***
+  /**
    * Takes all active chefs in the game and changes their speed to
    * if the power up is acquired.
    * @param chefs List of all active chefs.
@@ -35,7 +35,7 @@ public class DoubleSpeed extends BasePowerUp {
     return chefs;
   }
 
-  /***
+  /**
    * Takes all active chefs in the game and changes their speed to
    * normal if the power up has ended.
    * @param chefs List of all active chefs.

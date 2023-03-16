@@ -3,13 +3,13 @@ package com.neves6.piazzapanic.powerups;
 import com.neves6.piazzapanic.Machine;
 import java.util.ArrayList;
 
-/***
+/**
  * A power up which makes food take a shorter amount of time to cook.
  */
 public class ShorterMachineTime extends BasePowerUp {
 
-  /***
-   * Constructor
+  /**
+   * Constructor.
    *
    * @param effectTime How long the power up lasts.
    * */
@@ -17,7 +17,7 @@ public class ShorterMachineTime extends BasePowerUp {
     super(effectTime);
   }
 
-  /***
+  /**
    * Takes all active machines in the game and changes their processing speed
    * if the power up has ended.
    * @param machines List of all active machines.
@@ -36,7 +36,7 @@ public class ShorterMachineTime extends BasePowerUp {
     return machines;
   }
 
-  /***
+  /**
    * Takes all active machines in the game and changes their processing speed to
    * normal if the power up has ended.
    * @param machines List of all active machines.

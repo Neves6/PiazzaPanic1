@@ -14,17 +14,16 @@ public class IngredientsStaff extends BaseStaff {
    * the nth value in the sequence of movement which must take place. Generate tells the class that
    * all the ingredients needs adding to the stack.
    *
-   * @param xSequence List of x coordinates in order.
-   * @param ySequence List of y coordinates in order.
+   * @param xsequence List of x coordinates in order.
+   * @param ysequence List of y coordinates in order.
    */
-  @SuppressWarnings("checkstyle:ParameterName")
-  public IngredientsStaff(ArrayList<Integer> xSequence, ArrayList<Integer> ySequence) {
-    super(xSequence, ySequence);
+  public IngredientsStaff(ArrayList<Integer> xsequence, ArrayList<Integer> ysequence) {
+    super(xsequence, ysequence);
     this.stack = new Stack<>();
     this.generate = false;
   }
 
-  /***
+  /**
    * Depending on what recipe is needed, the stack is generated and designed to put the ingredients
    * you need last first. This allows the LIFO structure to optimise the way it gives ingredients
    * to the user for maximum time saving.
@@ -49,7 +48,7 @@ public class IngredientsStaff extends BaseStaff {
     }
   }
 
-  /***
+  /**
    * Sets current recipe if the flag is set.
    * @param recipe The recipe that is currently being processed.
    */
@@ -62,7 +61,7 @@ public class IngredientsStaff extends BaseStaff {
     }
   }
 
-  /***
+  /**
    * Collect ingredients that have been collected by the staff member.
    * @return The ingredients at the top of the stack.
    */
@@ -74,7 +73,7 @@ public class IngredientsStaff extends BaseStaff {
     }
   }
 
-  /***
+  /**
    * Getter method.
    * @param generate Whether a new recipes ingredients needs to be collected yet.
    */
