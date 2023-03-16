@@ -157,14 +157,14 @@ public class GameScreen extends ScreenAdapter {
         } if (!(machineUnlockBalance.isUnlocked("potato"))) {
             game.getBatch().draw(lock,  14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("pizza"))) {
-            game.batch.draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock,  1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
         }  if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
-            game.batch.draw(lock,  2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock,  2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
         } if (!(machineUnlockBalance.isUnlocked("server-staff"))) {
-            game.batch.draw(lock,  1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().draw(lock,  1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);
         }
 
-        game.batch.end();
+        game.getBatch().end();
 
         stage.draw();
 
@@ -176,18 +176,18 @@ public class GameScreen extends ScreenAdapter {
     public void drawSequence(IngredientsStaff ob){
         if (ob.getCollect()) {
             ArrayList<Integer> pairCoord = ob.getCoordInSeq();
-            game.batch.begin();
-            game.batch.draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
-            game.batch.end();
+            game.getBatch().begin();
+            game.getBatch().draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().end();
         }
     }
 
     public void drawSequence(DeliveryStaff ob){
         if (ob.getCollect()) {
             ArrayList<Integer> pairCoord = ob.getCoordInSeq();
-            game.batch.begin();
-            game.batch.draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
-            game.batch.end();
+            game.getBatch().begin();
+            game.getBatch().draw(new Texture(Gdx.files.internal("people/chef1down.png")), pairCoord.get(0) * wScale, pairCoord.get(1) * hScale, 32 * unitScale, 32 * unitScale);
+            game.getBatch().end();
         }
     }
 
@@ -209,7 +209,7 @@ public class GameScreen extends ScreenAdapter {
     public void hide(){
         super.dispose();
         game.dispose();
-        batch.dispose();
+        game.getBatch().dispose();
         font.dispose();
         stage.dispose();
         map.dispose();

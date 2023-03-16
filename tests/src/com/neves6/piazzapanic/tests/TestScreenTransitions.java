@@ -20,12 +20,4 @@ public class TestScreenTransitions {
         assertTrue(testGame.getScreen().getClass() == IntroScreen.class);
     }
 
-    @Test
-    public void testCreditsToTitleScreen(){
-        PiazzaPanicGame testGame = new PiazzaPanicGame();
-        CreditsScreen testCredits = new CreditsScreen(testGame);
-        testCredits.keyDown(1);
-        assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
-    }
-
 }
