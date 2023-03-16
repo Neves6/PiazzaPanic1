@@ -8,5 +8,6 @@ import static org.junit.Assert.assertTrue;
 @RunWith(GdxTestRunner.class)
 public class AssetTests {
 
+}
 
 
