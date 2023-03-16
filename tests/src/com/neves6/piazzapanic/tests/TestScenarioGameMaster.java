@@ -110,14 +110,18 @@ public class TestScenarioGameMaster {
 
     @Test
     public void testGenerateCustomersTrayText(){
-        assertTrue(testMasterIV.generateCustomersTrayText().equals("Customers remaining: 3\n" +
+        String testString = testMasterIV.generateCustomersTrayText();
+        assertTrue(testString.equals("Customers remaining: 3\n" +
                 "Order: jacket potato\n" +
                 "Tray 1 contents: []\n" +
-                "Tray 2 contents: []") || testMasterIV.generateCustomersTrayText().equals("Customers remaining: 3\n" +
+                "Tray 2 contents: []") || testString.equals("Customers remaining: 3\n" +
                 "Order: hamburger\n" +
                 "Tray 1 contents: []\n" +
-                "Tray 2 contents: []") || testMasterIV.generateCustomersTrayText().equals("Customers remaining: 3\n" +
+                "Tray 2 contents: []") || testString.equals("Customers remaining: 3\n" +
                 "Order: pizza\n" +
+                "Tray 1 contents: []\n" +
+                "Tray 2 contents: []") || testString.equals("Customers remaining: 3\n" +
+                "Order: salad\n" +
                 "Tray 1 contents: []\n" +
                 "Tray 2 contents: []"));
     }
