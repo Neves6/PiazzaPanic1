@@ -8,9 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-/**
- * Display once the game has been completed by the user.
- */
+/** Display once the game has been completed by the user. */
 public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -20,8 +18,8 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   int winHeight;
 
   /**
-   * Constructor method which sets up the fonts and textures to display the
-   * credits.
+   * Constructor method which sets up the fonts and textures to display the credits.
+   *
    * @param game
    */
   public CreditsScreen(PiazzaPanicGame game) {
@@ -30,9 +28,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
     credits = new Texture(Gdx.files.internal("credits.png"));
   }
 
-  /**
-   * Inherited show method which sets up screen dimensions.
-   */
+  /** Inherited show method which sets up screen dimensions. */
   @Override
   public void show() {
     Gdx.input.setInputProcessor(this);
@@ -43,6 +39,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Draws the credits image onto the screen.
+   *
    * @param delta The time in seconds since the last render.
    */
   @Override
@@ -63,6 +60,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * A function which can resize the window if it changes.
+   *
    * @param width Horizontal size of the screen.
    * @param height Vertical size of the screen.
    */
@@ -72,9 +70,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
     camera.setToOrtho(false, width, height);
   }
 
-  /**
-   * What to do when the screen is exited.
-   */
+  /** What to do when the screen is exited. */
   @Override
   public void hide() {
     super.dispose();
@@ -85,8 +81,8 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * When the user presses a single key down.
-   * @param keycode a one to one mapping between the user keyboard
-   *                and numbers.
+   *
+   * @param keycode a one to one mapping between the user keyboard and numbers.
    * @return true
    */
   @Override
@@ -97,6 +93,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED (NEED TO INHERIT CLASS)
+   *
    * @param keycode one of the constants in {@link Input.Keys}
    * @return false
    */
@@ -106,7 +103,6 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   *
    * @param character The character
    * @return false
    */

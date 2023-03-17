@@ -1,7 +1,7 @@
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;import com.neves6.piazzapanic.screens.IntroScreen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PiazzaPanicGame extends Game {
   SpriteBatch _batch;

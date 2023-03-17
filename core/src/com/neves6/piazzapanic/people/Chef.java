@@ -1,12 +1,10 @@
 package com.neves6.piazzapanic.people;
 
-import com.badlogic.gdx.graphics.Texture;import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.badlogic.gdx.graphics.Texture;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
 import java.util.Stack;
 
-/**
- * Chef class which helps the user cook items and it
- * inherits methods from the person class.
- */
+/** Chef class which helps the user cook items and it inherits methods from the person class. */
 public class Chef extends Person {
   private boolean isStickied;
   private Stack<String> inventory;
@@ -59,6 +57,7 @@ public class Chef extends Person {
 
   /**
    * Getter method used to see whether chef can move or not.
+   *
    * @return Can the chef move.
    */
   public boolean getIsStickied() {
@@ -66,8 +65,8 @@ public class Chef extends Person {
   }
 
   /**
-   * Getter method used to set which texture is being used
-   * to render the chef.
+   * Getter method used to set which texture is being used to render the chef.
+   *
    * @return Texture being used to render the chef.
    */
   public Texture getTxNow() {
@@ -75,8 +74,8 @@ public class Chef extends Person {
   }
 
   /**
-   * Setter method to set whether the chef is stuck to
-   * one coordinates.
+   * Setter method to set whether the chef is stuck to one coordinates.
+   *
    * @param flag Whether the chef is stuck to one coordinates.
    */
   public void setIsStickied(boolean flag) {
@@ -85,6 +84,7 @@ public class Chef extends Person {
 
   /**
    * Setter method to show what the chef is currently using.
+   *
    * @param machine The machine that the chef is interacting with.
    */
   public void setMachineInteractingWith(Machine machine) {
@@ -93,12 +93,12 @@ public class Chef extends Person {
 
   /**
    * Getter method to see what machine the chef is using.
+   *
    * @return The machine that the chef is interacting with.
    */
   public Machine getMachineInteractingWith() {
     return machineInteractingWith;
   }
-
 
   /***
    * Getter method to see what items the chef has.
@@ -110,21 +110,21 @@ public class Chef extends Person {
 
   /**
    * Add a new item to the top of the chef inventory.
+   *
    * @param item A ingredient to be added to the inventory.
    */
   public void addToInventory(String item) {
     this.inventory.push(item);
   }
 
-  /**
-   * Removes the item at the top of the chefs inventory.
-   */
+  /** Removes the item at the top of the chefs inventory. */
   public void removeTopFromInventory() {
     this.inventory.pop();
   }
 
   /**
    * Getter method for which way the chef is facing.
+   *
    * @return Which way the chef is facing.
    */
   public String getFacing() {
@@ -133,6 +133,7 @@ public class Chef extends Person {
 
   /**
    * Sets the facing direction of the chef, then changes the current texture to match.
+   *
    * @param facing sprite facing direction.
    */
   public void setFacing(String facing) {

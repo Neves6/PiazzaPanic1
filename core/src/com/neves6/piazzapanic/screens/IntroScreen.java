@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;import com.neves6.piazzapanic.gamemechanisms.Utility;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.neves6.piazzapanic.gamemechanisms.Utility;
 import java.util.ArrayList;
 
 public class IntroScreen extends ScreenAdapter {
