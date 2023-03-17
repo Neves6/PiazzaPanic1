@@ -48,7 +48,7 @@ public class Customer extends Person {
     return txLeft;
   }
 
-  public void generateHelper(){
+  public void generateHelper() {
     remainingSteps = new Stack<>();
     if (order == "salad") {
       this.remainingSteps.push("chopped onion");
@@ -66,18 +66,17 @@ public class Customer extends Person {
       this.remainingSteps.push("toasted bun");
     }
   }
-  public Boolean helper(String inv){
-    if (inv == this.remainingSteps.peek()){
+
+  public Boolean helper(String inv) {
+    if (inv == this.remainingSteps.peek()) {
       this.remainingSteps.pop();
       return true;
-    } else{
+    } else {
       return false;
     }
   }
 
-  public Boolean finishedRecipe(){
+  public Boolean finishedRecipe() {
     return remainingSteps.size() == 0;
   }
-
-
 }
