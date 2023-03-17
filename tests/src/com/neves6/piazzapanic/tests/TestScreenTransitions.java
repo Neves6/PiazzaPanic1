@@ -3,8 +3,8 @@ package com.neves6.piazzapanic.tests;
 import static org.junit.Assert.assertTrue;
 
 import com.badlogic.gdx.Gdx;
-import com.neves6.piazzapanic.IntroScreen;
-import com.neves6.piazzapanic.PiazzaPanicGame;
+import com.neves6.piazzapanic.screens.IntroScreen;
+import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

@@ -3,7 +3,7 @@ package com.neves6.piazzapanic.tests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.neves6.piazzapanic.Money;
+import com.neves6.piazzapanic.gamemechanisms.Money;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

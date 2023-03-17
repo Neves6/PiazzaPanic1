@@ -1,6 +1,6 @@
 package com.neves6.piazzapanic.powerups;
 
-import com.neves6.piazzapanic.Chef;
+import com.neves6.piazzapanic.people.Chef;
 import java.util.ArrayList;
 
 /** Allows the chefs to go double speed for a given time. */

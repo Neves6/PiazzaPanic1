@@ -2,9 +2,9 @@ package com.neves6.piazzapanic.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.neves6.piazzapanic.Chef;
-import com.neves6.piazzapanic.Machine;
-import com.neves6.piazzapanic.Money;
+import com.neves6.piazzapanic.people.Chef;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.powerups.AutoCook;
 import java.util.ArrayList;
 import java.util.Stack;

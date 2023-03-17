@@ -1,4 +1,4 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.gamemechanisms;
 
 import java.util.ArrayList;
 import java.util.HashMap;

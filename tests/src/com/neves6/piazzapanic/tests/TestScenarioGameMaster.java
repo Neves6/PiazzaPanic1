@@ -4,10 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.neves6.piazzapanic.Machine;
-import com.neves6.piazzapanic.Money;
-import com.neves6.piazzapanic.PiazzaPanicGame;
-import com.neves6.piazzapanic.ScenarioGameMaster;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.screens.PiazzaPanicGame;
+import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;

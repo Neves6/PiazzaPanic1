@@ -1,4 +1,4 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-public class GameWinScreen extends ScreenAdapter {
+public class TitleScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
   SpriteBatch batch;
@@ -24,16 +24,17 @@ public class GameWinScreen extends ScreenAdapter {
   int winHeight;
   float bgScaleFactor;
   Stage stage;
+  TextButton playButton;
+  TextButton tutorialButton;
   TextButton creditsButton;
-  TextButton titleButton;
+  TextButton settingsButton;
+  TextButton exitButton;
   TextButton.TextButtonStyle buttonStyle;
   Skin skin;
   TextureAtlas atlas;
-  int completionTime;
 
-  public GameWinScreen(PiazzaPanicGame game, int completionTime) {
+  public TitleScreen(PiazzaPanicGame game) {
     this.game = game;
-    this.completionTime = completionTime;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
   }
@@ -55,10 +56,38 @@ public class GameWinScreen extends ScreenAdapter {
     buttonStyle.down = skin.getDrawable("black_alpha_mid");
     buttonStyle.checked = skin.getDrawable("black_alpha_mid");
 
+    playButton = new TextButton("Play", buttonStyle);
+    playButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - playButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 2f + playButton.getHeight() / 2);
+    playButton.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(new LevelSelectorScreen(game));
+          }
+        });
+
+    stage.addActor(playButton);
+
+    tutorialButton = new TextButton("Tutorial", buttonStyle);
+    tutorialButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - tutorialButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 2f - tutorialButton.getHeight() / 2);
+    tutorialButton.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(new TutorialScreen(game, "title"));
+          }
+        });
+
+    stage.addActor(tutorialButton);
+
     creditsButton = new TextButton("Credits", buttonStyle);
     creditsButton.setPosition(
         Gdx.graphics.getWidth() / 2f - creditsButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 3f + creditsButton.getHeight() / 2);
+        Gdx.graphics.getHeight() / 2f - creditsButton.getHeight() * 3 / 2);
     creditsButton.addListener(
         new ChangeListener() {
           @Override
@@ -66,20 +95,34 @@ public class GameWinScreen extends ScreenAdapter {
             game.setScreen(new CreditsScreen(game));
           }
         });
+
     stage.addActor(creditsButton);
 
-    titleButton = new TextButton("Title", buttonStyle);
-    titleButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - titleButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 3f - titleButton.getHeight() / 2);
-    titleButton.addListener(
+    settingsButton = new TextButton("Settings", buttonStyle);
+    settingsButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - settingsButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 2f - settingsButton.getHeight() * 5 / 2);
+    settingsButton.addListener(
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
-            game.setScreen(new TitleScreen(game));
+            game.setScreen(new SettingsScreen(game));
           }
         });
-    stage.addActor(titleButton);
+    stage.addActor(settingsButton);
+
+    exitButton = new TextButton("Exit", buttonStyle);
+    exitButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - exitButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 2f - exitButton.getHeight() * 7 / 2);
+    exitButton.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            Gdx.app.exit();
+          }
+        });
+    stage.addActor(exitButton);
   }
 
   @Override
@@ -104,7 +147,7 @@ public class GameWinScreen extends ScreenAdapter {
             bg.getHeight() * bgScaleFactor);
     font.draw(
         game.getBatch(),
-        "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!",
+        "PIAZZA PANIC 1",
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f + winHeight / 5f,
         winWidth / 5f,
@@ -117,13 +160,23 @@ public class GameWinScreen extends ScreenAdapter {
   @Override
   public void resize(int width, int height) {
     super.resize(width, height);
+    playButton.setPosition(
+        width / 2f - playButton.getWidth() / 2, height / 2f + playButton.getHeight() / 2);
+    tutorialButton.setPosition(
+        width / 2f - tutorialButton.getWidth() / 2, height / 2f - tutorialButton.getHeight() / 2);
     creditsButton.setPosition(
-        width / 2f - creditsButton.getWidth() / 2, height / 3f + creditsButton.getHeight() / 2);
-    titleButton.setPosition(
-        width / 2f - titleButton.getWidth() / 2, height / 3f - titleButton.getHeight() / 2);
+        width / 2f - creditsButton.getWidth() / 2, height / 2f - creditsButton.getHeight() * 3 / 2);
+    settingsButton.setPosition(
+        width / 2f - settingsButton.getWidth() / 2,
+        height / 2f - settingsButton.getHeight() * 5 / 2);
+    exitButton.setPosition(
+        width / 2f - exitButton.getWidth() / 2, height / 2f - exitButton.getHeight() * 7 / 2);
     stage.clear();
+    stage.addActor(playButton);
+    stage.addActor(tutorialButton);
     stage.addActor(creditsButton);
-    stage.addActor(titleButton);
+    stage.addActor(settingsButton);
+    stage.addActor(exitButton);
     stage.getViewport().update(width, height);
     camera.setToOrtho(false, width, height);
   }

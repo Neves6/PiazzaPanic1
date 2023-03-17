@@ -1,6 +1,6 @@
 package com.neves6.piazzapanic.tests;
 
-import com.neves6.piazzapanic.Utility;
+import com.neves6.piazzapanic.gamemechanisms.Utility;
 import java.io.File;
 import java.util.ArrayList;
 import org.junit.Assert;

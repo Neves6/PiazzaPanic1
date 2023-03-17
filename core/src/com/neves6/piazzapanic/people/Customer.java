@@ -1,8 +1,10 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.people;
 
-import com.badlogic.gdx.graphics.Texture;import java.util.HashMap;import java.util.Stack;
+import com.badlogic.gdx.graphics.Texture;
+import java.util.Stack;
 
-/** Customer subclass. */
+/** Automated customers which extends the original person class
+ * in order to use movement.*/
 public class Customer extends Person {
 
   private String order;
@@ -26,10 +28,18 @@ public class Customer extends Person {
     this.txLeft = new Texture("people/cust1left.png");
   }
 
+  /**
+   * Getter method for the order that the customer has.
+   * @return String that represents the customers order.
+   */
   public String getOrder() {
     return order;
   }
 
+  /**
+   * Getter method for the
+   * @return
+   */
   public Texture getTxUp() {
     return txUp;
   }

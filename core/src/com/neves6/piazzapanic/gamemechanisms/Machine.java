@@ -1,6 +1,6 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.gamemechanisms;
 
-/** Machine class. Represents a machine or station in the game. */
+import com.neves6.piazzapanic.people.Chef; /** Machine class. Represents a machine or station in the game. */
 public class Machine {
   private final String type;
   private final String input;

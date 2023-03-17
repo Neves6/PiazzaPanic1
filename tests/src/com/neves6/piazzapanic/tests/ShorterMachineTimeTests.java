@@ -2,7 +2,7 @@ package com.neves6.piazzapanic.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.neves6.piazzapanic.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.powerups.ShorterMachineTime;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

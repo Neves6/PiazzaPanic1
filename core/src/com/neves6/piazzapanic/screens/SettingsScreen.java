@@ -1,4 +1,4 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;import com.neves6.piazzapanic.gamemechanisms.Utility;
 import java.util.ArrayList;
 
 public class SettingsScreen extends ScreenAdapter {

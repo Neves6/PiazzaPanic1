@@ -2,7 +2,7 @@ package com.neves6.piazzapanic.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.neves6.piazzapanic.Person;
+import com.neves6.piazzapanic.people.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

@@ -1,6 +1,6 @@
 package com.neves6.piazzapanic.powerups;
 
-import com.neves6.piazzapanic.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
 import java.util.ArrayList;
 
 /** Finds the first current recipe that is being process and skips the cook time for it. */

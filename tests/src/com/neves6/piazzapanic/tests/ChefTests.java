@@ -2,8 +2,8 @@ package com.neves6.piazzapanic.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.neves6.piazzapanic.Chef;
-import com.neves6.piazzapanic.Machine;
+import com.neves6.piazzapanic.people.Chef;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
 import java.util.Stack;
 import org.junit.Test;
 import org.junit.runner.RunWith;

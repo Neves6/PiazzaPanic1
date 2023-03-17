@@ -1,4 +1,4 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.people;
 
 /** Base person class. */
 public class Person {

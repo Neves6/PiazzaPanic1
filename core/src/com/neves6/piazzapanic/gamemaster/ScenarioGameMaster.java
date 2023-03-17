@@ -1,4 +1,4 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.gamemaster;
 
 import static java.util.Arrays.asList;
 
@@ -11,7 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
-import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.gamemechanisms.Machine;import com.neves6.piazzapanic.gamemechanisms.Money;import com.neves6.piazzapanic.gamemechanisms.Utility;import com.neves6.piazzapanic.people.Chef;import com.neves6.piazzapanic.people.Customer;import com.neves6.piazzapanic.screens.GameWinScreen;import com.neves6.piazzapanic.screens.PiazzaPanicGame;import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package com.neves6.piazzapanic.powerups;
 
-import com.neves6.piazzapanic.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
 import java.util.ArrayList;
 
 /** A power up which makes food take a shorter amount of time to cook. */

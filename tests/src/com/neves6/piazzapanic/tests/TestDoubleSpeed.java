@@ -2,7 +2,7 @@ package com.neves6.piazzapanic.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.neves6.piazzapanic.Chef;
+import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.powerups.DoubleSpeed;
 import java.util.ArrayList;
 import java.util.Stack;
