@@ -24,13 +24,14 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    */
   public CreditsScreen(PiazzaPanicGame game) {
     this.game = game;
-    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
-    credits = new Texture(Gdx.files.internal("credits.png"));
   }
 
   /** Inherited show method which sets up screen dimensions. */
   @Override
   public void show() {
+    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
+    credits = new Texture(Gdx.files.internal("credits.png"));
+
     Gdx.input.setInputProcessor(this);
 
     camera = new OrthographicCamera();

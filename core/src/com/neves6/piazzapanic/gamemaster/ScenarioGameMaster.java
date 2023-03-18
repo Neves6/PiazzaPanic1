@@ -16,7 +16,7 @@ import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
-import com.neves6.piazzapanic.screens.GameWinScreen;
+import com.neves6.piazzapanic.screens.CreditsScreen;import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
@@ -231,7 +231,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @param chefno chef number to check.
    * @return true if the chef would not collide, false otherwise.
    */
-  private boolean wouldNotCollide(int x, int y, int chefno) {
+  public boolean wouldNotCollide(int x, int y, int chefno) {
     if (chefs.get(chefno).getIsStickied()) {
       return false;
     }
