@@ -3,7 +3,8 @@ package com.neves6.piazzapanic.tests;
 import static org.junit.Assert.assertTrue;
 
 import com.badlogic.gdx.Gdx;
-import com.neves6.piazzapanic.screens.CreditsScreen;import com.neves6.piazzapanic.screens.IntroScreen;
+import com.neves6.piazzapanic.screens.CreditsScreen;
+import com.neves6.piazzapanic.screens.IntroScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +21,7 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testCreditsScreenToTitle(){
+  public void testCreditsScreenToTitle() {
     Gdx.gl20 = Gdx.gl;
     CreditsScreen testCredits = new CreditsScreen(testGame);
     testCredits.keyDown(2);

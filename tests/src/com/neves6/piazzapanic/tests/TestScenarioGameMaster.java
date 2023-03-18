@@ -2,7 +2,9 @@ package com.neves6.piazzapanic.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.badlogic.gdx.maps.MapLayer;import com.badlogic.gdx.maps.MapObject;import com.badlogic.gdx.maps.MapObjects;import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
@@ -174,77 +176,109 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testGetCorrectChef(){
+  public void testGetCorrectChef() {
     testMaster.setSelectedChef(1);
     assertTrue(testMaster.getSelectedChef() == 1);
   }
 
   @Test
-  public void testChefIsFrozenWhenStuck(){
+  public void testChefIsFrozenWhenStuck() {
     testMaster.getChef(1).setIsStickied(true);
     assertTrue(testMaster.wouldNotCollide(1, 1, 0) == false);
-
   }
 
   @Test
-  public void testChefCanNotCoverAnotherChef(){
+  public void testChefCanNotCoverAnotherChef() {
     testMasterIV.getChef(2).setyCoord(4);
     testMasterIV.getChef(2).setxCoord(5);
     assertTrue(testMasterIV.wouldNotCollide(5, 4, 0) == false);
-
   }
 
   @Test
-  public void testGetNumberOfCustomers(){
+  public void testGetNumberOfCustomers() {
     assertTrue(testMasterIV.getCustomersRemaining() == 3);
     // Need another to test after completing recipe
   }
 
   @Test
-  public void testGetUnlockLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("potato", "chopping", "forming", "grill", "server-staff", "pizza",
-            "ingredients-staff"));
+  public void testGetUnlockLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(
+            Arrays.asList(
+                "potato",
+                "chopping",
+                "forming",
+                "grill",
+                "server-staff",
+                "pizza",
+                "ingredients-staff"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Unlock Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testGetFridgeLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("fridge-dough", "fridge-beans", "fridge-potato", "fridge-cheese",
-            "fridge-onion", "fridge-lettuce", "fridge-lettuce", "fridge-tomato", "fridge-meat", "fridge-bun"));
+  public void testGetFridgeLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(
+            Arrays.asList(
+                "fridge-dough",
+                "fridge-beans",
+                "fridge-potato",
+                "fridge-cheese",
+                "fridge-onion",
+                "fridge-lettuce",
+                "fridge-lettuce",
+                "fridge-tomato",
+                "fridge-meat",
+                "fridge-bun"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Fridge Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testCookingLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("forming-1", "oven-pizza-2", "oven-pizza-1", "oven-potato-1", "oven-potato-2",
-            "chopping-onion-2", "chopping-tomato-2", "chopping-lettuce-2", "chopping-tomato-1", "chopping-onion-1", "chopping-lettuce-1", "forming-2",
-            "grill-bun-2", "grill-patty-2", "grill-bun-1", "grill-patty-1"));
+  public void testCookingLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(
+            Arrays.asList(
+                "forming-1",
+                "oven-pizza-2",
+                "oven-pizza-1",
+                "oven-potato-1",
+                "oven-potato-2",
+                "chopping-onion-2",
+                "chopping-tomato-2",
+                "chopping-lettuce-2",
+                "chopping-tomato-1",
+                "chopping-onion-1",
+                "chopping-lettuce-1",
+                "forming-2",
+                "grill-bun-2",
+                "grill-patty-2",
+                "grill-bun-1",
+                "grill-patty-1"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Cooking Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testMiscLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("bin", "fast-track-collect", "tray-1", "tray-2", "serving"));
+  public void testMiscLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(Arrays.asList("bin", "fast-track-collect", "tray-1", "tray-2", "serving"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testValidTiledOverlap(){}
+  public void testValidTiledOverlap() {}
 
   @Test
-  public void testInvalidTiledOverlap(){}
-
-
+  public void testInvalidTiledOverlap() {}
 }
