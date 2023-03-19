@@ -1,18 +1,18 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;import static org.junit.Assert.assertTrue;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.badlogic.gdx.math.Rectangle;import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import java.util.ArrayList;
+import java.awt.*;import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -277,8 +277,35 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testValidTiledOverlap() {}
+  public void testValidTiledOverlap() {
+    MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
+    Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
+    assertTrue(testMaster.detectInteractionFromTiledObject(testRec, 14, 4));
+  }
 
   @Test
-  public void testInvalidTiledOverlap() {}
+  public void testInvalidTiledOverlap() {
+    MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
+    Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
+    assertFalse(testMaster.detectInteractionFromTiledObject(testRec, 4, 4));
+  }
+
+  @Test
+  public void testLockedChef(){
+    final int ORIGINAL_X = testMasterIV.getChef(1).getxCoord();
+    final int ORIGINAL_Y = testMasterIV.getChef(1).getyCoord();
+    testMasterIV.getChef(1).setIsStickied(true);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getxCoord() == ORIGINAL_X);
+    assertTrue(testMasterIV.getChef(1).getyCoord() == ORIGINAL_Y);
+  }
+
+  @Test
+  public void testInteractWithUnlockLayer(){
+  }
+
+  @Test
+  public void testInteractWithFridgeLayer(){
+  }
 }
