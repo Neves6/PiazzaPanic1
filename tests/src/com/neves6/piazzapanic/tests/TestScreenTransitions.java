@@ -6,7 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.neves6.piazzapanic.screens.CreditsScreen;
 import com.neves6.piazzapanic.screens.IntroScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
-import com.neves6.piazzapanic.screens.TitleScreen;import org.junit.Test;
+import com.neves6.piazzapanic.screens.TitleScreen;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)

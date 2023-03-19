@@ -1,18 +1,21 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertFalse;import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Rectangle;import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.badlogic.gdx.math.Rectangle;
+import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import java.awt.*;import java.util.ArrayList;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -291,7 +294,7 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testLockedChef(){
+  public void testLockedChef() {
     final int ORIGINAL_X = testMasterIV.getChef(1).getxCoord();
     final int ORIGINAL_Y = testMasterIV.getChef(1).getyCoord();
     testMasterIV.getChef(1).setIsStickied(true);
@@ -302,7 +305,7 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testInteractWithUnlockLayerDown(){
+  public void testInteractWithUnlockLayerDown() {
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getChef(1).setFacing("down");
@@ -314,7 +317,7 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testInteractWithUnlockLayerUp(){
+  public void testInteractWithUnlockLayerUp() {
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getChef(1).setFacing("up");
@@ -324,8 +327,9 @@ public class TestScenarioGameMaster {
     testMasterIV.tryInteract();
     assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
+
   @Test
-  public void testInteractWithUnlockLayerRight(){
+  public void testInteractWithUnlockLayerRight() {
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getChef(1).setFacing("right");
@@ -337,7 +341,7 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testInteractWithUnlockLayerLeft(){
+  public void testInteractWithUnlockLayerLeft() {
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getUnlockClass().incrementBalance();
     testMasterIV.getChef(1).setFacing("left");
@@ -347,5 +351,4 @@ public class TestScenarioGameMaster {
     testMasterIV.tryInteract();
     assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
-
 }

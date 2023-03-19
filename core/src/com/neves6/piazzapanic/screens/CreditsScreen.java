@@ -29,7 +29,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   /** Inherited show method which sets up screen dimensions. */
   @Override
   public void show() {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
       credits = new Texture(Gdx.files.internal("credits.png"));
 

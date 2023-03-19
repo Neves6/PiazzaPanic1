@@ -442,10 +442,9 @@ public class ScenarioGameMaster extends GameMaster {
     }
   }
 
-  public Money getUnlockClass(){
+  public Money getUnlockClass() {
     return machineUnlockBalance;
   }
-
 
   /** Adds the top item from the currently selected chef's inventory to the tray. */
   private void addToTray(int station) {

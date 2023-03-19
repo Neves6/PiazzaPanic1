@@ -41,7 +41,7 @@ public class TitleScreen extends ScreenAdapter {
 
   @Override
   public void show() {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       camera = new OrthographicCamera();
       camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
       batch = new SpriteBatch();
@@ -161,14 +161,15 @@ public class TitleScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       super.resize(width, height);
       playButton.setPosition(
           width / 2f - playButton.getWidth() / 2, height / 2f + playButton.getHeight() / 2);
       tutorialButton.setPosition(
           width / 2f - tutorialButton.getWidth() / 2, height / 2f - tutorialButton.getHeight() / 2);
       creditsButton.setPosition(
-          width / 2f - creditsButton.getWidth() / 2, height / 2f - creditsButton.getHeight() * 3 / 2);
+          width / 2f - creditsButton.getWidth() / 2,
+          height / 2f - creditsButton.getHeight() * 3 / 2);
       settingsButton.setPosition(
           width / 2f - settingsButton.getWidth() / 2,
           height / 2f - settingsButton.getHeight() * 5 / 2);
