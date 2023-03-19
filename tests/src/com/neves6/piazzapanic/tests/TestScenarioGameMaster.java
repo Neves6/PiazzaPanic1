@@ -302,10 +302,50 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testInteractWithUnlockLayer(){
+  public void testInteractWithUnlockLayerDown(){
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("down");
+    testMasterIV.getChef(1).setxCoord(2);
+    testMasterIV.getChef(1).setyCoord(7);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
 
   @Test
-  public void testInteractWithFridgeLayer(){
+  public void testInteractWithUnlockLayerUp(){
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("up");
+    testMasterIV.getChef(1).setxCoord(2);
+    testMasterIV.getChef(1).setyCoord(9);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
+  @Test
+  public void testInteractWithUnlockLayerRight(){
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("right");
+    testMasterIV.getChef(1).setxCoord(1);
+    testMasterIV.getChef(1).setyCoord(8);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+  }
+
+  @Test
+  public void testInteractWithUnlockLayerLeft(){
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("left");
+    testMasterIV.getChef(1).setxCoord(3);
+    testMasterIV.getChef(1).setyCoord(8);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+  }
+
 }

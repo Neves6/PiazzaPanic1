@@ -6,12 +6,12 @@ import com.badlogic.gdx.Gdx;
 import com.neves6.piazzapanic.screens.CreditsScreen;
 import com.neves6.piazzapanic.screens.IntroScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
-import org.junit.Test;
+import com.neves6.piazzapanic.screens.TitleScreen;import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class TestScreenTransitions {
-  PiazzaPanicGame testGame = new PiazzaPanicGame();
+  PiazzaPanicGame testGame = new PiazzaPanicGame(true);
 
   @Test
   public void testIntroScreenOnLaunch() {
@@ -24,7 +24,7 @@ public class TestScreenTransitions {
   public void testCreditsScreenToTitle() {
     Gdx.gl20 = Gdx.gl;
     CreditsScreen testCredits = new CreditsScreen(testGame);
-    testCredits.keyDown(2);
-    assertTrue(testGame.getScreen().getClass() == IntroScreen.class);
+    assertTrue(testCredits.keyDown(2) == true);
+    assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
   }
 }

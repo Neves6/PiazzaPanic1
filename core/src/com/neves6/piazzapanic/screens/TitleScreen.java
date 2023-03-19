@@ -41,88 +41,90 @@ public class TitleScreen extends ScreenAdapter {
 
   @Override
   public void show() {
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    batch = new SpriteBatch();
+    if (game.testFlag == false){
+      camera = new OrthographicCamera();
+      camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+      batch = new SpriteBatch();
 
-    stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
-    skin = new Skin();
-    atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
-    skin.addRegions(atlas);
-    buttonStyle = new TextButton.TextButtonStyle();
-    buttonStyle.font = font;
-    buttonStyle.up = skin.getDrawable("black_alpha_mid");
-    buttonStyle.down = skin.getDrawable("black_alpha_mid");
-    buttonStyle.checked = skin.getDrawable("black_alpha_mid");
+      stage = new Stage();
+      Gdx.input.setInputProcessor(stage);
+      skin = new Skin();
+      atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
+      skin.addRegions(atlas);
+      buttonStyle = new TextButton.TextButtonStyle();
+      buttonStyle.font = font;
+      buttonStyle.up = skin.getDrawable("black_alpha_mid");
+      buttonStyle.down = skin.getDrawable("black_alpha_mid");
+      buttonStyle.checked = skin.getDrawable("black_alpha_mid");
 
-    playButton = new TextButton("Play", buttonStyle);
-    playButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - playButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f + playButton.getHeight() / 2);
-    playButton.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            game.setScreen(new LevelSelectorScreen(game));
-          }
-        });
+      playButton = new TextButton("Play", buttonStyle);
+      playButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - playButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f + playButton.getHeight() / 2);
+      playButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              game.setScreen(new LevelSelectorScreen(game));
+            }
+          });
 
-    stage.addActor(playButton);
+      stage.addActor(playButton);
 
-    tutorialButton = new TextButton("Tutorial", buttonStyle);
-    tutorialButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - tutorialButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - tutorialButton.getHeight() / 2);
-    tutorialButton.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            game.setScreen(new TutorialScreen(game, "title"));
-          }
-        });
+      tutorialButton = new TextButton("Tutorial", buttonStyle);
+      tutorialButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - tutorialButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f - tutorialButton.getHeight() / 2);
+      tutorialButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              game.setScreen(new TutorialScreen(game, "title"));
+            }
+          });
 
-    stage.addActor(tutorialButton);
+      stage.addActor(tutorialButton);
 
-    creditsButton = new TextButton("Credits", buttonStyle);
-    creditsButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - creditsButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - creditsButton.getHeight() * 3 / 2);
-    creditsButton.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            game.setScreen(new CreditsScreen(game));
-          }
-        });
+      creditsButton = new TextButton("Credits", buttonStyle);
+      creditsButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - creditsButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f - creditsButton.getHeight() * 3 / 2);
+      creditsButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              game.setScreen(new CreditsScreen(game));
+            }
+          });
 
-    stage.addActor(creditsButton);
+      stage.addActor(creditsButton);
 
-    settingsButton = new TextButton("Settings", buttonStyle);
-    settingsButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - settingsButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - settingsButton.getHeight() * 5 / 2);
-    settingsButton.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            game.setScreen(new SettingsScreen(game));
-          }
-        });
-    stage.addActor(settingsButton);
+      settingsButton = new TextButton("Settings", buttonStyle);
+      settingsButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - settingsButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f - settingsButton.getHeight() * 5 / 2);
+      settingsButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              game.setScreen(new SettingsScreen(game));
+            }
+          });
+      stage.addActor(settingsButton);
 
-    exitButton = new TextButton("Exit", buttonStyle);
-    exitButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - exitButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - exitButton.getHeight() * 7 / 2);
-    exitButton.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            Gdx.app.exit();
-          }
-        });
-    stage.addActor(exitButton);
+      exitButton = new TextButton("Exit", buttonStyle);
+      exitButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - exitButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f - exitButton.getHeight() * 7 / 2);
+      exitButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              Gdx.app.exit();
+            }
+          });
+      stage.addActor(exitButton);
+    }
   }
 
   @Override
@@ -159,26 +161,28 @@ public class TitleScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    super.resize(width, height);
-    playButton.setPosition(
-        width / 2f - playButton.getWidth() / 2, height / 2f + playButton.getHeight() / 2);
-    tutorialButton.setPosition(
-        width / 2f - tutorialButton.getWidth() / 2, height / 2f - tutorialButton.getHeight() / 2);
-    creditsButton.setPosition(
-        width / 2f - creditsButton.getWidth() / 2, height / 2f - creditsButton.getHeight() * 3 / 2);
-    settingsButton.setPosition(
-        width / 2f - settingsButton.getWidth() / 2,
-        height / 2f - settingsButton.getHeight() * 5 / 2);
-    exitButton.setPosition(
-        width / 2f - exitButton.getWidth() / 2, height / 2f - exitButton.getHeight() * 7 / 2);
-    stage.clear();
-    stage.addActor(playButton);
-    stage.addActor(tutorialButton);
-    stage.addActor(creditsButton);
-    stage.addActor(settingsButton);
-    stage.addActor(exitButton);
-    stage.getViewport().update(width, height);
-    camera.setToOrtho(false, width, height);
+    if (game.testFlag == false){
+      super.resize(width, height);
+      playButton.setPosition(
+          width / 2f - playButton.getWidth() / 2, height / 2f + playButton.getHeight() / 2);
+      tutorialButton.setPosition(
+          width / 2f - tutorialButton.getWidth() / 2, height / 2f - tutorialButton.getHeight() / 2);
+      creditsButton.setPosition(
+          width / 2f - creditsButton.getWidth() / 2, height / 2f - creditsButton.getHeight() * 3 / 2);
+      settingsButton.setPosition(
+          width / 2f - settingsButton.getWidth() / 2,
+          height / 2f - settingsButton.getHeight() * 5 / 2);
+      exitButton.setPosition(
+          width / 2f - exitButton.getWidth() / 2, height / 2f - exitButton.getHeight() * 7 / 2);
+      stage.clear();
+      stage.addActor(playButton);
+      stage.addActor(tutorialButton);
+      stage.addActor(creditsButton);
+      stage.addActor(settingsButton);
+      stage.addActor(exitButton);
+      stage.getViewport().update(width, height);
+      camera.setToOrtho(false, width, height);
+    }
   }
 
   @Override
