@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.neves6.piazzapanic.gamemaster.GameMaster;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.staff.BaseStaff;
@@ -19,7 +18,7 @@ import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GameScreen extends ScreenAdapter implements InputProcessor{
+public class GameScreen extends ScreenAdapter implements InputProcessor {
   DeliveryStaff deliveryStaff;
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -65,7 +64,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor{
       unitScale = Gdx.graphics.getHeight() / (12f * 32f);
       wscale = unitScale * 32f;
       hscale = unitScale * 32f;
-      if (game.testFlag == false){  renderer = new OrthogonalTiledMapRenderer(map, unitScale); }
+      if (game.testFlag == false) {
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+      }
     }
     selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     recipes = new Texture(Gdx.files.internal("recipes.png"));
@@ -106,101 +107,101 @@ public class GameScreen extends ScreenAdapter implements InputProcessor{
 
       game.getBatch().begin();
       game.getBatch()
-              .draw(
-                      gm.getChef(1).getTxNow(),
-                      gm.getChef(1).getxCoord() * wscale,
-                      gm.getChef(1).getyCoord() * hscale,
-                      32 * unitScale,
-                      32 * unitScale);
+          .draw(
+              gm.getChef(1).getTxNow(),
+              gm.getChef(1).getxCoord() * wscale,
+              gm.getChef(1).getyCoord() * hscale,
+              32 * unitScale,
+              32 * unitScale);
       game.getBatch()
-              .draw(
-                      gm.getChef(2).getTxNow(),
-                      gm.getChef(2).getxCoord() * wscale,
-                      gm.getChef(2).getyCoord() * hscale,
-                      32 * unitScale,
-                      32 * unitScale);
+          .draw(
+              gm.getChef(2).getTxNow(),
+              gm.getChef(2).getxCoord() * wscale,
+              gm.getChef(2).getyCoord() * hscale,
+              32 * unitScale,
+              32 * unitScale);
       game.getBatch()
-              .draw(
-                      gm.getChef(3).getTxNow(),
-                      gm.getChef(3).getxCoord() * wscale,
-                      gm.getChef(3).getyCoord() * hscale,
-                      32 * unitScale,
-                      32 * unitScale);
+          .draw(
+              gm.getChef(3).getTxNow(),
+              gm.getChef(3).getxCoord() * wscale,
+              gm.getChef(3).getyCoord() * hscale,
+              32 * unitScale,
+              32 * unitScale);
       game.getBatch()
-              .draw(
-                      selectedTexture,
-                      gm.getChef(gm.getSelectedChef()).getxCoord() * wscale,
-                      gm.getChef(gm.getSelectedChef()).getyCoord() * hscale,
-                      32 * unitScale,
-                      32 * unitScale);
+          .draw(
+              selectedTexture,
+              gm.getChef(gm.getSelectedChef()).getxCoord() * wscale,
+              gm.getChef(gm.getSelectedChef()).getyCoord() * hscale,
+              32 * unitScale,
+              32 * unitScale);
 
       if (gm.getCustomersRemaining() >= 1) {
         game.getBatch()
-                .draw(
-                        gm.getFirstCustomer().getTxUp(),
-                        8 * wscale,
-                        2 * hscale,
-                        32 * unitScale,
-                        32 * unitScale);
+            .draw(
+                gm.getFirstCustomer().getTxUp(),
+                8 * wscale,
+                2 * hscale,
+                32 * unitScale,
+                32 * unitScale);
         for (int i = 1; i < gm.getCustomersRemaining(); i++) {
           game.getBatch()
-                  .draw(
-                          gm.getFirstCustomer().getTxLeft(),
-                          (8 + i) * wscale,
-                          2 * hscale,
-                          32 * unitScale,
-                          32 * unitScale);
+              .draw(
+                  gm.getFirstCustomer().getTxLeft(),
+                  (8 + i) * wscale,
+                  2 * hscale,
+                  32 * unitScale,
+                  32 * unitScale);
         }
       }
       font.draw(
-              game.getBatch(),
-              gm.getMachineTimerForChef(0),
-              gm.getChef(1).getxCoord() * wscale,
-              gm.getChef(1).getyCoord() * hscale + 2 * (hscale / 3f),
-              32 * unitScale,
-              1,
-              false);
+          game.getBatch(),
+          gm.getMachineTimerForChef(0),
+          gm.getChef(1).getxCoord() * wscale,
+          gm.getChef(1).getyCoord() * hscale + 2 * (hscale / 3f),
+          32 * unitScale,
+          1,
+          false);
       font.draw(
-              game.getBatch(),
-              gm.getMachineTimerForChef(1),
-              gm.getChef(2).getxCoord() * wscale,
-              gm.getChef(2).getyCoord() * hscale + 2 * (hscale / 3f),
-              32 * unitScale,
-              1,
-              false);
+          game.getBatch(),
+          gm.getMachineTimerForChef(1),
+          gm.getChef(2).getxCoord() * wscale,
+          gm.getChef(2).getyCoord() * hscale + 2 * (hscale / 3f),
+          32 * unitScale,
+          1,
+          false);
       game.getBatch().draw(recipes, 20, 20);
       font.draw(
-              game.getBatch(),
-              gm.generateHoldingsText(),
-              winWidth - (4.75f * (winWidth / 8f)),
-              winHeight - 20,
-              (3 * (winWidth / 8f)),
-              -1,
-              true);
+          game.getBatch(),
+          gm.generateHoldingsText(),
+          winWidth - (4.75f * (winWidth / 8f)),
+          winHeight - 20,
+          (3 * (winWidth / 8f)),
+          -1,
+          true);
       font.draw(
-              game.getBatch(),
-              gm.generateCustomersTrayText(),
-              winWidth - (3 * (winWidth / 8f)),
-              winHeight - 20,
-              (3 * (winWidth / 8f)),
-              -1,
-              true);
+          game.getBatch(),
+          gm.generateCustomersTrayText(),
+          winWidth - (3 * (winWidth / 8f)),
+          winHeight - 20,
+          (3 * (winWidth / 8f)),
+          -1,
+          true);
       font.draw(
-              game.getBatch(),
-              gm.generateTimerText(),
-              winWidth - (winWidth / 3f),
-              40,
-              (winWidth / 3f),
-              -1,
-              false);
+          game.getBatch(),
+          gm.generateTimerText(),
+          winWidth - (winWidth / 3f),
+          40,
+          (winWidth / 3f),
+          -1,
+          false);
       font.draw(
-              game.getBatch(),
-              machineUnlockBalance.displayBalance(),
-              winWidth - (winWidth / 3f),
-              60,
-              (winWidth / 3f),
-              -1,
-              false);
+          game.getBatch(),
+          machineUnlockBalance.displayBalance(),
+          winWidth - (winWidth / 3f),
+          60,
+          (winWidth / 3f),
+          -1,
+          false);
 
       // Any machines that are unlockable add here to draw a lock on top of it.
       if (!(machineUnlockBalance.isUnlocked("chopping"))) {
@@ -275,69 +276,72 @@ public class GameScreen extends ScreenAdapter implements InputProcessor{
     selectedTexture.dispose();
     recipes.dispose();
   }
-    @Override
-    public boolean keyDown(int keycode) {
-      if (keycode == Input.Keys.W) {
-        gm.tryMove("up");
-      }
-      if (keycode == Input.Keys.A) {
-        gm.tryMove("left");
-      }
-      if (keycode == Input.Keys.S) {
-        gm.tryMove("down");
-      }
-      if (keycode == Input.Keys.D) {
-        gm.tryMove("right");
-      }
-      if (keycode == Input.Keys.NUM_1) {
-        gm.setSelectedChef(1);
-      }
-      if (keycode == Input.Keys.NUM_2) {
-        gm.setSelectedChef(2);
-      }
-      if (keycode == Input.Keys.NUM_3) {
-        gm.setSelectedChef(3);
-      }
-      if (keycode == Input.Keys.E) {
-        gm.tryInteract();
-      }
-      return true;
-    }
 
-    @Override
-    public boolean keyUp(int keycode) {
-      return false;
+  @Override
+  public boolean keyDown(int keycode) {
+    if (keycode == Input.Keys.W) {
+      gm.tryMove("up");
     }
-    @Override
-    public boolean keyTyped(char character) {
-      return false;
+    if (keycode == Input.Keys.A) {
+      gm.tryMove("left");
     }
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-      return false;
+    if (keycode == Input.Keys.S) {
+      gm.tryMove("down");
     }
+    if (keycode == Input.Keys.D) {
+      gm.tryMove("right");
+    }
+    if (keycode == Input.Keys.NUM_1) {
+      gm.setSelectedChef(1);
+    }
+    if (keycode == Input.Keys.NUM_2) {
+      gm.setSelectedChef(2);
+    }
+    if (keycode == Input.Keys.NUM_3) {
+      gm.setSelectedChef(3);
+    }
+    if (keycode == Input.Keys.E) {
+      gm.tryInteract();
+    }
+    return true;
+  }
 
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-      return false;
-    }
+  @Override
+  public boolean keyUp(int keycode) {
+    return false;
+  }
 
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-      return false;
-    }
+  @Override
+  public boolean keyTyped(char character) {
+    return false;
+  }
 
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-      return false;
-    }
+  @Override
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    return false;
+  }
 
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-      return false;
-    }
+  @Override
+  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    return false;
+  }
 
-    public ScenarioGameMaster getGameMaster(){
-      return gm;
-    }
+  @Override
+  public boolean touchDragged(int screenX, int screenY, int pointer) {
+    return false;
+  }
+
+  @Override
+  public boolean mouseMoved(int screenX, int screenY) {
+    return false;
+  }
+
+  @Override
+  public boolean scrolled(float amountX, float amountY) {
+    return false;
+  }
+
+  public ScenarioGameMaster getGameMaster() {
+    return gm;
+  }
 }

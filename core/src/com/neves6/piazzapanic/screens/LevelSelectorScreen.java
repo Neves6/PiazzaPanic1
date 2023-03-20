@@ -44,7 +44,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/levelselector/levelselector.atlas"));
     skin.addRegions(atlas);
