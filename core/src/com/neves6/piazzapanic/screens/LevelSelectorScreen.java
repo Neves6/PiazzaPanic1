@@ -44,7 +44,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-    Gdx.input.setInputProcessor(stage);
+
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/levelselector/levelselector.atlas"));
     skin.addRegions(atlas);
@@ -93,6 +93,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
       stage.addActor(level1Button);
       stage.addActor(level2Button);
       stage.addActor(level3Button);
+      Gdx.input.setInputProcessor(stage);
     }
   }
 
@@ -167,7 +168,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
   public void hide() {
     super.dispose();
     game.dispose();
-    batch.dispose();
     font.dispose();
     bg.dispose();
     lock.dispose();

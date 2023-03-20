@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 public class TitleScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
-  SpriteBatch batch;
   BitmapFont font;
   Texture bg;
   int winWidth;
