@@ -31,7 +31,7 @@ public class IntroScreen extends ScreenAdapter {
   }
 
   public void show() {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       camera = new OrthographicCamera();
       camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
       font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
@@ -63,7 +63,7 @@ public class IntroScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
       winWidth = Gdx.graphics.getWidth();
@@ -103,7 +103,7 @@ public class IntroScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       super.resize(width, height);
       camera.setToOrtho(false, width, height);
     }

@@ -78,7 +78,6 @@ public class SettingsScreen extends ScreenAdapter {
           }
         });
 
-
     volumeFullButton = new TextButton("Volume: Full", buttonStyle);
     volumeFullButton.setPosition(
         Gdx.graphics.getWidth() / 2f - volumeFullButton.getWidth() / 2,
@@ -92,7 +91,6 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-
 
     volumeHalfButton = new TextButton("Volume: Half", buttonStyle);
     volumeHalfButton.setPosition(
@@ -108,7 +106,6 @@ public class SettingsScreen extends ScreenAdapter {
           }
         });
 
-
     volumeNoneButton = new TextButton("Volume: None", buttonStyle);
     volumeNoneButton.setPosition(
         Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,
@@ -123,8 +120,7 @@ public class SettingsScreen extends ScreenAdapter {
           }
         });
 
-
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       stage = new Stage();
       stage.addActor(volumeFullButton);
       stage.addActor(fullscreenButton);
@@ -160,7 +156,7 @@ public class SettingsScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       super.resize(width, height);
       fullscreenButton.setPosition(
           Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,

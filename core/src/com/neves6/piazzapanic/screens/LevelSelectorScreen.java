@@ -88,7 +88,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       stage = new Stage();
       stage.addActor(level1Button);
       stage.addActor(level2Button);
@@ -145,7 +145,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       super.resize(width, height);
       level1Button.setPosition(
           width / 2f - level1Button.getWidth() / 2 - level1Button.getWidth() * 1.5f,
