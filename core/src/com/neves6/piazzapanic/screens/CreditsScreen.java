@@ -69,8 +69,10 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void resize(int width, int height) {
-    super.resize(width, height);
-    camera.setToOrtho(false, width, height);
+    if (game.testFlag == false){
+      super.resize(width, height);
+      camera.setToOrtho(false, width, height);
+    }
   }
 
   /** What to do when the screen is exited. */

@@ -45,10 +45,7 @@ public class SettingsScreen extends ScreenAdapter {
   public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    batch = new SpriteBatch();
 
-    stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
     skin.addRegions(atlas);
@@ -80,7 +77,7 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-    stage.addActor(fullscreenButton);
+
 
     volumeFullButton = new TextButton("Volume: Full", buttonStyle);
     volumeFullButton.setPosition(
@@ -95,7 +92,7 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-    stage.addActor(volumeFullButton);
+
 
     volumeHalfButton = new TextButton("Volume: Half", buttonStyle);
     volumeHalfButton.setPosition(
@@ -110,7 +107,7 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-    stage.addActor(volumeHalfButton);
+
 
     volumeNoneButton = new TextButton("Volume: None", buttonStyle);
     volumeNoneButton.setPosition(
@@ -125,7 +122,16 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-    stage.addActor(volumeNoneButton);
+
+
+    if (game.testFlag == false){
+      stage = new Stage();
+      stage.addActor(volumeFullButton);
+      stage.addActor(fullscreenButton);
+      stage.addActor(volumeHalfButton);
+      stage.addActor(volumeNoneButton);
+      Gdx.input.setInputProcessor(stage);
+    }
   }
 
   @Override
@@ -154,25 +160,27 @@ public class SettingsScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    super.resize(width, height);
-    fullscreenButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f + fullscreenButton.getHeight() / 2);
-    volumeFullButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - volumeFullButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - volumeFullButton.getHeight() / 2);
-    volumeHalfButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - volumeHalfButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - volumeHalfButton.getHeight() * 3 / 2);
-    volumeNoneButton.setPosition(
-        Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 5 / 2);
-    stage.clear();
-    stage.addActor(fullscreenButton);
-    stage.addActor(volumeFullButton);
-    stage.addActor(volumeHalfButton);
-    stage.addActor(volumeNoneButton);
-    camera.setToOrtho(false, width, height);
+    if (game.testFlag == false){
+      super.resize(width, height);
+      fullscreenButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f + fullscreenButton.getHeight() / 2);
+      volumeFullButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - volumeFullButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f - volumeFullButton.getHeight() / 2);
+      volumeHalfButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - volumeHalfButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f - volumeHalfButton.getHeight() * 3 / 2);
+      volumeNoneButton.setPosition(
+          Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,
+          Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 5 / 2);
+      stage.clear();
+      stage.addActor(fullscreenButton);
+      stage.addActor(volumeFullButton);
+      stage.addActor(volumeHalfButton);
+      stage.addActor(volumeNoneButton);
+      camera.setToOrtho(false, width, height);
+    }
   }
 
   @Override

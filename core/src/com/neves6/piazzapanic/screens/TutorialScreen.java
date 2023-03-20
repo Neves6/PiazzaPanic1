@@ -55,7 +55,6 @@ public class TutorialScreen extends ScreenAdapter {
 
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    batch = new SpriteBatch();
   }
 
   @Override
