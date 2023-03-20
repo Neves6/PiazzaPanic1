@@ -27,19 +27,19 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testIntrotoTitleScreen(){
+  public void testIntrotoTitleScreen() {
     Gdx.gl20 = Gdx.gl;
     IntroScreen testIntro = new IntroScreen(testGame);
     testIntro.show();
     Long waitTime = System.currentTimeMillis();
-    while (System.currentTimeMillis() - waitTime < 200){
+    while (System.currentTimeMillis() - waitTime < 200) {
       testIntro.render(1);
     }
     assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
   }
 
   @Test
-  public void testPlayButton(){
+  public void testPlayButton() {
     Gdx.gl20 = Gdx.gl;
     TitleScreen testTitle = new TitleScreen(testGame);
     testTitle.show();
@@ -48,7 +48,7 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testTutorialButton(){
+  public void testTutorialButton() {
     Gdx.gl20 = Gdx.gl;
     TitleScreen testTitle = new TitleScreen(testGame);
     testTitle.show();
@@ -57,7 +57,7 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testCreditsButton(){
+  public void testCreditsButton() {
     Gdx.gl20 = Gdx.gl;
     TitleScreen testTitle = new TitleScreen(testGame);
     testTitle.show();
@@ -66,7 +66,7 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testSettingsButton(){
+  public void testSettingsButton() {
     Gdx.gl20 = Gdx.gl;
     TitleScreen testTitle = new TitleScreen(testGame);
     testTitle.show();
@@ -75,16 +75,11 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testExitButton(){
+  public void testExitButton() {
     Gdx.gl20 = Gdx.gl;
     TitleScreen testTitle = new TitleScreen(testGame);
     testTitle.show();
     testTitle.getExitButton().toggle();
     assertTrue(testGame.getScreen() == null);
   }
-
-
-
-
-
 }

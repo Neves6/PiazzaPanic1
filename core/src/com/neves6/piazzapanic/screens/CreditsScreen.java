@@ -69,7 +69,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false){
+    if (game.testFlag == false) {
       super.resize(width, height);
       camera.setToOrtho(false, width, height);
     }
