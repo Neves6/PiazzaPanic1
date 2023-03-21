@@ -14,20 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
 public class GameWinScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -53,7 +39,7 @@ public class GameWinScreen extends ScreenAdapter {
   }
 
   @Override
-  public void show(){
+  public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     batch = new SpriteBatch();
@@ -70,29 +56,35 @@ public class GameWinScreen extends ScreenAdapter {
     buttonStyle.checked = skin.getDrawable("black_alpha_mid");
 
     creditsButton = new TextButton("Credits", buttonStyle);
-    creditsButton.setPosition(Gdx.graphics.getWidth()/2f - creditsButton.getWidth()/2, Gdx.graphics.getHeight()/3f + creditsButton.getHeight()/2);
-    creditsButton.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        game.setScreen(new CreditsScreen(game));
-      }
-    });
+    creditsButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - creditsButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 3f + creditsButton.getHeight() / 2);
+    creditsButton.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(new CreditsScreen(game));
+          }
+        });
     stage.addActor(creditsButton);
 
     titleButton = new TextButton("Title", buttonStyle);
-    titleButton.setPosition(Gdx.graphics.getWidth()/2f - titleButton.getWidth()/2, Gdx.graphics.getHeight()/3f - titleButton.getHeight()/2);
-    titleButton.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        game.setScreen(new TitleScreen(game));
-      }
-    });
+    titleButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - titleButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 3f - titleButton.getHeight() / 2);
+    titleButton.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(new TitleScreen(game));
+          }
+        });
     stage.addActor(titleButton);
   }
 
   @Override
   public void render(float delta) {
-    Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
+    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     winWidth = Gdx.graphics.getWidth();
@@ -103,13 +95,21 @@ public class GameWinScreen extends ScreenAdapter {
     game.getBatch().setProjectionMatrix(camera.combined);
 
     game.getBatch().begin();
-    game.getBatch().draw(
+    game.getBatch()
+        .draw(
             bg,
             -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,
             0,
             bg.getWidth() * bgScaleFactor,
             bg.getHeight() * bgScaleFactor);
-    font.draw(game.getBatch(), "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+    font.draw(
+        game.getBatch(),
+        "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!",
+        winWidth / 2f - winWidth / 10f,
+        winHeight / 2f + winHeight / 5f,
+        winWidth / 5f,
+        1,
+        false);
     game.getBatch().end();
     stage.draw();
   }
@@ -117,8 +117,10 @@ public class GameWinScreen extends ScreenAdapter {
   @Override
   public void resize(int width, int height) {
     super.resize(width, height);
-    creditsButton.setPosition(width/2f - creditsButton.getWidth()/2, height/3f + creditsButton.getHeight()/2);
-    titleButton.setPosition(width/2f - titleButton.getWidth()/2, height/3f - titleButton.getHeight()/2);
+    creditsButton.setPosition(
+        width / 2f - creditsButton.getWidth() / 2, height / 3f + creditsButton.getHeight() / 2);
+    titleButton.setPosition(
+        width / 2f - titleButton.getWidth() / 2, height / 3f - titleButton.getHeight() / 2);
     stage.clear();
     stage.addActor(creditsButton);
     stage.addActor(titleButton);
@@ -127,7 +129,7 @@ public class GameWinScreen extends ScreenAdapter {
   }
 
   @Override
-  public void hide(){
+  public void hide() {
     super.dispose();
     game.dispose();
     batch.dispose();

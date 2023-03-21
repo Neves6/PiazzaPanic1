@@ -1,14 +1,12 @@
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   PiazzaPanicGame game;
@@ -25,7 +23,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   @Override
-  public void show(){
+  public void show() {
     Gdx.input.setInputProcessor(this);
 
     camera = new OrthographicCamera();
@@ -34,7 +32,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
 
   @Override
   public void render(float delta) {
-    Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
+    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     winWidth = Gdx.graphics.getWidth();
@@ -55,7 +53,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   @Override
-  public void hide(){
+  public void hide() {
     super.dispose();
     game.dispose();
     font.dispose();
@@ -94,7 +92,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
-   * @param button  the button
+   * @param button the button
    * @return
    */
   @Override
@@ -106,7 +104,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    * @param screenX
    * @param screenY
    * @param pointer the pointer for the event.
-   * @param button  the button
+   * @param button the button
    * @return
    */
   @Override
@@ -136,8 +134,10 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * @param amountX the horizontal scroll amount, negative or positive depending on the direction the wheel was scrolled.
-   * @param amountY the vertical scroll amount, negative or positive depending on the direction the wheel was scrolled.
+   * @param amountX the horizontal scroll amount, negative or positive depending on the direction
+   *     the wheel was scrolled.
+   * @param amountY the vertical scroll amount, negative or positive depending on the direction the
+   *     wheel was scrolled.
    * @return
    */
   @Override
