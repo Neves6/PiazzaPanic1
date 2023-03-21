@@ -27,39 +27,39 @@ public class TutorialScreen extends ScreenAdapter {
   }
 
   @Override
-  public void show() {
-    Gdx.input.setInputProcessor(
-        new InputAdapter() {
-          @Override
-          public boolean keyDown(int keyCode) {
-            switch (continueTo) {
-              case "title":
-                game.setScreen(new TitleScreen(game));
-                break;
-              case "game1":
-                game.setScreen(new GameScreen(game, 1));
-                break;
-              case "game2":
-                game.setScreen(new GameScreen(game, 2));
-                break;
-              case "game3":
-                game.setScreen(new GameScreen(game, 3));
-                break;
-              default:
-                game.setScreen(new TitleScreen(game));
-                break;
-            }
-            return true;
-          }
-        });
+  public void show(){
+    Gdx.input.setInputProcessor(new InputAdapter() {
+      @Override
+      public boolean keyDown(int keyCode) {
+        switch (continueTo) {
+          case "title":
+            game.setScreen(new TitleScreen(game));
+            break;
+          case "game1":
+            game.setScreen(new GameScreen(game, 1));
+            break;
+          case "game2":
+            game.setScreen(new GameScreen(game, 2));
+            break;
+          case "game3":
+            game.setScreen(new GameScreen(game, 3));
+            break;
+          default:
+            game.setScreen(new TitleScreen(game));
+            break;
+        }
+        return true;
+      }
+    });
 
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    batch = new SpriteBatch();
   }
 
   @Override
   public void render(float delta) {
-    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     winWidth = Gdx.graphics.getWidth();
@@ -80,7 +80,7 @@ public class TutorialScreen extends ScreenAdapter {
   }
 
   @Override
-  public void hide() {
+  public void hide(){
     super.dispose();
     game.dispose();
     batch.dispose();

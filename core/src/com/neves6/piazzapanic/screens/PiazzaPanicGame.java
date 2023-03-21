@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PiazzaPanicGame extends Game {
   SpriteBatch _batch;
-  Boolean testFlag;
 
   public SpriteBatch getBatch() {
     if (_batch == null) {
@@ -16,16 +15,10 @@ public class PiazzaPanicGame extends Game {
 
   public PiazzaPanicGame() {
     super();
-    this.testFlag = false;
-  }
-
-  public PiazzaPanicGame(Boolean testFlag) {
-    super();
-    this.testFlag = testFlag;
   }
 
   @Override
-  public void create() {
+  public void create () {
     setScreen(new IntroScreen(this));
   }
 
@@ -33,8 +26,10 @@ public class PiazzaPanicGame extends Game {
     super.resize(width, height);
   }
 
-  public void render(float delta) {}
+  public void render(float delta) {
+  }
 
   @Override
-  public void dispose() {}
+  public void dispose () {
+  }
 }

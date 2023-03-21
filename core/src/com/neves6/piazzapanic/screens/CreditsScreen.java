@@ -1,14 +1,15 @@
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/** Display once the game has been completed by the user. */
 public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -17,34 +18,23 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   int winWidth;
   int winHeight;
 
-  /**
-   * Constructor method which sets up the fonts and textures to display the credits.
-   *
-   * @param game
-   */
   public CreditsScreen(PiazzaPanicGame game) {
     this.game = game;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     credits = new Texture(Gdx.files.internal("credits.png"));
   }
 
-  /** Inherited show method which sets up screen dimensions. */
   @Override
-  public void show() {
+  public void show(){
     Gdx.input.setInputProcessor(this);
 
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
   }
 
-  /**
-   * Draws the credits image onto the screen.
-   *
-   * @param delta The time in seconds since the last render.
-   */
   @Override
   public void render(float delta) {
-    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     winWidth = Gdx.graphics.getWidth();
@@ -58,21 +48,14 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
     game.getBatch().end();
   }
 
-  /**
-   * A function which can resize the window if it changes.
-   *
-   * @param width Horizontal size of the screen.
-   * @param height Vertical size of the screen.
-   */
   @Override
   public void resize(int width, int height) {
     super.resize(width, height);
     camera.setToOrtho(false, width, height);
   }
 
-  /** What to do when the screen is exited. */
   @Override
-  public void hide() {
+  public void hide(){
     super.dispose();
     game.dispose();
     font.dispose();
@@ -80,10 +63,8 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * When the user presses a single key down.
-   *
-   * @param keycode a one to one mapping between the user keyboard and numbers.
-   * @return true
+   * @param keycode one of the constants in {@link Input.Keys}
+   * @return
    */
   @Override
   public boolean keyDown(int keycode) {
@@ -92,10 +73,8 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED (NEED TO INHERIT CLASS)
-   *
    * @param keycode one of the constants in {@link Input.Keys}
-   * @return false
+   * @return
    */
   @Override
   public boolean keyUp(int keycode) {
@@ -104,7 +83,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * @param character The character
-   * @return false
+   * @return
    */
   @Override
   public boolean keyTyped(char character) {
@@ -115,7 +94,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
-   * @param button the button
+   * @param button  the button
    * @return
    */
   @Override
@@ -127,7 +106,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    * @param screenX
    * @param screenY
    * @param pointer the pointer for the event.
-   * @param button the button
+   * @param button  the button
    * @return
    */
   @Override
@@ -157,10 +136,8 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * @param amountX the horizontal scroll amount, negative or positive depending on the direction
-   *     the wheel was scrolled.
-   * @param amountY the vertical scroll amount, negative or positive depending on the direction the
-   *     wheel was scrolled.
+   * @param amountX the horizontal scroll amount, negative or positive depending on the direction the wheel was scrolled.
+   * @param amountY the vertical scroll amount, negative or positive depending on the direction the wheel was scrolled.
    * @return
    */
   @Override
