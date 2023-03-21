@@ -226,4 +226,12 @@ public class GameScreen extends ScreenAdapter {
     selectedTexture.dispose();
     recipes.dispose();
   }
+
+  public void keyDown(int w) {
+    return;
+  }
+
+  public ScenarioGameMaster getGameMaster() {
+    return gm;
+  }
 }

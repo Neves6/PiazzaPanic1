@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -43,8 +44,6 @@ public class TitleScreen extends ScreenAdapter {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-    stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
     skin.addRegions(atlas);
@@ -63,8 +62,6 @@ public class TitleScreen extends ScreenAdapter {
       }
     });
 
-    stage.addActor(playButton);
-
     tutorialButton = new TextButton("Tutorial", buttonStyle);
     tutorialButton.setPosition(Gdx.graphics.getWidth()/2f - tutorialButton.getWidth()/2, Gdx.graphics.getHeight()/2f - tutorialButton.getHeight()/2);
     tutorialButton.addListener(new ChangeListener() {
@@ -73,8 +70,6 @@ public class TitleScreen extends ScreenAdapter {
         game.setScreen(new TutorialScreen(game, "title"));
       }
     });
-
-    stage.addActor(tutorialButton);
 
     creditsButton = new TextButton("Credits", buttonStyle);
     creditsButton.setPosition(Gdx.graphics.getWidth()/2f - creditsButton.getWidth()/2, Gdx.graphics.getHeight()/2f - creditsButton.getHeight()*3/2);
@@ -85,7 +80,7 @@ public class TitleScreen extends ScreenAdapter {
       }
     });
 
-    stage.addActor(creditsButton);
+
 
     settingsButton = new TextButton("Settings", buttonStyle);
     settingsButton.setPosition(Gdx.graphics.getWidth()/2f - settingsButton.getWidth()/2, Gdx.graphics.getHeight()/2f - settingsButton.getHeight()*5/2);
@@ -95,7 +90,6 @@ public class TitleScreen extends ScreenAdapter {
         game.setScreen(new SettingsScreen(game));
       }
     });
-    stage.addActor(settingsButton);
 
     exitButton = new TextButton("Exit", buttonStyle);
     exitButton.setPosition(Gdx.graphics.getWidth()/2f - exitButton.getWidth()/2, Gdx.graphics.getHeight()/2f - exitButton.getHeight()*7/2);
@@ -105,7 +99,18 @@ public class TitleScreen extends ScreenAdapter {
         Gdx.app.exit();
       }
     });
+
+    if (game.testMode){
+      return;
+    }
+
+    stage = new Stage();
     stage.addActor(exitButton);
+    stage.addActor(settingsButton);
+    stage.addActor(creditsButton);
+    stage.addActor(tutorialButton);
+    stage.addActor(playButton);
+    Gdx.input.setInputProcessor(stage);
   }
 
   @Override
@@ -140,6 +145,11 @@ public class TitleScreen extends ScreenAdapter {
     creditsButton.setPosition(width/2f - creditsButton.getWidth()/2, height/2f - creditsButton.getHeight()*3/2);
     settingsButton.setPosition(width/2f - settingsButton.getWidth()/2, height/2f - settingsButton.getHeight()*5/2);
     exitButton.setPosition(width/2f - exitButton.getWidth()/2, height/2f - exitButton.getHeight()*7/2);
+
+    if (game.testMode){
+      return;
+    }
+
     stage.clear();
     stage.addActor(playButton);
     stage.addActor(tutorialButton);
@@ -160,5 +170,21 @@ public class TitleScreen extends ScreenAdapter {
     stage.dispose();
     skin.dispose();
     atlas.dispose();
+  }
+
+  public Button getPlayButton() {
+    return playButton;
+  }
+
+  public Button getTutorialButton() {
+    return tutorialButton;
+  }
+
+  public Button getCreditsButton() {
+    return creditsButton;
+  }
+
+  public Button getSettingsButton() {
+    return settingsButton;
   }
 }
