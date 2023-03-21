@@ -1,9 +1,6 @@
 package com.neves6.piazzapanic.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +18,7 @@ import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen extends ScreenAdapter implements InputProcessor {
   DeliveryStaff deliveryStaff;
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -74,46 +71,15 @@ public class GameScreen extends ScreenAdapter {
   public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    batch = new SpriteBatch();
-
     stage = new Stage();
 
     Gdx.graphics.setResizable(false);
+
+    Gdx.input.setInputProcessor(this);
   }
 
   @Override
   public void render(float delta) {
-    Gdx.input.setInputProcessor(new InputAdapter() {
-      @Override
-      public boolean keyDown(int keyCode) {
-        if (keyCode == Input.Keys.W) {
-          gm.tryMove("up");
-        }
-        if (keyCode == Input.Keys.A) {
-          gm.tryMove("left");
-        }
-        if (keyCode == Input.Keys.S) {
-          gm.tryMove("down");
-        }
-        if (keyCode == Input.Keys.D) {
-          gm.tryMove("right");
-        }
-        if (keyCode == Input.Keys.NUM_1) {
-          gm.setSelectedChef(1);
-        }
-        if (keyCode == Input.Keys.NUM_2) {
-          gm.setSelectedChef(2);
-        }
-        if (keyCode == Input.Keys.NUM_3) {
-          gm.setSelectedChef(3);
-        }
-        if (keyCode == Input.Keys.E) {
-          gm.tryInteract();
-        }
-        return true;
-      }
-    });
-
     gm.tickUpdate(delta);
 
     gm.setRecipeToStaff();
@@ -218,7 +184,6 @@ public class GameScreen extends ScreenAdapter {
   public void hide() {
     super.dispose();
     game.dispose();
-    game.getBatch().dispose();
     font.dispose();
     stage.dispose();
     map.dispose();
@@ -227,11 +192,116 @@ public class GameScreen extends ScreenAdapter {
     recipes.dispose();
   }
 
-  public void keyDown(int w) {
-    return;
-  }
+
 
   public ScenarioGameMaster getGameMaster() {
     return gm;
+  }
+
+  /**
+   * @param keycode one of the constants in {@link Input.Keys}
+   * @return
+   */
+  @Override
+  public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.W) {
+          gm.tryMove("up");
+        }
+        if (keycode == Input.Keys.A) {
+          gm.tryMove("left");
+        }
+        if (keycode == Input.Keys.S) {
+          gm.tryMove("down");
+        }
+        if (keycode == Input.Keys.D) {
+          gm.tryMove("right");
+        }
+        if (keycode == Input.Keys.NUM_1) {
+          gm.setSelectedChef(1);
+        }
+        if (keycode == Input.Keys.NUM_2) {
+          gm.setSelectedChef(2);
+        }
+        if (keycode == Input.Keys.NUM_3) {
+          gm.setSelectedChef(3);
+        }
+        if (keycode == Input.Keys.E) {
+          gm.tryInteract();
+        }
+        return true;
+
+  }
+
+  /**
+   * @param keycode one of the constants in {@link Input.Keys}
+   * @return
+   */
+  @Override
+  public boolean keyUp(int keycode) {
+    return false;
+  }
+
+  /**
+   * @param character The character
+   * @return
+   */
+  @Override
+  public boolean keyTyped(char character) {
+    return false;
+  }
+
+  /**
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
+   * @param pointer the pointer for the event.
+   * @param button  the button
+   * @return
+   */
+  @Override
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    return false;
+  }
+
+  /**
+   * @param screenX
+   * @param screenY
+   * @param pointer the pointer for the event.
+   * @param button  the button
+   * @return
+   */
+  @Override
+  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    return false;
+  }
+
+  /**
+   * @param screenX
+   * @param screenY
+   * @param pointer the pointer for the event.
+   * @return
+   */
+  @Override
+  public boolean touchDragged(int screenX, int screenY, int pointer) {
+    return false;
+  }
+
+  /**
+   * @param screenX
+   * @param screenY
+   * @return
+   */
+  @Override
+  public boolean mouseMoved(int screenX, int screenY) {
+    return false;
+  }
+
+  /**
+   * @param amountX the horizontal scroll amount, negative or positive depending on the direction the wheel was scrolled.
+   * @param amountY the vertical scroll amount, negative or positive depending on the direction the wheel was scrolled.
+   * @return
+   */
+  @Override
+  public boolean scrolled(float amountX, float amountY) {
+    return false;
   }
 }

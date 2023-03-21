@@ -45,10 +45,7 @@ public class SettingsScreen extends ScreenAdapter {
   public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    batch = new SpriteBatch();
 
-    stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
     skin.addRegions(atlas);
@@ -80,7 +77,7 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-    stage.addActor(fullscreenButton);
+
 
     volumeFullButton = new TextButton("Volume: Full", buttonStyle);
     volumeFullButton.setPosition(
@@ -95,7 +92,7 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-    stage.addActor(volumeFullButton);
+
 
     volumeHalfButton = new TextButton("Volume: Half", buttonStyle);
     volumeHalfButton.setPosition(
@@ -110,7 +107,7 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
-    stage.addActor(volumeHalfButton);
+
 
     volumeNoneButton = new TextButton("Volume: None", buttonStyle);
     volumeNoneButton.setPosition(
@@ -125,7 +122,17 @@ public class SettingsScreen extends ScreenAdapter {
             game.setScreen(new TitleScreen(game));
           }
         });
+
+    if (game.testMode){
+      return;
+    }
+
+    stage = new Stage();
     stage.addActor(volumeNoneButton);
+    stage.addActor(volumeHalfButton);
+    stage.addActor(volumeFullButton);
+    stage.addActor(fullscreenButton);
+    Gdx.input.setInputProcessor(stage);
   }
 
   @Override
@@ -154,6 +161,10 @@ public class SettingsScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
+    if (game.testMode){
+      return;
+    }
+
     super.resize(width, height);
     fullscreenButton.setPosition(
         Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,
@@ -179,7 +190,6 @@ public class SettingsScreen extends ScreenAdapter {
   public void hide() {
     super.dispose();
     game.dispose();
-    batch.dispose();
     font.dispose();
     bg.dispose();
     stage.dispose();
