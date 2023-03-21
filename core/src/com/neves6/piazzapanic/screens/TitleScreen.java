@@ -112,7 +112,6 @@ public class TitleScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testFlag == false) {
       stage = new Stage();
       stage.addActor(playButton);
       stage.addActor(exitButton);
@@ -120,7 +119,7 @@ public class TitleScreen extends ScreenAdapter {
       stage.addActor(creditsButton);
       stage.addActor(tutorialButton);
       Gdx.input.setInputProcessor(stage);
-    }
+
   }
 
   @Override
@@ -157,8 +156,7 @@ public class TitleScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false) {
-      super.resize(width, height);
+    super.resize(width, height);
       playButton.setPosition(
           width / 2f - playButton.getWidth() / 2, height / 2f + playButton.getHeight() / 2);
       tutorialButton.setPosition(
@@ -179,7 +177,6 @@ public class TitleScreen extends ScreenAdapter {
       stage.addActor(exitButton);
       stage.getViewport().update(width, height);
       camera.setToOrtho(false, width, height);
-    }
   }
 
   @Override

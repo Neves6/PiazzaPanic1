@@ -45,32 +45,31 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   public GameScreen(PiazzaPanicGame game, int level) {
     this.machineUnlockBalance = new Money();
     this.deliveryStaff =
-        new DeliveryStaff(
-            new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
-            (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
+            new DeliveryStaff(
+                    new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
+                    (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
     this.game = game;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
     font.getData().setScale(0.75F);
     // bg = new Texture(Gdx.files.internal("title_screen_large.png"));
     this.ingredientsHelper =
-        new IngredientsStaff(
-            new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
-            (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
+            new IngredientsStaff(
+                    new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
+                    (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
     if (level == 1) {
       map = new TmxMapLoader().load("tilemaps/level1.tmx");
       gm =
-          new ScenarioGameMaster(
-              game, map, 3, 5, machineUnlockBalance, ingredientsHelper, deliveryStaff);
+              new ScenarioGameMaster(
+                      game, map, 3, 5, machineUnlockBalance, ingredientsHelper, deliveryStaff);
       unitScale = Gdx.graphics.getHeight() / (12f * 32f);
       wscale = unitScale * 32f;
       hscale = unitScale * 32f;
-      if (game.testFlag == false) {
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
-      }
+      renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+
+      selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
+      recipes = new Texture(Gdx.files.internal("recipes.png"));
+      lock = new Texture(Gdx.files.internal("levellocked.png"));
     }
-    selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
-    recipes = new Texture(Gdx.files.internal("recipes.png"));
-    lock = new Texture(Gdx.files.internal("levellocked.png"));
   }
 
   @Override
@@ -92,12 +91,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     gm.setRecipeToStaff();
 
-    if (game.testFlag == false) {
-      Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-      Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-      winWidth = Gdx.graphics.getWidth();
-      winHeight = Gdx.graphics.getHeight();
+    winWidth = Gdx.graphics.getWidth();
+    winHeight = Gdx.graphics.getHeight();
 
       camera.update();
       // game.batch.setProjectionMatrix(camera.combined);

@@ -120,14 +120,12 @@ public class SettingsScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testFlag == false) {
       stage = new Stage();
       stage.addActor(volumeFullButton);
       stage.addActor(fullscreenButton);
       stage.addActor(volumeHalfButton);
       stage.addActor(volumeNoneButton);
       Gdx.input.setInputProcessor(stage);
-    }
   }
 
   @Override

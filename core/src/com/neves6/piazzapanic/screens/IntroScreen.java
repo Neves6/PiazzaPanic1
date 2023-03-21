@@ -31,12 +31,11 @@ public class IntroScreen extends ScreenAdapter {
   }
 
   public void show() {
-    if (game.testFlag == false) {
-      camera = new OrthographicCamera();
-      camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-      font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
-      // Added to set screen size using settings from text file
-      settings = Utility.getSettings();
+    camera = new OrthographicCamera();
+    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
+    // Added to set screen size using settings from text file
+    settings = Utility.getSettings();
       if (settings.get(0).trim().equals("fullscreen")) {
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
       } else if (settings.get(0).trim().equals("windowed")) {
@@ -56,10 +55,9 @@ public class IntroScreen extends ScreenAdapter {
         }
       }
       introAnimation = new Animation<TextureRegion>(0.125f, walkFrames);
+    stateTime = 0f;
     }
 
-    stateTime = 0f;
-  }
 
   @Override
   public void render(float delta) {
@@ -103,10 +101,8 @@ public class IntroScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false) {
-      super.resize(width, height);
-      camera.setToOrtho(false, width, height);
-    }
+    super.resize(width, height);
+    camera.setToOrtho(false, width, height);
   }
 
   @Override

@@ -144,7 +144,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testFlag == false) {
       super.resize(width, height);
       level1Button.setPosition(
           width / 2f - level1Button.getWidth() / 2 - level1Button.getWidth() * 1.5f,
@@ -160,7 +159,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
       stage.addActor(level3Button);
       stage.getViewport().update(width, height);
       camera.setToOrtho(false, width, height);
-    }
+
   }
 
   @Override
