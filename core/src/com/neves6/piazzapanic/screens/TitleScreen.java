@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 public class TitleScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
-  SpriteBatch batch;
   BitmapFont font;
   Texture bg;
   int winWidth;
@@ -43,10 +42,7 @@ public class TitleScreen extends ScreenAdapter {
   public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    batch = new SpriteBatch();
 
-    stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
     skin.addRegions(atlas);
@@ -68,8 +64,6 @@ public class TitleScreen extends ScreenAdapter {
           }
         });
 
-    stage.addActor(playButton);
-
     tutorialButton = new TextButton("Tutorial", buttonStyle);
     tutorialButton.setPosition(
         Gdx.graphics.getWidth() / 2f - tutorialButton.getWidth() / 2,
@@ -81,8 +75,6 @@ public class TitleScreen extends ScreenAdapter {
             game.setScreen(new TutorialScreen(game, "title"));
           }
         });
-
-    stage.addActor(tutorialButton);
 
     creditsButton = new TextButton("Credits", buttonStyle);
     creditsButton.setPosition(
@@ -96,8 +88,6 @@ public class TitleScreen extends ScreenAdapter {
           }
         });
 
-    stage.addActor(creditsButton);
-
     settingsButton = new TextButton("Settings", buttonStyle);
     settingsButton.setPosition(
         Gdx.graphics.getWidth() / 2f - settingsButton.getWidth() / 2,
@@ -109,7 +99,6 @@ public class TitleScreen extends ScreenAdapter {
             game.setScreen(new SettingsScreen(game));
           }
         });
-    stage.addActor(settingsButton);
 
     exitButton = new TextButton("Exit", buttonStyle);
     exitButton.setPosition(
@@ -122,7 +111,16 @@ public class TitleScreen extends ScreenAdapter {
             Gdx.app.exit();
           }
         });
-    stage.addActor(exitButton);
+
+    if (game.testFlag == false) {
+      stage = new Stage();
+      stage.addActor(playButton);
+      stage.addActor(exitButton);
+      stage.addActor(settingsButton);
+      stage.addActor(creditsButton);
+      stage.addActor(tutorialButton);
+      Gdx.input.setInputProcessor(stage);
+    }
   }
 
   @Override
@@ -159,37 +157,61 @@ public class TitleScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    super.resize(width, height);
-    playButton.setPosition(
-        width / 2f - playButton.getWidth() / 2, height / 2f + playButton.getHeight() / 2);
-    tutorialButton.setPosition(
-        width / 2f - tutorialButton.getWidth() / 2, height / 2f - tutorialButton.getHeight() / 2);
-    creditsButton.setPosition(
-        width / 2f - creditsButton.getWidth() / 2, height / 2f - creditsButton.getHeight() * 3 / 2);
-    settingsButton.setPosition(
-        width / 2f - settingsButton.getWidth() / 2,
-        height / 2f - settingsButton.getHeight() * 5 / 2);
-    exitButton.setPosition(
-        width / 2f - exitButton.getWidth() / 2, height / 2f - exitButton.getHeight() * 7 / 2);
-    stage.clear();
-    stage.addActor(playButton);
-    stage.addActor(tutorialButton);
-    stage.addActor(creditsButton);
-    stage.addActor(settingsButton);
-    stage.addActor(exitButton);
-    stage.getViewport().update(width, height);
-    camera.setToOrtho(false, width, height);
+    if (game.testFlag == false) {
+      super.resize(width, height);
+      playButton.setPosition(
+          width / 2f - playButton.getWidth() / 2, height / 2f + playButton.getHeight() / 2);
+      tutorialButton.setPosition(
+          width / 2f - tutorialButton.getWidth() / 2, height / 2f - tutorialButton.getHeight() / 2);
+      creditsButton.setPosition(
+          width / 2f - creditsButton.getWidth() / 2,
+          height / 2f - creditsButton.getHeight() * 3 / 2);
+      settingsButton.setPosition(
+          width / 2f - settingsButton.getWidth() / 2,
+          height / 2f - settingsButton.getHeight() * 5 / 2);
+      exitButton.setPosition(
+          width / 2f - exitButton.getWidth() / 2, height / 2f - exitButton.getHeight() * 7 / 2);
+      stage.clear();
+      stage.addActor(playButton);
+      stage.addActor(tutorialButton);
+      stage.addActor(creditsButton);
+      stage.addActor(settingsButton);
+      stage.addActor(exitButton);
+      stage.getViewport().update(width, height);
+      camera.setToOrtho(false, width, height);
+    }
   }
 
   @Override
   public void hide() {
-    super.dispose();
-    game.dispose();
-    batch.dispose();
-    font.dispose();
-    bg.dispose();
-    stage.dispose();
-    skin.dispose();
-    atlas.dispose();
+    if (game.testFlag == false) {
+      super.dispose();
+      game.dispose();
+      font.dispose();
+      bg.dispose();
+      stage.dispose();
+      skin.dispose();
+      atlas.dispose();
+    }
+  }
+
+  public Button getPlayButton() {
+    return playButton;
+  }
+
+  public Button getTutorialButton() {
+    return tutorialButton;
+  }
+
+  public Button getCreditsButton() {
+    return creditsButton;
+  }
+
+  public Button getSettingsButton() {
+    return settingsButton;
+  }
+
+  public Button getExitButton() {
+    return exitButton;
   }
 }

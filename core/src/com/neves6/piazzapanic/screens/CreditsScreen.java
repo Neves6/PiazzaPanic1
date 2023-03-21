@@ -29,13 +29,15 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   /** Inherited show method which sets up screen dimensions. */
   @Override
   public void show() {
-    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
-    credits = new Texture(Gdx.files.internal("credits.png"));
+    if (game.testFlag == false) {
+      font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
+      credits = new Texture(Gdx.files.internal("credits.png"));
 
-    Gdx.input.setInputProcessor(this);
+      Gdx.input.setInputProcessor(this);
 
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+      camera = new OrthographicCamera();
+      camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
   }
 
   /**
@@ -67,8 +69,10 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void resize(int width, int height) {
-    super.resize(width, height);
-    camera.setToOrtho(false, width, height);
+    if (game.testFlag == false) {
+      super.resize(width, height);
+      camera.setToOrtho(false, width, height);
+    }
   }
 
   /** What to do when the screen is exited. */

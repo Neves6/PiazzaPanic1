@@ -1,15 +1,20 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.badlogic.gdx.maps.MapLayer;import com.badlogic.gdx.maps.MapObject;import com.badlogic.gdx.maps.MapObjects;import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Test;
@@ -174,77 +179,176 @@ public class TestScenarioGameMaster {
   }
 
   @Test
-  public void testGetCorrectChef(){
+  public void testGetCorrectChef() {
     testMaster.setSelectedChef(1);
     assertTrue(testMaster.getSelectedChef() == 1);
   }
 
   @Test
-  public void testChefIsFrozenWhenStuck(){
+  public void testChefIsFrozenWhenStuck() {
     testMaster.getChef(1).setIsStickied(true);
     assertTrue(testMaster.wouldNotCollide(1, 1, 0) == false);
-
   }
 
   @Test
-  public void testChefCanNotCoverAnotherChef(){
+  public void testChefCanNotCoverAnotherChef() {
     testMasterIV.getChef(2).setyCoord(4);
     testMasterIV.getChef(2).setxCoord(5);
     assertTrue(testMasterIV.wouldNotCollide(5, 4, 0) == false);
-
   }
 
   @Test
-  public void testGetNumberOfCustomers(){
+  public void testGetNumberOfCustomers() {
     assertTrue(testMasterIV.getCustomersRemaining() == 3);
     // Need another to test after completing recipe
   }
 
   @Test
-  public void testGetUnlockLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("potato", "chopping", "forming", "grill", "server-staff", "pizza",
-            "ingredients-staff"));
+  public void testGetUnlockLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(
+            Arrays.asList(
+                "potato",
+                "chopping",
+                "forming",
+                "grill",
+                "server-staff",
+                "pizza",
+                "ingredients-staff"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Unlock Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testGetFridgeLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("fridge-dough", "fridge-beans", "fridge-potato", "fridge-cheese",
-            "fridge-onion", "fridge-lettuce", "fridge-lettuce", "fridge-tomato", "fridge-meat", "fridge-bun"));
+  public void testGetFridgeLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(
+            Arrays.asList(
+                "fridge-dough",
+                "fridge-beans",
+                "fridge-potato",
+                "fridge-cheese",
+                "fridge-onion",
+                "fridge-lettuce",
+                "fridge-lettuce",
+                "fridge-tomato",
+                "fridge-meat",
+                "fridge-bun"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Fridge Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testCookingLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("forming-1", "oven-pizza-2", "oven-pizza-1", "oven-potato-1", "oven-potato-2",
-            "chopping-onion-2", "chopping-tomato-2", "chopping-lettuce-2", "chopping-tomato-1", "chopping-onion-1", "chopping-lettuce-1", "forming-2",
-            "grill-bun-2", "grill-patty-2", "grill-bun-1", "grill-patty-1"));
+  public void testCookingLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(
+            Arrays.asList(
+                "forming-1",
+                "oven-pizza-2",
+                "oven-pizza-1",
+                "oven-potato-1",
+                "oven-potato-2",
+                "chopping-onion-2",
+                "chopping-tomato-2",
+                "chopping-lettuce-2",
+                "chopping-tomato-1",
+                "chopping-onion-1",
+                "chopping-lettuce-1",
+                "forming-2",
+                "grill-bun-2",
+                "grill-patty-2",
+                "grill-bun-1",
+                "grill-patty-1"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Cooking Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testMiscLayer(){
-    ArrayList<String> testFinder = new ArrayList<>(Arrays.asList("bin", "fast-track-collect", "tray-1", "tray-2", "serving"));
+  public void testMiscLayer() {
+    ArrayList<String> testFinder =
+        new ArrayList<>(Arrays.asList("bin", "fast-track-collect", "tray-1", "tray-2", "serving"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
-    for (MapObject item: testLayer){
+    for (MapObject item : testLayer) {
       assertTrue(testFinder.contains(item.getName()));
     }
   }
 
   @Test
-  public void testValidTiledOverlap(){}
+  public void testValidTiledOverlap() {
+    MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
+    Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
+    assertTrue(testMaster.detectInteractionFromTiledObject(testRec, 14, 4));
+  }
 
   @Test
-  public void testInvalidTiledOverlap(){}
+  public void testInvalidTiledOverlap() {
+    MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
+    Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
+    assertFalse(testMaster.detectInteractionFromTiledObject(testRec, 4, 4));
+  }
 
+  @Test
+  public void testLockedChef() {
+    final int ORIGINAL_X = testMasterIV.getChef(1).getxCoord();
+    final int ORIGINAL_Y = testMasterIV.getChef(1).getyCoord();
+    testMasterIV.getChef(1).setIsStickied(true);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getxCoord() == ORIGINAL_X);
+    assertTrue(testMasterIV.getChef(1).getyCoord() == ORIGINAL_Y);
+  }
 
+  @Test
+  public void testInteractWithUnlockLayerDown() {
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("down");
+    testMasterIV.getChef(1).setxCoord(2);
+    testMasterIV.getChef(1).setyCoord(7);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+  }
+
+  @Test
+  public void testInteractWithUnlockLayerUp() {
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("up");
+    testMasterIV.getChef(1).setxCoord(2);
+    testMasterIV.getChef(1).setyCoord(9);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+  }
+
+  @Test
+  public void testInteractWithUnlockLayerRight() {
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("right");
+    testMasterIV.getChef(1).setxCoord(1);
+    testMasterIV.getChef(1).setyCoord(8);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+  }
+
+  @Test
+  public void testInteractWithUnlockLayerLeft() {
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getChef(1).setFacing("left");
+    testMasterIV.getChef(1).setxCoord(3);
+    testMasterIV.getChef(1).setyCoord(8);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+  }
 }

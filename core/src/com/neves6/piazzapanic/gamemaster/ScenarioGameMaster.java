@@ -16,7 +16,7 @@ import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
-import com.neves6.piazzapanic.screens.CreditsScreen;import com.neves6.piazzapanic.screens.GameWinScreen;
+import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
@@ -440,6 +440,10 @@ public class ScenarioGameMaster extends GameMaster {
         tempMachine.processStaffInteraction(chef, machineUnlockBalance);
       }
     }
+  }
+
+  public Money getUnlockClass() {
+    return machineUnlockBalance;
   }
 
   /** Adds the top item from the currently selected chef's inventory to the tray. */

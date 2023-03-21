@@ -43,10 +43,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
   public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    batch = new SpriteBatch();
 
-    stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/levelselector/levelselector.atlas"));
     skin.addRegions(atlas);
@@ -67,9 +64,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
     level3Button.setPosition(
         Gdx.graphics.getWidth() / 2f - level1Button.getWidth() / 2 + level3Button.getWidth() * 1.5f,
         Gdx.graphics.getHeight() / 2f - level1Button.getHeight() / 2);
-    stage.addActor(level1Button);
-    stage.addActor(level2Button);
-    stage.addActor(level3Button);
     level1Button.addListener(
         new ChangeListener() {
           @Override
@@ -92,6 +86,14 @@ public class LevelSelectorScreen extends ScreenAdapter {
             // game.setScreen(new GameScreen(game, 3));
           }
         });
+
+    if (game.testFlag == false) {
+      stage = new Stage();
+      stage.addActor(level1Button);
+      stage.addActor(level2Button);
+      stage.addActor(level3Button);
+      Gdx.input.setInputProcessor(stage);
+    }
   }
 
   @Override
@@ -142,28 +144,29 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    super.resize(width, height);
-    level1Button.setPosition(
-        width / 2f - level1Button.getWidth() / 2 - level1Button.getWidth() * 1.5f,
-        height / 2f - level1Button.getHeight() / 2);
-    level2Button.setPosition(
-        width / 2f - level1Button.getWidth() / 2, height / 2f - level1Button.getHeight() / 2);
-    level3Button.setPosition(
-        width / 2f - level1Button.getWidth() / 2 + level3Button.getWidth() * 1.5f,
-        height / 2f - level1Button.getHeight() / 2);
-    stage.clear();
-    stage.addActor(level1Button);
-    stage.addActor(level2Button);
-    stage.addActor(level3Button);
-    stage.getViewport().update(width, height);
-    camera.setToOrtho(false, width, height);
+    if (game.testFlag == false) {
+      super.resize(width, height);
+      level1Button.setPosition(
+          width / 2f - level1Button.getWidth() / 2 - level1Button.getWidth() * 1.5f,
+          height / 2f - level1Button.getHeight() / 2);
+      level2Button.setPosition(
+          width / 2f - level1Button.getWidth() / 2, height / 2f - level1Button.getHeight() / 2);
+      level3Button.setPosition(
+          width / 2f - level1Button.getWidth() / 2 + level3Button.getWidth() * 1.5f,
+          height / 2f - level1Button.getHeight() / 2);
+      stage.clear();
+      stage.addActor(level1Button);
+      stage.addActor(level2Button);
+      stage.addActor(level3Button);
+      stage.getViewport().update(width, height);
+      camera.setToOrtho(false, width, height);
+    }
   }
 
   @Override
   public void hide() {
     super.dispose();
     game.dispose();
-    batch.dispose();
     font.dispose();
     bg.dispose();
     lock.dispose();
