@@ -23,7 +23,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   OrthographicCamera camera;
   SpriteBatch batch;
   BitmapFont font;
-  Stage stage;
   int winWidth;
   int winHeight;
   TiledMap map;
@@ -65,7 +64,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
       unitScale = Gdx.graphics.getHeight() / (12f * 32f);
       wScale = unitScale * 32f;
       hScale = unitScale * 32f;
-      renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+      if (game.testMode == false){
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);}
     }
     selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     recipes = new Texture(Gdx.files.internal("recipes.png"));
@@ -76,7 +76,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    stage = new Stage();
 
     Gdx.graphics.setResizable(false);
 
@@ -224,8 +223,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     game.getBatch().end();
 
-    stage.draw();
-
     drawSequence(ingredientsHelper);
     drawSequence(deliveryStaff);
   }
@@ -262,6 +259,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   @Override
   public void resize(int width, int height) {
+    if (game.testMode){
+      return;
+    }
+
     if (width == INITIAL_WIDTH && height == INITIAL_HEIGHT) {
       super.resize(width, height);
       camera.setToOrtho(false, width, height);
@@ -279,7 +280,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     super.dispose();
     game.dispose();
     font.dispose();
-    stage.dispose();
     map.dispose();
     renderer.dispose();
     selectedTexture.dispose();

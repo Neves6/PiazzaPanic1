@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.neves6.piazzapanic.screens.GameScreen;
+import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,14 +65,6 @@ public class TestGameScreen {
 
   @Test
   public void tryAttainChefThree() {
-    Gdx.gl = Gdx.gl20;
-    testGameScreen.keyDown(Input.Keys.NUM_3);
-    assertTrue(testGameScreen.getGameMaster().getSelectedChef() == 3);
-  }
-
-  @Test
-  public void tryInteractDefault() {
-    // Always first chef facing down if nothing is changed.
     Gdx.gl = Gdx.gl20;
     testGameScreen.keyDown(Input.Keys.NUM_3);
     assertTrue(testGameScreen.getGameMaster().getSelectedChef() == 3);

@@ -69,6 +69,16 @@ public class IntroScreen extends ScreenAdapter {
     TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);
 
     camera.update();
+
+    if (stateTime > 2f) {
+      // dispose();
+      game.setScreen(new TitleScreen(game));
+    }
+
+    if (game.testMode){
+      return;
+    }
+
     game.getBatch().setProjectionMatrix(camera.combined);
 
     game.getBatch().begin();
@@ -88,11 +98,6 @@ public class IntroScreen extends ScreenAdapter {
         1,
         false);
     game.getBatch().end();
-
-    if (stateTime > 2f) {
-      // dispose();
-      game.setScreen(new TitleScreen(game));
-    }
   }
 
   @Override

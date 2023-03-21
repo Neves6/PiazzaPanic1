@@ -32,7 +32,7 @@ public class TestScreenTransitions {
     IntroScreen testIntro = new IntroScreen(testGame);
     testIntro.show();
     Long waitTime = System.currentTimeMillis();
-    while (System.currentTimeMillis() - waitTime < 200) {
+    while (System.currentTimeMillis() - waitTime < 2000) {
       testIntro.render(1);
     }
     assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
@@ -74,9 +74,54 @@ public class TestScreenTransitions {
     assertTrue(testGame.getScreen().getClass() == SettingsScreen.class);
   }
 
-  /**
-   * @Test public void testExitButton(){ Gdx.gl20 = Gdx.gl; TitleScreen testTitle = new
-   * TitleScreen(testGame); testTitle.show(); testTitle.getExitButton().toggle();
-   * assertTrue(testGame.getScreen() == null); testGame.dispose(); }
-   */
+  @Test
+  public void testWinScreenToCredit(){
+    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20);
+    testWinScreen.show();
+    testWinScreen.getCreditsScreen().toggle();
+    assertTrue(testGame.getScreen().getClass() == CreditsScreen.class);
+  }
+
+  @Test
+  public void testWinScreenToTitle(){
+    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20);
+    testWinScreen.show();
+    testWinScreen.getTitleScreen().toggle();
+    assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
+  }
+
+  @Test
+  public void testTutorialToGameOne(){
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "game1");
+    testTutorial.keyDown(0);
+    assertTrue(testGame.getScreen().getClass() == GameScreen.class);
+  }
+
+  @Test
+  public void testTutorialToGameTwo(){
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "game2");
+    testTutorial.keyDown(0);
+    assertTrue(testGame.getScreen().getClass() == GameScreen.class);
+  }
+
+  @Test
+  public void testTutorialToGameThree(){
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "game3");
+    testTutorial.keyDown(0);
+    assertTrue(testGame.getScreen().getClass() == GameScreen.class);
+  }
+
+  @Test
+  public void testTutorialToTitle(){
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "title");
+    testTutorial.keyDown(0);
+    assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
+  }
+
+  @Test
+  public void testTutorialToDefault(){
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "void");
+    testTutorial.keyDown(0);
+    assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
+  }
 }
