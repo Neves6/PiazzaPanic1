@@ -2,7 +2,6 @@ package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class PiazzaPanicGame extends Game {
   SpriteBatch _batch;
@@ -20,7 +19,7 @@ public class PiazzaPanicGame extends Game {
     testMode = false;
   }
 
-  public PiazzaPanicGame(Boolean tf){
+  public PiazzaPanicGame(Boolean tf) {
     testMode = tf;
   }
 
