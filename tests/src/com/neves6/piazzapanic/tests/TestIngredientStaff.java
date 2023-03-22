@@ -1,13 +1,12 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestIngredientStaff {
@@ -26,8 +25,10 @@ public class TestIngredientStaff {
   public void testPotatoStack() {
     test.setGenerate(true);
     test.setCurrentRecipe("jacket potato");
-    assertSame("For a jacket potato, staff should give out a potato first", "potato", test.collectItem());
-    assertSame("For a jacket potato, staff should give out beans second", "beans", test.collectItem());
+    assertSame(
+        "For a jacket potato, staff should give out a potato first", "potato", test.collectItem());
+    assertSame(
+        "For a jacket potato, staff should give out beans second", "beans", test.collectItem());
   }
 
   @Test
@@ -35,7 +36,8 @@ public class TestIngredientStaff {
     test.setGenerate(true);
     test.setCurrentRecipe("pizza");
     assertSame("For a pizza, staff should give out dough first.", "dough", test.collectItem());
-    Assert.assertSame("For a pizza, staff should give out tomato seconds.", "tomato", test.collectItem());
+    Assert.assertSame(
+        "For a pizza, staff should give out tomato seconds.", "tomato", test.collectItem());
 
     assertSame("For a pizza, staff should give out cheese third", "cheese", test.collectItem());
   }

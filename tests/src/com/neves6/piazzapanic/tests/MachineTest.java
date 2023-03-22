@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
-
 import java.util.Objects;
 import java.util.Stack;
 import org.junit.Test;
@@ -31,7 +30,7 @@ public class MachineTest {
     testMachine2.process(testChef2, new Money());
     assertTrue(
         "Processing an item must stick chef",
-            Objects.equals(testChef.getInventory().peek(), "Cooked Patty")
+        Objects.equals(testChef.getInventory().peek(), "Cooked Patty")
             && testChef2.getIsStickied()
             && Objects.equals(testChef2.getInventory().peek(), "Burger"));
   }
@@ -46,7 +45,8 @@ public class MachineTest {
     testMachine.attemptGetOutput();
     assertTrue(
         "Input must be popped from stack and output pushed to stack",
-            Objects.equals(testChef.getInventory().peek(), "Cooked Patty") && !testChef.getIsStickied());
+        Objects.equals(testChef.getInventory().peek(), "Cooked Patty")
+            && !testChef.getIsStickied());
   }
 
   @Test
@@ -55,6 +55,10 @@ public class MachineTest {
     float delta = 5;
     Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 5, true);
     testMachine.incrementRuntime(delta);
-    assertEquals("Increment runtime should not be changed by any method apart from alterRuntime()", 5, testMachine.getRuntime(), 0.0);
+    assertEquals(
+        "Increment runtime should not be changed by any method apart from alterRuntime()",
+        5,
+        testMachine.getRuntime(),
+        0.0);
   }
 }

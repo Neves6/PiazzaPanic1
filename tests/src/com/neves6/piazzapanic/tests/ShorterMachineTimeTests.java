@@ -16,7 +16,8 @@ public class ShorterMachineTimeTests {
 
   @Test
   public void testConstructor() {
-    assertEquals("Constructor must not modify effect time", 1L, (long) testMachineTime.getEffectTime());
+    assertEquals(
+        "Constructor must not modify effect time", 1L, (long) testMachineTime.getEffectTime());
   }
 
   @Test(expected = IllegalArgumentException.class)

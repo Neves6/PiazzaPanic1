@@ -25,6 +25,7 @@ public class TestDeliveryServer {
     test.collectItem("pizza");
     Stack<Object> testStack = new Stack<>();
     testStack.add("pizza");
-    assertEquals("Once an item is collected, it must be pushed onto the stack", test.getItems(), testStack);
+    assertEquals(
+        "Once an item is collected, it must be pushed onto the stack", test.getItems(), testStack);
   }
 }

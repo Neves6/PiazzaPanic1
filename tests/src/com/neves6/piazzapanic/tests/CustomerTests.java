@@ -3,10 +3,9 @@ package com.neves6.piazzapanic.tests;
 import static org.junit.Assert.assertTrue;
 
 import com.neves6.piazzapanic.people.Customer;
+import java.util.Objects;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Objects;
 
 /**
  * things to test :) constructor validity x coord is set y coord is set erroneous coords throws

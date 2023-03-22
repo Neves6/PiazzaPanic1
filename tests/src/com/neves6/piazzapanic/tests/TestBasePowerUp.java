@@ -1,12 +1,11 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.powerups.BasePowerUp;
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestBasePowerUp {
@@ -24,14 +23,18 @@ public class TestBasePowerUp {
 
   @Test
   public void testConstructorIII() {
-    assertEquals("Constructor should not modify effect time", 1L, (long) testPowerUp.getEffectTime());
+    assertEquals(
+        "Constructor should not modify effect time", 1L, (long) testPowerUp.getEffectTime());
   }
 
   @Test
   public void invalidActivation() {
     System.out.println(testPowerUp.getStartTime());
     testPowerUp.setStartTime();
-    assertEquals("Start time should not be set if power-up is attained.", 0L, (long) testPowerUp.getStartTime());
+    assertEquals(
+        "Start time should not be set if power-up is attained.",
+        0L,
+        (long) testPowerUp.getStartTime());
   }
 
   @Test
@@ -54,6 +57,7 @@ public class TestBasePowerUp {
 
   @Test
   public void invalidEndTime() {
-    assertFalse("End time should not change anything if it was never activated ", testPowerUpII.endTime());
+    assertFalse(
+        "End time should not change anything if it was never activated ", testPowerUpII.endTime());
   }
 }

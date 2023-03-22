@@ -1,11 +1,11 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestMoney {
@@ -21,13 +21,19 @@ public class TestMoney {
   public void testIncrement() {
     test.incrementBalance();
 
-
-    Assert.assertEquals("Increment balance should add 100 to the balance and should be displayed in the format 'Balance: $x'", "Balance: $100", test.displayBalance());
+    Assert.assertEquals(
+        "Increment balance should add 100 to the balance and should be displayed in the format"
+            + " 'Balance: $x'",
+        "Balance: $100",
+        test.displayBalance());
   }
 
   @Test
   public void testInitialValue() {
-    assertEquals("Initial balance should be 0 and display in the format 'Balance: $0'", "Balance: $0", test.displayBalance());
+    assertEquals(
+        "Initial balance should be 0 and display in the format 'Balance: $0'",
+        "Balance: $0",
+        test.displayBalance());
   }
 
   @Test
@@ -45,21 +51,25 @@ public class TestMoney {
   public void testValidPurchaseBorder() {
     test.incrementBalance();
     test.addGroup("test", 100);
-    assertTrue("Machine should be unlocked if the user has enough money even it leads to them having a 0 balance."
-            ,test.unlockMachine("test"));
+    assertTrue(
+        "Machine should be unlocked if the user has enough money even it leads to them having a 0"
+            + " balance.",
+        test.unlockMachine("test"));
   }
 
   @Test
   public void testValidPurchase() {
     test.incrementBalance();
     test.addGroup("test", 50);
-    assertTrue("Machine should be unlocked if the user has enough money", test.unlockMachine("test"));
+    assertTrue(
+        "Machine should be unlocked if the user has enough money", test.unlockMachine("test"));
   }
 
   @Test
   public void testInvalidPurchase() {
     test.incrementBalance();
     test.addGroup("test", 150);
-    assertFalse("Machine should not be unlocked if there is not enough money", test.unlockMachine("test"));
+    assertFalse(
+        "Machine should not be unlocked if there is not enough money", test.unlockMachine("test"));
   }
 }

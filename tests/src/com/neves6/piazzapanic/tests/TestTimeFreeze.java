@@ -1,10 +1,10 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.assertEquals;
+
 import com.neves6.piazzapanic.powerups.TimeFreeze;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
 public class TestTimeFreeze {
