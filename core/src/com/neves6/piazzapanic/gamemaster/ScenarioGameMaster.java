@@ -332,10 +332,19 @@ public class ScenarioGameMaster extends GameMaster {
     }
   }
 
+  /**
+   * Calculates size of customers array.
+   * @return The amount of customers which are yet to be served.
+   */
   public int getCustomersRemaining() {
     return customers.size();
   }
 
+  /**
+   * Calculates the first customer at the start of the customers
+   * array.
+   * @return The customer which is at the start of the queue.
+   */
   public Customer getFirstCustomer() {
     return customers.get(0);
   }
@@ -359,16 +368,37 @@ public class ScenarioGameMaster extends GameMaster {
     totalTimer += increment;
   }
 
+  /**
+   * Helper method used to get the objects from a layer using its
+   * key.
+   * @param key Name of the layer.
+   * @return All objects from the layer indicated by the key.
+   */
   public MapObjects getObjectLayers(String key) {
     MapLayer unlockLayer = map.getLayers().get(key);
     return unlockLayer.getObjects();
   }
 
+  /**
+   * Converts the tiled map coordinates into the game coordinates then compares
+   * it to the target x and target y, to check whether the rectangle is being
+   * interacted with.
+   * @param object A tiled map representation of an point on the map.
+   * @param xcoord A game x coordinate.
+   * @param ycoord A game y coordinate.
+   * @return Boolean value representing whether the coordinates passed in are the coordinates
+   * of the rectangle passed in.
+   */
   public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord) {
     return xcoord == Math.round(object.getX() / tilewidth)
         && ycoord == Math.round(object.getY() / tilewidth);
   }
 
+  /**
+   * Helper method to convert a map object to a rectangle map object.
+   * @param object A single part of a layer of the map.
+   * @return Returns a rectangle representing the object.
+   */
   public Rectangle loadRectangle(MapObject object) {
     RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
     // now you can get the position of the rectangle like this:
@@ -381,9 +411,13 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tryInteract() {
     Chef chef = chefs.get(selectedChef);
+
+    // If the chef is stuck, it is not allowed to move.
     if (chef.getIsStickied()) {
       return;
     }
+
+
     int targetx;
     int targety;
     switch (chef.getFacing()) {
@@ -419,7 +453,7 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
-    // Staff collects items.
+    // Fridge layer - contains all fridges in order to pick up ingredients.
     MapObjects fridgeObjects = getObjectLayers("Fridge Layer");
     for (MapObject ob : fridgeObjects) {
       if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
@@ -428,6 +462,7 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
+    // Cooking Objects - contain all machines
     MapObjects cookingObjects = getObjectLayers("Cooking Layer");
 
     if (chef.getInventory().size() != 0) {
@@ -435,6 +470,8 @@ public class ScenarioGameMaster extends GameMaster {
       String invTop = chef.getInventory().peek();
 
       for (MapObject ob : cookingObjects) {
+        // Only use a machine if you are trying to interact with it and have the correct
+        // input.
         if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
             && machines.get(ob.getName()).getInput() == invTop) {
           machines.get(ob.getName()).process(chef, machineUnlockBalance);
@@ -467,11 +504,18 @@ public class ScenarioGameMaster extends GameMaster {
     }
   }
 
+  /**
+   * Getter method for the money class.
+   * @return Instance of the money class that is being used within scenario game master.
+   */
   public Money getUnlockClass() {
     return machineUnlockBalance;
   }
 
-  /** Adds the top item from the currently selected chef's inventory to the tray. */
+  /**
+   * Adds the top item from the currently selected chef's inventory to the tray.
+   * @param station Indicates which tray station is being used.
+   */
   private void addToTray(int station) {
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv = chef.getInventory();
@@ -491,6 +535,8 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
+    // Pizza cannot be handled by staff because you need to put it in the oven then
+    // take it to the customer.
     if (tray.contains("dough") && tray.contains("chopped tomato") && tray.contains("cheese")) {
       tray.clear();
       inv.add("raw pizza");
@@ -513,9 +559,16 @@ public class ScenarioGameMaster extends GameMaster {
     }
   }
 
+  /**
+   * Method to handle giving food to the customer.
+   */
   private void serveFood() {
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
+    // If the order isn't pizza and the server is unlocked,
+    // get the order from the staff members inventory.
+    // Otherwise, get the chefs inventory and operate
+    // from there.
     if (machineUnlockBalance.isUnlocked("server-staff")
         && !(customers.get(0).getOrder() == "pizza")) {
       inv = deliveryStaff.getItems();
@@ -531,7 +584,10 @@ public class ScenarioGameMaster extends GameMaster {
       inv.pop();
       customers.remove(0);
       serving.play(soundVolume);
+      // +$100 on completion of a recipe.
       machineUnlockBalance.incrementBalance();
+      // Once an order is complete, allow ingredient staff to
+      // collect another order.
       staffOne.setGenerate(true);
     }
 

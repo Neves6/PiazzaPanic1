@@ -36,7 +36,16 @@ public class Money {
     this.balance += 100;
   }
 
+  /**
+   * Method to add a group of unlockable machines.
+   * @param key String given to identify set of unlockable machines.
+   * @param unlockFee Integer given to identify how much money is needed
+   *                  to unlock the machine.
+   * @return Boolean value to indicate whether the new group has successfully
+   * been added.
+   */
   public boolean addGroup(String key, Integer unlockFee) {
+    // If the key doesn't already exist don't add it.
     if (unlockDetails.containsKey(key)) {
       return false;
     } else {
@@ -48,13 +57,29 @@ public class Money {
     }
   }
 
+  /**
+   * Tells you whether a group has already been unlocked.
+   * @param unlockID A string representing the group of
+   *                 machines.
+   * @return Boolean value indicating whether a group has already
+   * been unlocked or not.
+   */
   public boolean isUnlocked(String unlockID) {
     ArrayList<Integer> i = unlockDetails.get(unlockID);
     return i.get(1) == 1;
   }
 
+  /**
+   * Method to unlock a machine.
+   * @param unlockID A string representing the group of
+   *                 machines.
+   * @return Boolean value to represent if the machine has
+   * successfully been unlocked or not.
+   */
   public boolean unlockMachine(String unlockID) {
     ArrayList<Integer> i = unlockDetails.get(unlockID);
+    // Must not already be unlocked and have enough money
+    // to unlock it.
     if (this.balance >= i.get(0) && i.get(1) == 0) {
       this.balance -= i.get(0);
       i.set(1, 1);

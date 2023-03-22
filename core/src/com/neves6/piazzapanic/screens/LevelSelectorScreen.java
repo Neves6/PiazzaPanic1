@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+/**
+ * Screen used to select which level wants to be played.
+ */
 public class LevelSelectorScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -32,6 +35,10 @@ public class LevelSelectorScreen extends ScreenAdapter {
   Skin skin;
   TextureAtlas atlas;
 
+  /**
+   *
+   * @param game
+   */
   public LevelSelectorScreen(PiazzaPanicGame game) {
     this.game = game;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
@@ -39,6 +46,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
     lock = new Texture(Gdx.files.internal("levellocked.png"));
   }
 
+  /**
+   * What to show when this screen is loaded.
+   */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -98,6 +108,10 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(level3Button);
   }
 
+  /**
+   * What to process in every frame.
+   * @param delta The time in seconds since the last render.
+   */
   @Override
   public void render(float delta) {
     Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

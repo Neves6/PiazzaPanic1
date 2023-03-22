@@ -41,6 +41,9 @@ public class SettingsScreen extends ScreenAdapter {
     bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
   }
 
+  /**
+   * What to show when this screen is loaded.
+   */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -132,6 +135,10 @@ public class SettingsScreen extends ScreenAdapter {
     Gdx.input.setInputProcessor(stage);
   }
 
+  /**
+   * What to process in every frame.
+   * @param delta The time in seconds since the last render.
+   */
   @Override
   public void render(float delta) {
     Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

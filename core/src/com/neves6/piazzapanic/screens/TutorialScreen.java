@@ -26,6 +26,9 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
   }
 
+  /**
+   * What to show when this screen is loaded.
+   */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -33,6 +36,10 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     Gdx.input.setInputProcessor(this);
   }
 
+  /**
+   * What to process in every frame.
+   * @param delta The time in seconds since the last render.
+   */
   @Override
   public void render(float delta) {
     Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

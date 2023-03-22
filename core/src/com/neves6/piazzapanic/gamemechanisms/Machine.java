@@ -46,7 +46,7 @@ public class Machine {
    * @param input Input ingredient.
    * @param output Output ingredient.
    * @param processingTime Processing time.
-   * @param sticky Whether or not the machine locks the chef in place during use.
+   * @param sticky Whether the machine locks the chef in place during use.
    */
   public Machine(String type, String input, String output, float processingTime, Boolean sticky) {
     this.type = type;
@@ -100,27 +100,56 @@ public class Machine {
     }
   }
 
+  /**
+   * Getter method for the input variable.
+   * @return Input required to use the machine.
+   */
   public String getInput() {
     return input;
   }
 
+  /**
+   * Increase the variable which indicates how long the machine
+   * has been used for.
+   * @param delta Time since last render.
+   */
   public void incrementRuntime(float delta) {
     this.runtime += delta;
   }
 
+  /**
+   * Getter method for the runtime variable.
+   * @return Time since the machine started running.
+   */
   public float getRuntime() {
     return runtime;
   }
 
+  /**
+   * Getter method for the active variable.
+   * @return Boolean variable indicating whether the machine
+   * is being used for not.
+   */
   public boolean getActive() {
     return active;
   }
 
+  /**
+   * Getter method for processingTime variable.
+   * @return Float variable which indicates how long the
+   * machine takes to process.
+   */
   public float getProcessingTime() {
     return processingTime;
   }
 
   // Use this for auto cook and shorter cook.
+
+  /**
+   * Setter method for processingTime variable.
+   * @param newTime Float variable which indicates how long
+   *                the machine should now take.
+   */
   public void changeProcessingTime(float newTime) {
     this.processingTime = newTime;
   }

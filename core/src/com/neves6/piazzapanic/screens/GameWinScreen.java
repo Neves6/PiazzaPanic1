@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+/**
+ * Screen which indicates that the user has won.
+ */
 public class GameWinScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -31,6 +34,11 @@ public class GameWinScreen extends ScreenAdapter {
   TextureAtlas atlas;
   int completionTime;
 
+  /**
+   * Constructor method.
+   * @param game Instance of PiazzaPanicGame.
+   * @param completionTime Time taken to complete the game.
+   */
   public GameWinScreen(PiazzaPanicGame game, int completionTime) {
     this.game = game;
     this.completionTime = completionTime;
@@ -38,6 +46,9 @@ public class GameWinScreen extends ScreenAdapter {
     bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
   }
 
+  /**
+   * What to show when this screen is loaded.
+   */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -86,6 +97,10 @@ public class GameWinScreen extends ScreenAdapter {
     Gdx.input.setInputProcessor(stage);
   }
 
+  /**
+   * What to process in every frame.
+   * @param delta The time in seconds since the last render.
+   */
   @Override
   public void render(float delta) {
     Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -118,6 +133,13 @@ public class GameWinScreen extends ScreenAdapter {
     stage.draw();
   }
 
+  /**
+   * Changes size of input upon user adjustment.
+   * @param width Integer representing the horizontal size of
+   *              the screen.
+   * @param height Integer representing the vertical size of
+   *               the screen.
+   */
   @Override
   public void resize(int width, int height) {
     super.resize(width, height);
@@ -132,6 +154,10 @@ public class GameWinScreen extends ScreenAdapter {
     camera.setToOrtho(false, width, height);
   }
 
+  /**
+   * Method which runs when the screen transitions to
+   * another.
+   */
   @Override
   public void hide() {
     super.dispose();
@@ -144,10 +170,18 @@ public class GameWinScreen extends ScreenAdapter {
     atlas.dispose();
   }
 
+  /**
+   * Getter method for credits button.
+   * @return A button with a change listener which can be used for testing.
+   */
   public TextButton getCreditsScreen() {
     return creditsButton;
   }
 
+  /**
+   * Getter method for title button.
+   * @return A button with a change listener which can be used for testing.
+   */
   public TextButton getTitleScreen() {
     return titleButton;
   }

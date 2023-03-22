@@ -11,11 +11,15 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.staff.BaseStaff;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A screen that displays the main game.
+ */
 public class GameScreen extends ScreenAdapter implements InputProcessor {
   DeliveryStaff deliveryStaff;
   PiazzaPanicGame game;
@@ -39,6 +43,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   Money machineUnlockBalance;
   IngredientsStaff ingredientsHelper;
 
+  /**
+   * Constructor method.
+   * @param game The instance of PiazzaPanicGame.
+   * @param level The difficulty that the user has selected.
+   */
   public GameScreen(PiazzaPanicGame game, int level) {
     this.machineUnlockBalance = new Money();
     this.deliveryStaff =
@@ -72,6 +81,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     lock = new Texture(Gdx.files.internal("levellocked.png"));
   }
 
+  /**
+   * What to show when this screen is loaded.
+   */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -82,6 +94,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     Gdx.input.setInputProcessor(this);
   }
 
+  /**
+   * What to process in every frame.
+   * @param delta The time in seconds since the last render.
+   */
   @Override
   public void render(float delta) {
     gm.tickUpdate(delta);
@@ -227,7 +243,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     drawSequence(deliveryStaff);
   }
 
-  public void drawSequence(IngredientsStaff ob) {
+  /**
+   * Gets a pair of coordinates and draws a chef.
+   * @param ob A baseStaff object type which path is getting drawn.
+   */
+  public void drawSequence(BaseStaff ob) {
     if (ob.getCollect()) {
       ArrayList<Integer> pairCoord = ob.getCoordInSeq();
       game.getBatch().begin();
@@ -242,21 +262,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
   }
 
-  public void drawSequence(DeliveryStaff ob) {
-    if (ob.getCollect()) {
-      ArrayList<Integer> pairCoord = ob.getCoordInSeq();
-      game.getBatch().begin();
-      game.getBatch()
-          .draw(
-              new Texture(Gdx.files.internal("people/chef1down.png")),
-              pairCoord.get(0) * wScale,
-              pairCoord.get(1) * hScale,
-              32 * unitScale,
-              32 * unitScale);
-      game.getBatch().end();
-    }
-  }
-
+  /**
+   * Changes size of input upon user adjustment.
+   * @param width Integer representing the horizontal size of
+   *              the screen.
+   * @param height Integer representing the vertical size of
+   *               the screen.
+   */
   @Override
   public void resize(int width, int height) {
     if (game.testMode) {
@@ -275,6 +287,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
   }
 
+  /**
+   * Method which runs when the screen transitions to
+   * another.
+   */
   @Override
   public void hide() {
     super.dispose();
@@ -286,13 +302,20 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     recipes.dispose();
   }
 
+  /**
+   * Getter method for scenario game master.
+   * @return Instance of scenario game master which is
+   * currently being used to control the game.
+   */
   public ScenarioGameMaster getGameMaster() {
     return gm;
   }
 
   /**
-   * @param keycode one of the constants in {@link Input.Keys}
-   * @return
+   * Method which runs when user presses a key down.
+   *
+   * @param keycode one of the constants in Input.Keys
+   * @return true
    */
   @Override
   public boolean keyDown(int keycode) {
@@ -324,8 +347,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * UNUSED METHOD
+   *
    * @param keycode one of the constants in {@link Input.Keys}
-   * @return
+   * @return false
    */
   @Override
   public boolean keyUp(int keycode) {
@@ -333,8 +358,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * UNUSED METHOD
+   *
    * @param character The character
-   * @return
+   * @return false
    */
   @Override
   public boolean keyTyped(char character) {
@@ -342,11 +369,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * UNUSED METHOD
+   *
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
    * @param button the button
-   * @return
+   * @return false
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -354,11 +383,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * UNUSED METHOD
+   *
    * @param screenX
    * @param screenY
    * @param pointer the pointer for the event.
    * @param button the button
-   * @return
+   * @return false
    */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
@@ -366,10 +397,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * UNUSED METHOD
+   *
    * @param screenX
    * @param screenY
    * @param pointer the pointer for the event.
-   * @return
+   * @return false
    */
   @Override
   public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -377,9 +410,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * UNUSED METHOD
+   *
    * @param screenX
    * @param screenY
-   * @return
+   * @return false
    */
   @Override
   public boolean mouseMoved(int screenX, int screenY) {
@@ -387,11 +422,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * UNUSED METHOD
+   *
    * @param amountX the horizontal scroll amount, negative or positive depending on the direction
    *     the wheel was scrolled.
    * @param amountY the vertical scroll amount, negative or positive depending on the direction the
    *     wheel was scrolled.
-   * @return
+   * @return false
    */
   @Override
   public boolean scrolled(float amountX, float amountY) {

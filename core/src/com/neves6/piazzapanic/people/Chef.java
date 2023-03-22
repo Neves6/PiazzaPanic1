@@ -100,7 +100,7 @@ public class Chef extends Person {
     return machineInteractingWith;
   }
 
-  /***
+  /**
    * Getter method to see what items the chef has.
    * @return The items that the chef has in its possession.
    */

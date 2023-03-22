@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
 import java.util.ArrayList;
 
+/**
+ * The screen with an animation on start up.
+ */
 public class IntroScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -24,6 +27,10 @@ public class IntroScreen extends ScreenAdapter {
   int winHeight;
   ArrayList<String> settings;
 
+  /**
+   * Constructor method.
+   * @param game Instance of PiazzaPanicGame.
+   */
   public IntroScreen(PiazzaPanicGame game) {
     this.game = game;
     camera = new OrthographicCamera();
@@ -38,6 +45,9 @@ public class IntroScreen extends ScreenAdapter {
     }
   }
 
+  /**
+   * What to show when this screen is loaded.
+   */
   public void show() {
     // INTRO ANIMATION
     FRAME_COLS = 8;
@@ -57,6 +67,10 @@ public class IntroScreen extends ScreenAdapter {
     stateTime = 0f;
   }
 
+  /**
+   * What to process in every frame.
+   * @param delta The time in seconds since the last render.
+   */
   @Override
   public void render(float delta) {
     Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -100,12 +114,23 @@ public class IntroScreen extends ScreenAdapter {
     game.getBatch().end();
   }
 
+  /**
+   * Changes size of input upon user adjustment.
+   * @param width Integer representing the horizontal size of
+   *              the screen.
+   * @param height Integer representing the vertical size of
+   *               the screen.
+   */
   @Override
   public void resize(int width, int height) {
     super.resize(width, height);
     camera.setToOrtho(false, width, height);
   }
 
+  /**
+   * Method which runs when the screen transitions to
+   * another.
+   */
   @Override
   public void hide() {
     super.dispose();
