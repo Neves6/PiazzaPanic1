@@ -188,7 +188,7 @@ public class TitleScreen extends ScreenAdapter {
 
   @Override
   public void hide() {
-    if (game.testMode){
+    if (game.testMode) {
       return;
     }
 

@@ -75,7 +75,7 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testWinScreenToCredit(){
+  public void testWinScreenToCredit() {
     GameWinScreen testWinScreen = new GameWinScreen(testGame, 20);
     testWinScreen.show();
     testWinScreen.getCreditsScreen().toggle();
@@ -83,7 +83,7 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testWinScreenToTitle(){
+  public void testWinScreenToTitle() {
     GameWinScreen testWinScreen = new GameWinScreen(testGame, 20);
     testWinScreen.show();
     testWinScreen.getTitleScreen().toggle();
@@ -91,35 +91,35 @@ public class TestScreenTransitions {
   }
 
   @Test
-  public void testTutorialToGameOne(){
+  public void testTutorialToGameOne() {
     TutorialScreen testTutorial = new TutorialScreen(testGame, "game1");
     testTutorial.keyDown(0);
     assertTrue(testGame.getScreen().getClass() == GameScreen.class);
   }
 
   @Test
-  public void testTutorialToGameTwo(){
+  public void testTutorialToGameTwo() {
     TutorialScreen testTutorial = new TutorialScreen(testGame, "game2");
     testTutorial.keyDown(0);
     assertTrue(testGame.getScreen().getClass() == GameScreen.class);
   }
 
   @Test
-  public void testTutorialToGameThree(){
+  public void testTutorialToGameThree() {
     TutorialScreen testTutorial = new TutorialScreen(testGame, "game3");
     testTutorial.keyDown(0);
     assertTrue(testGame.getScreen().getClass() == GameScreen.class);
   }
 
   @Test
-  public void testTutorialToTitle(){
+  public void testTutorialToTitle() {
     TutorialScreen testTutorial = new TutorialScreen(testGame, "title");
     testTutorial.keyDown(0);
     assertTrue(testGame.getScreen().getClass() == TitleScreen.class);
   }
 
   @Test
-  public void testTutorialToDefault(){
+  public void testTutorialToDefault() {
     TutorialScreen testTutorial = new TutorialScreen(testGame, "void");
     testTutorial.keyDown(0);
     assertTrue(testGame.getScreen().getClass() == TitleScreen.class);

@@ -75,7 +75,7 @@ public class IntroScreen extends ScreenAdapter {
       game.setScreen(new TitleScreen(game));
     }
 
-    if (game.testMode){
+    if (game.testMode) {
       return;
     }
 

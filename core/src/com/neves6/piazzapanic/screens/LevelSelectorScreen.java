@@ -87,7 +87,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testMode){
+    if (game.testMode) {
       return;
     }
 
@@ -96,7 +96,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(level1Button);
     stage.addActor(level2Button);
     stage.addActor(level3Button);
-
   }
 
   @Override
@@ -147,7 +146,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testMode){
+    if (game.testMode) {
       return;
     }
 

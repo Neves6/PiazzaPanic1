@@ -26,9 +26,7 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * A class designed to handle all in game processing.
- */
+/** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
   int tilewidth;
   DeliveryStaff deliveryStaff;
@@ -172,9 +170,9 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Setter method for selectedChef. Indexing is changed to represent
-   * java indexing starting from 0 but numbering for chefs starting
-   * from 1.
+   * Setter method for selectedChef. Indexing is changed to represent java indexing starting from 0
+   * but numbering for chefs starting from 1.
+   *
    * @param selectedChef Index of the chef that movement needs to be applied on.
    */
   public void setSelectedChef(int selectedChef) {
@@ -182,9 +180,9 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Getter method for selectedChef. Indexing is changed to represent
-   * java indexing starting from 0 but numbering for chefs starting
-   * from 1.
+   * Getter method for selectedChef. Indexing is changed to represent java indexing starting from 0
+   * but numbering for chefs starting from 1.
+   *
    * @return Index of the chef that movement will be applied on.
    */
   public int getSelectedChef() {
@@ -192,9 +190,9 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Access method for any chef in the chefs array. Indexing is changed to represent
-   * java indexing starting from 0 but numbering for chefs starting
-   * from 1.
+   * Access method for any chef in the chefs array. Indexing is changed to represent java indexing
+   * starting from 0 but numbering for chefs starting from 1.
+   *
    * @param i ith position in the chefs array that needs to be accessed.
    * @return chef object based upon ith position passed in.
    */
@@ -203,8 +201,8 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Used to set the current recipe to the ingredients staff member
-   * if this staff member has been unlocked.
+   * Used to set the current recipe to the ingredients staff member if this staff member has been
+   * unlocked.
    */
   public void setRecipeToStaff() {
     if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
@@ -213,8 +211,9 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Attempts to move the currently selected chef in a specified direction. If the move is
-   * valid, the facing variable for the currently selected chef will be set.
+   * Attempts to move the currently selected chef in a specified direction. If the move is valid,
+   * the facing variable for the currently selected chef will be set.
+   *
    * @param direction Direction to move.
    */
   public void tryMove(String direction) {

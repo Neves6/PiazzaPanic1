@@ -7,7 +7,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.neves6.piazzapanic.screens.GameScreen;
-import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import org.junit.Test;
 import org.junit.runner.RunWith;

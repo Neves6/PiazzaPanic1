@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
@@ -64,8 +63,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
       unitScale = Gdx.graphics.getHeight() / (12f * 32f);
       wScale = unitScale * 32f;
       hScale = unitScale * 32f;
-      if (game.testMode == false){
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);}
+      if (game.testMode == false) {
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+      }
     }
     selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     recipes = new Texture(Gdx.files.internal("recipes.png"));
@@ -259,7 +259,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   @Override
   public void resize(int width, int height) {
-    if (game.testMode){
+    if (game.testMode) {
       return;
     }
 

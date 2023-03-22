@@ -1,7 +1,6 @@
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
@@ -73,23 +72,22 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     switch (continueTo) {
       case "title":
         game.setScreen(new TitleScreen(game));
-                    break;
-                  case "game1":
-                    game.setScreen(new GameScreen(game, 1));
-                    break;
-                  case "game2":
-                    game.setScreen(new GameScreen(game, 2));
-                    break;
-                  case "game3":
-                    game.setScreen(new GameScreen(game, 3));
-                    break;
-                  default:
-                    game.setScreen(new TitleScreen(game));
-                    break;
-                }
-                return true;
-              }
-
+        break;
+      case "game1":
+        game.setScreen(new GameScreen(game, 1));
+        break;
+      case "game2":
+        game.setScreen(new GameScreen(game, 2));
+        break;
+      case "game3":
+        game.setScreen(new GameScreen(game, 3));
+        break;
+      default:
+        game.setScreen(new TitleScreen(game));
+        break;
+    }
+    return true;
+  }
 
   /**
    * @param keycode one of the constants in {@link Input.Keys}
@@ -113,7 +111,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
-   * @param button  the button
+   * @param button the button
    * @return
    */
   @Override
@@ -125,7 +123,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * @param screenX
    * @param screenY
    * @param pointer the pointer for the event.
-   * @param button  the button
+   * @param button the button
    * @return
    */
   @Override
@@ -155,8 +153,10 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * @param amountX the horizontal scroll amount, negative or positive depending on the direction the wheel was scrolled.
-   * @param amountY the vertical scroll amount, negative or positive depending on the direction the wheel was scrolled.
+   * @param amountX the horizontal scroll amount, negative or positive depending on the direction
+   *     the wheel was scrolled.
+   * @param amountY the vertical scroll amount, negative or positive depending on the direction the
+   *     wheel was scrolled.
    * @return
    */
   @Override

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -44,7 +43,6 @@ public class GameWinScreen extends ScreenAdapter {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
     skin.addRegions(atlas);
@@ -66,7 +64,6 @@ public class GameWinScreen extends ScreenAdapter {
           }
         });
 
-
     titleButton = new TextButton("Title", buttonStyle);
     titleButton.setPosition(
         Gdx.graphics.getWidth() / 2f - titleButton.getWidth() / 2,
@@ -79,7 +76,7 @@ public class GameWinScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testMode){
+    if (game.testMode) {
       return;
     }
 
@@ -147,9 +144,9 @@ public class GameWinScreen extends ScreenAdapter {
     atlas.dispose();
   }
 
-    public TextButton getCreditsScreen() {
-      return creditsButton;
-    }
+  public TextButton getCreditsScreen() {
+    return creditsButton;
+  }
 
   public TextButton getTitleScreen() {
     return titleButton;
