@@ -26,6 +26,9 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * A class designed to handle all in game processing.
+ */
 public class ScenarioGameMaster extends GameMaster {
   int tilewidth;
   DeliveryStaff deliveryStaff;
@@ -168,18 +171,41 @@ public class ScenarioGameMaster extends GameMaster {
     tilewidth = (int) map.getProperties().get("tilewidth");
   }
 
+  /**
+   * Setter method for selectedChef. Indexing is changed to represent
+   * java indexing starting from 0 but numbering for chefs starting
+   * from 1.
+   * @param selectedChef Index of the chef that movement needs to be applied on.
+   */
   public void setSelectedChef(int selectedChef) {
     this.selectedChef = selectedChef - 1;
   }
 
+  /**
+   * Getter method for selectedChef. Indexing is changed to represent
+   * java indexing starting from 0 but numbering for chefs starting
+   * from 1.
+   * @return Index of the chef that movement will be applied on.
+   */
   public int getSelectedChef() {
     return selectedChef + 1;
   }
 
+  /**
+   * Access method for any chef in the chefs array. Indexing is changed to represent
+   * java indexing starting from 0 but numbering for chefs starting
+   * from 1.
+   * @param i ith position in the chefs array that needs to be accessed.
+   * @return chef object based upon ith position passed in.
+   */
   public Chef getChef(int i) {
     return chefs.get(i - 1);
   }
 
+  /**
+   * Used to set the current recipe to the ingredients staff member
+   * if this staff member has been unlocked.
+   */
   public void setRecipeToStaff() {
     if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
       staffOne.setCurrentRecipe(customers.get(0).getOrder());
@@ -187,8 +213,8 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Attempts to move the currently selected chef in a specified direction.
-   *
+   * Attempts to move the currently selected chef in a specified direction. If the move is
+   * valid, the facing variable for the currently selected chef will be set.
    * @param direction Direction to move.
    */
   public void tryMove(String direction) {

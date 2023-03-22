@@ -351,4 +351,96 @@ public class TestScenarioGameMaster {
     testMasterIV.tryInteract();
     assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
+
+  @Test
+  public void testInteractWithFridgeLayerDown() {
+    testMasterIV.getChef(1).setFacing("down");
+    testMasterIV.getChef(1).setxCoord(1);
+    testMasterIV.getChef(1).setyCoord(9);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+  }
+
+  @Test
+  public void testInteractWithFridgeLayerUp() {
+    testMasterIV.getChef(1).setFacing("up");
+    testMasterIV.getChef(1).setxCoord(1);
+    testMasterIV.getChef(1).setyCoord(7);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+  }
+
+  @Test
+  public void testInteractWithFridgeLayerRight() {
+    testMasterIV.getChef(1).setFacing("right");
+    testMasterIV.getChef(1).setxCoord(0);
+    testMasterIV.getChef(1).setyCoord(8);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+  }
+
+  @Test
+  public void testInteractWithFridgeLayerLeft() {
+    testMasterIV.getChef(1).setFacing("left");
+    testMasterIV.getChef(1).setxCoord(2);
+    testMasterIV.getChef(1).setyCoord(8);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+  }
+
+  @Test
+  public void testInteractWithCookingLayerDown() {
+    testMasterIV.getChef(1).setFacing("down");
+    testMasterIV.getChef(1).setxCoord(9);
+    testMasterIV.getChef(1).setyCoord(8);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    testMasterIV.getChef(1).addToInventory("meat");
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+  }
+
+  @Test
+  public void testInteractWithCookingLayerUp() {
+    testMasterIV.getChef(1).setFacing("up");
+    testMasterIV.getChef(1).setxCoord(9);
+    testMasterIV.getChef(1).setyCoord(6);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    testMasterIV.getChef(1).addToInventory("meat");
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+  }
+
+  @Test
+  public void testInteractWithCookingLayerRight() {
+    testMasterIV.getChef(1).setFacing("right");
+    testMasterIV.getChef(1).setxCoord(8);
+    testMasterIV.getChef(1).setyCoord(7);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    testMasterIV.getChef(1).addToInventory("meat");
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+  }
+
+  @Test
+  public void testInteractWithCookingLayerLeft() {
+    testMasterIV.getChef(1).setFacing("left");
+    testMasterIV.getChef(1).setxCoord(10);
+    testMasterIV.getChef(1).setyCoord(7);
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    testMasterIV.getChef(1).addToInventory("meat");
+    testMasterIV.tryInteract();
+    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+  }
 }
