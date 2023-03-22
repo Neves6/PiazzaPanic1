@@ -21,7 +21,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Constructor method.
-   * @param game Instance of PiazzaPanicGame.
+   * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
   public CreditsScreen(PiazzaPanicGame game) {
     this.game = game;

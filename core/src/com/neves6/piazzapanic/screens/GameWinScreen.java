@@ -36,7 +36,7 @@ public class GameWinScreen extends ScreenAdapter {
 
   /**
    * Constructor method.
-   * @param game Instance of PiazzaPanicGame.
+   * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param completionTime Time taken to complete the game.
    */
   public GameWinScreen(PiazzaPanicGame game, int completionTime) {

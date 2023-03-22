@@ -36,8 +36,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
   TextureAtlas atlas;
 
   /**
-   *
-   * @param game
+   * Constructor method
+   * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
   public LevelSelectorScreen(PiazzaPanicGame game) {
     this.game = game;
@@ -158,6 +158,13 @@ public class LevelSelectorScreen extends ScreenAdapter {
     game.getBatch().end();
   }
 
+  /**
+   * Changes size of input upon user adjustment.
+   * @param width Integer representing the horizontal size of
+   *              the screen.
+   * @param height Integer representing the vertical size of
+   *               the screen.
+   */
   @Override
   public void resize(int width, int height) {
     if (game.testMode) {
@@ -181,6 +188,10 @@ public class LevelSelectorScreen extends ScreenAdapter {
     camera.setToOrtho(false, width, height);
   }
 
+  /**
+   * Method which runs when the screen transitions to
+   * another.
+   */
   @Override
   public void hide() {
     super.dispose();

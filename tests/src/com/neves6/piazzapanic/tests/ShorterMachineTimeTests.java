@@ -15,11 +15,12 @@ public class ShorterMachineTimeTests {
 
   @Test
   public void testConstructor() {
-    assertTrue(testMachineTime.getEffectTime() == 1L);
+    assertTrue("Constructor must not modify effect time", testMachineTime.getEffectTime() == 1L);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testApplyPowerUpEmpty() {
+    //"Attempting to apply powerup to empty list of machine should return IllegalArgumentExcpetion"
     testMachineTime.applyPowerUp(new ArrayList<>());
   }
 
@@ -36,7 +37,8 @@ public class ShorterMachineTimeTests {
     Machine updatedm1 = testMachines.get(0);
     Machine updatedm2 = testMachines.get(1);
 
-    assertTrue(updatedm1.getProcessingTime() == 5 && updatedm2.getProcessingTime() == 10);
+    assertTrue("Applying shorter time powerup should only be done when powerup is active",
+            updatedm1.getProcessingTime() == 5 && updatedm2.getProcessingTime() == 10);
   }
 
   @Test
@@ -49,7 +51,8 @@ public class ShorterMachineTimeTests {
     Machine updatedm1 = testMachines.get(0);
     Machine updatedm2 = testMachines.get(1);
 
-    assertTrue(updatedm1.getProcessingTime() == 2.5 && updatedm2.getProcessingTime() == 5);
+    assertTrue("Applying shorter time powerup should half the processing time",
+            updatedm1.getProcessingTime() == 2.5 && updatedm2.getProcessingTime() == 5);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -61,12 +64,13 @@ public class ShorterMachineTimeTests {
   public void testEndPowerUpUnattained() {
     testMachines.add(m1);
     testMachines.add(m2);
-    testMachines = testMachineTime.applyPowerUp(testMachines);
+    testMachines = testMachineTime.endPowerUp(testMachines);
 
     Machine updatedm1 = testMachines.get(0);
     Machine updatedm2 = testMachines.get(1);
 
-    assertTrue(updatedm1.getProcessingTime() == 5 && updatedm2.getProcessingTime() == 10);
+    assertTrue("Ending a power-up for inactive activation should return the machines without modification"
+            ,updatedm1.getProcessingTime() == 5 && updatedm2.getProcessingTime() == 10);
   }
 
   @Test
@@ -83,6 +87,7 @@ public class ShorterMachineTimeTests {
     Machine updatedm1 = testMachines.get(0);
     Machine updatedm2 = testMachines.get(1);
 
-    assertTrue(updatedm1.getProcessingTime() == 5 && updatedm2.getProcessingTime() == 10);
+    assertTrue("Ending a power-up for active activation should return the machines to the original times",
+            updatedm1.getProcessingTime() == 5 && updatedm2.getProcessingTime() == 10);
   }
 }

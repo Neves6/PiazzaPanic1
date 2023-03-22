@@ -14,6 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+/**
+ * Screen displayed on launch with settings, credits and game selection
+ * buttons.
+ */
 public class TitleScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -32,6 +36,10 @@ public class TitleScreen extends ScreenAdapter {
   Skin skin;
   TextureAtlas atlas;
 
+  /**
+   * Constructor method.
+   * @param game Instance of PiazzaPanicGame used to control screen transitions.
+   */
   public TitleScreen(PiazzaPanicGame game) {
     this.game = game;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
@@ -164,6 +172,13 @@ public class TitleScreen extends ScreenAdapter {
     stage.draw();
   }
 
+  /**
+   * Changes size of input upon user adjustment.
+   * @param width Integer representing the horizontal size of
+   *              the screen.
+   * @param height Integer representing the vertical size of
+   *               the screen.
+   */
   @Override
   public void resize(int width, int height) {
     super.resize(width, height);
@@ -193,6 +208,10 @@ public class TitleScreen extends ScreenAdapter {
     camera.setToOrtho(false, width, height);
   }
 
+  /**
+   * Method which runs when the screen transitions to
+   * another.
+   */
   @Override
   public void hide() {
     if (game.testMode) {
@@ -208,6 +227,10 @@ public class TitleScreen extends ScreenAdapter {
     atlas.dispose();
   }
 
+  /**
+   *
+   * @return
+   */
   public Button getPlayButton() {
     return playButton;
   }

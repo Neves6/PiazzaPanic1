@@ -45,7 +45,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Constructor method.
-   * @param game The instance of PiazzaPanicGame.
+   * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param level The difficulty that the user has selected.
    */
   public GameScreen(PiazzaPanicGame game, int level) {

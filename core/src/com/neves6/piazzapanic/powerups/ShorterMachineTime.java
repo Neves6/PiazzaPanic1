@@ -46,9 +46,10 @@ public class ShorterMachineTime extends BasePowerUp {
     if (machines.size() < 1) {
       throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
     }
-    setStartTime();
-    for (Machine machine : machines) {
-      machine.changeProcessingTime(machine.getProcessingTime() * 2);
+    if (endTime()) {
+      for (Machine machine : machines) {
+        machine.changeProcessingTime(machine.getProcessingTime() * 2);
+      }
     }
     return machines;
   }

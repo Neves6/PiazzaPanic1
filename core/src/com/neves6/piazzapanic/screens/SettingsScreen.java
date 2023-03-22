@@ -16,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
 import java.util.ArrayList;
 
+/** Screen used to adjust and save settings for current
+ * and future games.
+ */
 public class SettingsScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -34,6 +37,10 @@ public class SettingsScreen extends ScreenAdapter {
   int winHeight;
   ArrayList<String> settings;
 
+  /**
+   * Constructor method.
+   * @param game Instance of PiazzaPanicGame used to control screen transitions.
+   */
   public SettingsScreen(PiazzaPanicGame game) {
     this.game = game;
     settings = Utility.getSettings();
@@ -163,6 +170,13 @@ public class SettingsScreen extends ScreenAdapter {
     stage.draw();
   }
 
+  /**
+   * Changes size of input upon user adjustment.
+   * @param width Integer representing the horizontal size of
+   *              the screen.
+   * @param height Integer representing the vertical size of
+   *               the screen.
+   */
   @Override
   public void resize(int width, int height) {
     if (game.testMode) {
@@ -190,6 +204,10 @@ public class SettingsScreen extends ScreenAdapter {
     camera.setToOrtho(false, width, height);
   }
 
+  /**
+   * Method which runs when the screen transitions to
+   * another.
+   */
   @Override
   public void hide() {
     super.dispose();

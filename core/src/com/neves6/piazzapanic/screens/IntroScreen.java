@@ -29,7 +29,7 @@ public class IntroScreen extends ScreenAdapter {
 
   /**
    * Constructor method.
-   * @param game Instance of PiazzaPanicGame.
+   * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
   public IntroScreen(PiazzaPanicGame game) {
     this.game = game;
