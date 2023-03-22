@@ -17,9 +17,7 @@ import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * A screen that displays the main game.
- */
+/** A screen that displays the main game. */
 public class GameScreen extends ScreenAdapter implements InputProcessor {
   DeliveryStaff deliveryStaff;
   PiazzaPanicGame game;
@@ -45,6 +43,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Constructor method.
+   *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param level The difficulty that the user has selected.
    */
@@ -81,9 +80,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     lock = new Texture(Gdx.files.internal("levellocked.png"));
   }
 
-  /**
-   * What to show when this screen is loaded.
-   */
+  /** What to show when this screen is loaded. */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -96,6 +93,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * What to process in every frame.
+   *
    * @param delta The time in seconds since the last render.
    */
   @Override
@@ -245,6 +243,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Gets a pair of coordinates and draws a chef.
+   *
    * @param ob A baseStaff object type which path is getting drawn.
    */
   public void drawSequence(BaseStaff ob) {
@@ -264,10 +263,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Changes size of input upon user adjustment.
-   * @param width Integer representing the horizontal size of
-   *              the screen.
-   * @param height Integer representing the vertical size of
-   *               the screen.
+   *
+   * @param width Integer representing the horizontal size of the screen.
+   * @param height Integer representing the vertical size of the screen.
    */
   @Override
   public void resize(int width, int height) {
@@ -287,10 +285,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
   }
 
-  /**
-   * Method which runs when the screen transitions to
-   * another.
-   */
+  /** Method which runs when the screen transitions to another. */
   @Override
   public void hide() {
     super.dispose();
@@ -304,8 +299,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Getter method for scenario game master.
-   * @return Instance of scenario game master which is
-   * currently being used to control the game.
+   *
+   * @return Instance of scenario game master which is currently being used to control the game.
    */
   public ScenarioGameMaster getGameMaster() {
     return gm;

@@ -21,8 +21,9 @@ public class TestBaseStaff {
   public void testValidTransitions() {
     BaseStaff test =
         new BaseStaff(new ArrayList<>(Arrays.asList(1, 2)), new ArrayList<>(Arrays.asList(1, 3)));
-    assertTrue("X and Y coordinates should be mapped onto each other",
-            test.getCoordInSeq().equals(new ArrayList<>(Arrays.asList(1, 1))));
+    assertTrue(
+        "X and Y coordinates should be mapped onto each other",
+        test.getCoordInSeq().equals(new ArrayList<>(Arrays.asList(1, 1))));
   }
 
   @Test
@@ -33,7 +34,8 @@ public class TestBaseStaff {
     TimeUnit.MILLISECONDS.sleep(500);
     test.getCoordInSeq();
     TimeUnit.MILLISECONDS.sleep(500);
-    assertTrue("Once the mapping of the arrays has been iterated over, collect should be set to false.",
-            test.getCollect() == false);
+    assertTrue(
+        "Once the mapping of the arrays has been iterated over, collect should be set to false.",
+        test.getCollect() == false);
   }
 }

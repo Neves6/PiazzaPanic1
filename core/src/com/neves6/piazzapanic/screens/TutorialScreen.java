@@ -9,9 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/**
- * Screen used to demonstrate gameplay to users.
- */
+/** Screen used to demonstrate gameplay to users. */
 public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -29,9 +27,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
   }
 
-  /**
-   * What to show when this screen is loaded.
-   */
+  /** What to show when this screen is loaded. */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -41,6 +37,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * What to process in every frame.
+   *
    * @param delta The time in seconds since the last render.
    */
   @Override
@@ -61,10 +58,9 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * Changes size of input upon user adjustment.
-   * @param width Integer representing the horizontal size of
-   *              the screen.
-   * @param height Integer representing the vertical size of
-   *               the screen.
+   *
+   * @param width Integer representing the horizontal size of the screen.
+   * @param height Integer representing the vertical size of the screen.
    */
   @Override
   public void resize(int width, int height) {
@@ -72,10 +68,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     camera.setToOrtho(false, width, height);
   }
 
-  /**
-   * Method which runs when the screen transitions to
-   * another.
-   */
+  /** Method which runs when the screen transitions to another. */
   @Override
   public void hide() {
     super.dispose();
@@ -112,6 +105,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED METHOD.
+   *
    * @param keycode one of the constants in {@link Input.Keys}
    * @return
    */
@@ -122,6 +116,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED METHOD.
+   *
    * @param character The character
    * @return
    */
@@ -132,6 +127,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED METHOD.
+   *
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
@@ -145,6 +141,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED METHOD.
+   *
    * @param screenX
    * @param screenY
    * @param pointer the pointer for the event.
@@ -158,6 +155,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED METHOD.
+   *
    * @param screenX
    * @param screenY
    * @param pointer the pointer for the event.
@@ -170,6 +168,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED METHOD.
+   *
    * @param screenX
    * @param screenY
    * @return
@@ -181,6 +180,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * UNUSED METHOD.
+   *
    * @param amountX the horizontal scroll amount, negative or positive depending on the direction
    *     the wheel was scrolled.
    * @param amountY the vertical scroll amount, negative or positive depending on the direction the

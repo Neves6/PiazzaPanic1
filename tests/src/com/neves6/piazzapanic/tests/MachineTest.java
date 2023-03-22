@@ -26,7 +26,8 @@ public class MachineTest {
     Chef testChef2 = new Chef("Bill", 0, 0, 5, 5, 5, false, inventory2, 1);
     Machine testMachine2 = new Machine("Board", "Lettuce", "Chopped Lettuce", 0, true);
     testMachine2.process(testChef2, new Money());
-    assertTrue("Processing an item must stick chef",
+    assertTrue(
+        "Processing an item must stick chef",
         testChef.getInventory().peek() == "Cooked Patty"
             && testChef2.getIsStickied() == true
             && testChef2.getInventory().peek() == "Burger");
@@ -40,7 +41,8 @@ public class MachineTest {
     Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 0, true);
     testMachine.process(testChef, new Money());
     testMachine.attemptGetOutput();
-    assertTrue("Input must be popped from stack and output pushed to stack",
+    assertTrue(
+        "Input must be popped from stack and output pushed to stack",
         testChef.getInventory().peek() == "Cooked Patty" && testChef.getIsStickied() == false);
   }
 
@@ -50,7 +52,8 @@ public class MachineTest {
     float delta = 5;
     Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 5, true);
     testMachine.incrementRuntime(delta);
-    assertTrue("Increment runtime should not be changed by any method apart from alterRuntime()",
-            testMachine.getRuntime() == 5);
+    assertTrue(
+        "Increment runtime should not be changed by any method apart from alterRuntime()",
+        testMachine.getRuntime() == 5);
   }
 }

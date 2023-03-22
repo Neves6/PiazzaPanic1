@@ -1,13 +1,12 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.assertTrue;
+
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import java.util.ArrayList;
 import java.util.Stack;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class TestDeliveryServer {
@@ -16,8 +15,8 @@ public class TestDeliveryServer {
   @Test
   public void testCollect() {
     test.collectItem("pizza");
-    assertTrue("Once an item is collected, the collected flag must be set to true",
-            test.getCollect());
+    assertTrue(
+        "Once an item is collected, the collected flag must be set to true", test.getCollect());
   }
 
   @Test
@@ -25,8 +24,8 @@ public class TestDeliveryServer {
     test.collectItem("pizza");
     Stack<Object> testStack = new Stack<>();
     testStack.add("pizza");
-    assertTrue("Once an item is collected, it must be pushed onto the stack",
-            test.getItems().equals(testStack));
+    assertTrue(
+        "Once an item is collected, it must be pushed onto the stack",
+        test.getItems().equals(testStack));
   }
 }
-

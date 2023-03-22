@@ -14,10 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-/**
- * Screen displayed on launch with settings, credits and game selection
- * buttons.
- */
+/** Screen displayed on launch with settings, credits and game selection buttons. */
 public class TitleScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -38,6 +35,7 @@ public class TitleScreen extends ScreenAdapter {
 
   /**
    * Constructor method.
+   *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
   public TitleScreen(PiazzaPanicGame game) {
@@ -46,9 +44,7 @@ public class TitleScreen extends ScreenAdapter {
     bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
   }
 
-  /**
-   * What to show when this screen is loaded.
-   */
+  /** What to show when this screen is loaded. */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -138,6 +134,7 @@ public class TitleScreen extends ScreenAdapter {
 
   /**
    * What to process in every frame.
+   *
    * @param delta The time in seconds since the last render.
    */
   @Override
@@ -174,10 +171,9 @@ public class TitleScreen extends ScreenAdapter {
 
   /**
    * Changes size of input upon user adjustment.
-   * @param width Integer representing the horizontal size of
-   *              the screen.
-   * @param height Integer representing the vertical size of
-   *               the screen.
+   *
+   * @param width Integer representing the horizontal size of the screen.
+   * @param height Integer representing the vertical size of the screen.
    */
   @Override
   public void resize(int width, int height) {
@@ -208,10 +204,7 @@ public class TitleScreen extends ScreenAdapter {
     camera.setToOrtho(false, width, height);
   }
 
-  /**
-   * Method which runs when the screen transitions to
-   * another.
-   */
+  /** Method which runs when the screen transitions to another. */
   @Override
   public void hide() {
     if (game.testMode) {
@@ -228,7 +221,6 @@ public class TitleScreen extends ScreenAdapter {
   }
 
   /**
-   *
    * @return
    */
   public Button getPlayButton() {

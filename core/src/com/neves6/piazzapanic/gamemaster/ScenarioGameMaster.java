@@ -334,6 +334,7 @@ public class ScenarioGameMaster extends GameMaster {
 
   /**
    * Calculates size of customers array.
+   *
    * @return The amount of customers which are yet to be served.
    */
   public int getCustomersRemaining() {
@@ -341,8 +342,8 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Calculates the first customer at the start of the customers
-   * array.
+   * Calculates the first customer at the start of the customers array.
+   *
    * @return The customer which is at the start of the queue.
    */
   public Customer getFirstCustomer() {
@@ -369,8 +370,8 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Helper method used to get the objects from a layer using its
-   * key.
+   * Helper method used to get the objects from a layer using its key.
+   *
    * @param key Name of the layer.
    * @return All objects from the layer indicated by the key.
    */
@@ -380,14 +381,14 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Converts the tiled map coordinates into the game coordinates then compares
-   * it to the target x and target y, to check whether the rectangle is being
-   * interacted with.
+   * Converts the tiled map coordinates into the game coordinates then compares it to the target x
+   * and target y, to check whether the rectangle is being interacted with.
+   *
    * @param object A tiled map representation of an point on the map.
    * @param xcoord A game x coordinate.
    * @param ycoord A game y coordinate.
-   * @return Boolean value representing whether the coordinates passed in are the coordinates
-   * of the rectangle passed in.
+   * @return Boolean value representing whether the coordinates passed in are the coordinates of the
+   *     rectangle passed in.
    */
   public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord) {
     return xcoord == Math.round(object.getX() / tilewidth)
@@ -396,6 +397,7 @@ public class ScenarioGameMaster extends GameMaster {
 
   /**
    * Helper method to convert a map object to a rectangle map object.
+   *
    * @param object A single part of a layer of the map.
    * @return Returns a rectangle representing the object.
    */
@@ -416,7 +418,6 @@ public class ScenarioGameMaster extends GameMaster {
     if (chef.getIsStickied()) {
       return;
     }
-
 
     int targetx;
     int targety;
@@ -506,6 +507,7 @@ public class ScenarioGameMaster extends GameMaster {
 
   /**
    * Getter method for the money class.
+   *
    * @return Instance of the money class that is being used within scenario game master.
    */
   public Money getUnlockClass() {
@@ -514,6 +516,7 @@ public class ScenarioGameMaster extends GameMaster {
 
   /**
    * Adds the top item from the currently selected chef's inventory to the tray.
+   *
    * @param station Indicates which tray station is being used.
    */
   private void addToTray(int station) {
@@ -559,9 +562,7 @@ public class ScenarioGameMaster extends GameMaster {
     }
   }
 
-  /**
-   * Method to handle giving food to the customer.
-   */
+  /** Method to handle giving food to the customer. */
   private void serveFood() {
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;

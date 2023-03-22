@@ -13,7 +13,8 @@ public class TestBasePowerUp {
 
   @Test
   public void testConstructorI() {
-    assertTrue("Constructor should not modify acquired status", testPowerUp.getAquiredStatus() == false);
+    assertTrue(
+        "Constructor should not modify acquired status", testPowerUp.getAquiredStatus() == false);
   }
 
   @Test
@@ -30,14 +31,16 @@ public class TestBasePowerUp {
   public void invalidActivation() {
     System.out.println(testPowerUp.getStartTime());
     testPowerUp.setStartTime();
-    assertTrue("Start time should not be set if power-up is attained.", testPowerUp.getStartTime() == 0L);
+    assertTrue(
+        "Start time should not be set if power-up is attained.", testPowerUp.getStartTime() == 0L);
   }
 
   @Test
   public void validActivation() {
     testPowerUp.aquirePowerUp();
     testPowerUp.setStartTime();
-    assertTrue("Start time should be set if power-up is attained.",testPowerUp.getStartTime() != 0L);
+    assertTrue(
+        "Start time should be set if power-up is attained.", testPowerUp.getStartTime() != 0L);
   }
 
   @Test
@@ -52,6 +55,8 @@ public class TestBasePowerUp {
 
   @Test
   public void invalidEndTime() {
-    assertTrue("End time should not change anything if it was never activated ",testPowerUpII.endTime() == false);
+    assertTrue(
+        "End time should not change anything if it was never activated ",
+        testPowerUpII.endTime() == false);
   }
 }

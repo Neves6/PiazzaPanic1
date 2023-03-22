@@ -14,9 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-/**
- * Screen used to select which level wants to be played.
- */
+/** Screen used to select which level wants to be played. */
 public class LevelSelectorScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
@@ -37,6 +35,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
   /**
    * Constructor method
+   *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
   public LevelSelectorScreen(PiazzaPanicGame game) {
@@ -46,9 +45,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     lock = new Texture(Gdx.files.internal("levellocked.png"));
   }
 
-  /**
-   * What to show when this screen is loaded.
-   */
+  /** What to show when this screen is loaded. */
   @Override
   public void show() {
     camera = new OrthographicCamera();
@@ -110,6 +107,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
   /**
    * What to process in every frame.
+   *
    * @param delta The time in seconds since the last render.
    */
   @Override
@@ -160,10 +158,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
   /**
    * Changes size of input upon user adjustment.
-   * @param width Integer representing the horizontal size of
-   *              the screen.
-   * @param height Integer representing the vertical size of
-   *               the screen.
+   *
+   * @param width Integer representing the horizontal size of the screen.
+   * @param height Integer representing the vertical size of the screen.
    */
   @Override
   public void resize(int width, int height) {
@@ -188,10 +185,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     camera.setToOrtho(false, width, height);
   }
 
-  /**
-   * Method which runs when the screen transitions to
-   * another.
-   */
+  /** Method which runs when the screen transitions to another. */
   @Override
   public void hide() {
     super.dispose();

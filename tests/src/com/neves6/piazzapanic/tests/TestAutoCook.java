@@ -17,8 +17,8 @@ public class TestAutoCook {
 
   @Test
   public void testConstructor() {
-    assertTrue("The constructor should not modify the effect time",
-            testAutoCook.getEffectTime() == 1L);
+    assertTrue(
+        "The constructor should not modify the effect time", testAutoCook.getEffectTime() == 1L);
   }
 
   Machine m1 = new Machine("test", "test", "test", 5, false);
@@ -31,8 +31,9 @@ public class TestAutoCook {
     testMachines.add(m2);
     testAutoCook.aquirePowerUp();
     testAutoCook.applyPowerUp(testMachines);
-    assertTrue("If no machine is running, the game should save it till this occurs",
-            testAutoCook.getAquiredStatus() == true);
+    assertTrue(
+        "If no machine is running, the game should save it till this occurs",
+        testAutoCook.getAquiredStatus() == true);
   }
 
   @Test
@@ -43,7 +44,8 @@ public class TestAutoCook {
     testMachines.add(m1);
     testAutoCook.aquirePowerUp();
     testAutoCook.applyPowerUp(testMachines);
-    assertTrue("If a machine is running, when this powerup is attained, it should be used immediately",
-            testAutoCook.getAquiredStatus() == false);
+    assertTrue(
+        "If a machine is running, when this powerup is attained, it should be used immediately",
+        testAutoCook.getAquiredStatus() == false);
   }
 }

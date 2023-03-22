@@ -102,6 +102,7 @@ public class Machine {
 
   /**
    * Getter method for the input variable.
+   *
    * @return Input required to use the machine.
    */
   public String getInput() {
@@ -109,8 +110,8 @@ public class Machine {
   }
 
   /**
-   * Increase the variable which indicates how long the machine
-   * has been used for.
+   * Increase the variable which indicates how long the machine has been used for.
+   *
    * @param delta Time since last render.
    */
   public void incrementRuntime(float delta) {
@@ -119,6 +120,7 @@ public class Machine {
 
   /**
    * Getter method for the runtime variable.
+   *
    * @return Time since the machine started running.
    */
   public float getRuntime() {
@@ -127,8 +129,8 @@ public class Machine {
 
   /**
    * Getter method for the active variable.
-   * @return Boolean variable indicating whether the machine
-   * is being used for not.
+   *
+   * @return Boolean variable indicating whether the machine is being used for not.
    */
   public boolean getActive() {
     return active;
@@ -136,8 +138,8 @@ public class Machine {
 
   /**
    * Getter method for processingTime variable.
-   * @return Float variable which indicates how long the
-   * machine takes to process.
+   *
+   * @return Float variable which indicates how long the machine takes to process.
    */
   public float getProcessingTime() {
     return processingTime;
@@ -147,8 +149,8 @@ public class Machine {
 
   /**
    * Setter method for processingTime variable.
-   * @param newTime Float variable which indicates how long
-   *                the machine should now take.
+   *
+   * @param newTime Float variable which indicates how long the machine should now take.
    */
   public void changeProcessingTime(float newTime) {
     this.processingTime = newTime;

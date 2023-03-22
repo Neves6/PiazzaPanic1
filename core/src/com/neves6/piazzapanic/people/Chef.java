@@ -102,6 +102,7 @@ public class Chef extends Person {
 
   /**
    * Getter method to see what items the chef has.
+   *
    * @return The items that the chef has in its possession.
    */
   public Stack<String> getInventory() {
