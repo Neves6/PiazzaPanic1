@@ -6,6 +6,8 @@ import com.neves6.piazzapanic.people.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Objects;
+
 /**
  * things to test :) constructor validity x coord is set y coord is set erroneous coords throws
  * error move right move left move down move up order is set textures exist
@@ -25,9 +27,9 @@ public class CustomerTests {
             && testCustomer.getxCoord() == 6
             && testCustomer.getyCoord() == y
             && testCustomer.getyCoord() == 9
-            && testCustomer.getName() == name
-            && testCustomer.getName() == "39"
-            && testCustomer.getOrder() == order
-            && testCustomer.getOrder() == "chronological");
+            && Objects.equals(testCustomer.getName(), name)
+            && Objects.equals(testCustomer.getName(), "39")
+            && Objects.equals(testCustomer.getOrder(), order)
+            && Objects.equals(testCustomer.getOrder(), "chronological"));
   }
 }

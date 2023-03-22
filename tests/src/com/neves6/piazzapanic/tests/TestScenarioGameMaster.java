@@ -1,8 +1,5 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -11,22 +8,27 @@ import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+
+import static org.junit.Assert.*;
+
 @RunWith(GdxTestRunner.class)
 public class TestScenarioGameMaster {
+  PiazzaPanicGame testGame = new PiazzaPanicGame(true);
   TiledMap map = new TmxMapLoader().load("tilemaps/level1.tmx");
   ArrayList<Integer> defValues = new ArrayList<>(Arrays.asList(1, 2));
   ScenarioGameMaster testMaster =
       new ScenarioGameMaster(
-          new PiazzaPanicGame(),
+          testGame,
           map,
           1,
           1,
@@ -37,29 +39,29 @@ public class TestScenarioGameMaster {
   @Test
   public void tryMoveValidUp() {
     testMaster.tryMove("up");
-    assertTrue(testMaster.getChef(1).getyCoord() == 6);
-    assertTrue(testMaster.getChef(1).getxCoord() == 6);
+    assertEquals("Moving up should change the y axis in the positive direction", 6, testMaster.getChef(1).getyCoord());
+    assertEquals("Moving up should not effect the x axis", 6, testMaster.getChef(1).getxCoord());
   }
 
   @Test
   public void tryMoveValidDown() {
     testMaster.tryMove("down");
-    assertTrue(testMaster.getChef(1).getyCoord() == 4);
-    assertTrue(testMaster.getChef(1).getxCoord() == 6);
+    assertEquals("Moving up should change the y axis in the negative direction", 4, testMaster.getChef(1).getyCoord());
+    assertEquals("Moving up should not effect the x axis", 6, testMaster.getChef(1).getxCoord());
   }
 
   @Test
   public void tryMoveValidRight() {
     testMaster.tryMove("right");
-    assertTrue(testMaster.getChef(1).getxCoord() == 7);
-    assertTrue(testMaster.getChef(1).getyCoord() == 5);
+    assertEquals("Moving up should change the x axis in the positive direction", 7, testMaster.getChef(1).getxCoord());
+    assertEquals("Moving up should not effect the y axis", 5, testMaster.getChef(1).getyCoord());
   }
 
   @Test
   public void tryMoveValidLeft() {
     testMaster.tryMove("left");
-    assertTrue(testMaster.getChef(1).getxCoord() == 5);
-    assertTrue(testMaster.getChef(1).getyCoord() == 5);
+    assertEquals("Moving up should change the x axis in the negative direction", 5, testMaster.getChef(1).getxCoord());
+    assertEquals("Moving up should not effect the y axis", 5, testMaster.getChef(1).getyCoord());
   }
 
   @Test
@@ -67,8 +69,8 @@ public class TestScenarioGameMaster {
     testMaster.getChef(1).setxCoord(7);
     testMaster.getChef(1).setyCoord(6);
     testMaster.tryMove("up");
-    assertTrue(testMaster.getChef(1).getyCoord() == 6);
-    assertTrue(testMaster.getChef(1).getxCoord() == 7);
+    assertEquals("Moving up should not effect the x axis if there is a collision tile", 6, testMaster.getChef(1).getyCoord());
+    assertEquals("Moving up should not effect the y axis if there is a collision tile", 7, testMaster.getChef(1).getxCoord());
   }
 
   @Test
@@ -76,8 +78,8 @@ public class TestScenarioGameMaster {
     testMaster.getChef(1).setxCoord(6);
     testMaster.getChef(1).setyCoord(4);
     testMaster.tryMove("down");
-    assertTrue(testMaster.getChef(1).getyCoord() == 4);
-    assertTrue(testMaster.getChef(1).getxCoord() == 6);
+    assertEquals("Moving down should not effect the y axis if there is a collision tile", 4, testMaster.getChef(1).getyCoord());
+    assertEquals("Moving down should not effect the y axis if there is a collision tile", 6, testMaster.getChef(1).getxCoord());
   }
 
   @Test
@@ -85,8 +87,8 @@ public class TestScenarioGameMaster {
     testMaster.getChef(1).setxCoord(6);
     testMaster.getChef(1).setyCoord(8);
     testMaster.tryMove("left");
-    assertTrue(testMaster.getChef(1).getxCoord() == 6);
-    assertTrue(testMaster.getChef(1).getyCoord() == 8);
+    assertEquals("Moving right should not effect the y axis if there is a collision tile", 6, testMaster.getChef(1).getxCoord());
+    assertEquals("Moving right should not effect the y axis if there is a collision tile", 8, testMaster.getChef(1).getyCoord());
   }
 
   @Test
@@ -94,18 +96,19 @@ public class TestScenarioGameMaster {
     testMaster.getChef(1).setxCoord(2);
     testMaster.getChef(1).setyCoord(8);
     testMaster.tryMove("left");
-    assertTrue(testMaster.getChef(1).getxCoord() == 2);
-    assertTrue(testMaster.getChef(1).getyCoord() == 8);
+    assertEquals("Moving left should not effect the y axis if there is a collision tile", 2, testMaster.getChef(1).getxCoord());
+    assertEquals("Moving left should not effect the y axis if there is a collision tile", 8, testMaster.getChef(1).getyCoord());
   }
 
   @Test
   public void testDisplayTextEmpty() {
-    assertTrue(testMaster.generateHoldingsText().equals("Chef 1 is holding:\n[]\n"));
+    assertEquals("Expected format for empty inventorys is: 'Chef 1 is holding:\n[]\n'",
+            "Chef 1 is holding:\n[]\n", testMaster.generateHoldingsText());
   }
 
   ScenarioGameMaster testMasterII =
       new ScenarioGameMaster(
-          new PiazzaPanicGame(),
+          testGame,
           map,
           2,
           1,
@@ -119,15 +122,14 @@ public class TestScenarioGameMaster {
     testMasterII.getChef(1).addToInventory("e");
     testMasterII.getChef(2).addToInventory("s");
     testMasterII.getChef(2).addToInventory("t");
-    assertTrue(
-        testMasterII
-            .generateHoldingsText()
-            .equals("Chef 1 is holding:\n[t, e]\nChef 2 is holding:\n[s, t]\n"));
+    assertEquals("Expected format for empty inventorys is: 'Chef 1 is holding:\n[item1, item2, itemn]\nChef n is holding:\n[item1..itemn]\n'",
+            "Chef 1 is holding:\n[t, e]\nChef 2 is holding:\n[s, t]\n", testMasterII
+            .generateHoldingsText());
   }
 
   ScenarioGameMaster testMasterIV =
       new ScenarioGameMaster(
-          new PiazzaPanicGame(),
+          testGame,
           map,
           3,
           3,
@@ -138,7 +140,7 @@ public class TestScenarioGameMaster {
   @Test
   public void testGenerateCustomersTrayText() {
     String testString = testMasterIV.generateCustomersTrayText();
-    assertTrue(
+    assertTrue("Text with at least one order should display either a jacket potato, hamburger, pizza or salad",
         testString.equals(
                 "Customers remaining: 3\n"
                     + "Order: jacket potato\n"
@@ -163,44 +165,49 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testGenerateTimerText() {
-    assertTrue(testMasterIV.generateTimerText().equals("Time elapsed: 0 s"));
+    assertEquals("Timer text should be in the format: 'Time elapsed: x s",
+            "Time elapsed: 0 s", testMasterIV.generateTimerText());
   }
 
   @Test
   public void testGetMachineTimerForChefNull() {
-    assertTrue(testMasterIV.getMachineTimerForChef(1).equals(""));
+    assertEquals("If chef is not assigned to a machine, the chef machine text should be blank",
+            "", testMasterIV.getMachineTimerForChef(1));
   }
 
   @Test
   public void testGetMachineTimerForChef() {
     Machine cooker = new Machine("Cooker", "Patty", "Burger", 3, true, "1234");
     testMasterIV.getChef(2).setMachineInteractingWith(cooker);
-    assertTrue(testMasterIV.getMachineTimerForChef(1).equals(4 + ""));
+    assertEquals("If chef is assigned to a machine, the chef machine text should display the number of seconds left of the interaction"
+            ,4 + "", testMasterIV.getMachineTimerForChef(1));
   }
 
   @Test
   public void testGetCorrectChef() {
     testMaster.setSelectedChef(1);
-    assertTrue(testMaster.getSelectedChef() == 1);
+    assertEquals("setSelectedChef should set the selected chef variable"
+            ,1, testMaster.getSelectedChef());
   }
 
   @Test
   public void testChefIsFrozenWhenStuck() {
     testMaster.getChef(1).setIsStickied(true);
-    assertTrue(testMaster.wouldNotCollide(1, 1, 0) == false);
+    assertFalse("If a chef is stuck, the testMaster should not try and move it",
+            testMaster.wouldNotCollide(1, 1, 0));
   }
 
   @Test
   public void testChefCanNotCoverAnotherChef() {
     testMasterIV.getChef(2).setyCoord(4);
     testMasterIV.getChef(2).setxCoord(5);
-    assertTrue(testMasterIV.wouldNotCollide(5, 4, 0) == false);
+    assertFalse("Two chefs must not overlap", testMasterIV.wouldNotCollide(5, 4, 0));
   }
 
   @Test
   public void testGetNumberOfCustomers() {
-    assertTrue(testMasterIV.getCustomersRemaining() == 3);
-    // Need another to test after completing recipe
+    assertEquals("Initially before a recipe is complete, the amount of customers should be the same as passed in, in the constructor",
+            3, testMasterIV.getCustomersRemaining());
   }
 
   @Test
@@ -217,7 +224,7 @@ public class TestScenarioGameMaster {
                 "ingredients-staff"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Unlock Layer");
     for (MapObject item : testLayer) {
-      assertTrue(testFinder.contains(item.getName()));
+      assertTrue("All of the objects in the unlock layer should be detected.", testFinder.contains(item.getName()));
     }
   }
 
@@ -238,7 +245,7 @@ public class TestScenarioGameMaster {
                 "fridge-bun"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Fridge Layer");
     for (MapObject item : testLayer) {
-      assertTrue(testFinder.contains(item.getName()));
+      assertTrue("All of the objects in the fridge layer should be detected.", testFinder.contains(item.getName()));
     }
   }
 
@@ -265,7 +272,7 @@ public class TestScenarioGameMaster {
                 "grill-patty-1"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Cooking Layer");
     for (MapObject item : testLayer) {
-      assertTrue(testFinder.contains(item.getName()));
+      assertTrue("All of the objects in the cooking layer should be detected.", testFinder.contains(item.getName()));
     }
   }
 
@@ -275,7 +282,7 @@ public class TestScenarioGameMaster {
         new ArrayList<>(Arrays.asList("bin", "fast-track-collect", "tray-1", "tray-2", "serving"));
     MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
     for (MapObject item : testLayer) {
-      assertTrue(testFinder.contains(item.getName()));
+      assertTrue("All of the objects in the misc layer should be detected.", testFinder.contains(item.getName()));
     }
   }
 
@@ -283,14 +290,16 @@ public class TestScenarioGameMaster {
   public void testValidTiledOverlap() {
     MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
     Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
-    assertTrue(testMaster.detectInteractionFromTiledObject(testRec, 14, 4));
+    assertTrue("The user should be able to interact with objects on the tiled map if in the right position",
+            testMaster.detectInteractionFromTiledObject(testRec, 14, 4));
   }
 
   @Test
   public void testInvalidTiledOverlap() {
     MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
     Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
-    assertFalse(testMaster.detectInteractionFromTiledObject(testRec, 4, 4));
+    assertFalse("The user should not be able to interact with objects on the tiled map if the wrong position",
+            testMaster.detectInteractionFromTiledObject(testRec, 4, 4));
   }
 
   @Test
@@ -300,8 +309,8 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setIsStickied(true);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getxCoord() == ORIGINAL_X);
-    assertTrue(testMasterIV.getChef(1).getyCoord() == ORIGINAL_Y);
+    assertEquals("You should not be able to move an unlocked chef no matter the position", testMasterIV.getChef(1).getxCoord(), ORIGINAL_X);
+    assertEquals("You should not be able to move an unlocked chef no matter the position", testMasterIV.getChef(1).getyCoord(), ORIGINAL_Y);
   }
 
   @Test
@@ -313,7 +322,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(7);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+    assertTrue("Should be able to interact with a object from the unlock layer when facing down", testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
 
   @Test
@@ -325,7 +334,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(9);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+    assertTrue("Should be able to interact with a object from the unlock layer when facing up", testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
 
   @Test
@@ -337,7 +346,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(8);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+    assertTrue("Should be able to interact with a object from the unlock layer when facing right", testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
 
   @Test
@@ -349,7 +358,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(8);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
+    assertTrue("Should be able to interact with a object from the unlock layer when facing left", testMasterIV.getUnlockClass().unlockMachine("ingredients-staff"));
   }
 
   @Test
@@ -359,7 +368,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(9);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+    assertSame("Should be able to interact with a object from the fridge layer when facing down", "bun", testMasterIV.getChef(1).getInventory().peek());
   }
 
   @Test
@@ -369,7 +378,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(7);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+    assertSame("Should be able to interact with a object from the fridge layer when facing up", "bun", testMasterIV.getChef(1).getInventory().peek());
   }
 
   @Test
@@ -379,7 +388,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(8);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+    assertSame("Should be able to interact with a object from the fridge layer when facing right", "bun", testMasterIV.getChef(1).getInventory().peek());
   }
 
   @Test
@@ -389,7 +398,7 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(8);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getInventory().peek() == "bun");
+    assertSame("Should be able to interact with a object from the fridge layer when facing left", "bun", testMasterIV.getChef(1).getInventory().peek());
   }
 
   @Test
@@ -399,10 +408,10 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(8);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    assertNull(testMasterIV.getChef(1).getMachineInteractingWith());
     testMasterIV.getChef(1).addToInventory("meat");
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+    assertSame("Should be able to interact with a object from the fridge layer when facing down", "meat", testMasterIV.getChef(1).getMachineInteractingWith().getInput());
   }
 
   @Test
@@ -412,10 +421,10 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(6);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    assertNull(testMasterIV.getChef(1).getMachineInteractingWith());
     testMasterIV.getChef(1).addToInventory("meat");
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+    assertSame("Should be able to interact with a object from the fridge layer when facing up", "meat", testMasterIV.getChef(1).getMachineInteractingWith().getInput());
   }
 
   @Test
@@ -425,10 +434,10 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(7);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    assertNull(testMasterIV.getChef(1).getMachineInteractingWith());
     testMasterIV.getChef(1).addToInventory("meat");
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+    assertSame("Should be able to interact with a object from the cooking layer when facing right", "meat", testMasterIV.getChef(1).getMachineInteractingWith().getInput());
   }
 
   @Test
@@ -438,9 +447,66 @@ public class TestScenarioGameMaster {
     testMasterIV.getChef(1).setyCoord(7);
     testMasterIV.setSelectedChef(1);
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith() == null);
+    assertNull(testMasterIV.getChef(1).getMachineInteractingWith());
     testMasterIV.getChef(1).addToInventory("meat");
     testMasterIV.tryInteract();
-    assertTrue(testMasterIV.getChef(1).getMachineInteractingWith().getInput() == "meat");
+    assertEquals("Should be able to interact with a object from the fridge layer when facing left", "meat", testMasterIV.getChef(1).getMachineInteractingWith().getInput());
+  }
+
+  @Test
+  public void testBinInteraction(){
+    testMasterIV.getChef(1).addToInventory("keep");
+    testMasterIV.getChef(1).addToInventory("remove");
+    testMasterIV.getChef(1).setxCoord(14);
+    testMasterIV.getChef(1).setyCoord(5);
+    testMasterIV.getChef(1).setFacing("down");
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertEquals("Interaction with bin must remove top of the chefs stack",
+            testMasterIV.getChef(1).getInventory().peek(), "keep");
+  }
+
+  @Test
+  public void testIngredientsStaffInteractionLocked(){
+    testMasterIV.getChef(1).addToInventory("keep");
+    testMasterIV.getChef(1).setxCoord(2);
+    testMasterIV.getChef(1).setyCoord(7);
+    testMasterIV.getChef(1).setFacing("down");
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.tryInteract();
+    assertEquals("Interaction with ingredients staff if not unlocked shouldn't add anything to the stack",
+            testMasterIV.getChef(1).getInventory().peek(), "keep");
+  }
+
+  @Test
+  public void testIngredientsStaffInteractionUnlocked(){
+    testMasterIV.getChef(1).addToInventory("keep");
+    testMasterIV.getChef(1).setxCoord(2);
+    testMasterIV.getChef(1).setyCoord(9);
+    testMasterIV.getChef(1).setFacing("down");
+    testMasterIV.setSelectedChef(1);
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().incrementBalance();
+    testMasterIV.getUnlockClass().unlockMachine("ingredients-staff");
+    testMasterIV.tryInteract();
+    assertEquals("Interaction with ingredients staff unlocked should add an ingredient to the stack",
+            testMasterIV.getChef(1).getInventory().peek(), "keep");
+  }
+
+  ScenarioGameMaster testMasterEmpty =
+          new ScenarioGameMaster(
+                  testGame,
+                  map,
+                  1,
+                  0,
+                  new Money(),
+                  new IngredientsStaff(defValues, defValues),
+                  new DeliveryStaff(defValues, defValues));
+
+  @Test
+  public void testServeFoodEndGame(){
+    testMasterEmpty.serveFood();
+    assertEquals("No customers means that user should be sent to game winning screen.",
+            testGame.getScreen().getClass(), GameWinScreen.class);
   }
 }

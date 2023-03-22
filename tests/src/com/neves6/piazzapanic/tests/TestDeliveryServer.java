@@ -1,5 +1,6 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.neves6.piazzapanic.staff.DeliveryStaff;
@@ -24,8 +25,6 @@ public class TestDeliveryServer {
     test.collectItem("pizza");
     Stack<Object> testStack = new Stack<>();
     testStack.add("pizza");
-    assertTrue(
-        "Once an item is collected, it must be pushed onto the stack",
-        test.getItems().equals(testStack));
+    assertEquals("Once an item is collected, it must be pushed onto the stack", test.getItems(), testStack);
   }
 }

@@ -482,6 +482,16 @@ public class ScenarioGameMaster extends GameMaster {
 
     MapObjects miscObjects = getObjectLayers("Misc Layer");
 
+    System.out.println(loadRectangle(miscObjects.get("bin")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("bin")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("serving")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("serving")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-1")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-1")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-2")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-2")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getY() / tilewidth);
     if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       chef.removeTopFromInventory();
       trash.play(soundVolume);
@@ -563,7 +573,11 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /** Method to handle giving food to the customer. */
-  private void serveFood() {
+  public void serveFood() {
+    if (customers.size() == 0) {
+      game.setScreen(new GameWinScreen(game, (int) totalTimer));
+    }
+
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
     // If the order isn't pizza and the server is unlocked,
@@ -590,10 +604,6 @@ public class ScenarioGameMaster extends GameMaster {
       // Once an order is complete, allow ingredient staff to
       // collect another order.
       staffOne.setGenerate(true);
-    }
-
-    if (customers.size() == 0) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer));
     }
   }
 }

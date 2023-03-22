@@ -1,10 +1,10 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertTrue;
-
 import com.neves6.piazzapanic.powerups.TimeFreeze;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
 public class TestTimeFreeze {
@@ -12,17 +12,17 @@ public class TestTimeFreeze {
 
   @Test
   public void testConstructor() {
-    assertTrue(testFreeze.getEffectTime() == 1L);
+    assertEquals("Constructor must not edit effect time.", 1L, (long) testFreeze.getEffectTime());
   }
 
   @Test
   public void testUnactivatedFreeze() {
-    assertTrue(testFreeze.getDelta(1) == 1);
+    assertEquals("If power up isn't acquired, delta stays at 1", 1, testFreeze.getDelta(1), 0.0);
   }
 
   @Test
   public void testActivatedFreeze() {
     testFreeze.aquirePowerUp();
-    assertTrue(testFreeze.getDelta(1) == 0);
+    assertEquals("If power up is acquired delta must be 0", 0, testFreeze.getDelta(1), 0.0);
   }
 }

@@ -1,11 +1,13 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertTrue;
-
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestIngredientStaff {
@@ -15,63 +17,47 @@ public class TestIngredientStaff {
   public void testSaladStack() {
     test.setGenerate(true);
     test.setCurrentRecipe("salad");
-    assertTrue(test.collectItem() == "lettuce");
-    assertTrue(test.collectItem() == "tomato");
-    assertTrue(test.collectItem() == "onion");
+    assertSame("For a salad, staff should give out lettuce first.", "lettuce", test.collectItem());
+    assertSame("For a salad, staff should give out tomato second.", "tomato", test.collectItem());
+    assertSame("For a salad, staff should give out onion third.", "onion", test.collectItem());
   }
 
   @Test
   public void testPotatoStack() {
     test.setGenerate(true);
     test.setCurrentRecipe("jacket potato");
-    assertTrue(test.collectItem() == "potato");
-    assertTrue(test.collectItem() == "beans");
+    assertSame("For a jacket potato, staff should give out a potato first", "potato", test.collectItem());
+    assertSame("For a jacket potato, staff should give out beans second", "beans", test.collectItem());
   }
 
   @Test
   public void testPizzaStack() {
     test.setGenerate(true);
     test.setCurrentRecipe("pizza");
-    assertTrue(test.collectItem() == "dough");
-    assertTrue(test.collectItem() == "tomato");
-    assertTrue(test.collectItem() == "cheese");
+    assertSame("For a pizza, staff should give out dough first.", "dough", test.collectItem());
+    Assert.assertSame("For a pizza, staff should give out tomato seconds.", "tomato", test.collectItem());
+
+    assertSame("For a pizza, staff should give out cheese third", "cheese", test.collectItem());
   }
 
   @Test
   public void testBurgerStack() {
     test.setGenerate(true);
     test.setCurrentRecipe("hamburger");
-    assertTrue(test.collectItem() == "bun");
-    assertTrue(test.collectItem() == "meat");
+    assertSame("For a burger, staff should give out a bun first.", "bun", test.collectItem());
+    assertSame("For a burger, staff should give out meat first.", "meat", test.collectItem());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidSaladStack() {
-    test.setCurrentRecipe("salad");
-    test.generateStack();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidPotatoStack() {
-    test.setCurrentRecipe("jacket potato");
-    test.generateStack();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidPizzaStack() {
-    test.setCurrentRecipe("pizza");
-    test.generateStack();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidBurgerStack() {
-    test.setCurrentRecipe("hamburger");
+    // Generate stack for an invalid recipe.
+    test.setCurrentRecipe("beer");
     test.generateStack();
   }
 
   @Test
   public void testEmptyStack() {
     test.setGenerate(true);
-    assertTrue(test.collectItem() == null);
+    assertNull("If no ingredients need to be given out, it must return null.", test.collectItem());
   }
 }

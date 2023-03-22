@@ -1,11 +1,12 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertTrue;
-
 import com.neves6.piazzapanic.powerups.BasePowerUp;
-import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestBasePowerUp {
@@ -13,26 +14,24 @@ public class TestBasePowerUp {
 
   @Test
   public void testConstructorI() {
-    assertTrue(
-        "Constructor should not modify acquired status", testPowerUp.getAquiredStatus() == false);
+    assertFalse("Constructor should not modify acquired status", testPowerUp.getAquiredStatus());
   }
 
   @Test
   public void testConstructorII() {
-    assertTrue("Constructor should not modify start time", testPowerUp.getStartTime() == 0L);
+    assertEquals("Constructor should not modify start time", 0L, (long) testPowerUp.getStartTime());
   }
 
   @Test
   public void testConstructorIII() {
-    assertTrue("Constructor should not modify effect time", testPowerUp.getEffectTime() == 1L);
+    assertEquals("Constructor should not modify effect time", 1L, (long) testPowerUp.getEffectTime());
   }
 
   @Test
   public void invalidActivation() {
     System.out.println(testPowerUp.getStartTime());
     testPowerUp.setStartTime();
-    assertTrue(
-        "Start time should not be set if power-up is attained.", testPowerUp.getStartTime() == 0L);
+    assertEquals("Start time should not be set if power-up is attained.", 0L, (long) testPowerUp.getStartTime());
   }
 
   @Test
@@ -48,15 +47,13 @@ public class TestBasePowerUp {
     testPowerUp.aquirePowerUp();
     testPowerUp.setStartTime();
     TimeUnit.MILLISECONDS.sleep(5);
-    assertTrue("Power-up should be deactivated once the time is up", testPowerUp.endTime() == true);
+    assertTrue("Power-up should be deactivated once the time is up", testPowerUp.endTime());
   }
 
   BasePowerUp testPowerUpII = new BasePowerUp(5000L);
 
   @Test
   public void invalidEndTime() {
-    assertTrue(
-        "End time should not change anything if it was never activated ",
-        testPowerUpII.endTime() == false);
+    assertFalse("End time should not change anything if it was never activated ", testPowerUpII.endTime());
   }
 }

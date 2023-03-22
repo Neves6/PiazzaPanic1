@@ -1,5 +1,6 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import com.neves6.piazzapanic.gamemechanisms.Machine;
@@ -26,7 +27,6 @@ public class ChefTests {
     inv.push("m");
 
     int texSet = 1;
-    String direction = "down";
     Chef testChef = new Chef(name, x, y, chopSpeed, frySpeed, bakeSpeed, isStickied, inv, texSet);
     assertTrue(
         "Chef Constructor Valid :D",
@@ -63,7 +63,7 @@ public class ChefTests {
             /** texture set int */
             1);
     testChef.setMachineInteractingWith(testMachine);
-    assertTrue("Set Machine Works :D", testChef.getMachineInteractingWith() == testMachine);
+    assertSame("Set Machine Works :D", testChef.getMachineInteractingWith(), testMachine);
   }
 
   @Test // NOT SURE (same again)
@@ -89,7 +89,7 @@ public class ChefTests {
     testChef.setIsStickied(stickiness);
     assertTrue(
         "Set Sticky Works :D",
-        testChef.getIsStickied() == true && testChef.getIsStickied() == stickiness);
+        testChef.getIsStickied() && testChef.getIsStickied() == stickiness);
   }
 
   @Test
@@ -114,7 +114,7 @@ public class ChefTests {
     Stack<String> testInvA = testChef.getInventory();
     testChef.addToInventory("s");
     testInvA.add("s");
-    assertTrue("Add to Inventory Works :D", testInvA == testChef.getInventory());
+    assertSame("Add to Inventory Works :D", testInvA, testChef.getInventory());
   }
 
   @Test
@@ -139,7 +139,7 @@ public class ChefTests {
     Stack<String> testInvP = testChef.getInventory();
     testChef.removeTopFromInventory();
     testInvP.pop();
-    assertTrue("Pop from Inventory Works :D", testChef.getInventory() == testInvP);
+    assertSame("Pop from Inventory Works :D", testChef.getInventory(), testInvP);
   }
 
   @Test
@@ -165,6 +165,6 @@ public class ChefTests {
         "down"; // i think should be testChef.facing="" //on further reading might not need it at
     // all, textures are confusing
     testChef.setFacing("up");
-    assertTrue("Set Facing Works :D", testChef.getFacing() == "up");
+    assertSame("Set Facing Works :D", "up", testChef.getFacing());
   }
 }

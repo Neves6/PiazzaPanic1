@@ -139,6 +139,10 @@ public class GameWinScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
+    if (game.testMode){
+      return;
+    }
+
     super.resize(width, height);
     creditsButton.setPosition(
         width / 2f - creditsButton.getWidth() / 2, height / 3f + creditsButton.getHeight() / 2);
@@ -178,7 +182,7 @@ public class GameWinScreen extends ScreenAdapter {
    *
    * @return A button with a change listener which can be used for testing.
    */
-  public TextButton getTitleScreen() {
+  public TextButton getTitleButton() {
     return titleButton;
   }
 }

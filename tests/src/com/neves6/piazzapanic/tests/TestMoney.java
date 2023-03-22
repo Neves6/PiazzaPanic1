@@ -1,11 +1,11 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import com.neves6.piazzapanic.gamemechanisms.Money;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestMoney {
@@ -13,49 +13,53 @@ public class TestMoney {
 
   @Test
   public void testAutoGeneration() {
-    assertTrue(test.unlockMachine("auto") == false);
+
+    assertFalse("By default, the auto unlock id should be unlocked.", test.unlockMachine("auto"));
   }
 
   @Test
   public void testIncrement() {
     test.incrementBalance();
-    assertTrue(test.displayBalance().equals("Balance: $100"));
+
+
+    Assert.assertEquals("Increment balance should add 100 to the balance and should be displayed in the format 'Balance: $x'", "Balance: $100", test.displayBalance());
   }
 
   @Test
   public void testInitialValue() {
-    assertTrue(test.displayBalance().equals("Balance: $0"));
+    assertEquals("Initial balance should be 0 and display in the format 'Balance: $0'", "Balance: $0", test.displayBalance());
   }
 
   @Test
   public void testAddGroupAuto() {
-    assertTrue(test.addGroup("auto", 1000) == false);
+    assertFalse("Any pre-existing groups should not be overridden", test.addGroup("auto", 1000));
   }
 
   @Test
   public void testAddGroupValid() {
     test.addGroup("test", 100);
-    assertTrue(test.isUnlocked("test") == false);
+    assertFalse("By default, any new groups added should be locked.", test.isUnlocked("test"));
   }
 
   @Test
   public void testValidPurchaseBorder() {
     test.incrementBalance();
     test.addGroup("test", 100);
-    assertTrue(test.unlockMachine("test"));
+    assertTrue("Machine should be unlocked if the user has enough money even it leads to them having a 0 balance."
+            ,test.unlockMachine("test"));
   }
 
   @Test
   public void testValidPurchase() {
     test.incrementBalance();
     test.addGroup("test", 50);
-    assertTrue(test.unlockMachine("test"));
+    assertTrue("Machine should be unlocked if the user has enough money", test.unlockMachine("test"));
   }
 
   @Test
   public void testInvalidPurchase() {
     test.incrementBalance();
     test.addGroup("test", 150);
-    assertFalse(test.unlockMachine("test"));
+    assertFalse("Machine should not be unlocked if there is not enough money", test.unlockMachine("test"));
   }
 }

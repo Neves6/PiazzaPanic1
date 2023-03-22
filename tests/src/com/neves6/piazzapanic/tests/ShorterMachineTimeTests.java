@@ -1,5 +1,6 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.neves6.piazzapanic.gamemechanisms.Machine;
@@ -15,7 +16,7 @@ public class ShorterMachineTimeTests {
 
   @Test
   public void testConstructor() {
-    assertTrue("Constructor must not modify effect time", testMachineTime.getEffectTime() == 1L);
+    assertEquals("Constructor must not modify effect time", 1L, (long) testMachineTime.getEffectTime());
   }
 
   @Test(expected = IllegalArgumentException.class)
