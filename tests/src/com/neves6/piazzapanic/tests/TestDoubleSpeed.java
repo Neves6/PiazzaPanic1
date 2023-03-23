@@ -17,7 +17,8 @@ public class TestDoubleSpeed {
 
   @Test
   public void testConstructor() {
-    assertEquals("Constructor must not edit effect time", 1L, (long) testDoubleSpeed.getEffectTime());
+    assertEquals(
+        "Constructor must not edit effect time", 1L, (long) testDoubleSpeed.getEffectTime());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -38,8 +39,9 @@ public class TestDoubleSpeed {
     Chef updatedt1 = testChefs.get(0);
     Chef updatedt2 = testChefs.get(1);
 
-    assertTrue("Apply the powerup while unattained should not have an effect on speed",
-            updatedt1.getSpeed() == 1 && updatedt2.getSpeed() == 1);
+    assertTrue(
+        "Apply the powerup while unattained should not have an effect on speed",
+        updatedt1.getSpeed() == 1 && updatedt2.getSpeed() == 1);
   }
 
   @Test
@@ -52,8 +54,9 @@ public class TestDoubleSpeed {
     Chef updatedt1 = testChefs.get(0);
     Chef updatedt2 = testChefs.get(1);
 
-    assertTrue("Apply the powerup while attained should double the speed",
-            updatedt1.getSpeed() == 2 && updatedt2.getSpeed() == 2);
+    assertTrue(
+        "Apply the powerup while attained should double the speed",
+        updatedt1.getSpeed() == 2 && updatedt2.getSpeed() == 2);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -70,8 +73,9 @@ public class TestDoubleSpeed {
     Chef updatedt1 = testChefs.get(0);
     Chef updatedt2 = testChefs.get(1);
 
-    assertTrue("Ending an unattained powerup should have no effect on speed",
-            updatedt1.getSpeed() == 1 && updatedt2.getSpeed() == 1);
+    assertTrue(
+        "Ending an unattained powerup should have no effect on speed",
+        updatedt1.getSpeed() == 1 && updatedt2.getSpeed() == 1);
   }
 
   @Test
@@ -88,7 +92,8 @@ public class TestDoubleSpeed {
     Chef updatedt1 = testChefs.get(0);
     Chef updatedt2 = testChefs.get(1);
 
-    assertTrue("Ending an unattained powerup should return speed to normal values",
-            updatedt1.getSpeed() == 1 && updatedt2.getSpeed() == 1);
+    assertTrue(
+        "Ending an unattained powerup should return speed to normal values",
+        updatedt1.getSpeed() == 1 && updatedt2.getSpeed() == 1);
   }
 }

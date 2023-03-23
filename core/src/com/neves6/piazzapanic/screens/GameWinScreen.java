@@ -139,7 +139,7 @@ public class GameWinScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-    if (game.testMode){
+    if (game.testMode) {
       return;
     }
 

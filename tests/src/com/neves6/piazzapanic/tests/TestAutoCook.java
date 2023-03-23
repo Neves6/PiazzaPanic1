@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
@@ -9,15 +11,16 @@ import java.util.Stack;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
-
 @RunWith(GdxTestRunner.class)
 public class TestAutoCook {
   AutoCook testAutoCook = new AutoCook(1L);
 
   @Test
   public void testConstructor() {
-    assertEquals("The constructor should not modify the effect time", 1L, (long) testAutoCook.getEffectTime());
+    assertEquals(
+        "The constructor should not modify the effect time",
+        1L,
+        (long) testAutoCook.getEffectTime());
   }
 
   Machine m1 = new Machine("test", "test", "test", 5, false);
@@ -30,7 +33,9 @@ public class TestAutoCook {
     testMachines.add(m2);
     testAutoCook.aquirePowerUp();
     testAutoCook.applyPowerUp(testMachines);
-    assertTrue("If no machine is running, the game should save it till this occurs", testAutoCook.getAquiredStatus());
+    assertTrue(
+        "If no machine is running, the game should save it till this occurs",
+        testAutoCook.getAquiredStatus());
   }
 
   @Test
@@ -41,6 +46,8 @@ public class TestAutoCook {
     testMachines.add(m1);
     testAutoCook.aquirePowerUp();
     testAutoCook.applyPowerUp(testMachines);
-    assertFalse("If a machine is running, when this powerup is attained, it should be used immediately", testAutoCook.getAquiredStatus());
+    assertFalse(
+        "If a machine is running, when this powerup is attained, it should be used immediately",
+        testAutoCook.getAquiredStatus());
   }
 }

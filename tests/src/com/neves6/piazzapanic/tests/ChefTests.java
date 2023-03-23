@@ -88,8 +88,7 @@ public class ChefTests {
     boolean stickiness = true;
     testChef.setIsStickied(stickiness);
     assertTrue(
-        "Set Sticky Works :D",
-        testChef.getIsStickied() && testChef.getIsStickied() == stickiness);
+        "Set Sticky Works :D", testChef.getIsStickied() && testChef.getIsStickied() == stickiness);
   }
 
   @Test
