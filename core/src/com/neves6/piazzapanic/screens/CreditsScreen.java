@@ -92,7 +92,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
    * @param keycode one of the constants in {@link Input.Keys}
    * @return false
@@ -103,7 +103,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
    * @param character The character
    * @return false
@@ -114,7 +114,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
@@ -128,10 +128,10 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
    * @param button the button
    * @return false
@@ -144,8 +144,8 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   /**
    * UNUSED METHOD
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
    * @return false
    */
@@ -155,10 +155,10 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
    * @return false
    */
   @Override
@@ -167,7 +167,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
    * @param amountX the horizontal scroll amount, negative or positive depending on the direction
    *     the wheel was scrolled.

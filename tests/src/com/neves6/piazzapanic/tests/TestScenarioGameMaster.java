@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class TestScenarioGameMaster {
   PiazzaPanicGame testGame = new PiazzaPanicGame(true);
-  TiledMap map = new TmxMapLoader().load("tilemaps/level1.tmx");
+  TiledMap map = new TmxMapLoader().load("tilemaps/testdouble.tmx");
   ArrayList<Integer> defValues = new ArrayList<>(Arrays.asList(1, 2));
   ScenarioGameMaster testMaster =
       new ScenarioGameMaster(
