@@ -1,59 +1,63 @@
 package com.neves6.piazzapanic.tests;
 
-import com.badlogic.gdx.Gdx;
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.powerups.BasePowerUp;
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertTrue;
-
 @RunWith(GdxTestRunner.class)
 public class TestBasePowerUp {
-    BasePowerUp testPowerUp = new BasePowerUp(1L);
-    @Test
-    public void testConstructorI(){
-        assertTrue(testPowerUp.getAquiredStatus() == false);
-    }
+  BasePowerUp testPowerUp = new BasePowerUp(1L);
 
-    @Test
-    public void testConstructorII(){
-        assertTrue(testPowerUp.getStartTime() == 0L);
-    }
+  @Test
+  public void testConstructorI() {
+    assertFalse("Constructor should not modify acquired status", testPowerUp.getAquiredStatus());
+  }
 
-    @Test
-    public void testConstructorIII(){
-        assertTrue(testPowerUp.getEffectTime() == 1L);
-    }
+  @Test
+  public void testConstructorII() {
+    assertEquals("Constructor should not modify start time", 0L, (long) testPowerUp.getStartTime());
+  }
 
-    @Test
-    public void invalidActivation(){
-        System.out.println(testPowerUp.getStartTime() );
-        testPowerUp.setStartTime();
-        assertTrue(testPowerUp.getStartTime() == 0L);
-    }
+  @Test
+  public void testConstructorIII() {
+    assertEquals(
+        "Constructor should not modify effect time", 1L, (long) testPowerUp.getEffectTime());
+  }
 
-    @Test
-    public void validActivation(){
-        testPowerUp.aquirePowerUp();
-        testPowerUp.setStartTime();
-        assertTrue(testPowerUp.getStartTime() != 0L);
-    }
+  @Test
+  public void invalidActivation() {
+    System.out.println(testPowerUp.getStartTime());
+    testPowerUp.setStartTime();
+    assertEquals(
+        "Start time should not be set if power-up is attained.",
+        0L,
+        (long) testPowerUp.getStartTime());
+  }
 
-    @Test
-    public void validEndTime() throws InterruptedException {
-        testPowerUp.aquirePowerUp();
-        testPowerUp.setStartTime();
-        TimeUnit.MILLISECONDS.sleep(5);
-        assertTrue(testPowerUp.endTime() == true);
-    }
+  @Test
+  public void validActivation() {
+    testPowerUp.aquirePowerUp();
+    testPowerUp.setStartTime();
+    assertTrue(
+        "Start time should be set if power-up is attained.", testPowerUp.getStartTime() != 0L);
+  }
 
-    BasePowerUp testPowerUpII = new BasePowerUp(5000L);
+  @Test
+  public void validEndTime() throws InterruptedException {
+    testPowerUp.aquirePowerUp();
+    testPowerUp.setStartTime();
+    TimeUnit.MILLISECONDS.sleep(5);
+    assertTrue("Power-up should be deactivated once the time is up", testPowerUp.endTime());
+  }
 
-    @Test
-    public void invalidEndTime(){
-        assertTrue(testPowerUpII.endTime() == false);
-    }
+  BasePowerUp testPowerUpII = new BasePowerUp(5000L);
+
+  @Test
+  public void invalidEndTime() {
+    assertFalse(
+        "End time should not change anything if it was never activated ", testPowerUpII.endTime());
+  }
 }
-

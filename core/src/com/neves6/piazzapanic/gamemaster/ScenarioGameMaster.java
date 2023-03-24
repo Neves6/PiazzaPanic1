@@ -1,0 +1,611 @@
+package com.neves6.piazzapanic.gamemaster;
+
+import static java.util.Arrays.asList;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.gamemechanisms.Utility;
+import com.neves6.piazzapanic.people.Chef;
+import com.neves6.piazzapanic.people.Customer;
+import com.neves6.piazzapanic.screens.GameWinScreen;
+import com.neves6.piazzapanic.screens.PiazzaPanicGame;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
+
+/** A class designed to handle all in game processing. */
+public class ScenarioGameMaster extends GameMaster {
+  int tilewidth;
+  DeliveryStaff deliveryStaff;
+  IngredientsStaff staffOne;
+  PiazzaPanicGame game;
+  TiledMap map;
+  TiledMapTileLayer collisionLayer;
+  ArrayList<Chef> chefs = new ArrayList<>();
+  Stack<Customer> customers = new Stack<>();
+  Map<String, Machine> machines = new HashMap();
+  ArrayList<String> tray1 = new ArrayList<>();
+  ArrayList<String> tray2 = new ArrayList<>();
+  int selectedChef;
+  float totalTimer;
+  Sound grill;
+  Sound chopping;
+  Sound serving;
+  Sound fridge;
+  Sound forming;
+  Sound trash;
+  float soundVolume;
+  ArrayList<String> settings;
+  Money machineUnlockBalance;
+  ArrayList<String> recipes =
+      new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
+
+  /**
+   * ScenarioGameMaster constructor.
+   *
+   * @param game PiazzaPanicGame instance.
+   * @param map TiledMap instance.
+   * @param chefno Number of chefs.
+   * @param custno Number of customers.
+   * @param machineUnlockBalance A class that controls the in game currency.
+   * @param ingredientsHelper Staff member which can get ingredients.
+   */
+  public ScenarioGameMaster(
+      PiazzaPanicGame game,
+      TiledMap map,
+      int chefno,
+      int custno,
+      Money machineUnlockBalance,
+      IngredientsStaff ingredientsHelper,
+      DeliveryStaff deliveryStaff) {
+    this.machineUnlockBalance = machineUnlockBalance;
+    this.staffOne = ingredientsHelper;
+    this.deliveryStaff = deliveryStaff;
+    this.game = game;
+    settings = Utility.getSettings();
+    this.map = map;
+    collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+    for (int i = 0; i < chefno; i++) {
+      chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
+    }
+    for (int i = 0; i < custno; i++) {
+      int randomNum = ThreadLocalRandom.current().nextInt(0, 4);
+      customers.add(new Customer("Customer" + (i + 1), -1, -1, recipes.get(randomNum)));
+    }
+    totalTimer = 0f;
+
+    // Assessment 1 (index 0-16)
+    machines.put("fridge-meat", new Machine("fridge-meat", "", "meat", 0, false));
+    machines.put("fridge-tomato", new Machine("fridge-tomato", "", "tomato", 0, false));
+    machines.put("fridge-lettuce", new Machine("fridge-lettuce", "", "lettuce", 0, false));
+    machines.put("fridge-onion", new Machine("fridge-onion", "", "onion", 0, false));
+    machines.put("fridge-bun", new Machine("fridge-bun", "", "bun", 0, false));
+
+    machineUnlockBalance.addGroup("grill", 100);
+    machines.put("grill-patty-1", new Machine("grill-patty-1", "patty", "burger", 3, true));
+    machines.put(
+        "grill-patty-2", new Machine("grill-patty-2", "patty", "burger", 3, true, "grill"));
+    machines.put("grill-bun-1", new Machine("grill-bun-1", "bun", "toasted bun", 3, true));
+    machines.put("grill-bun-2", new Machine("grill-bun-2", "bun", "toasted bun", 3, true, "grill"));
+
+    machineUnlockBalance.addGroup("forming", 50);
+    machines.put("forming-1", new Machine("forming-1", "meat", "patty", 3, true));
+    machines.put("forming-2", new Machine("forming-2", "meat", "patty", 3, true, "forming"));
+
+    machineUnlockBalance.addGroup("chopping", 50);
+    machines.put(
+        "chopping-tomato-1", new Machine("chopping-tomato-1", "tomato", "chopped tomato", 3, true));
+    machines.put(
+        "chopping-tomato-2",
+        new Machine("chopping-tomato-2", "tomato", "chopped tomato", 3, true, "chopping"));
+    machines.put(
+        "chopping-lettuce-1",
+        new Machine("chopping-lettuce-1", "lettuce", "chopped lettuce", 3, true));
+    machines.put(
+        "chopping-lettuce-2",
+        new Machine("chopping-lettuce-2", "lettuce", "chopped lettuce", 3, true, "chopping"));
+    machines.put(
+        "chopping-onion-1", new Machine("chopping-onion-1", "onion", "chopped onion", 3, true));
+    machines.put(
+        "chopping-onion-2",
+        new Machine("chopping-onion-2", "onion", "chopped onion", 3, true, "chopping"));
+
+    // Assessment 2 (index 17-24)
+    machines.put("fridge-dough", new Machine("fridge-dough", "", "dough", 0, false));
+    machines.put("fridge-cheese", new Machine("fridge-cheese", "", "cheese", 0, false));
+    machines.put("fridge-potato", new Machine("fridge-potato", "", "potato", 0, false));
+    machines.put("fridge-beans", new Machine("fridge-beans", "", "beans", 0, false));
+
+    machineUnlockBalance.addGroup("potato", 150);
+    machines.put("oven-potato-1", new Machine("oven-potato-1", "potato", "jacket", 3, true));
+    machines.put(
+        "oven-potato-2", new Machine("oven-potato-2", "potato", "jacket", 3, true, "potato"));
+
+    machineUnlockBalance.addGroup("pizza", 150);
+    machines.put("oven-pizza-1", new Machine("oven-pizza-1", "raw pizza", "pizza", 3, true));
+    machines.put(
+        "oven-pizza-2", new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true, "pizza"));
+
+    // disposal and tray/serving handled separately
+
+    grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
+    chopping = Gdx.audio.newSound(Gdx.files.internal("sounds/chopping.mp3"));
+    serving = Gdx.audio.newSound(Gdx.files.internal("sounds/serving.mp3"));
+    fridge = Gdx.audio.newSound(Gdx.files.internal("sounds/fridge.mp3"));
+    forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
+    trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
+
+    switch (settings.get(1).trim()) {
+      case "full":
+        soundVolume = 1f;
+        break;
+      case "half":
+        soundVolume = 0.5f;
+        break;
+      case "none":
+        soundVolume = 0f;
+        break;
+      default:
+        break;
+    }
+
+    machineUnlockBalance.addGroup("ingredients-staff", 150);
+    machineUnlockBalance.addGroup("server-staff", 50);
+
+    // It is a square hence, width = height, just get one.
+    tilewidth = (int) map.getProperties().get("tilewidth");
+  }
+
+  /**
+   * Setter method for selectedChef. Indexing is changed to represent java indexing starting from 0
+   * but numbering for chefs starting from 1.
+   *
+   * @param selectedChef Index of the chef that movement needs to be applied on.
+   */
+  public void setSelectedChef(int selectedChef) {
+    this.selectedChef = selectedChef - 1;
+  }
+
+  /**
+   * Getter method for selectedChef. Indexing is changed to represent java indexing starting from 0
+   * but numbering for chefs starting from 1.
+   *
+   * @return Index of the chef that movement will be applied on.
+   */
+  public int getSelectedChef() {
+    return selectedChef + 1;
+  }
+
+  /**
+   * Access method for any chef in the chefs array. Indexing is changed to represent java indexing
+   * starting from 0 but numbering for chefs starting from 1.
+   *
+   * @param i ith position in the chefs array that needs to be accessed.
+   * @return chef object based upon ith position passed in.
+   */
+  public Chef getChef(int i) {
+    return chefs.get(i - 1);
+  }
+
+  /**
+   * Used to set the current recipe to the ingredients staff member if this staff member has been
+   * unlocked.
+   */
+  public void setRecipeToStaff() {
+    if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
+      staffOne.setCurrentRecipe(customers.get(0).getOrder());
+    }
+  }
+
+  /**
+   * Attempts to move the currently selected chef in a specified direction. If the move is valid,
+   * the facing variable for the currently selected chef will be set.
+   *
+   * @param direction Direction to move.
+   */
+  public void tryMove(String direction) {
+    Chef chef = chefs.get(selectedChef);
+    switch (direction) {
+      case "up":
+        if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {
+          chef.alteryCoord(+1);
+        }
+        chef.setFacing("up");
+        break;
+      case "down":
+        if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() - 1, selectedChef)) {
+          chef.alteryCoord(-1);
+        }
+        chef.setFacing("down");
+        break;
+      case "left":
+        if (wouldNotCollide(chef.getxCoord() - 1, chef.getyCoord(), selectedChef)) {
+          chef.alterxCoord(-1);
+        }
+        chef.setFacing("left");
+        break;
+      case "right":
+        if (wouldNotCollide(chef.getxCoord() + 1, chef.getyCoord(), selectedChef)) {
+          chef.alterxCoord(+1);
+        }
+        chef.setFacing("right");
+        break;
+      default:
+        break;
+    }
+  }
+
+  /**
+   * Checks collision with the collision layer, other chefs, and being stickied.
+   *
+   * @param x x coordinate to check.
+   * @param y y coordinate to check.
+   * @param chefno chef number to check.
+   * @return true if the chef would not collide, false otherwise.
+   */
+  public boolean wouldNotCollide(int x, int y, int chefno) {
+    if (chefs.get(chefno).getIsStickied()) {
+      return false;
+    }
+    for (int i = 0; i < chefs.size(); i++) {
+      if (i != chefno && chefs.get(i).getxCoord() == x && chefs.get(i).getyCoord() == y) {
+        return false;
+      }
+    }
+    int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();
+    return tempCellTileID != 37 && tempCellTileID != 39;
+  }
+
+  /**
+   * Generates the display text for the chefs' inventories.
+   *
+   * @return String containing the display text.
+   */
+  public String generateHoldingsText() {
+    String comp = "";
+    for (int i = 0; i < chefs.size(); i++) {
+      comp += "Chef " + (i + 1) + " is holding:\n";
+      comp += chefs.get(i).getInventory().toString() + "\n";
+    }
+    return comp;
+  }
+
+  /**
+   * Generates the display text for the customers' tray and order.
+   *
+   * @return String containing the display text.
+   */
+  public String generateCustomersTrayText() {
+    String comp = "";
+    comp += "Customers remaining: ";
+    comp += customers.size();
+    if (customers.size() > 0) {
+      comp += "\nOrder: ";
+      comp += customers.get(0).getOrder();
+    }
+    comp += "\nTray 1 contents: ";
+    comp += tray1.toString();
+    comp += "\nTray 2 contents: ";
+    comp += tray2.toString();
+    return comp;
+  }
+
+  /**
+   * Generates the display text for the timer.
+   *
+   * @return String containing the display text.
+   */
+  public String generateTimerText() {
+    String comp = "";
+    comp += "Time elapsed: ";
+    comp += (int) totalTimer;
+    comp += " s";
+    return comp;
+  }
+
+  /**
+   * Generates the display text for the chef's timer.
+   *
+   * @param chefno chef number to check.
+   * @return String containing the display text.
+   */
+  public String getMachineTimerForChef(int chefno) {
+    Chef chef = chefs.get(chefno);
+    if (chef.getMachineInteractingWith() != null) {
+      Machine machine = chef.getMachineInteractingWith();
+      return ((int) (machine.getProcessingTime() - machine.getRuntime() + 1)) + "";
+    } else {
+      return "";
+    }
+  }
+
+  /**
+   * Calculates size of customers array.
+   *
+   * @return The amount of customers which are yet to be served.
+   */
+  public int getCustomersRemaining() {
+    return customers.size();
+  }
+
+  /**
+   * Calculates the first customer at the start of the customers array.
+   *
+   * @return The customer which is at the start of the queue.
+   */
+  public Customer getFirstCustomer() {
+    return customers.get(0);
+  }
+
+  /**
+   * Updates timers on all machines and the total timer. To be called every frame render.
+   *
+   * @param delta time since last frame.
+   */
+  public void tickUpdate(float delta) {
+    // TODO: Use increment variable to handle powerup -
+    // just use get delta everytime.
+    float increment = delta;
+    for (String machine : machines.keySet()) {
+      Machine tempMachine = machines.get(machine);
+      if (tempMachine.getActive()) {
+        tempMachine.incrementRuntime(delta);
+        tempMachine.attemptGetOutput();
+      }
+    }
+    totalTimer += increment;
+  }
+
+  /**
+   * Helper method used to get the objects from a layer using its key.
+   *
+   * @param key Name of the layer.
+   * @return All objects from the layer indicated by the key.
+   */
+  public MapObjects getObjectLayers(String key) {
+    MapLayer unlockLayer = map.getLayers().get(key);
+    return unlockLayer.getObjects();
+  }
+
+  /**
+   * Converts the tiled map coordinates into the game coordinates then compares it to the target x
+   * and target y, to check whether the rectangle is being interacted with.
+   *
+   * @param object A tiled map representation of an point on the map.
+   * @param xcoord A game x coordinate.
+   * @param ycoord A game y coordinate.
+   * @return Boolean value representing whether the coordinates passed in are the coordinates of the
+   *     rectangle passed in.
+   */
+  public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord) {
+    return xcoord == Math.round(object.getX() / tilewidth)
+        && ycoord == Math.round(object.getY() / tilewidth);
+  }
+
+  /**
+   * Helper method to convert a map object to a rectangle map object.
+   *
+   * @param object A single part of a layer of the map.
+   * @return Returns a rectangle representing the object.
+   */
+  public Rectangle loadRectangle(MapObject object) {
+    RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
+    // now you can get the position of the rectangle like this:
+    return rectangleMapObject.getRectangle();
+  }
+
+  /**
+   * Attempts to cause an interaction between the currently selected chef and the machine in front
+   * of them.
+   */
+  public void tryInteract() {
+    Chef chef = chefs.get(selectedChef);
+
+    // If the chef is stuck, it is not allowed to move.
+    if (chef.getIsStickied()) {
+      return;
+    }
+
+    int targetx;
+    int targety;
+    switch (chef.getFacing()) {
+      case "up":
+        targetx = chef.getxCoord();
+        targety = chef.getyCoord() + 1;
+        break;
+      case "down":
+        targetx = chef.getxCoord();
+        targety = chef.getyCoord() - 1;
+        break;
+      case "left":
+        targetx = chef.getxCoord() - 1;
+        targety = chef.getyCoord();
+        break;
+      case "right":
+        targetx = chef.getxCoord() + 1;
+        targety = chef.getyCoord();
+        break;
+      default:
+        targetx = chef.getxCoord();
+        targety = chef.getyCoord();
+        break;
+    }
+
+    // Unlock layer - interactions with any stations that need to be
+    // purchased using credits.
+    MapObjects unlockObjects = getObjectLayers("Unlock Layer");
+
+    for (MapObject ob : unlockObjects) {
+      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
+        machineUnlockBalance.unlockMachine(ob.getName());
+      }
+    }
+
+    // Fridge layer - contains all fridges in order to pick up ingredients.
+    MapObjects fridgeObjects = getObjectLayers("Fridge Layer");
+    for (MapObject ob : fridgeObjects) {
+      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
+        machines.get(ob.getName()).process(chef, machineUnlockBalance);
+        fridge.play(soundVolume);
+      }
+    }
+
+    // Cooking Objects - contain all machines
+    MapObjects cookingObjects = getObjectLayers("Cooking Layer");
+
+    if (chef.getInventory().size() != 0) {
+      // Work stations
+      String invTop = chef.getInventory().peek();
+
+      for (MapObject ob : cookingObjects) {
+        // Only use a machine if you are trying to interact with it and have the correct
+        // input.
+        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+            && machines.get(ob.getName()).getInput() == invTop) {
+          machines.get(ob.getName()).process(chef, machineUnlockBalance);
+        }
+      }
+    }
+
+    MapObjects miscObjects = getObjectLayers("Misc Layer");
+
+    System.out.println(loadRectangle(miscObjects.get("bin")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("bin")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("serving")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("serving")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-1")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-1")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-2")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("tray-2")).getY() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getX() / tilewidth);
+    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getY() / tilewidth);
+    if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
+      chef.removeTopFromInventory();
+      trash.play(soundVolume);
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("serving")), targetx, targety)) {
+      serveFood();
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
+      addToTray(1);
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
+      addToTray(2);
+    } else if (detectInteractionFromTiledObject(
+        loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
+      String item = staffOne.collectItem();
+      // Don't add a null pointer onto the chefs stack.
+      if (item != null) {
+        Machine tempMachine = new Machine("staff", item, item, 0, true, "ingredients-staff");
+        tempMachine.processStaffInteraction(chef, machineUnlockBalance);
+      }
+    }
+  }
+
+  /**
+   * Getter method for the money class.
+   *
+   * @return Instance of the money class that is being used within scenario game master.
+   */
+  public Money getUnlockClass() {
+    return machineUnlockBalance;
+  }
+
+  /**
+   * Adds the top item from the currently selected chef's inventory to the tray.
+   *
+   * @param station Indicates which tray station is being used.
+   */
+  private void addToTray(int station) {
+    Chef chef = chefs.get(selectedChef);
+    Stack<String> inv = chef.getInventory();
+    ArrayList<String> tray = new ArrayList<String>();
+    if (station == 1) {
+      tray = tray1;
+    } else if (station == 2) {
+      tray = tray2;
+    } else {
+      return;
+    }
+
+    // Force user to order in the correct way (The Easiest difficulty):
+    if (inv.size() > 0) {
+      if (customers.get(0).helper(inv.peek())) {
+        tray.add(inv.pop());
+      }
+    }
+
+    // Pizza cannot be handled by staff because you need to put it in the oven then
+    // take it to the customer.
+    if (tray.contains("dough") && tray.contains("chopped tomato") && tray.contains("cheese")) {
+      tray.clear();
+      inv.add("raw pizza");
+      serving.play(soundVolume);
+    } else if (customers.get(0).finishedRecipe()) {
+      tray.clear();
+      if (machineUnlockBalance.isUnlocked("server-staff")) {
+        deliveryStaff.collectItem(customers.get(0).getOrder());
+        serveFood();
+      } else {
+        if (inv.isEmpty()) {
+          inv.add(customers.get(0).getOrder());
+        }
+      }
+      serving.play(soundVolume);
+    }
+
+    if (station == 1) {
+      tray1 = tray;
+    } else if (station == 2) {
+      tray2 = tray;
+    }
+  }
+
+  /** Method to handle giving food to the customer. */
+  public void serveFood() {
+    if (customers.size() == 0) {
+      game.setScreen(new GameWinScreen(game, (int) totalTimer));
+    }
+
+    Chef chef = chefs.get(selectedChef);
+    Stack<String> inv;
+    // If the order isn't pizza and the server is unlocked,
+    // get the order from the staff members inventory.
+    // Otherwise, get the chefs inventory and operate
+    // from there.
+    if (machineUnlockBalance.isUnlocked("server-staff")
+        && !(customers.get(0).getOrder() == "pizza")) {
+      inv = deliveryStaff.getItems();
+    } else {
+      inv = chef.getInventory();
+    }
+
+    if (inv.size() == 0) {
+      return;
+    }
+
+    if (customers.get(0).getOrder() == inv.peek()) {
+      inv.pop();
+      customers.remove(0);
+      serving.play(soundVolume);
+      // +$100 on completion of a recipe.
+      machineUnlockBalance.incrementBalance();
+      // Once an order is complete, allow ingredient staff to
+      // collect another order.
+      staffOne.setGenerate(true);
+    }
+  }
+}
