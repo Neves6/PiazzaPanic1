@@ -1,21 +1,31 @@
 package com.neves6.piazzapanic.tests;
 
-import com.neves6.piazzapanic.staff.IngredientsStaff;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import java.util.ArrayList;
+import java.util.Stack;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 @RunWith(GdxTestRunner.class)
 public class TestDeliveryServer {
-    IngredientsStaff test = new IngredientsStaff(new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
-            (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9 ,9, 9, 8, 9))));
+  DeliveryStaff test = new DeliveryStaff(new ArrayList<>(), new ArrayList<>());
 
-    @Test
-    public void testIncrements(){
-        test.getCoordInSeq();
-        test.getCoordInSeq();
-        test.getCoordInSeq();
-    }
+  @Test
+  public void testCollect() {
+    test.collectItem("pizza");
+    assertTrue(
+        "Once an item is collected, the collected flag must be set to true", test.getCollect());
+  }
+
+  @Test
+  public void testPickup() {
+    test.collectItem("pizza");
+    Stack<Object> testStack = new Stack<>();
+    testStack.add("pizza");
+    assertEquals(
+        "Once an item is collected, it must be pushed onto the stack", test.getItems(), testStack);
+  }
 }
