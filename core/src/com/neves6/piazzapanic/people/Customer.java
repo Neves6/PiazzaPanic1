@@ -84,12 +84,13 @@ public class Customer extends Person {
    * @return Boolean value indicating whether the chef and the customer stack matches.
    */
   public Boolean helper(String inv) {
-    if (inv == this.remainingSteps.peek()) {
-      this.remainingSteps.pop();
-      return true;
-    } else {
-      return false;
+    if (!this.remainingSteps.isEmpty()) {
+      if (inv == this.remainingSteps.peek()) {
+        this.remainingSteps.pop();
+        return true;
+      }
     }
+    return false;
   }
 
   /**

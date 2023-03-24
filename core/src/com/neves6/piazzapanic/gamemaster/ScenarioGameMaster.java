@@ -560,7 +560,9 @@ public class ScenarioGameMaster extends GameMaster {
         deliveryStaff.collectItem(customers.get(0).getOrder());
         serveFood();
       } else {
-        inv.add(customers.get(0).getOrder());
+        if (inv.isEmpty()) {
+          inv.add(customers.get(0).getOrder());
+        }
       }
       serving.play(soundVolume);
     }
