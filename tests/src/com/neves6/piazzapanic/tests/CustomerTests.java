@@ -1,6 +1,5 @@
 package com.neves6.piazzapanic.tests;
-import com.badlogic.gdx.Gdx;
-import com.neves6.piazzapanic.Customer;
+import com.neves6.piazzapanic.people.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.assertTrue;
@@ -28,14 +27,14 @@ public class CustomerTests {
         float time = 100;
         Customer testCustomer=new Customer(name, x, y, order, time);
         assertTrue("Customer Constructor Valid :D",
-        testCustomer.getxCoord()==x &&
-        testCustomer.getxCoord()==6 &&
-        testCustomer.getyCoord()==y &&
-        testCustomer.getyCoord()==9 &&
-        testCustomer.getName()==name &&
-        testCustomer.getName()=="39" &&
-        testCustomer.getOrder()==order &&
-        testCustomer.getOrder()=="chronological" &&
+        testCustomer.getxCoord() == x &&
+        testCustomer.getxCoord() == 6 &&
+        testCustomer.getyCoord() == y &&
+        testCustomer.getyCoord() == 9 &&
+        testCustomer.getName().equals(name) &&
+        testCustomer.getName().equals("39") &&
+        testCustomer.getOrder().equals(order) &&
+        testCustomer.getOrder().equals("chronological") &&
         testCustomer.getTimeArrived() == time
         );
     }
