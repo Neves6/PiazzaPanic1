@@ -368,7 +368,9 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
     totalTimer += increment;
-    createCustomers();
+    if (maxCustomers == -1 || (maxCustomers > 0 && customersServed < maxCustomers)) {
+      createCustomers();
+    }
     checkOrderExpired();
   }
 
@@ -400,7 +402,7 @@ public class ScenarioGameMaster extends GameMaster {
         int partySize = generatePartySize();
         for (int i = 0; i < partySize; i++) {
           //Max number of customers in the queue starts at 5, increases by 1 every 5 served, caps at 10
-          if (customers.size() < Math.min(5 + (customersServed / 5), 10)) {
+          if (customers.size() < Math.min(5 + (customersServed / 5), 10) && customersServed < maxCustomers) {
             int randomInt = ThreadLocalRandom.current().nextInt(0, 4);
             customers.add(new Customer("Customer" + (customers.size() + 1), -1, -1, recipes.get(randomInt), totalTimer));
           } else {
@@ -604,7 +606,7 @@ public class ScenarioGameMaster extends GameMaster {
   private void addToTray(int station) {
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv = chef.getInventory();
-    ArrayList<String> tray = new ArrayList<String>();
+    ArrayList<String> tray;
     if (station == 1) {
       tray = tray1;
     } else if (station == 2) {
@@ -648,7 +650,7 @@ public class ScenarioGameMaster extends GameMaster {
 
   /** Method to handle giving food to the customer. */
   public void serveFood() {
-    if (customers.size() == 0) {
+    if (customersServed == maxCustomers) {
       game.setScreen(new GameWinScreen(game, (int) totalTimer));
     }
 

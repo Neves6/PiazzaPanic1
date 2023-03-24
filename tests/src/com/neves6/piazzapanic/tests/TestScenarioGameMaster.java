@@ -178,6 +178,9 @@ public class TestScenarioGameMaster {
           new IngredientsStaff(defValues, defValues),
           new DeliveryStaff(defValues, defValues));
 
+  /* TODO: Create new test for text based on customer orders
+           Customers are no longer generated upon loading game scenario, instead are produced at slight random intervals throughout
+           So value cannot be easily tested without public setter method for customer objects
   @Test
   public void testGenerateCustomersTrayText() {
     String testString = testMasterIV.generateCustomersTrayText();
@@ -205,6 +208,7 @@ public class TestScenarioGameMaster {
                     + "Tray 1 contents: []\n"
                     + "Tray 2 contents: []"));
   }
+   */
 
   @Test
   public void testGenerateTimerText() {
@@ -255,6 +259,9 @@ public class TestScenarioGameMaster {
     assertFalse("Two chefs must not overlap", testMasterIV.wouldNotCollide(5, 4, 0));
   }
 
+/* TODO: Create new test for get number of customers
+         Customers are no longer generated upon loading game scenario, instead are produced at slight random intervals throughout
+         So value cannot be easily tested without public setter method for customer objects
   @Test
   public void testGetNumberOfCustomers() {
     assertEquals(
@@ -263,6 +270,7 @@ public class TestScenarioGameMaster {
         3,
         testMasterIV.getCustomersRemaining());
   }
+ */
 
   @Test
   public void testGetUnlockLayer() {
