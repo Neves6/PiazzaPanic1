@@ -14,7 +14,7 @@ on:
     branches: main
 
 jobs:
- artifacts:
+  DISCORD_WEBHOOK:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -56,7 +56,7 @@ jobs:
           path: tests/build/reports/checkstyle/test.html
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: "https://discordapp.com/api/webhooks/1089146509800513566/a0vMTWD4VxtNiVZA1ckN1W89t6eY9psi9I_xtlV3oEv9Rq0ReE8fsQRIU-WicpPy0zyn"
+          DISCORD_WEBHOOK: {"${{ secrets.DISCORD_WEBHOOK }}"}
         uses: Ilshidur/action-discord@master
         with:
           args: 'The branch is ready to be reviewed and merged to main.'
