@@ -259,18 +259,18 @@ public class TestScenarioGameMaster {
     assertFalse("Two chefs must not overlap", testMasterIV.wouldNotCollide(5, 4, 0));
   }
 
-/* TODO: Create new test for get number of customers
-         Customers are no longer generated upon loading game scenario, instead are produced at slight random intervals throughout
-         So value cannot be easily tested without public setter method for customer objects
-  @Test
-  public void testGetNumberOfCustomers() {
-    assertEquals(
-        "Initially before a recipe is complete, the amount of customers should be the same as"
-            + " passed in, in the constructor",
-        3,
-        testMasterIV.getCustomersRemaining());
-  }
- */
+  /* TODO: Create new test for get number of customers
+          Customers are no longer generated upon loading game scenario, instead are produced at slight random intervals throughout
+          So value cannot be easily tested without public setter method for customer objects
+   @Test
+   public void testGetNumberOfCustomers() {
+     assertEquals(
+         "Initially before a recipe is complete, the amount of customers should be the same as"
+             + " passed in, in the constructor",
+         3,
+         testMasterIV.getCustomersRemaining());
+   }
+  */
 
   @Test
   public void testGetUnlockLayer() {

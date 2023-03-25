@@ -12,7 +12,6 @@ public class Customer extends Person {
   private Stack<String> remainingSteps;
   private float timeArrived;
 
-
   /**
    * Customer constructor.
    *
@@ -28,7 +27,6 @@ public class Customer extends Person {
     this.txUp = new Texture("people/cust1up.png");
     this.txLeft = new Texture("people/cust1left.png");
     this.timeArrived = timeArrived;
-
   }
 
   /**
@@ -105,6 +103,8 @@ public class Customer extends Person {
   public Boolean finishedRecipe() {
     return remainingSteps.size() == 0;
   }
-  public float getTimeArrived() {return timeArrived;}
 
+  public float getTimeArrived() {
+    return timeArrived;
+  }
 }
