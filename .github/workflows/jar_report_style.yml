@@ -54,12 +54,11 @@ jobs:
         with:
           name: checkstyle-test
           path: tests/build/reports/checkstyle/test.html
-      - name: Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
+      - name: Discord Webhook Action
+        uses: tsickert/discord-webhook@v5.3.0
         with:
-          args: 'The branch is ready to be reviewed and merged to main.'
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          content: "Test"
 
       
 
