@@ -10,6 +10,9 @@
 name: Java CI (Gradle, Temurin, JDK 11)
 
 on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
     branches: main
   workflow_run:
@@ -78,6 +81,23 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: 'The branch is ready to be reviewed and merged to main.'
+  release:
+    needs: [buildGame]
+    if: startsWith(github.ref, 'refs/tags/')
+    permission:
+      contents: write
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.1
+        with:
+          name: desktop.jar
+          path: desktop/build/libs/desktop-1.0.jar
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: desktop.jar
+          path: desktop/build/libs/desktop-1.0.jar
+
 
       
 
