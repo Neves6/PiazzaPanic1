@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Setting an environment variable with the value of a configuration variable
-      DISCORD_WEBHOOK : ${{ vars.DISCORD_WEBHOOK }}
+      DISCORD_WEBHOOK : ${{ DISCORD_WEBHOOK.DISCORD_WEBHOOK }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
