@@ -10,6 +10,8 @@ public class Customer extends Person {
   private final Texture txUp;
   private final Texture txLeft;
   private Stack<String> remainingSteps;
+  private float timeArrived;
+
 
   /**
    * Customer constructor.
@@ -19,12 +21,14 @@ public class Customer extends Person {
    * @param ycoord logical y coordinate of customer.
    * @param order Order of customer.
    */
-  public Customer(String name, int xcoord, int ycoord, String order) {
+  public Customer(String name, int xcoord, int ycoord, String order, float timeArrived) {
     super(name, xcoord, ycoord);
     this.order = order;
     generateHelper();
     this.txUp = new Texture("people/cust1up.png");
     this.txLeft = new Texture("people/cust1left.png");
+    this.timeArrived = timeArrived;
+
   }
 
   /**
@@ -101,4 +105,6 @@ public class Customer extends Person {
   public Boolean finishedRecipe() {
     return remainingSteps.size() == 0;
   }
+  public float getTimeArrived() {return timeArrived;}
+
 }

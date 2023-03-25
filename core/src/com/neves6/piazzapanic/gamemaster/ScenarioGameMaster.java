@@ -20,10 +20,8 @@ import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /** A class designed to handle all in game processing. */
@@ -35,7 +33,7 @@ public class ScenarioGameMaster extends GameMaster {
   TiledMap map;
   TiledMapTileLayer collisionLayer;
   ArrayList<Chef> chefs = new ArrayList<>();
-  Stack<Customer> customers = new Stack<>();
+  Queue<Customer> customers = new LinkedList<>();
   Map<String, Machine> machines = new HashMap();
   ArrayList<String> tray1 = new ArrayList<>();
   ArrayList<String> tray2 = new ArrayList<>();
@@ -52,7 +50,11 @@ public class ScenarioGameMaster extends GameMaster {
   Money machineUnlockBalance;
   ArrayList<String> recipes =
       new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
-
+  int customersServed;
+  int maxCustomers;
+  int timeAllowed;
+  float lastCustomer;
+  float waitTime;
   /**
    * ScenarioGameMaster constructor.
    *
@@ -78,13 +80,12 @@ public class ScenarioGameMaster extends GameMaster {
     settings = Utility.getSettings();
     this.map = map;
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
     }
-    for (int i = 0; i < custno; i++) {
-      int randomNum = ThreadLocalRandom.current().nextInt(0, 4);
-      customers.add(new Customer("Customer" + (i + 1), -1, -1, recipes.get(randomNum)));
-    }
+    this.maxCustomers = custno;
+
     totalTimer = 0f;
 
     // Assessment 1 (index 0-16)
@@ -206,7 +207,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void setRecipeToStaff() {
     if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
-      staffOne.setCurrentRecipe(customers.get(0).getOrder());
+      staffOne.setCurrentRecipe(customers.peek().getOrder());
     }
   }
 
@@ -294,7 +295,7 @@ public class ScenarioGameMaster extends GameMaster {
     comp += customers.size();
     if (customers.size() > 0) {
       comp += "\nOrder: ";
-      comp += customers.get(0).getOrder();
+      comp += customers.peek().getOrder();
     }
     comp += "\nTray 1 contents: ";
     comp += tray1.toString();
@@ -347,7 +348,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @return The customer which is at the start of the queue.
    */
   public Customer getFirstCustomer() {
-    return customers.get(0);
+    return customers.peek();
   }
 
   /**
@@ -367,6 +368,79 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
     totalTimer += increment;
+    if (maxCustomers == -1 || (maxCustomers > 0 && customersServed < maxCustomers)) {
+      createCustomers();
+    }
+    checkOrderExpired();
+  }
+
+  /**
+   * Checks if time allowed to complete any customer orders has elapsed
+   * Removes customers whose order expired and removes a reputation point
+   */
+  private void checkOrderExpired() {
+    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);
+    for (int i = 0; i < customers.size(); i++) {
+      if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
+        //TODO: add reputation point decrement and fail message
+        customers.poll();
+      }
+    }
+  }
+
+  /**
+   * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of customers served increases
+   * Will occasionally 0.5s stalls to vary customer arrival times
+   */
+  private void createCustomers() {
+    waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
+    if (lastCustomer + waitTime <= totalTimer) {
+      float randomFloat = ThreadLocalRandom.current().nextFloat();
+      if (randomFloat > 0.90 && customers.size() != 0) {
+        lastCustomer += 0.5;
+      } else {
+        int partySize = generatePartySize();
+        for (int i = 0; i < partySize; i++) {
+          //Max number of customers in the queue starts at 5, increases by 1 every 5 served, caps at 10
+          if (customers.size() < Math.min(5 + (customersServed / 5), 10) && customersServed < maxCustomers) {
+            int randomInt = ThreadLocalRandom.current().nextInt(0, 4);
+            customers.add(new Customer("Customer" + (customers.size() + 1), -1, -1, recipes.get(randomInt), totalTimer));
+          } else {
+            break;
+          }
+        }
+        lastCustomer = totalTimer;
+      }
+    }
+  }
+
+  /**
+   * Randomly generates a value 1 to 3 dependent on the number of customers served to be used as group sizes
+   * Initially biased towards 1 but gradually shifts in favour of 3
+   * @return integer value 1 to 3
+   */
+  private int generatePartySize() {
+        /*
+        Creates a random party size of 1-3 customers
+        The more customers that have been served, the more likely a larger group becomes
+        Probabilities of group size for each interval of customers served:
+            0-4:    1 = 80%,    2 = 20%,    3 = 0%
+            5-9:    1 = 40%,    2 = 40%,    3 = 20%
+            10-14:  1 = 0%,     2 = 60%,    3 = 40%
+            15-19:  1 = 0%,     2 = 40%,    3 = 60%
+            20-24:  1 = 0%,     2 = 20%,    3 = 80%
+            25+:    1 = 0%,     2 = 0%,     3 = 100%
+        */
+    float randomFloat = ThreadLocalRandom.current().nextFloat();
+    int partySize;
+    if (randomFloat <= (0.8 - 0.4 * (customersServed / 5))) {
+      partySize = 1;
+    } else if (randomFloat > (0.8 - 0.4 * (customersServed / 5)) && randomFloat <= (1 - 0.2 * (customersServed / 5))) {
+      partySize = 2;
+    } else {
+      partySize = 3;
+    }
+    return partySize;
   }
 
   /**
@@ -532,7 +606,7 @@ public class ScenarioGameMaster extends GameMaster {
   private void addToTray(int station) {
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv = chef.getInventory();
-    ArrayList<String> tray = new ArrayList<String>();
+    ArrayList<String> tray;
     if (station == 1) {
       tray = tray1;
     } else if (station == 2) {
@@ -543,7 +617,7 @@ public class ScenarioGameMaster extends GameMaster {
 
     // Force user to order in the correct way (The Easiest difficulty):
     if (inv.size() > 0) {
-      if (customers.get(0).helper(inv.peek())) {
+      if (customers.peek().helper(inv.peek())) {
         tray.add(inv.pop());
       }
     }
@@ -554,14 +628,14 @@ public class ScenarioGameMaster extends GameMaster {
       tray.clear();
       inv.add("raw pizza");
       serving.play(soundVolume);
-    } else if (customers.get(0).finishedRecipe()) {
+    } else if (customers.peek().finishedRecipe()) {
       tray.clear();
       if (machineUnlockBalance.isUnlocked("server-staff")) {
-        deliveryStaff.collectItem(customers.get(0).getOrder());
+        deliveryStaff.collectItem(customers.peek().getOrder());
         serveFood();
       } else {
         if (inv.isEmpty()) {
-          inv.add(customers.get(0).getOrder());
+          inv.add(customers.peek().getOrder());
         }
       }
       serving.play(soundVolume);
@@ -576,7 +650,7 @@ public class ScenarioGameMaster extends GameMaster {
 
   /** Method to handle giving food to the customer. */
   public void serveFood() {
-    if (customers.size() == 0) {
+    if (customersServed == maxCustomers) {
       game.setScreen(new GameWinScreen(game, (int) totalTimer));
     }
 
@@ -587,7 +661,7 @@ public class ScenarioGameMaster extends GameMaster {
     // Otherwise, get the chefs inventory and operate
     // from there.
     if (machineUnlockBalance.isUnlocked("server-staff")
-        && !(customers.get(0).getOrder() == "pizza")) {
+        && !(customers.peek().getOrder() == "pizza")) {
       inv = deliveryStaff.getItems();
     } else {
       inv = chef.getInventory();
@@ -597,7 +671,7 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    if (customers.get(0).getOrder() == inv.peek()) {
+    if (customers.peek().getOrder() == inv.peek()) {
       inv.pop();
       customers.remove(0);
       serving.play(soundVolume);
