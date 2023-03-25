@@ -107,6 +107,7 @@ project(":tests") {
         additionalClassDirs.from = files(classDirs)
         dependsOn test // tests are required to run before generating the report
 
+
         reports {
             xml.required = false
             csv.required = false
@@ -126,7 +127,12 @@ project(":tests") {
                 failOnViolation = true
                 rule {
                     limit {
-                        minimum = 0.75
+                        counter = 'LINE'
+                        minimum = 0.7
+                    }
+                    limit {
+                        counter = 'BRANCH'
+                        minimum = 0.6
                     }
                 }
             }
