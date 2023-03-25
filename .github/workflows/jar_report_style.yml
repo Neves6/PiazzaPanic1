@@ -92,12 +92,12 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.1
         with:
-          name: desktop.jar
+          name: desktop-1.0.jar
           path: desktop/build/libs/desktop-1.0.jar
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          name: desktop.jar
+          name: desktop-1.0.jar
           path: desktop/build/libs/desktop-1.0.jar
 
 
