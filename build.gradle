@@ -115,8 +115,8 @@ project(":tests") {
 
         afterEvaluate {
             classDirectories.setFrom(files(classDirectories.files.collect {
-                fileTree( exclude: [
-                        "${project.rootDir}\\tests"
+                fileTree( dir: "${project.rootDir}\\core\\build\\classes\\" , exclude: [
+                        "${project.rootDir}\\tests\\build\\classes\\"
                 ])
             }))
         }
