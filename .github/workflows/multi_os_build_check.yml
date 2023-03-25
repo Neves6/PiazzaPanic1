@@ -25,7 +25,7 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: ${{ github.ref }}
-          check-name: 'Auto-format to Google Style Guide'
+          check-name: 'formatting'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 60
       - uses: actions/checkout@v3
