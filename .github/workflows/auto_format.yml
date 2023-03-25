@@ -1,4 +1,4 @@
-name: Format
+name: Auto-format to Google Style Guide
 
 on:
   push:
@@ -6,14 +6,11 @@ on:
       - 'main'
 
 jobs:
-
   formatting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3 # v2 minimum required
       - uses: axel-op/googlejavaformat-action@v3
         with:
-
           args: "--replace"
-
           github-token: ${{ secrets.GITHUB_TOKEN }}

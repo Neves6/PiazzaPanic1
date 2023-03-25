@@ -101,6 +101,10 @@ project(":tests") {
     }
 
     jacocoTestReport {
+        def sourceDirs = ["${project.rootDir}\\core\\src"]
+        def classDirs = ["${project.rootDir}\\core\\build\\classes\\"]
+        additionalSourceDirs.from = files(sourceDirs)
+        additionalClassDirs.from = files(classDirs)
         dependsOn test // tests are required to run before generating the report
 
         reports {
@@ -112,7 +116,6 @@ project(":tests") {
         finalizedBy checkstyleTest
     }
 }
-
 
 project(":core") {
     apply plugin: "java-library"
