@@ -113,6 +113,14 @@ project(":tests") {
             html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
         }
 
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree( exclude: [
+                        "${project.rootDir}\\tests"
+                ])
+            }))
+        }
+
         finalizedBy checkstyleTest
     }
 }
