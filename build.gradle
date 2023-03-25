@@ -123,9 +123,10 @@ project(":tests") {
 
         jacocoTestCoverageVerification {
             violationRules {
+                failOnViolation = true
                 rule {
                     limit {
-                        minimum = 0.7
+                        minimum = 0.75
                     }
                 }
             }
