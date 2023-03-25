@@ -10,8 +10,6 @@
 name: Java CI (Gradle, Temurin, JDK 11)
 
 on:
-  push:
-    branches: main
   pull_request:
     branches: main
 
@@ -56,6 +54,7 @@ jobs:
         with:
           name: checkstyle-test
           path: tests/build/reports/checkstyle/test.html
+
       
 
 
