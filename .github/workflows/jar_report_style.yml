@@ -14,6 +14,8 @@ on:
     branches: main
 
 jobs:
+  setupEnvironment:
+
   buildGame:
     runs-on: ubuntu-latest
     steps:
@@ -41,6 +43,7 @@ jobs:
           path: tests/build/jacocoHtml
   uploadJar:
       runs-on: ubuntu-latest
+      needs: [buildGame]
       steps:
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
