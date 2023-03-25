@@ -134,6 +134,7 @@ project(":tests") {
                         counter = 'BRANCH'
                         minimum = 0.6
                     }
+
                 }
             }
         }
