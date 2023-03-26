@@ -40,28 +40,16 @@ jobs:
         run: ./gradlew :desktop:dist
       - name: Display structure of downloaded files
         run: ls -R
-  uploadJacocoReport:
-      runs-on: ubuntu-latest
-      needs: [buildGame]
-      steps:
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
           name: jacoco
           path: tests/build/jacocoHtml
-  uploadJar:
-      runs-on: ubuntu-latest
-      needs: [buildGame]
-      steps:
       - name: Upload Desktop jar
         uses: actions/upload-artifact@v3.1.1
         with:
           name: desktop.jar
           path: desktop/build/libs/desktop-1.0.jar
-  uploadCheckstyle:
-      runs-on: ubuntu-latest
-      needs: [buildGame]
-      steps:
       - name: Upload Core Checkstyle Report
         uses: actions/upload-artifact@v3.1.1
         with:
@@ -92,11 +80,11 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.1
         with:
-          name: desktop/build/libs/desktop-1.0.jar
+          name: desktop-1.0.jar
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: "./desktop/build/libs/desktop-1.0.jar"
+          files: desktop-1.0.jar
 
 
       
