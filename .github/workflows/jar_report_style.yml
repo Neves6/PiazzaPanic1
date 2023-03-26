@@ -88,17 +88,12 @@ jobs:
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.1
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: desktop/build/libs/desktop-1.0.jar
-          asset_name: Desktop JAR
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "This is my release text"
+          name: desktop/build/libs/desktop-1.0.jar
       - name: Release
         uses: softprops/action-gh-release@v1
+        with:
+          files: desktop-1.0.jar
 
 
       
