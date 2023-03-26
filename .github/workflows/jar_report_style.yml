@@ -10,13 +10,17 @@
 name: Java CI (Gradle, Temurin, JDK 11)
 
 on:
-  push:
-    branches: main
   pull_request:
     branches: main
+  push:
+    tags : ["v[0-9]+.[0-9]+.[0-9]+"]
+  workflow_run:
+    workflows: [ 'Auto-format to Google Style Guide' ]
+    types:
+      - completed
 
 jobs:
- artifacts:
+  buildGame:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,22 +36,32 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
-      - name: Clean directory for correct structure of test compilation for Jacoco Test
-        run: bash tools/moveFolder.sh
-      - name: Generate Jacoco Test
-        run: ./gradlew :tests:jacocoTestReport
+      - name: Desktop Jar generation
+        run: ./gradlew :desktop:dist
+      - name: Display structure of downloaded files
+        run: ls -R
+  uploadJacocoReport:
+      runs-on: ubuntu-latest
+      needs: [buildGame]
+      steps:
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
           name: jacoco
           path: tests/build/jacocoHtml
-      - name: Desktop Jar generation
-        run: ./gradlew :desktop:dist
+  uploadJar:
+      runs-on: ubuntu-latest
+      needs: [buildGame]
+      steps:
       - name: Upload Desktop jar
         uses: actions/upload-artifact@v3.1.1
         with:
           name: desktop.jar
           path: desktop/build/libs/desktop-1.0.jar
+  uploadCheckstyle:
+      runs-on: ubuntu-latest
+      needs: [buildGame]
+      steps:
       - name: Upload Core Checkstyle Report
         uses: actions/upload-artifact@v3.1.1
         with:
@@ -58,6 +72,33 @@ jobs:
         with:
           name: checkstyle-test
           path: tests/build/reports/checkstyle/test.html
+  discordAlert:
+      runs-on: ubuntu-latest
+      needs: [buildGame, uploadCheckstyle, uploadJacocoReport, uploadJar]
+      steps:
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: "${{ secrets.DISCORD_WEBHOOK }}"
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The branch is ready to be reviewed and merged to main.'
+  release:
+    runs-on: ubuntu-latest
+    needs: [buildGame]
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.1
+        with:
+          name: desktop/build/libs/desktop-1.0.jar
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "./desktop/build/libs/desktop-1.0.jar"
+
+
       
 
 
