@@ -62,7 +62,7 @@ jobs:
           path: tests/build/reports/checkstyle/test.html
   discordAlert:
       runs-on: ubuntu-latest
-      needs: [buildGame, uploadCheckstyle, uploadJacocoReport, uploadJar]
+      needs: [buildGame]
       steps:
       - name: Discord notification
         env:
