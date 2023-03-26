@@ -12,6 +12,7 @@ name: Java CI (Gradle, Temurin, JDK 11)
 on:
   pull_request:
     branches: main
+  push:
     tags : ["v[0-9]+.[0-9]+.[0-9]+"]
   workflow_run:
     workflows: [ 'Auto-format to Google Style Guide' ]
