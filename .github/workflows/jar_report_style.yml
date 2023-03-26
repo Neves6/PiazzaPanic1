@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Java CI (Gradle, Temurin, JDK 11)
+name: Developer Feedback
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ on:
   push:
     tags : ["v[0-9]+.[0-9]+.[0-9]+"]
   workflow_run:
-    workflows: [ 'Auto-format to Google Style Guide' ]
+    workflows: [ 'Test and Build on Windows, Linux and Mac' ]
     types:
       - completed
 
@@ -38,30 +38,16 @@ jobs:
           arguments: build
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
-      - name: Display structure of downloaded files
-        run: ls -R
-  uploadJacocoReport:
-      runs-on: ubuntu-latest
-      needs: [buildGame]
-      steps:
       - name: Upload Jacoco Report
         uses: actions/upload-artifact@v3.1.1
         with:
           name: jacoco
           path: tests/build/jacocoHtml
-  uploadJar:
-      runs-on: ubuntu-latest
-      needs: [buildGame]
-      steps:
       - name: Upload Desktop jar
         uses: actions/upload-artifact@v3.1.1
         with:
           name: desktop.jar
           path: desktop/build/libs/desktop-1.0.jar
-  uploadCheckstyle:
-      runs-on: ubuntu-latest
-      needs: [buildGame]
-      steps:
       - name: Upload Core Checkstyle Report
         uses: actions/upload-artifact@v3.1.1
         with:
@@ -74,7 +60,7 @@ jobs:
           path: tests/build/reports/checkstyle/test.html
   discordAlert:
       runs-on: ubuntu-latest
-      needs: [buildGame, uploadCheckstyle, uploadJacocoReport, uploadJar]
+      needs: [buildGame]
       steps:
       - name: Discord notification
         env:
@@ -92,14 +78,8 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.1
         with:
-          name: desktop/build/libs/desktop-1.0.jar
+          name: desktop.jar
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: "./desktop/build/libs/desktop-1.0.jar"
-
-
-      
-
-
-
+          files: desktop-1.0.jar
