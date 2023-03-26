@@ -12,6 +12,8 @@ name: Test and Build on Windows, Linux and Mac
 on:
   pull_request:
     branches: main
+  push:
+    branches: main
   workflow_run:
     workflows: [ 'Auto-format to Google Style Guide' ]
     types:
