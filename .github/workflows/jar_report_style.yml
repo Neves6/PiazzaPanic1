@@ -37,6 +37,8 @@ jobs:
           arguments: build
       - name: Desktop Jar generation
         run: ./gradlew :desktop:dist
+      - name: Display structure of downloaded files
+        run: ls -R
   uploadJacocoReport:
       runs-on: ubuntu-latest
       needs: [buildGame]
