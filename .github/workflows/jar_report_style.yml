@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Java CI (Gradle, Temurin, JDK 11)
+name: Developer Feedback
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ on:
   push:
     tags : ["v[0-9]+.[0-9]+.[0-9]+"]
   workflow_run:
-    workflows: [ 'Auto-format to Google Style Guide' ]
+    workflows: [ 'Test and Build on Windows, Linux and Mac' ]
     types:
       - completed
 
