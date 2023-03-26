@@ -12,7 +12,6 @@ name: Java CI (Gradle, Temurin, JDK 11)
 on:
   push:
     tags:
-      - main
       - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
     branches: main
@@ -91,14 +90,17 @@ jobs:
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.1
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          name: desktop-1.0.jar
-          path: desktop/build/libs/desktop-1.0.jar
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: desktop/build/libs/desktop-1.0.jar
+          asset_name: Desktop JAR
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "This is my release text"
       - name: Release
         uses: softprops/action-gh-release@v1
-        with:
-          name: desktop-1.0.jar
-          path: desktop/build/libs/desktop-1.0.jar
 
 
       
