@@ -1,26 +1,26 @@
 package com.neves6.piazzapanic.powerups;
 
-import java.util.ArrayList;
 
 import static java.lang.Math.random;
 
 public class PowerUpRunner {
-    DoubleSpeed doublespeed = new DoubleSpeed(30000L);
-    ShorterMachineTime shorterMachineTime = new ShorterMachineTime(30000L);
-    public PowerUpRunner(){
-    }
+  DoubleSpeed doublespeed = new DoubleSpeed(30000L);
+  ShorterMachineTime shorterMachineTime = new ShorterMachineTime(30000L);
 
-    public void activateRandomPowerUp(){
-        double random = random();
-        if (random < 1 && random > 0){
-            shorterMachineTime.aquirePowerUp();}
-    }
+  public PowerUpRunner() {}
 
-    public DoubleSpeed getDoubleSpeed(){
-        return doublespeed;
+  public void activateRandomPowerUp() {
+    double random = random();
+    if (random < 1 && random > 0) {
+      shorterMachineTime.aquirePowerUp();
     }
+  }
 
-    public ShorterMachineTime getShorterMachineTime(){
-        return shorterMachineTime;
-    }
+  public DoubleSpeed getDoubleSpeed() {
+    return doublespeed;
+  }
+
+  public ShorterMachineTime getShorterMachineTime() {
+    return shorterMachineTime;
+  }
 }

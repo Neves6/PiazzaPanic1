@@ -687,7 +687,7 @@ public class ScenarioGameMaster extends GameMaster {
       // collect another order.
       staffOne.setGenerate(true);
 
-      if (!(disablePowerUp)){
+      if (!(disablePowerUp)) {
         this.powerups.activateRandomPowerUp();
         chefs = powerups.getDoubleSpeed().applyPowerUp(chefs);
         machines = powerups.getShorterMachineTime().applyPowerUp(machines);

@@ -68,12 +68,28 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
     if (level == 1) {
       map = new TmxMapLoader().load("tilemaps/level1.tmx");
-      if (endless){
-        gm = new ScenarioGameMaster(
-                game, map, 3, -1, machineUnlockBalance, ingredientsHelper, deliveryStaff, disablePowerup);
+      if (endless) {
+        gm =
+            new ScenarioGameMaster(
+                game,
+                map,
+                3,
+                -1,
+                machineUnlockBalance,
+                ingredientsHelper,
+                deliveryStaff,
+                disablePowerup);
       } else {
-        gm = new ScenarioGameMaster(
-                        game, map, 3, 5, machineUnlockBalance, ingredientsHelper, deliveryStaff, disablePowerup);
+        gm =
+            new ScenarioGameMaster(
+                game,
+                map,
+                3,
+                5,
+                machineUnlockBalance,
+                ingredientsHelper,
+                deliveryStaff,
+                disablePowerup);
       }
       unitScale = Gdx.graphics.getHeight() / (12f * 32f);
       wScale = unitScale * 32f;
@@ -86,7 +102,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     recipes = new Texture(Gdx.files.internal("recipes.png"));
     lock = new Texture(Gdx.files.internal("levellocked.png"));
   }
-
 
   /** What to show when this screen is loaded. */
   @Override
