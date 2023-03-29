@@ -10,26 +10,35 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /** Screen used to select which level wants to be played. */
 public class LevelSelectorScreen extends ScreenAdapter {
   PiazzaPanicGame game;
   OrthographicCamera camera;
-  SpriteBatch batch;
   BitmapFont font;
   Texture bg;
   Texture lock;
+  Texture leftCustomerMode;
+  Texture rightCustomerMode;
+  Texture leftPowerupMode;
+  Texture rightPowerupMode;
   int winWidth;
   int winHeight;
   float bgScaleFactor;
   Stage stage;
+  Stage flipButtonStage;
   TextButton level1Button;
   TextButton level2Button;
   TextButton level3Button;
   TextButton.TextButtonStyle buttonStyle;
+  Button customerGameModeButton;
+  Button powerupGameModeButton;
   Skin skin;
   TextureAtlas atlas;
 
@@ -43,6 +52,10 @@ public class LevelSelectorScreen extends ScreenAdapter {
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
     lock = new Texture(Gdx.files.internal("levellocked.png"));
+    leftCustomerMode = new Texture(Gdx.files.internal("left-scenario-slider.png"));
+    rightCustomerMode = new Texture(Gdx.files.internal("right-scenario-slider.png"));
+    leftPowerupMode = new Texture(Gdx.files.internal("left-powerup-slider.png"));
+    rightPowerupMode = new Texture(Gdx.files.internal("right-powerup-slider.png"));
   }
 
   /** What to show when this screen is loaded. */
@@ -94,12 +107,26 @@ public class LevelSelectorScreen extends ScreenAdapter {
           }
         });
 
+    // New assessment two buttons.
+    customerGameModeButton = new ImageButton(new TextureRegionDrawable(leftCustomerMode),
+            new TextureRegionDrawable(rightCustomerMode), new TextureRegionDrawable(rightCustomerMode));
+    customerGameModeButton.setPosition(40, 100);
+
+    powerupGameModeButton = new ImageButton(new TextureRegionDrawable(leftPowerupMode),
+            new TextureRegionDrawable(rightCustomerMode), new TextureRegionDrawable(rightPowerupMode));
+    powerupGameModeButton.setPosition(40, 75);
+
+
     if (game.testMode) {
       return;
     }
 
+    flipButtonStage = new Stage();
+    flipButtonStage.addActor(customerGameModeButton);
+    flipButtonStage.addActor(powerupGameModeButton);
+
     stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
+    Gdx.input.setInputProcessor(flipButtonStage);
     stage.addActor(level1Button);
     stage.addActor(level2Button);
     stage.addActor(level3Button);
@@ -153,6 +180,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
             level3Button.getY(),
             level3Button.getWidth(),
             level3Button.getHeight());
+    flipButtonStage.draw();
     game.getBatch().end();
   }
 
