@@ -1,7 +1,8 @@
 package com.neves6.piazzapanic.powerups;
 
 import com.neves6.piazzapanic.gamemechanisms.Machine;
-import java.util.ArrayList;
+
+import java.util.Map;
 
 /** Finds the first current recipe that is being process and skips the cook time for it. */
 public class AutoCook extends BasePowerUp {
@@ -19,10 +20,13 @@ public class AutoCook extends BasePowerUp {
    *
    * @param machines List of machines on the map.
    */
-  public void applyPowerUp(ArrayList<Machine> machines) {
-    for (Machine machine : machines) {
-      if (machine.getActive() == true) {
-        machine.incrementRuntime(machine.getProcessingTime() - machine.getRuntime());
+  public void applyPowerUp(Map<String, Machine> machines) {
+    if (!(this.aquired)){
+      return;
+    }
+    for (String machine : machines.keySet()) {
+      if (machines.get(machine).getActive() == true) {
+        machines.get(machine).incrementRuntime(machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());
         this.aquired = false;
         return;
       }

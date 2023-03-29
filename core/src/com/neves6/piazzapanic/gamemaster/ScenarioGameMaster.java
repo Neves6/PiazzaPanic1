@@ -84,7 +84,6 @@ public class ScenarioGameMaster extends GameMaster {
     this.map = map;
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
     this.disablePowerUp = disablePowerup;
-    this.powerups = new PowerUpRunner();
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -173,6 +172,8 @@ public class ScenarioGameMaster extends GameMaster {
 
     // It is a square hence, width = height, just get one.
     tilewidth = (int) map.getProperties().get("tilewidth");
+
+    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);
   }
 
   /**
@@ -362,10 +363,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-    chefs = powerups.getDoubleSpeed().endPowerUp(chefs);
-    machines = powerups.getShorterMachineTime().endPowerUp(machines);
 
-    float increment = delta;
+    float increment = powerups.updateValues(delta);
+
     for (String machine : machines.keySet()) {
       Machine tempMachine = machines.get(machine);
       if (tempMachine.getActive()) {
@@ -687,10 +687,9 @@ public class ScenarioGameMaster extends GameMaster {
       // collect another order.
       staffOne.setGenerate(true);
 
+      // Activate random power up if a recipe is complete.
       if (!(disablePowerUp)){
         this.powerups.activateRandomPowerUp();
-        chefs = powerups.getDoubleSpeed().applyPowerUp(chefs);
-        machines = powerups.getShorterMachineTime().applyPowerUp(machines);
       }
     }
   }
