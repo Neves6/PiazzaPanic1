@@ -88,7 +88,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
             // game.setScreen(new GameScreen(game, 1));
-            game.setScreen(new TutorialScreen(game, "game1"));
+            game.setScreen(new TutorialScreen(game, "game1", customerGameModeButton.isChecked(), powerupGameModeButton.isChecked()));
           }
         });
     level1Button.addListener(
@@ -109,11 +109,14 @@ public class LevelSelectorScreen extends ScreenAdapter {
     // New assessment two buttons.
     customerGameModeButton = new ImageButton(new TextureRegionDrawable(leftCustomerMode),
             new TextureRegionDrawable(rightCustomerMode), new TextureRegionDrawable(rightCustomerMode));
-    customerGameModeButton.setPosition(40, 100);
+    customerGameModeButton.setPosition(
+            Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
+            Gdx.graphics.getHeight() / 4f - level1Button.getHeight() / 2);
 
     powerupGameModeButton = new ImageButton(new TextureRegionDrawable(leftPowerupMode),
             new TextureRegionDrawable(rightPowerupMode), new TextureRegionDrawable(rightPowerupMode));
-    powerupGameModeButton.setPosition(40, 75);
+    powerupGameModeButton.setPosition(Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
+            Gdx.graphics.getHeight() / 3f - level1Button.getHeight() / 2);
 
 
     if (game.testMode) {
@@ -201,6 +204,12 @@ public class LevelSelectorScreen extends ScreenAdapter {
     level3Button.setPosition(
         width / 2f - level1Button.getWidth() / 2 + level3Button.getWidth() * 1.5f,
         height / 2f - level1Button.getHeight() / 2);
+    customerGameModeButton.setPosition(
+            Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
+            Gdx.graphics.getHeight() / 4f - level1Button.getHeight() / 2);
+    powerupGameModeButton.setPosition(
+            Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
+            Gdx.graphics.getHeight() / 3f - level1Button.getHeight() / 2);
     stage.clear();
     stage.addActor(level1Button);
     stage.addActor(level2Button);

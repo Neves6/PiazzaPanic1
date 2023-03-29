@@ -32,7 +32,7 @@ public class TestScenarioGameMaster {
           1,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
+          new DeliveryStaff(defValues, defValues), false);
 
   @Test
   public void tryMoveValidUp() {
@@ -150,7 +150,7 @@ public class TestScenarioGameMaster {
           1,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
+          new DeliveryStaff(defValues, defValues), false);
 
   @Test
   public void testDisplayTextFull() {
@@ -176,7 +176,7 @@ public class TestScenarioGameMaster {
           3,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
+          new DeliveryStaff(defValues, defValues), false);
 
   /* TODO: Create new test for text based on customer orders
            Customers are no longer generated upon loading game scenario, instead are produced at slight random intervals throughout
@@ -619,7 +619,7 @@ public class TestScenarioGameMaster {
           0,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
+          new DeliveryStaff(defValues, defValues), false);
 
   @Test
   public void testServeFoodEndGame() {

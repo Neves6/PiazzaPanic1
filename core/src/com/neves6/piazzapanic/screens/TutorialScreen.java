@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import jdk.internal.loader.BootLoader;
 
 /** Screen used to demonstrate gameplay to users. */
 public class TutorialScreen extends ScreenAdapter implements InputProcessor {
@@ -19,12 +20,16 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   int winWidth;
   int winHeight;
   String continueTo;
+  Boolean endless;
+  Boolean disablePowerUp;
 
-  public TutorialScreen(PiazzaPanicGame game, String continueTo) {
+  public TutorialScreen(PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup) {
     this.game = game;
     this.continueTo = continueTo;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
+    this.endless = endless;
+    this.disablePowerUp = disablePowerup;
   }
 
   /** What to show when this screen is loaded. */
@@ -88,13 +93,13 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
         game.setScreen(new TitleScreen(game));
         break;
       case "game1":
-        game.setScreen(new GameScreen(game, 1));
+        game.setScreen(new GameScreen(game, 1, endless, disablePowerUp));
         break;
       case "game2":
-        game.setScreen(new GameScreen(game, 2));
+        game.setScreen(new GameScreen(game, 2, endless, disablePowerUp));
         break;
       case "game3":
-        game.setScreen(new GameScreen(game, 3));
+        game.setScreen(new GameScreen(game, 3, endless, disablePowerUp));
         break;
       default:
         game.setScreen(new TitleScreen(game));

@@ -79,7 +79,7 @@ public class TitleScreen extends ScreenAdapter {
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
-            game.setScreen(new TutorialScreen(game, "title"));
+            game.setScreen(new TutorialScreen(game, "title", false, false));
           }
         });
 

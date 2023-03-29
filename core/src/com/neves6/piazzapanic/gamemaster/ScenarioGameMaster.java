@@ -16,6 +16,7 @@ import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
+import com.neves6.piazzapanic.powerups.PowerUpRunner;
 import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
@@ -54,6 +55,8 @@ public class ScenarioGameMaster extends GameMaster {
   int timeAllowed;
   float lastCustomer;
   float waitTime;
+  Boolean disablePowerUp;
+  PowerUpRunner powerups;
   /**
    * ScenarioGameMaster constructor.
    *
@@ -71,7 +74,8 @@ public class ScenarioGameMaster extends GameMaster {
       int custno,
       Money machineUnlockBalance,
       IngredientsStaff ingredientsHelper,
-      DeliveryStaff deliveryStaff) {
+      DeliveryStaff deliveryStaff,
+      Boolean disablePowerup) {
     this.machineUnlockBalance = machineUnlockBalance;
     this.staffOne = ingredientsHelper;
     this.deliveryStaff = deliveryStaff;
@@ -79,6 +83,8 @@ public class ScenarioGameMaster extends GameMaster {
     settings = Utility.getSettings();
     this.map = map;
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+    this.disablePowerUp = disablePowerup;
+    this.powerups = new PowerUpRunner();
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -356,8 +362,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-    // TODO: Use increment variable to handle powerup -
-    // just use get delta everytime.
+    chefs = powerups.getDoubleSpeed().endPowerUp(chefs);
+    machines = powerups.getShorterMachineTime().endPowerUp(machines);
+
     float increment = delta;
     for (String machine : machines.keySet()) {
       Machine tempMachine = machines.get(machine);
@@ -565,16 +572,6 @@ public class ScenarioGameMaster extends GameMaster {
 
     MapObjects miscObjects = getObjectLayers("Misc Layer");
 
-    System.out.println(loadRectangle(miscObjects.get("bin")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("bin")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("serving")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("serving")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-1")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-1")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-2")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-2")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getY() / tilewidth);
     if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       chef.removeTopFromInventory();
       trash.play(soundVolume);
@@ -682,13 +679,19 @@ public class ScenarioGameMaster extends GameMaster {
 
     if (customers.peek().getOrder() == inv.peek()) {
       inv.pop();
-      customers.remove(0);
+      customers.poll();
       serving.play(soundVolume);
       // +$100 on completion of a recipe.
       machineUnlockBalance.incrementBalance();
       // Once an order is complete, allow ingredient staff to
       // collect another order.
       staffOne.setGenerate(true);
+
+      if (!(disablePowerUp)){
+        this.powerups.activateRandomPowerUp();
+        chefs = powerups.getDoubleSpeed().applyPowerUp(chefs);
+        machines = powerups.getShorterMachineTime().applyPowerUp(machines);
+      }
     }
   }
 }

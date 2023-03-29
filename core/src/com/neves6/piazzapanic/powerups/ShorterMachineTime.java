@@ -2,10 +2,10 @@ package com.neves6.piazzapanic.powerups;
 
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import java.util.ArrayList;
+import java.util.Map;
 
 /** A power up which makes food take a shorter amount of time to cook. */
 public class ShorterMachineTime extends BasePowerUp {
-
   /**
    * Constructor.
    *
@@ -22,14 +22,15 @@ public class ShorterMachineTime extends BasePowerUp {
    * @param machines List of all active machines.
    * @return Machines with decreasing processing speed.
    */
-  public ArrayList<Machine> applyPowerUp(ArrayList<Machine> machines) {
+  public Map<String, Machine> applyPowerUp(Map<String, Machine> machines) {
     if (machines.size() < 1) {
       throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
     }
     if (getAquiredStatus()) {
       setStartTime();
-      for (Machine machine : machines) {
-        machine.changeProcessingTime(machine.getProcessingTime() / 2);
+      for (String machine : machines.keySet()) {
+        System.out.println(machines.get(machine).getProcessingTime() / 2);
+        machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() / 2);
       }
     }
     return machines;
@@ -42,13 +43,14 @@ public class ShorterMachineTime extends BasePowerUp {
    * @param machines List of all active machines.
    * @return Machines with normal processing speed.
    */
-  public ArrayList<Machine> endPowerUp(ArrayList<Machine> machines) {
+  public Map<String, Machine> endPowerUp(Map<String, Machine> machines) {
     if (machines.size() < 1) {
       throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
     }
     if (endTime()) {
-      for (Machine machine : machines) {
-        machine.changeProcessingTime(machine.getProcessingTime() * 2);
+      for (String machine : machines.keySet()) {
+        System.out.println(machines.get(machine).getProcessingTime() * 2);
+        machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() * 2);
       }
     }
     return machines;
