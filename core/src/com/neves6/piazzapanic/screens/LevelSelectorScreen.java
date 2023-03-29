@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -108,14 +107,19 @@ public class LevelSelectorScreen extends ScreenAdapter {
         });
 
     // New assessment two buttons.
-    customerGameModeButton = new ImageButton(new TextureRegionDrawable(leftCustomerMode),
-            new TextureRegionDrawable(rightCustomerMode), new TextureRegionDrawable(rightCustomerMode));
+    customerGameModeButton =
+        new ImageButton(
+            new TextureRegionDrawable(leftCustomerMode),
+            new TextureRegionDrawable(rightCustomerMode),
+            new TextureRegionDrawable(rightCustomerMode));
     customerGameModeButton.setPosition(40, 100);
 
-    powerupGameModeButton = new ImageButton(new TextureRegionDrawable(leftPowerupMode),
-            new TextureRegionDrawable(rightCustomerMode), new TextureRegionDrawable(rightPowerupMode));
+    powerupGameModeButton =
+        new ImageButton(
+            new TextureRegionDrawable(leftPowerupMode),
+            new TextureRegionDrawable(rightCustomerMode),
+            new TextureRegionDrawable(rightPowerupMode));
     powerupGameModeButton.setPosition(40, 75);
-
 
     if (game.testMode) {
       return;
