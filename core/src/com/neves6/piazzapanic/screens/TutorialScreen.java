@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import jdk.internal.loader.BootLoader;
 
 /** Screen used to demonstrate gameplay to users. */
 public class TutorialScreen extends ScreenAdapter implements InputProcessor {
@@ -23,7 +22,8 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   Boolean endless;
   Boolean disablePowerUp;
 
-  public TutorialScreen(PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup) {
+  public TutorialScreen(
+      PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup) {
     this.game = game;
     this.continueTo = continueTo;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
