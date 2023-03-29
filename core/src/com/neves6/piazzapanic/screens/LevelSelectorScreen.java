@@ -32,7 +32,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
   int winHeight;
   float bgScaleFactor;
   Stage stage;
-  Stage flipButtonStage;
   TextButton level1Button;
   TextButton level2Button;
   TextButton level3Button;
@@ -113,7 +112,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     customerGameModeButton.setPosition(40, 100);
 
     powerupGameModeButton = new ImageButton(new TextureRegionDrawable(leftPowerupMode),
-            new TextureRegionDrawable(rightCustomerMode), new TextureRegionDrawable(rightPowerupMode));
+            new TextureRegionDrawable(rightPowerupMode), new TextureRegionDrawable(rightPowerupMode));
     powerupGameModeButton.setPosition(40, 75);
 
 
@@ -121,15 +120,13 @@ public class LevelSelectorScreen extends ScreenAdapter {
       return;
     }
 
-    flipButtonStage = new Stage();
-    flipButtonStage.addActor(customerGameModeButton);
-    flipButtonStage.addActor(powerupGameModeButton);
-
     stage = new Stage();
-    Gdx.input.setInputProcessor(flipButtonStage);
+    Gdx.input.setInputProcessor(stage);
     stage.addActor(level1Button);
     stage.addActor(level2Button);
     stage.addActor(level3Button);
+    stage.addActor(customerGameModeButton);
+    stage.addActor(powerupGameModeButton);
   }
 
   /**
@@ -165,7 +162,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
         winWidth / 5f,
         1,
         false);
-    stage.draw();
     game.getBatch()
         .draw(
             lock,
@@ -180,7 +176,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
             level3Button.getY(),
             level3Button.getWidth(),
             level3Button.getHeight());
-    flipButtonStage.draw();
+    stage.draw();
     game.getBatch().end();
   }
 
@@ -209,6 +205,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(level1Button);
     stage.addActor(level2Button);
     stage.addActor(level3Button);
+    stage.addActor(customerGameModeButton);
+    stage.addActor(powerupGameModeButton);
     stage.getViewport().update(width, height);
     camera.setToOrtho(false, width, height);
   }
