@@ -10,11 +10,11 @@ import java.util.Map;
 import static java.lang.Math.random;
 
 public class PowerUpRunner {
-    DoubleSpeed doublespeed = new DoubleSpeed(30000L);
-    ShorterMachineTime shorterMachineTime = new ShorterMachineTime(30000L);
-    AutoCook autoCook = new AutoCook(30000L);
-    TimeFreeze timeFreeze = new TimeFreeze(30000L);
-    DoubleMoney doubleMoney = new DoubleMoney(30000L);
+    DoubleSpeed doublespeed = new DoubleSpeed(30000L, "x2 Speed for 30 seconds");
+    ShorterMachineTime shorterMachineTime = new ShorterMachineTime(30000L, "1/2 machine time for 30 seconds");
+    AutoCook autoCook = new AutoCook(30000L, "no wait on a machine");
+    TimeFreeze timeFreeze = new TimeFreeze(30000L, "time freeze for 30 seconds");
+    DoubleMoney doubleMoney = new DoubleMoney(30000L, "double money for 30 seconds");
     ArrayList<Chef> chefs;
     Map<String, Machine> machines;
     Money money;
@@ -42,4 +42,14 @@ public class PowerUpRunner {
         autoCook.applyPowerUp(machines);
         return timeFreeze.getDelta(delta);
     }
+
+    public String displayText(){
+        return "Current Active Powerups: \n" +
+                doublespeed.prettyPrint() +
+                doubleMoney.prettyPrint() +
+                shorterMachineTime.prettyPrint() +
+                autoCook.prettyPrint() +
+                timeFreeze.prettyPrint();
+    }
+
 }

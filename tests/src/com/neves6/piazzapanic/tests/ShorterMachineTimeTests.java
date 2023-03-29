@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class ShorterMachineTimeTests {
-  ShorterMachineTime testMachineTime = new ShorterMachineTime(1L);
+  ShorterMachineTime testMachineTime = new ShorterMachineTime(1L, "1/2 machine time for 30 seconds");
 
   @Test
   public void testConstructor() {

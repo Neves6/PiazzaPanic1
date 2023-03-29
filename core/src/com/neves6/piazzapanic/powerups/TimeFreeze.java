@@ -6,9 +6,10 @@ public class TimeFreeze extends BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
+   * @param s
    */
-  public TimeFreeze(Long effectTime) {
-    super(effectTime);
+  public TimeFreeze(Long effectTime, String s) {
+    super(effectTime, s);
   }
 
   /**

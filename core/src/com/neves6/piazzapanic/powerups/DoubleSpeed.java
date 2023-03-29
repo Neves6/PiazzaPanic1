@@ -10,9 +10,10 @@ public class DoubleSpeed extends BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the effect will last for.
+   * @param x2Speed
    */
-  public DoubleSpeed(Long effectTime) {
-    super(effectTime);
+  public DoubleSpeed(Long effectTime, String x2Speed) {
+    super(effectTime, x2Speed);
   }
 
   /**

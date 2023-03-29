@@ -9,10 +9,11 @@ public class AutoCook extends BasePowerUp {
   /**
    * Constructor.
    *
-   * @param effectTime How long the power up lasts.
+   * @param effectTime       How long the power up lasts.
+   * @param noWaitOnAMachine
    */
-  public AutoCook(Long effectTime) {
-    super(effectTime);
+  public AutoCook(Long effectTime, String noWaitOnAMachine) {
+    super(effectTime, noWaitOnAMachine);
   }
 
   /**

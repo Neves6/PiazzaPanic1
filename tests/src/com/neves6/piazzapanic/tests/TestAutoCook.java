@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class TestAutoCook {
-  AutoCook testAutoCook = new AutoCook(1L);
+  AutoCook testAutoCook = new AutoCook(1L, "no wait on a machine");
 
   @Test
   public void testConstructor() {

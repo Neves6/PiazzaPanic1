@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class TestDoubleSpeed {
-  DoubleSpeed testDoubleSpeed = new DoubleSpeed(1L);
+  DoubleSpeed testDoubleSpeed = new DoubleSpeed(1L, "x2 Speed");
 
   @Test
   public void testConstructor() {

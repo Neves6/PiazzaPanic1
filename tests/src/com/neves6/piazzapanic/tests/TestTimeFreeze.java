@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class TestTimeFreeze {
-  TimeFreeze testFreeze = new TimeFreeze(1L);
+  TimeFreeze testFreeze = new TimeFreeze(1L, "time freeze for 30 seconds");
 
   @Test
   public void testConstructor() {

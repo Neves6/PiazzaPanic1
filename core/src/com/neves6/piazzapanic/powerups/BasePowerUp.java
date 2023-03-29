@@ -5,16 +5,18 @@ public class BasePowerUp {
   Boolean aquired;
   Long startTime;
   Long effectTime;
+  String name;
 
   /**
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
    */
-  public BasePowerUp(Long effectTime) {
+  public BasePowerUp(Long effectTime, String name) {
     this.aquired = false;
     this.startTime = 0L;
     this.effectTime = effectTime;
+    this.name = name;
   }
 
   /** Sets start time if it already hasn't been run and the power up is acquired. */
@@ -69,4 +71,14 @@ public class BasePowerUp {
   public Long getEffectTime() {
     return effectTime;
   }
+
+  public String prettyPrint(){
+    if (this.aquired) {
+      Long inSeconds = (System.currentTimeMillis() - startTime) / 1000;
+      return name + ":" + inSeconds.toString() + "s \n";
+    } else{
+      return "";
+    }
+  }
+
 }

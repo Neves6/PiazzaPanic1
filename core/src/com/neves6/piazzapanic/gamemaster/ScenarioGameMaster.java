@@ -693,4 +693,8 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
   }
+
+  public PowerUpRunner getPowerUpRunner(){
+    return powerups;
+  }
 }

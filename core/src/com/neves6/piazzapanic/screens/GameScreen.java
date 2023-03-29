@@ -234,6 +234,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         (winWidth / 3f),
         -1,
         false);
+    font.draw(
+        game.getBatch(),
+        gm.getPowerUpRunner().displayText(),
+        winWidth - (winWidth / 3f),
+        100,
+        (winWidth / 3f),
+        -1,
+        false);
 
     // Any machines that are unlockable add here to draw a lock on top of it.
     if (!(machineUnlockBalance.isUnlocked("chopping"))) {
