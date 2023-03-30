@@ -27,7 +27,7 @@ public class PowerUpRunner {
   }
 
   public void activateRandomPowerUp() {
-    int random = 3;//(int) Math.round(random() / 0.25);
+    int random = 3; // (int) Math.round(random() / 0.25);
     switch (random) {
       case 0:
         cheaperMachineUnlock.aquirePowerUp();

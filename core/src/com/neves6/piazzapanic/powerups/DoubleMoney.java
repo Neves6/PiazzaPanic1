@@ -21,7 +21,7 @@ public class DoubleMoney extends BasePowerUp {
   }
 
   public void endPowerUp() {
-    if (this.aquired && endTime()){
+    if (this.aquired && endTime()) {
       this.aquired = false;
       this.startTime = 0L;
     }
