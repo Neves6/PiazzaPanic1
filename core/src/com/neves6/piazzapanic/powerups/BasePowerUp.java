@@ -73,13 +73,12 @@ public class BasePowerUp {
     return effectTime;
   }
 
-  public String prettyPrint(){
+  public String prettyPrint() {
     if (this.aquired) {
       Long inSeconds = (System.currentTimeMillis() - startTime) / 1000;
       return name + ":" + inSeconds.toString() + "s \n";
-    } else{
+    } else {
       return "";
     }
   }
-
 }

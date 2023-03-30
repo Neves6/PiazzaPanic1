@@ -1,6 +1,5 @@
 package com.neves6.piazzapanic.gamemaster;
 
-import static java.lang.Math.random;
 import static java.util.Arrays.asList;
 
 import com.badlogic.gdx.Gdx;
@@ -690,13 +689,13 @@ public class ScenarioGameMaster extends GameMaster {
       staffOne.setGenerate(true);
 
       // Activate random power up if a recipe is complete.
-      if (!(disablePowerUp)){
+      if (!(disablePowerUp)) {
         this.powerups.activateRandomPowerUp();
       }
     }
   }
 
-  public PowerUpRunner getPowerUpRunner(){
+  public PowerUpRunner getPowerUpRunner() {
     return powerups;
   }
 }
