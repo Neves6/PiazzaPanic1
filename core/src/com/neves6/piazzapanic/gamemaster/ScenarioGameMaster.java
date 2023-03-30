@@ -52,6 +52,7 @@ public class ScenarioGameMaster extends GameMaster {
       new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
   int customersServed;
   int maxCustomers;
+  int customersGenerated;
   int timeAllowed;
   float lastCustomer;
   float waitTime;
@@ -88,7 +89,7 @@ public class ScenarioGameMaster extends GameMaster {
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
     }
-    this.maxCustomers = custno;
+    this.maxCustomers = 2;
 
     totalTimer = 0f;
 
@@ -174,7 +175,6 @@ public class ScenarioGameMaster extends GameMaster {
     tilewidth = (int) map.getProperties().get("tilewidth");
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);
-    System.out.println(custno);
   }
 
   /**
@@ -364,7 +364,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-
+    if (customersGenerated == maxCustomers && customers.size() == 0) {
+      game.setScreen(new GameWinScreen(game, (int) totalTimer));
+    }
     float increment = powerups.updateValues(delta);
 
     for (String machine : machines.keySet()) {
@@ -375,7 +377,7 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
     totalTimer += increment;
-    if (maxCustomers == -1 || (maxCustomers > 0 && customersServed < maxCustomers)) {
+    if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
       createCustomers();
     }
     checkOrderExpired();
@@ -411,7 +413,7 @@ public class ScenarioGameMaster extends GameMaster {
           // Max number of customers in the queue starts at 5, increases by 1 every 5 served, caps
           // at 10
           if (customers.size() < Math.min(5 + (customersServed / 5), 10)
-              && customersServed < maxCustomers) {
+              && (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers))) {
             int randomInt = ThreadLocalRandom.current().nextInt(0, 4);
             customers.add(
                 new Customer(
@@ -420,6 +422,7 @@ public class ScenarioGameMaster extends GameMaster {
                     -1,
                     recipes.get(randomInt),
                     totalTimer));
+            customersGenerated += 1;
           } else {
             break;
           }
@@ -657,10 +660,6 @@ public class ScenarioGameMaster extends GameMaster {
 
   /** Method to handle giving food to the customer. */
   public void serveFood() {
-    if (customersServed == maxCustomers) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer));
-    }
-
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
     // If the order isn't pizza and the server is unlocked,
