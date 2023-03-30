@@ -50,7 +50,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param level The difficulty that the user has selected.
    */
-  public GameScreen(PiazzaPanicGame game, int level, boolean endless, boolean disablePowerup) {
+  public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
     this.machineUnlockBalance = new Money();
     this.deliveryStaff =
         new DeliveryStaff(
@@ -68,13 +68,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
     if (level == 1) {
       map = new TmxMapLoader().load("tilemaps/level1.tmx");
-      if (endless) {
+      if (scenerio) {
         gm =
             new ScenarioGameMaster(
                 game,
                 map,
                 3,
-                -1,
+                5,
                 machineUnlockBalance,
                 ingredientsHelper,
                 deliveryStaff,
@@ -85,7 +85,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                 game,
                 map,
                 3,
-                5,
+                -1,
                 machineUnlockBalance,
                 ingredientsHelper,
                 deliveryStaff,
@@ -225,7 +225,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         40,
         (winWidth / 3f),
         -1,
-        false);
+        true);
     font.draw(
         game.getBatch(),
         machineUnlockBalance.displayBalance(),
@@ -233,7 +233,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         60,
         (winWidth / 3f),
         -1,
-        false);
+        true);
     font.draw(
         game.getBatch(),
         gm.getPowerUpRunner().displayText(),
@@ -241,7 +241,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         550,
         (winWidth / 3f),
         -1,
-        false);
+        true);
 
     // Any machines that are unlockable add here to draw a lock on top of it.
     if (!(machineUnlockBalance.isUnlocked("chopping"))) {

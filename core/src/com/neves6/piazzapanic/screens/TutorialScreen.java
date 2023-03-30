@@ -19,7 +19,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   int winWidth;
   int winHeight;
   String continueTo;
-  Boolean endless;
+  Boolean scenerio;
   Boolean disablePowerUp;
 
   public TutorialScreen(
@@ -28,7 +28,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     this.continueTo = continueTo;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
-    this.endless = endless;
+    this.scenerio = endless;
     this.disablePowerUp = disablePowerup;
   }
 
@@ -93,13 +93,13 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
         game.setScreen(new TitleScreen(game));
         break;
       case "game1":
-        game.setScreen(new GameScreen(game, 1, endless, disablePowerUp));
+        game.setScreen(new GameScreen(game, 1, scenerio, disablePowerUp));
         break;
       case "game2":
-        game.setScreen(new GameScreen(game, 2, endless, disablePowerUp));
+        game.setScreen(new GameScreen(game, 2, scenerio, disablePowerUp));
         break;
       case "game3":
-        game.setScreen(new GameScreen(game, 3, endless, disablePowerUp));
+        game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp));
         break;
       default:
         game.setScreen(new TitleScreen(game));
