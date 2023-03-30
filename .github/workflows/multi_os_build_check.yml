@@ -7,13 +7,17 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Java CI (Gradle, Temurin, JDK 11)
+name: Test and Build on Windows, Linux and Mac
 
 on:
-  push:
-    branches: main
   pull_request:
     branches: main
+  push:
+    branches: main
+  workflow_run:
+    workflows: [ 'Auto-format to Google Style Guide' ]
+    types:
+      - completed
 
 jobs:
   build:
