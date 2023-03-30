@@ -191,16 +191,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         gm.getChef(1).getxCoord() * wScale,
         gm.getChef(1).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
-        1,
-        false);
+        1, true);
     font.draw(
         game.getBatch(),
         gm.getMachineTimerForChef(1),
         gm.getChef(2).getxCoord() * wScale,
         gm.getChef(2).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
-        1,
-        false);
+        1, true);
     game.getBatch().draw(recipes, 20, 20);
     font.draw(
         game.getBatch(),
@@ -209,15 +207,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         winHeight - 20,
         (3 * (winWidth / 8f)),
         -1,
-        true);
+            true);
     font.draw(
         game.getBatch(),
         gm.generateCustomersTrayText(),
         winWidth - (3 * (winWidth / 8f)),
         winHeight - 20,
         (3 * (winWidth / 8f)),
-        -1,
-        true);
+        -1, true);
     font.draw(
         game.getBatch(),
         gm.generateTimerText(),
@@ -238,7 +235,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         game.getBatch(),
         gm.getPowerUpRunner().displayText(),
         winWidth - (winWidth / 3f),
-        100,
+        550,
         (winWidth / 3f),
         -1,
         false);
