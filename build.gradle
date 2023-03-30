@@ -101,7 +101,12 @@ project(":tests") {
     }
 
     jacocoTestReport {
+        def sourceDirs = ["${project.rootDir}\\core\\src"]
+        def classDirs = ["${project.rootDir}\\core\\build\\classes\\"]
+        additionalSourceDirs.from = files(sourceDirs)
+        additionalClassDirs.from = files(classDirs)
         dependsOn test // tests are required to run before generating the report
+
 
         reports {
             xml.required = false
@@ -109,10 +114,36 @@ project(":tests") {
             html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
         }
 
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree( dir: "${project.rootDir}\\core\\build\\classes\\" , exclude: [
+                        "${project.rootDir}\\tests\\build\\classes\\"
+                ])
+            }))
+        }
+
+        jacocoTestCoverageVerification {
+            violationRules {
+                failOnViolation = true
+                rule {
+                    limit {
+                        counter = 'LINE'
+                        minimum = 0.5
+                    }
+                    limit {
+                        counter = 'BRANCH'
+                        minimum = 0.5
+                    }
+                }
+            }
+        }
+
+        // to run coverage verification during the build (and fail when appropriate)
+        check.dependsOn jacocoTestCoverageVerification
+
         finalizedBy checkstyleTest
     }
 }
-
 
 project(":core") {
     apply plugin: "java-library"

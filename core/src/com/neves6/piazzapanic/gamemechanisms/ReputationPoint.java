@@ -1,4 +1,7 @@
-package com.neves6.piazzapanic;
+package com.neves6.piazzapanic.gamemechanisms;
+
+import com.neves6.piazzapanic.screens.GameWinScreen;
+import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 
 public class ReputationPoint {
     private ReputationPoint (){ //DO NOT INSTANTIATE
