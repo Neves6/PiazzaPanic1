@@ -42,7 +42,13 @@ public class GameWinScreen extends ScreenAdapter {
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param completionTime Time taken to complete the game.
    */
-  public GameWinScreen(PiazzaPanicGame game, int completionTime, boolean winOrLose, boolean isEndless, boolean isPowerUp, int difficulty) {
+  public GameWinScreen(
+      PiazzaPanicGame game,
+      int completionTime,
+      boolean winOrLose,
+      boolean isEndless,
+      boolean isPowerUp,
+      int difficulty) {
     this.game = game;
     this.completionTime = completionTime;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
@@ -132,9 +138,9 @@ public class GameWinScreen extends ScreenAdapter {
             bg.getWidth() * bgScaleFactor,
             bg.getHeight() * bgScaleFactor);
     String winOrLoseText;
-    if (winOrLose){
+    if (winOrLose) {
       winOrLoseText = "Congratulations!";
-    }else{
+    } else {
       winOrLoseText = "Unlucky!";
     }
     font.draw(
