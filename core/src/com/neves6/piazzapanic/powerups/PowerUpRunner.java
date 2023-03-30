@@ -27,7 +27,7 @@ public class PowerUpRunner {
   }
 
   public void activateRandomPowerUp() {
-    int random = (int) Math.round(random() / 0.25);
+    int random = 3;//(int) Math.round(random() / 0.25);
     switch (random) {
       case 0:
         cheaperMachineUnlock.aquirePowerUp();
@@ -37,10 +37,13 @@ public class PowerUpRunner {
         break;
       case 2:
         doubleMoney.aquirePowerUp();
+        break;
       case 3:
         autoCook.aquirePowerUp();
+        break;
       case 4:
         timeFreeze.aquirePowerUp();
+        break;
     }
     machines = shorterMachineTime.applyPowerUp(machines);
     doubleMoney.applyPowerUp(money);
@@ -51,6 +54,7 @@ public class PowerUpRunner {
     shorterMachineTime.endPowerUp(machines);
     autoCook.applyPowerUp(machines);
     cheaperMachineUnlock.endPowerUp(money.getUnlockDetails());
+    doubleMoney.endPowerUp();
     return timeFreeze.getDelta(delta);
   }
 

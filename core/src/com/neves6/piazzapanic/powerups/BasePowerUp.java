@@ -53,6 +53,7 @@ public class BasePowerUp {
   /** Set boolean value if the power up has just been attained. */
   public void aquirePowerUp() {
     this.aquired = true;
+    this.startTime = System.currentTimeMillis();
   }
 
   /**

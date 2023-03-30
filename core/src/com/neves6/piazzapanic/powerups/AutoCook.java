@@ -31,6 +31,7 @@ public class AutoCook extends BasePowerUp {
             .incrementRuntime(
                 machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());
         this.aquired = false;
+        this.startTime = 0L;
         return;
       }
     }

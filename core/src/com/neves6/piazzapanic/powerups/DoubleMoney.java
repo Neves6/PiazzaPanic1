@@ -19,4 +19,11 @@ public class DoubleMoney extends BasePowerUp {
     }
     return;
   }
+
+  public void endPowerUp() {
+    if (this.aquired && endTime()){
+      this.aquired = false;
+      this.startTime = 0L;
+    }
+  }
 }
