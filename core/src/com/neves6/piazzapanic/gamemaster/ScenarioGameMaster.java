@@ -1,5 +1,6 @@
 package com.neves6.piazzapanic.gamemaster;
 
+import static java.lang.Math.random;
 import static java.util.Arrays.asList;
 
 import com.badlogic.gdx.Gdx;
@@ -99,18 +100,18 @@ public class ScenarioGameMaster extends GameMaster {
     machines.put("fridge-onion", new Machine("fridge-onion", "", "onion", 0, false));
     machines.put("fridge-bun", new Machine("fridge-bun", "", "bun", 0, false));
 
-    machineUnlockBalance.addGroup("grill", 100);
+    machineUnlockBalance.addGroup("grill", 100f);
     machines.put("grill-patty-1", new Machine("grill-patty-1", "patty", "burger", 3, true));
     machines.put(
         "grill-patty-2", new Machine("grill-patty-2", "patty", "burger", 3, true, "grill"));
     machines.put("grill-bun-1", new Machine("grill-bun-1", "bun", "toasted bun", 3, true));
     machines.put("grill-bun-2", new Machine("grill-bun-2", "bun", "toasted bun", 3, true, "grill"));
 
-    machineUnlockBalance.addGroup("forming", 50);
+    machineUnlockBalance.addGroup("forming", 50f);
     machines.put("forming-1", new Machine("forming-1", "meat", "patty", 3, true));
     machines.put("forming-2", new Machine("forming-2", "meat", "patty", 3, true, "forming"));
 
-    machineUnlockBalance.addGroup("chopping", 50);
+    machineUnlockBalance.addGroup("chopping", 50f);
     machines.put(
         "chopping-tomato-1", new Machine("chopping-tomato-1", "tomato", "chopped tomato", 3, true));
     machines.put(
@@ -134,12 +135,12 @@ public class ScenarioGameMaster extends GameMaster {
     machines.put("fridge-potato", new Machine("fridge-potato", "", "potato", 0, false));
     machines.put("fridge-beans", new Machine("fridge-beans", "", "beans", 0, false));
 
-    machineUnlockBalance.addGroup("potato", 150);
+    machineUnlockBalance.addGroup("potato", 150f);
     machines.put("oven-potato-1", new Machine("oven-potato-1", "potato", "jacket", 3, true));
     machines.put(
         "oven-potato-2", new Machine("oven-potato-2", "potato", "jacket", 3, true, "potato"));
 
-    machineUnlockBalance.addGroup("pizza", 150);
+    machineUnlockBalance.addGroup("pizza", 150f);
     machines.put("oven-pizza-1", new Machine("oven-pizza-1", "raw pizza", "pizza", 3, true));
     machines.put(
         "oven-pizza-2", new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true, "pizza"));
@@ -167,13 +168,14 @@ public class ScenarioGameMaster extends GameMaster {
         break;
     }
 
-    machineUnlockBalance.addGroup("ingredients-staff", 150);
-    machineUnlockBalance.addGroup("server-staff", 50);
+    machineUnlockBalance.addGroup("ingredients-staff", 150f);
+    machineUnlockBalance.addGroup("server-staff", 50f);
 
     // It is a square hence, width = height, just get one.
     tilewidth = (int) map.getProperties().get("tilewidth");
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);
+    System.out.println(custno);
   }
 
   /**

@@ -25,11 +25,9 @@ public class ShorterMachineTime extends BasePowerUp {
   public Map<String, Machine> applyPowerUp(Map<String, Machine> machines) {
     if (machines.size() < 1) {
       throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
-    }
-    if (getAquiredStatus()) {
+    } else if (getAquiredStatus()) {
       setStartTime();
       for (String machine : machines.keySet()) {
-        System.out.println(machines.get(machine).getProcessingTime() / 2);
         machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() / 2);
       }
     }
@@ -49,7 +47,7 @@ public class ShorterMachineTime extends BasePowerUp {
     }
     if (endTime()) {
       for (String machine : machines.keySet()) {
-        System.out.println(machines.get(machine).getProcessingTime() * 2);
+        System.out.println(machines.get(machine).getProcessingTime());
         machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() * 2);
       }
     }
