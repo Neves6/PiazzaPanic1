@@ -660,7 +660,7 @@ public class ScenarioGameMaster extends GameMaster {
   /** Method to handle giving food to the customer. */
   public void serveFood() {
     if (customersServed == maxCustomers) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer));
+      game.setScreen(new GameWinScreen(game, (int) totalTimer, true, false, false, 0));
     }
 
     Chef chef = chefs.get(selectedChef);

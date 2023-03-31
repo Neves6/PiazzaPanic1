@@ -31,6 +31,10 @@ public class GameWinScreen extends ScreenAdapter {
   Skin skin;
   TextureAtlas atlas;
   int completionTime;
+  boolean winOrLose;
+  boolean isEndless;
+  boolean isPowerUp;
+  int difficulty;
 
   /**
    * Constructor method.
@@ -38,11 +42,21 @@ public class GameWinScreen extends ScreenAdapter {
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param completionTime Time taken to complete the game.
    */
-  public GameWinScreen(PiazzaPanicGame game, int completionTime) {
+  public GameWinScreen(
+      PiazzaPanicGame game,
+      int completionTime,
+      boolean winOrLose,
+      boolean isEndless,
+      boolean isPowerUp,
+      int difficulty) {
     this.game = game;
     this.completionTime = completionTime;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
+    this.winOrLose = winOrLose;
+    this.isEndless = isEndless;
+    this.isPowerUp = isPowerUp;
+    this.difficulty = difficulty;
   }
 
   /** What to show when this screen is loaded. */
@@ -50,7 +64,10 @@ public class GameWinScreen extends ScreenAdapter {
   public void show() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    batch = new SpriteBatch();
 
+    stage = new Stage();
+    Gdx.input.setInputProcessor(stage);
     skin = new Skin();
     atlas = new TextureAtlas(Gdx.files.internal("buttons/title/unnamed.atlas"));
     skin.addRegions(atlas);
@@ -71,6 +88,7 @@ public class GameWinScreen extends ScreenAdapter {
             game.setScreen(new CreditsScreen(game));
           }
         });
+    stage.addActor(creditsButton);
 
     titleButton = new TextButton("Title", buttonStyle);
     titleButton.setPosition(
@@ -119,9 +137,15 @@ public class GameWinScreen extends ScreenAdapter {
             0,
             bg.getWidth() * bgScaleFactor,
             bg.getHeight() * bgScaleFactor);
+    String winOrLoseText;
+    if (winOrLose) {
+      winOrLoseText = "Congratulations!";
+    } else {
+      winOrLoseText = "Unlucky!";
+    }
     font.draw(
         game.getBatch(),
-        "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!",
+        winOrLoseText + "\nYou completed the game in " + completionTime + " seconds!",
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f + winHeight / 5f,
         winWidth / 5f,
