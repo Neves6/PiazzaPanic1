@@ -78,7 +78,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                 machineUnlockBalance,
                 ingredientsHelper,
                 deliveryStaff,
-                disablePowerup);
+                disablePowerup,
+                level);
       } else {
         gm =
             new ScenarioGameMaster(
@@ -89,7 +90,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                 machineUnlockBalance,
                 ingredientsHelper,
                 deliveryStaff,
-                disablePowerup);
+                disablePowerup,
+                level);
       }
       unitScale = Gdx.graphics.getHeight() / (12f * 32f);
       wScale = unitScale * 32f;

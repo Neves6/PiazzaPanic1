@@ -59,6 +59,7 @@ public class ScenarioGameMaster extends GameMaster {
   Boolean isPowerUp;
   PowerUpRunner powerups;
   int reputationPoints = 3;
+  int difficulty;
   /**
    * ScenarioGameMaster constructor.
    *
@@ -77,7 +78,8 @@ public class ScenarioGameMaster extends GameMaster {
       Money machineUnlockBalance,
       IngredientsStaff ingredientsHelper,
       DeliveryStaff deliveryStaff,
-      Boolean disablePowerup) {
+      Boolean disablePowerup,
+      int difficulty) {
     this.machineUnlockBalance = machineUnlockBalance;
     this.staffOne = ingredientsHelper;
     this.deliveryStaff = deliveryStaff;
@@ -86,6 +88,7 @@ public class ScenarioGameMaster extends GameMaster {
     this.map = map;
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
     this.isPowerUp = !disablePowerup;
+    this.difficulty = difficulty;
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -371,6 +374,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
+    // TODO: play test and adjust difficulty scaling according to feedback
     checkOrderExpired();
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
       game.setScreen(new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
@@ -396,7 +400,7 @@ public class ScenarioGameMaster extends GameMaster {
    * order expired and removes a reputation point
    */
   private void checkOrderExpired() {
-    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);
+    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45) - (5 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
         // TODO: add fail message
@@ -413,14 +417,23 @@ public class ScenarioGameMaster extends GameMaster {
   private void createCustomers() {
     waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
     if (lastCustomer + waitTime <= totalTimer) {
+      /*
+      Random chance to stall next customer's arrival to vary customer arrival times
+      Stalls scaled by difficulty to make harder difficulties slightly faster paced
+      Chance to stall and time stalled by difficulty:
+          Easy    30%   1s
+          Medium  20%   0.75s
+          Hard    10%   0.5s
+      */
+
       float randomFloat = ThreadLocalRandom.current().nextFloat();
-      if (randomFloat > 0.90 && customers.size() != 0) {
-        lastCustomer += 0.5;
+      if (customers.size() != 0 && randomFloat > (0.9 - 0.1 * (3 - difficulty))) {
+        lastCustomer += 0.5 + 0.25 * (3 - difficulty);
       } else {
         int partySize = generatePartySize();
         for (int i = 0; i < partySize; i++) {
-          // Max number of customers in the queue starts at 5, increases by 1 every 5 served, caps
-          // at 10
+          // Max number of customers in the queue starts at 5, increases by 1 every 5 served
+          // Queue caps at 10 customers
           if (customers.size() < Math.min(5 + (customersServed / 5), 10)
               && (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers))) {
             int randomInt = ThreadLocalRandom.current().nextInt(0, 4);
@@ -506,7 +519,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public Rectangle loadRectangle(MapObject object) {
     RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
-    // now you can get the position of the rectangle like this:
+    // Now you can get the position of the rectangle like this:
     return rectangleMapObject.getRectangle();
   }
 

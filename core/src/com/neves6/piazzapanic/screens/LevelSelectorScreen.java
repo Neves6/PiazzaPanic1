@@ -31,9 +31,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
   int winHeight;
   float bgScaleFactor;
   Stage stage;
-  TextButton level1Button;
-  TextButton level2Button;
-  TextButton level3Button;
+  TextButton easyButton;
+  TextButton mediumButton;
+  TextButton hardButton;
   TextButton.TextButtonStyle buttonStyle;
   Button customerGameModeButton;
   Button powerupGameModeButton;
@@ -70,45 +70,54 @@ public class LevelSelectorScreen extends ScreenAdapter {
     buttonStyle.up = skin.getDrawable("black_alpha_square");
     buttonStyle.down = skin.getDrawable("black_alpha_square");
     buttonStyle.checked = skin.getDrawable("black_alpha_square");
-    level1Button = new TextButton("Level 1", buttonStyle);
-    level1Button.setPosition(
-        Gdx.graphics.getWidth() / 2f - level1Button.getWidth() / 2 - level1Button.getWidth() * 1.5f,
-        Gdx.graphics.getHeight() / 2f - level1Button.getHeight() / 2);
-    level2Button = new TextButton("Level 2", buttonStyle);
-    level2Button.setPosition(
-        Gdx.graphics.getWidth() / 2f - level1Button.getWidth() / 2,
-        Gdx.graphics.getHeight() / 2f - level1Button.getHeight() / 2);
-    level3Button = new TextButton("Level 3", buttonStyle);
-    level3Button.setPosition(
-        Gdx.graphics.getWidth() / 2f - level1Button.getWidth() / 2 + level3Button.getWidth() * 1.5f,
-        Gdx.graphics.getHeight() / 2f - level1Button.getHeight() / 2);
-    level1Button.addListener(
+    easyButton = new TextButton("Easy", buttonStyle);
+    easyButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,
+        Gdx.graphics.getHeight() / 2f - easyButton.getHeight() / 2);
+    mediumButton = new TextButton("Medium", buttonStyle);
+    mediumButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 2f - easyButton.getHeight() / 2);
+    hardButton = new TextButton("Hard", buttonStyle);
+    hardButton.setPosition(
+        Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,
+        Gdx.graphics.getHeight() / 2f - easyButton.getHeight() / 2);
+    easyButton.addListener(
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
-            // game.setScreen(new GameScreen(game, 1));
             game.setScreen(
                 new TutorialScreen(
                     game,
-                    "game1",
+                    "easyGame",
                     customerGameModeButton.isChecked(),
                     powerupGameModeButton.isChecked()));
           }
         });
-    level1Button.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            // game.setScreen(new GameScreen(game, 2));
-          }
-        });
-    level1Button.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            // game.setScreen(new GameScreen(game, 3));
-          }
-        });
+    mediumButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              game.setScreen(
+                      new TutorialScreen(
+                              game,
+                              "mediumGame",
+                              customerGameModeButton.isChecked(),
+                              powerupGameModeButton.isChecked()));
+            }
+          });
+    hardButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              game.setScreen(
+                      new TutorialScreen(
+                              game,
+                              "hardGame",
+                              customerGameModeButton.isChecked(),
+                              powerupGameModeButton.isChecked()));
+            }
+          });
 
     // New assessment two buttons.
     customerGameModeButton =
@@ -117,8 +126,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
             new TextureRegionDrawable(rightCustomerMode),
             new TextureRegionDrawable(rightCustomerMode));
     customerGameModeButton.setPosition(
-        Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
-        Gdx.graphics.getHeight() / 4f - level1Button.getHeight() / 2);
+        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 4f - easyButton.getHeight() / 2);
 
     powerupGameModeButton =
         new ImageButton(
@@ -126,8 +135,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
             new TextureRegionDrawable(rightPowerupMode),
             new TextureRegionDrawable(rightPowerupMode));
     powerupGameModeButton.setPosition(
-        Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
-        Gdx.graphics.getHeight() / 3f - level1Button.getHeight() / 2);
+        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 3f - easyButton.getHeight() / 2);
 
     if (game.testMode) {
       return;
@@ -135,9 +144,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
     stage = new Stage();
     Gdx.input.setInputProcessor(stage);
-    stage.addActor(level1Button);
-    stage.addActor(level2Button);
-    stage.addActor(level3Button);
+    stage.addActor(easyButton);
+    stage.addActor(mediumButton);
+    stage.addActor(hardButton);
     stage.addActor(customerGameModeButton);
     stage.addActor(powerupGameModeButton);
   }
@@ -175,20 +184,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
         winWidth / 5f,
         1,
         false);
-    game.getBatch()
-        .draw(
-            lock,
-            level2Button.getX(),
-            level2Button.getY(),
-            level2Button.getWidth(),
-            level2Button.getHeight());
-    game.getBatch()
-        .draw(
-            lock,
-            level3Button.getX(),
-            level3Button.getY(),
-            level3Button.getWidth(),
-            level3Button.getHeight());
     stage.draw();
     game.getBatch().end();
   }
@@ -206,24 +201,24 @@ public class LevelSelectorScreen extends ScreenAdapter {
     }
 
     super.resize(width, height);
-    level1Button.setPosition(
-        width / 2f - level1Button.getWidth() / 2 - level1Button.getWidth() * 1.5f,
-        height / 2f - level1Button.getHeight() / 2);
-    level2Button.setPosition(
-        width / 2f - level1Button.getWidth() / 2, height / 2f - level1Button.getHeight() / 2);
-    level3Button.setPosition(
-        width / 2f - level1Button.getWidth() / 2 + level3Button.getWidth() * 1.5f,
-        height / 2f - level1Button.getHeight() / 2);
+    easyButton.setPosition(
+        width / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,
+        height / 2f - easyButton.getHeight() / 2);
+    mediumButton.setPosition(
+        width / 2f - easyButton.getWidth() / 2, height / 2f - easyButton.getHeight() / 2);
+    hardButton.setPosition(
+        width / 2f - easyButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,
+        height / 2f - easyButton.getHeight() / 2);
     customerGameModeButton.setPosition(
-        Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
-        Gdx.graphics.getHeight() / 4f - level1Button.getHeight() / 2);
+        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 4f - easyButton.getHeight() / 2);
     powerupGameModeButton.setPosition(
-        Gdx.graphics.getWidth() / 3f - level1Button.getWidth() / 2,
-        Gdx.graphics.getHeight() / 3f - level1Button.getHeight() / 2);
+        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 3f - easyButton.getHeight() / 2);
     stage.clear();
-    stage.addActor(level1Button);
-    stage.addActor(level2Button);
-    stage.addActor(level3Button);
+    stage.addActor(easyButton);
+    stage.addActor(mediumButton);
+    stage.addActor(hardButton);
     stage.addActor(customerGameModeButton);
     stage.addActor(powerupGameModeButton);
     stage.getViewport().update(width, height);
