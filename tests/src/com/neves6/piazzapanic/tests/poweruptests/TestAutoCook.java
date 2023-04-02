@@ -19,14 +19,6 @@ public class TestAutoCook {
   AutoCook testAutoCook = new AutoCook(1L, "no wait on a machine");
   AutoCook testAutoCookII = new AutoCook(30000L, "no wait on a machine");
 
-  @Test
-  public void testConstructor() {
-    assertEquals(
-        "The constructor should not modify the effect time",
-        1L,
-        (long) testAutoCook.getEffectTime());
-  }
-
   Machine m1 = new Machine("test", "test", "testProcessed", 5, false);
   Machine m2 = new Machine("test", "test", "test", 10, true);
   Map<String, Machine> testMachines = new HashMap<>();

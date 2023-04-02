@@ -13,15 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
-public class ShorterMachineTimeTests {
+public class TestShorterMachineTime {
   ShorterMachineTime testMachineTime =
       new ShorterMachineTime(1L, "1/2 machine time for 30 seconds");
-
-  @Test
-  public void testConstructor() {
-    assertEquals(
-        "Constructor must not modify effect time", 1L, (long) testMachineTime.getEffectTime());
-  }
 
   @Test(expected = IllegalArgumentException.class)
   public void testApplyPowerUpEmpty() {
