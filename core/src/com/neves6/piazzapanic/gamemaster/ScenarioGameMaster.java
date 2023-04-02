@@ -365,7 +365,8 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tickUpdate(float delta) {
     if (customersGenerated == maxCustomers && customers.size() == 0) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer));
+      // TODO: FIX PARAMETERS
+      //game.setScreen(new GameWinScreen(game, (int) totalTimer));
     }
     float increment = powerups.updateValues(delta);
 
@@ -660,6 +661,9 @@ public class ScenarioGameMaster extends GameMaster {
 
   /** Method to handle giving food to the customer. */
   public void serveFood() {
+    if (customersServed == maxCustomers) {
+      game.setScreen(new GameWinScreen(game, (int) totalTimer, true, false, false, 0));
+    }
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
     // If the order isn't pizza and the server is unlocked,

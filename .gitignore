@@ -118,3 +118,10 @@ Thumbs.db
 
 # Game Settings
 /assets/settings.txt
+
+#IntelliJ Session
+/.idea
+
+#Tests
+/tests/bin
+

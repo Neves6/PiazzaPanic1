@@ -98,7 +98,7 @@ public class TestScreenTransitions {
 
   @Test
   public void testWinScreenToCredit() {
-    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20);
+    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20, true, true, true, 0);
     testWinScreen.show();
     testWinScreen.getCreditsScreen().toggle();
     assertSame(
@@ -109,7 +109,7 @@ public class TestScreenTransitions {
 
   @Test
   public void testWinScreenToTitle() {
-    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20);
+    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20, true, true, true, 0);
     testWinScreen.show();
     testWinScreen.getTitleButton().toggle();
     assertSame(
