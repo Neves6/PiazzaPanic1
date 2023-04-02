@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PowerUpRunner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.powerups</a> &gt; <span class="el_source">PowerUpRunner.java</span></div><h1>PowerUpRunner.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.powerups;
+
+import static java.lang.Math.random;
+
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.people.Chef;
+import java.util.ArrayList;
+import java.util.Map;
+
+public class PowerUpRunner {
+<span class="nc" id="L12">  CheaperMachineUnlock cheaperMachineUnlock =</span>
+<span class="nc" id="L13">      new CheaperMachineUnlock(30000L, &quot;1/2 price machines for 30 seconds&quot;);</span>
+<span class="nc" id="L14">  ShorterMachineTime shorterMachineTime =</span>
+<span class="nc" id="L15">      new ShorterMachineTime(30000L, &quot;1/2 machine time for 30 seconds&quot;);</span>
+<span class="nc" id="L16">  AutoCook autoCook = new AutoCook(30000L, &quot;no wait on a machine&quot;);</span>
+<span class="nc" id="L17">  TimeFreeze timeFreeze = new TimeFreeze(30000L, &quot;time freeze for 30 seconds&quot;);</span>
+<span class="nc" id="L18">  DoubleMoney doubleMoney = new DoubleMoney(30000L, &quot;double money for 30 seconds&quot;);</span>
+  ArrayList&lt;Chef&gt; chefs;
+  Map&lt;String, Machine&gt; machines;
+  Money money;
+
+<span class="nc" id="L23">  public PowerUpRunner(ArrayList&lt;Chef&gt; chefs, Map&lt;String, Machine&gt; machines, Money money) {</span>
+<span class="nc" id="L24">    this.chefs = chefs;</span>
+<span class="nc" id="L25">    this.machines = machines;</span>
+<span class="nc" id="L26">    this.money = money;</span>
+<span class="nc" id="L27">  }</span>
+
+  public void activateRandomPowerUp() {
+<span class="nc" id="L30">    int random = (int) Math.round(random() / 0.25);</span>
+<span class="nc bnc" id="L31" title="All 6 branches missed.">    switch (random) {</span>
+      case 0:
+<span class="nc" id="L33">        cheaperMachineUnlock.acquirePowerUp();</span>
+<span class="nc" id="L34">        break;</span>
+      case 1:
+<span class="nc" id="L36">        shorterMachineTime.acquirePowerUp();</span>
+<span class="nc" id="L37">        break;</span>
+      case 2:
+<span class="nc" id="L39">        doubleMoney.acquirePowerUp();</span>
+<span class="nc" id="L40">        break;</span>
+      case 3:
+<span class="nc" id="L42">        autoCook.acquirePowerUp();</span>
+<span class="nc" id="L43">        break;</span>
+      case 4:
+<span class="nc" id="L45">        timeFreeze.acquirePowerUp();</span>
+        break;
+    }
+<span class="nc" id="L48">    machines = shorterMachineTime.applyPowerUp(machines);</span>
+<span class="nc" id="L49">    doubleMoney.applyPowerUp(money);</span>
+<span class="nc" id="L50">    cheaperMachineUnlock.applyPowerUp(money.getUnlockDetails());</span>
+<span class="nc" id="L51">  }</span>
+
+  public Float updateValues(Float delta) {
+<span class="nc" id="L54">    shorterMachineTime.endPowerUp(machines);</span>
+<span class="nc" id="L55">    autoCook.applyPowerUp(machines);</span>
+<span class="nc" id="L56">    cheaperMachineUnlock.endPowerUp(money.getUnlockDetails());</span>
+<span class="nc" id="L57">    doubleMoney.endPowerUp();</span>
+<span class="nc" id="L58">    return timeFreeze.getDelta(delta);</span>
+  }
+
+  public String displayText() {
+<span class="nc" id="L62">    return &quot;Current Active Powerups: \n&quot;</span>
+<span class="nc" id="L63">        + cheaperMachineUnlock.prettyPrint()</span>
+<span class="nc" id="L64">        + doubleMoney.prettyPrint()</span>
+<span class="nc" id="L65">        + shorterMachineTime.prettyPrint()</span>
+<span class="nc" id="L66">        + autoCook.prettyPrint()</span>
+<span class="nc" id="L67">        + timeFreeze.prettyPrint();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
