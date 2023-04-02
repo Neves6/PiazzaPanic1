@@ -95,29 +95,29 @@ public class LevelSelectorScreen extends ScreenAdapter {
           }
         });
     mediumButton.addListener(
-          new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-              game.setScreen(
-                      new TutorialScreen(
-                              game,
-                              "mediumGame",
-                              customerGameModeButton.isChecked(),
-                              powerupGameModeButton.isChecked()));
-            }
-          });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(
+                new TutorialScreen(
+                    game,
+                    "mediumGame",
+                    customerGameModeButton.isChecked(),
+                    powerupGameModeButton.isChecked()));
+          }
+        });
     hardButton.addListener(
-          new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-              game.setScreen(
-                      new TutorialScreen(
-                              game,
-                              "hardGame",
-                              customerGameModeButton.isChecked(),
-                              powerupGameModeButton.isChecked()));
-            }
-          });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(
+                new TutorialScreen(
+                    game,
+                    "hardGame",
+                    customerGameModeButton.isChecked(),
+                    powerupGameModeButton.isChecked()));
+          }
+        });
 
     // New assessment two buttons.
     customerGameModeButton =
