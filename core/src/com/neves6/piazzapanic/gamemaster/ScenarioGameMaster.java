@@ -378,7 +378,8 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Updates all in game timers, performs any checks or functions required every frame. To be called every frame render.
+   * Updates all in game timers, performs any checks or functions required every frame. To be called
+   * every frame render.
    *
    * @param delta time since last frame.
    */
@@ -386,7 +387,8 @@ public class ScenarioGameMaster extends GameMaster {
     // TODO: play test and adjust difficulty scaling according to feedback
     checkOrderExpired();
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
+      game.setScreen(
+          new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
     }
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
       createCustomers();
@@ -692,7 +694,8 @@ public class ScenarioGameMaster extends GameMaster {
   /** Method to handle giving food to the customer. */
   public void serveFood() {
     if (customersServed == maxCustomers) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
+      game.setScreen(
+          new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
     }
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
