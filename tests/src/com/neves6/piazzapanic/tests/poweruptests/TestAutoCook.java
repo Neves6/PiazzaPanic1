@@ -6,13 +6,11 @@ import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.powerups.AutoCook;
-
+import com.neves6.piazzapanic.tests.GdxTestRunner;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
-
-import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,8 +41,8 @@ public class TestAutoCook {
         "If no machine is running, the game should save it till this occurs",
         testAutoCook.getAcquiredStatus());
     assertTrue(
-            "If no machine is running, the start time should be set to zero",
-            testAutoCook.getAcquiredStatus());
+        "If no machine is running, the start time should be set to zero",
+        testAutoCook.getAcquiredStatus());
   }
 
   @Test
@@ -57,11 +55,10 @@ public class TestAutoCook {
     testAutoCookII.acquirePowerUp();
     testAutoCookII.applyPowerUp(testMachines);
     m1.attemptGetOutput();
-    assertTrue("If a machine is running, when this powerup is attained, it should be used immediately",
-            t1.getInventory().peek() == "testProcessed");
-    assertFalse(
-        "Once a powerup is used it must be disabled.",
-        testAutoCookII.getAcquiredStatus());
+    assertTrue(
+        "If a machine is running, when this powerup is attained, it should be used immediately",
+        t1.getInventory().peek() == "testProcessed");
+    assertFalse("Once a powerup is used it must be disabled.", testAutoCookII.getAcquiredStatus());
   }
 
   @Test
@@ -75,8 +72,8 @@ public class TestAutoCook {
     TimeUnit.MILLISECONDS.sleep(5);
     testAutoCook.applyPowerUp(testMachines);
     assertFalse(
-            "Once the timer is up, it must be disposed even if the powerup has not been used.",
-            testAutoCook.getAcquiredStatus());
+        "Once the timer is up, it must be disposed even if the powerup has not been used.",
+        testAutoCook.getAcquiredStatus());
   }
 
   @Test
@@ -88,7 +85,7 @@ public class TestAutoCook {
     testMachines.put("m2", m2);
     testAutoCook.applyPowerUp(testMachines);
     assertFalse(
-            "If the powerup is not attained, it should not be applied.",
-            testAutoCook.getAcquiredStatus());
+        "If the powerup is not attained, it should not be applied.",
+        testAutoCook.getAcquiredStatus());
   }
 }

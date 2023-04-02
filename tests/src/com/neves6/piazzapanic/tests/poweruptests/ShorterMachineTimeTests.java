@@ -5,11 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.powerups.ShorterMachineTime;
+import com.neves6.piazzapanic.tests.GdxTestRunner;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

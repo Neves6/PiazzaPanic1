@@ -1,13 +1,12 @@
 package com.neves6.piazzapanic.tests.poweruptests;
 
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.powerups.BasePowerUp;
 import com.neves6.piazzapanic.tests.GdxTestRunner;
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestBasePowerUp {
@@ -53,12 +52,12 @@ public class TestBasePowerUp {
   }
 
   @Test
-  public void inactivePrettyPrint(){
+  public void inactivePrettyPrint() {
     assertEquals("Inactive powerup should not return a message", "", testPowerUp.prettyPrint());
   }
 
   @Test
-  public void activePrettyPrint(){
+  public void activePrettyPrint() {
     testPowerUpII.acquirePowerUp();
     assertFalse("String must contain the name of the powerup", testPowerUpII.prettyPrint() == "");
     assertTrue(testPowerUpII.prettyPrint().contains("Test powerup #2:"));
