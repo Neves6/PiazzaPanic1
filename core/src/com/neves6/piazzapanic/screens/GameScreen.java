@@ -228,9 +228,17 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        machineUnlockBalance.displayBalance(),
+        gm.generateReputationPointText(),
         winWidth - (winWidth / 3f),
         60,
+        (winWidth / 3f),
+        -1,
+        true);
+    font.draw(
+        game.getBatch(),
+        machineUnlockBalance.displayBalance(),
+        winWidth - (winWidth / 3f),
+        80,
         (winWidth / 3f),
         -1,
         true);

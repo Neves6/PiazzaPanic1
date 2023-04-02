@@ -56,8 +56,9 @@ public class ScenarioGameMaster extends GameMaster {
   int timeAllowed;
   float lastCustomer;
   float waitTime;
-  Boolean disablePowerUp;
+  Boolean isPowerUp;
   PowerUpRunner powerups;
+  int reputationPoints = 3;
   /**
    * ScenarioGameMaster constructor.
    *
@@ -84,7 +85,7 @@ public class ScenarioGameMaster extends GameMaster {
     settings = Utility.getSettings();
     this.map = map;
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
-    this.disablePowerUp = disablePowerup;
+    this.isPowerUp = !disablePowerup;
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -323,6 +324,12 @@ public class ScenarioGameMaster extends GameMaster {
     comp += " s";
     return comp;
   }
+  public String generateReputationPointText() {
+    String comp = "";
+    comp += "Reputation points: ";
+    comp += reputationPoints;
+    return comp;
+  }
 
   /**
    * Generates the display text for the chef's timer.
@@ -364,8 +371,12 @@ public class ScenarioGameMaster extends GameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-    if (customersGenerated == maxCustomers && customers.size() == 0) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer, false, false, false, 0));
+    checkOrderExpired();
+    if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
+      game.setScreen(new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
+    }
+    if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
+      createCustomers();
     }
     float increment = powerups.updateValues(delta);
 
@@ -376,11 +387,8 @@ public class ScenarioGameMaster extends GameMaster {
         tempMachine.attemptGetOutput();
       }
     }
+
     totalTimer += increment;
-    if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
-      createCustomers();
-    }
-    checkOrderExpired();
   }
 
   /**
@@ -391,8 +399,9 @@ public class ScenarioGameMaster extends GameMaster {
     timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
-        // TODO: add reputation point decrement and fail message
+        // TODO: add fail message
         customers.poll();
+        reputationPoints -= 1;
       }
     }
   }
@@ -661,7 +670,7 @@ public class ScenarioGameMaster extends GameMaster {
   /** Method to handle giving food to the customer. */
   public void serveFood() {
     if (customersServed == maxCustomers) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer, true, false, false, 0));
+      game.setScreen(new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
     }
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
@@ -691,7 +700,7 @@ public class ScenarioGameMaster extends GameMaster {
       staffOne.setGenerate(true);
 
       // Activate random power up if a recipe is complete.
-      if (!(disablePowerUp)) {
+      if (isPowerUp) {
         this.powerups.activateRandomPowerUp();
       }
     }

@@ -10,8 +10,6 @@ import org.junit.runner.RunWith;
 @RunWith(GdxTestRunner.class)
 public class UtilityTests {
 
-  // TODO: Check text files are recognised
-  //      Check text files read properly, create new file to test with
   @Test
   public void testSettingsFileCreateDefault() {
     // Delete any existing file
