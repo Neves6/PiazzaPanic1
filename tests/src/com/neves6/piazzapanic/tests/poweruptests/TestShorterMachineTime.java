@@ -1,6 +1,5 @@
 package com.neves6.piazzapanic.tests.poweruptests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.neves6.piazzapanic.gamemechanisms.Machine;
