@@ -69,6 +69,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @param custno Number of customers.
    * @param machineUnlockBalance A class that controls the in game currency.
    * @param ingredientsHelper Staff member which can get ingredients.
+   * @param deliveryStaff Staff member who serves customers.
+   * @param disablePowerup Turn power ups off.
+   * @param difficulty Game difficulty setting.
    */
   public ScenarioGameMaster(
       PiazzaPanicGame game,
@@ -327,6 +330,12 @@ public class ScenarioGameMaster extends GameMaster {
     comp += " s";
     return comp;
   }
+
+  /**
+   * Generates the display text for reputation point count
+   *
+   * @return String containing the display text.
+   */
   public String generateReputationPointText() {
     String comp = "";
     comp += "Reputation points: ";
@@ -369,7 +378,7 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Updates timers on all machines and the total timer. To be called every frame render.
+   * Updates all in game timers, performs any checks or functions required every frame. To be called every frame render.
    *
    * @param delta time since last frame.
    */
@@ -719,6 +728,11 @@ public class ScenarioGameMaster extends GameMaster {
     }
   }
 
+  /**
+   * Getter method for the game's PowerUpRunner instance
+   *
+   * @return Instance of PowerUpRunner used in the game
+   */
   public PowerUpRunner getPowerUpRunner() {
     return powerups;
   }

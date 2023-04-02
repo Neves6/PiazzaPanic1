@@ -41,6 +41,10 @@ public class GameWinScreen extends ScreenAdapter {
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param completionTime Time taken to complete the game.
+   * @param isWin Did the player win the game.
+   * @param isEndless Was the game set to endless mode.
+   * @param isPowerUp Were power ups enabled.
+   * @param difficulty Game difficulty setting
    */
   public GameWinScreen(
       PiazzaPanicGame game,

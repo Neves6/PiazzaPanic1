@@ -92,13 +92,13 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
       case "title":
         game.setScreen(new TitleScreen(game));
         break;
-      case "game1":
+      case "easyGame":
         game.setScreen(new GameScreen(game, 1, scenerio, disablePowerUp));
         break;
-      case "game2":
+      case "mediumGame":
         game.setScreen(new GameScreen(game, 2, scenerio, disablePowerUp));
         break;
-      case "game3":
+      case "hardGame":
         game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp));
         break;
       default:

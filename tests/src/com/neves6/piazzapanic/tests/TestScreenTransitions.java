@@ -120,7 +120,7 @@ public class TestScreenTransitions {
 
   @Test
   public void testTutorialToGameOne() {
-    TutorialScreen testTutorial = new TutorialScreen(testGame, "game1", false, false);
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "easyGame", false, false);
     testTutorial.keyDown(0);
     assertSame(
         "Pressing any button with the continueTo set to game1 should lead to the game screen",
@@ -130,7 +130,7 @@ public class TestScreenTransitions {
 
   @Test
   public void testTutorialToGameTwo() {
-    TutorialScreen testTutorial = new TutorialScreen(testGame, "game2", false, false);
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "mediumGame", false, false);
     testTutorial.keyDown(0);
     assertSame(
         "Pressing any button with the continueTo set to game2 should lead to the game screen",
@@ -140,7 +140,7 @@ public class TestScreenTransitions {
 
   @Test
   public void testTutorialToGameThree() {
-    TutorialScreen testTutorial = new TutorialScreen(testGame, "game3", false, false);
+    TutorialScreen testTutorial = new TutorialScreen(testGame, "hardGame", false, false);
     testTutorial.keyDown(0);
     assertSame(
         "Pressing any button with the continueTo set to game3 should lead to the game screen",
