@@ -89,7 +89,7 @@ public class ScenarioGameMaster extends GameMaster {
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
     }
-    this.maxCustomers = 2;
+    this.maxCustomers = custno;
 
     totalTimer = 0f;
 
@@ -365,8 +365,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tickUpdate(float delta) {
     if (customersGenerated == maxCustomers && customers.size() == 0) {
-      // TODO: FIX PARAMETERS
-      //game.setScreen(new GameWinScreen(game, (int) totalTimer));
+      game.setScreen(new GameWinScreen(game, (int) totalTimer, false, false, false, 0));
     }
     float increment = powerups.updateValues(delta);
 

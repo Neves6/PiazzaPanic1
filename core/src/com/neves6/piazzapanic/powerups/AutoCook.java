@@ -23,6 +23,8 @@ public class AutoCook extends BasePowerUp {
   public void applyPowerUp(Map<String, Machine> machines) {
     if (!(this.aquired)) {
       return;
+    } else if (endTime()){
+      return;
     }
     for (String machine : machines.keySet()) {
       if (machines.get(machine).getActive() == true) {
