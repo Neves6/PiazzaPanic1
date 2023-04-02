@@ -19,7 +19,7 @@ public class TimeFreeze extends BasePowerUp {
    * @return The increment for the time that will be applied to the output.
    */
   public float getDelta(float delta) {
-    if (getAquiredStatus()) {
+    if (getAcquiredStatus()) {
       if (endTime() == false) {
         setStartTime();
         return 0;

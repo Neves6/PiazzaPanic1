@@ -21,7 +21,7 @@ public class AutoCook extends BasePowerUp {
    * @param machines List of machines on the map.
    */
   public void applyPowerUp(Map<String, Machine> machines) {
-    if (!(this.aquired)) {
+    if (!(this.acquired)) {
       return;
     } else if (endTime()){
       return;
@@ -32,7 +32,7 @@ public class AutoCook extends BasePowerUp {
             .get(machine)
             .incrementRuntime(
                 machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());
-        this.aquired = false;
+        this.acquired = false;
         this.startTime = 0L;
         return;
       }

@@ -25,7 +25,7 @@ public class ShorterMachineTime extends BasePowerUp {
   public Map<String, Machine> applyPowerUp(Map<String, Machine> machines) {
     if (machines.size() < 1) {
       throw new IllegalArgumentException("Chefs list must have at least two chefs in.");
-    } else if (getAquiredStatus()) {
+    } else if (getAcquiredStatus()) {
       setStartTime();
       for (String machine : machines.keySet()) {
         machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() / 2);

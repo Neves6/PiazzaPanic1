@@ -30,19 +30,19 @@ public class PowerUpRunner {
     int random = (int) Math.round(random() / 0.25);
     switch (random) {
       case 0:
-        cheaperMachineUnlock.aquirePowerUp();
+        cheaperMachineUnlock.acquirePowerUp();
         break;
       case 1:
-        shorterMachineTime.aquirePowerUp();
+        shorterMachineTime.acquirePowerUp();
         break;
       case 2:
-        doubleMoney.aquirePowerUp();
+        doubleMoney.acquirePowerUp();
         break;
       case 3:
-        autoCook.aquirePowerUp();
+        autoCook.acquirePowerUp();
         break;
       case 4:
-        timeFreeze.aquirePowerUp();
+        timeFreeze.acquirePowerUp();
         break;
     }
     machines = shorterMachineTime.applyPowerUp(machines);

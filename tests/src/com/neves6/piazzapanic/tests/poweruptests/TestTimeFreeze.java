@@ -1,8 +1,9 @@
-package com.neves6.piazzapanic.tests;
+package com.neves6.piazzapanic.tests.poweruptests;
 
 import static org.junit.Assert.assertEquals;
 
 import com.neves6.piazzapanic.powerups.TimeFreeze;
+import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,7 +23,7 @@ public class TestTimeFreeze {
 
   @Test
   public void testActivatedFreeze() {
-    testFreeze.aquirePowerUp();
+    testFreeze.acquirePowerUp();
     assertEquals("If power up is acquired delta must be 0", 0, testFreeze.getDelta(1), 0.0);
   }
 }

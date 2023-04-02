@@ -14,15 +14,15 @@ public class DoubleMoney extends BasePowerUp {
   }
 
   public void applyPowerUp(Money money) {
-    if (this.aquired && !endTime()) {
+    if (this.acquired && !endTime()) {
       money.incrementBalance();
     }
     return;
   }
 
   public void endPowerUp() {
-    if (this.aquired && endTime()) {
-      this.aquired = false;
+    if (this.acquired && endTime()) {
+      this.acquired = false;
       this.startTime = 0L;
     }
   }

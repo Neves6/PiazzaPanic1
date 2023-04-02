@@ -2,7 +2,7 @@ package com.neves6.piazzapanic.powerups;
 
 /** Base class which is used for all powerups. Timing functions all located within this. */
 public class BasePowerUp {
-  Boolean aquired;
+  Boolean acquired;
   Long startTime;
   Long effectTime;
   String name;
@@ -13,7 +13,7 @@ public class BasePowerUp {
    * @param effectTime How long the power up lasts.
    */
   public BasePowerUp(Long effectTime, String name) {
-    this.aquired = false;
+    this.acquired = false;
     this.startTime = 0L;
     this.effectTime = effectTime;
     this.name = name;
@@ -21,7 +21,7 @@ public class BasePowerUp {
 
   /** Sets start time if it already hasn't been run and the power up is acquired. */
   public void setStartTime() {
-    if (this.startTime == 0L && this.aquired) {
+    if (this.startTime == 0L) {
       this.startTime = System.currentTimeMillis();
     }
   }
@@ -33,7 +33,7 @@ public class BasePowerUp {
    */
   public Boolean endTime() {
     if (System.currentTimeMillis() - this.startTime > effectTime && this.startTime != 0L) {
-      this.aquired = false;
+      this.acquired = false;
       this.startTime = 0L;
       return true;
     } else {
@@ -46,13 +46,13 @@ public class BasePowerUp {
    *
    * @return whether you have the power-up or not
    */
-  public Boolean getAquiredStatus() {
-    return this.aquired;
+  public Boolean getAcquiredStatus() {
+    return this.acquired;
   }
 
   /** Set boolean value if the power up has just been attained. */
-  public void aquirePowerUp() {
-    this.aquired = true;
+  public void acquirePowerUp() {
+    this.acquired = true;
     this.startTime = System.currentTimeMillis();
   }
 
@@ -75,7 +75,7 @@ public class BasePowerUp {
   }
 
   public String prettyPrint() {
-    if (this.aquired) {
+    if (this.acquired) {
       Long inSeconds = (System.currentTimeMillis() - startTime) / 1000;
       return name + ":" + inSeconds.toString() + "s \n";
     } else {

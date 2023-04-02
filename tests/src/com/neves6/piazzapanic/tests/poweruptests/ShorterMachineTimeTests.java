@@ -49,7 +49,7 @@ public class ShorterMachineTimeTests {
   public void testApplyPowerUpAttained() {
     testMachines.put("m1", m1);
     testMachines.put("m2", m2);
-    testMachineTime.aquirePowerUp();
+    testMachineTime.acquirePowerUp();
     testMachines = testMachineTime.applyPowerUp(testMachines);
 
     assertTrue(
@@ -77,7 +77,7 @@ public class ShorterMachineTimeTests {
   public void testEndPowerUpAttained() throws InterruptedException {
     testMachines.put("m1", m1);
     testMachines.put("m2", m2);
-    testMachineTime.aquirePowerUp();
+    testMachineTime.acquirePowerUp();
 
     testMachines = testMachineTime.applyPowerUp(testMachines);
     TimeUnit.MILLISECONDS.sleep(5);

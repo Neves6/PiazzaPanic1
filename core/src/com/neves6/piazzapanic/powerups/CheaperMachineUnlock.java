@@ -15,7 +15,7 @@ public class CheaperMachineUnlock extends BasePowerUp {
   }
 
   public Map<String, ArrayList<Float>> applyPowerUp(Map<String, ArrayList<Float>> machineStatus) {
-    if (getAquiredStatus()) {
+    if (getAcquiredStatus()) {
       setStartTime();
       for (String status : machineStatus.keySet())
         machineStatus.get(status).set(0, machineStatus.get(status).get(0) / 2);
