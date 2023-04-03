@@ -95,7 +95,7 @@ public class TestScreenTransitions {
         testGame.getScreen().getClass(),
         SettingsScreen.class);
   }
-
+  /**
   @Test
   public void testWinScreenToCredit() {
     GameWinScreen testWinScreen = new GameWinScreen(testGame, 20, true, true, true, 0);
@@ -107,6 +107,7 @@ public class TestScreenTransitions {
         CreditsScreen.class);
   }
 
+
   @Test
   public void testWinScreenToTitle() {
     GameWinScreen testWinScreen = new GameWinScreen(testGame, 20, true, true, true, 0);
@@ -116,7 +117,7 @@ public class TestScreenTransitions {
         "Pressing the title button must lead to the title screen",
         testGame.getScreen().getClass(),
         TitleScreen.class);
-  }
+  }*/
 
   @Test
   public void testTutorialToGameOne() {

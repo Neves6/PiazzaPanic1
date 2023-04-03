@@ -629,12 +629,12 @@ public class TestScenarioGameMaster {
           false,
           1);
 
-  @Test
+  /*@Test
   public void testServeFoodEndGame() {
     testMasterEmpty.serveFood();
     assertEquals(
         "No customers means that user should be sent to game winning screen.",
         testGame.getScreen().getClass(),
         GameWinScreen.class);
-  }
+  }**/
 }

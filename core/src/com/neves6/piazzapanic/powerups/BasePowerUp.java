@@ -65,15 +65,6 @@ public class BasePowerUp {
     return startTime;
   }
 
-  /**
-   * Getter method.
-   *
-   * @return how long the power up lasts.
-   */
-  public Long getEffectTime() {
-    return effectTime;
-  }
-
   public String prettyPrint() {
     if (this.acquired) {
       Long inSeconds = (System.currentTimeMillis() - startTime) / 1000;
