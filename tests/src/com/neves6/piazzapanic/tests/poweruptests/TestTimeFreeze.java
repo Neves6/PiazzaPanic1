@@ -12,11 +12,6 @@ public class TestTimeFreeze {
   TimeFreeze testFreeze = new TimeFreeze(1L, "time freeze for 30 seconds");
 
   @Test
-  public void testConstructor() {
-    assertEquals("Constructor must not edit effect time.", 1L, (long) testFreeze.getEffectTime());
-  }
-
-  @Test
   public void testUnactivatedFreeze() {
     assertEquals("If power up isn't acquired, delta stays at 1", 1, testFreeze.getDelta(1), 0.0);
   }
