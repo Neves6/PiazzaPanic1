@@ -46,7 +46,7 @@ public class TestCheaperMachineUnlock {
         testMap.put("t1", testMachineUnlock);
         testCheaperMachineClassII.acquirePowerUp();
         testCheaperMachineClassII.applyPowerUp(testMap);
-        TimeUnit.MILLISECONDS.sleep(1000L);
+        TimeUnit.MILLISECONDS.sleep(2000L);
         testCheaperMachineClassII.endPowerUp(testMap);
         assertTrue("The run time value must return to its original value once power-up has ended.",
                 testMachineUnlock.get(0) == 100f);
