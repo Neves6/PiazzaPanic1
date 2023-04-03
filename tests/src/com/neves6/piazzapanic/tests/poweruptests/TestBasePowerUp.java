@@ -48,6 +48,8 @@ public class TestBasePowerUp {
   @Test
   public void testActivePrettyPrint() {
     testPowerUpII.acquirePowerUp();
-    assertTrue("String must contain the name of the powerup", testPowerUpII.prettyPrint().contains("Test powerup #2:"));
+    assertTrue(
+        "String must contain the name of the powerup",
+        testPowerUpII.prettyPrint().contains("Test powerup #2:"));
   }
 }

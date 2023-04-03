@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
-import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;

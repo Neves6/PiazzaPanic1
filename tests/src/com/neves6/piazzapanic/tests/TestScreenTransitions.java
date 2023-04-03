@@ -96,29 +96,15 @@ public class TestScreenTransitions {
         SettingsScreen.class);
   }
   /**
-  @Test
-  public void testWinScreenToCredit() {
-    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20, true, true, true, 0);
-    testWinScreen.show();
-    testWinScreen.getCreditsScreen().toggle();
-    assertSame(
-        "Pressing the credits button, must lead to the credits screen",
-        testGame.getScreen().getClass(),
-        CreditsScreen.class);
-  }
-
-
-  @Test
-  public void testWinScreenToTitle() {
-    GameWinScreen testWinScreen = new GameWinScreen(testGame, 20, true, true, true, 0);
-    testWinScreen.show();
-    testWinScreen.getTitleButton().toggle();
-    assertSame(
-        "Pressing the title button must lead to the title screen",
-        testGame.getScreen().getClass(),
-        TitleScreen.class);
-  }*/
-
+   * @Test public void testWinScreenToCredit() { GameWinScreen testWinScreen = new
+   * GameWinScreen(testGame, 20, true, true, true, 0); testWinScreen.show();
+   * testWinScreen.getCreditsScreen().toggle(); assertSame( "Pressing the credits button, must lead
+   * to the credits screen", testGame.getScreen().getClass(), CreditsScreen.class); } @Test public
+   * void testWinScreenToTitle() { GameWinScreen testWinScreen = new GameWinScreen(testGame, 20,
+   * true, true, true, 0); testWinScreen.show(); testWinScreen.getTitleButton().toggle();
+   * assertSame( "Pressing the title button must lead to the title screen",
+   * testGame.getScreen().getClass(), TitleScreen.class); }
+   */
   @Test
   public void testTutorialToGameOne() {
     TutorialScreen testTutorial = new TutorialScreen(testGame, "easyGame", false, false);
