@@ -16,6 +16,7 @@ import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
+import com.neves6.piazzapanic.powerups.PowerUpRunner;
 import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
@@ -51,9 +52,14 @@ public class ScenarioGameMaster extends GameMaster {
       new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
   int customersServed;
   int maxCustomers;
+  int customersGenerated;
   int timeAllowed;
   float lastCustomer;
   float waitTime;
+  Boolean isPowerUp;
+  PowerUpRunner powerups;
+  int reputationPoints = 3;
+  int difficulty;
   /**
    * ScenarioGameMaster constructor.
    *
@@ -63,6 +69,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @param custno Number of customers.
    * @param machineUnlockBalance A class that controls the in game currency.
    * @param ingredientsHelper Staff member which can get ingredients.
+   * @param deliveryStaff Staff member who serves customers.
+   * @param disablePowerup Turn power ups off.
+   * @param difficulty Game difficulty setting.
    */
   public ScenarioGameMaster(
       PiazzaPanicGame game,
@@ -71,7 +80,9 @@ public class ScenarioGameMaster extends GameMaster {
       int custno,
       Money machineUnlockBalance,
       IngredientsStaff ingredientsHelper,
-      DeliveryStaff deliveryStaff) {
+      DeliveryStaff deliveryStaff,
+      Boolean disablePowerup,
+      int difficulty) {
     this.machineUnlockBalance = machineUnlockBalance;
     this.staffOne = ingredientsHelper;
     this.deliveryStaff = deliveryStaff;
@@ -79,6 +90,8 @@ public class ScenarioGameMaster extends GameMaster {
     settings = Utility.getSettings();
     this.map = map;
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+    this.isPowerUp = !disablePowerup;
+    this.difficulty = difficulty;
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -94,18 +107,18 @@ public class ScenarioGameMaster extends GameMaster {
     machines.put("fridge-onion", new Machine("fridge-onion", "", "onion", 0, false));
     machines.put("fridge-bun", new Machine("fridge-bun", "", "bun", 0, false));
 
-    machineUnlockBalance.addGroup("grill", 100);
+    machineUnlockBalance.addGroup("grill", 100f);
     machines.put("grill-patty-1", new Machine("grill-patty-1", "patty", "burger", 3, true));
     machines.put(
         "grill-patty-2", new Machine("grill-patty-2", "patty", "burger", 3, true, "grill"));
     machines.put("grill-bun-1", new Machine("grill-bun-1", "bun", "toasted bun", 3, true));
     machines.put("grill-bun-2", new Machine("grill-bun-2", "bun", "toasted bun", 3, true, "grill"));
 
-    machineUnlockBalance.addGroup("forming", 50);
+    machineUnlockBalance.addGroup("forming", 50f);
     machines.put("forming-1", new Machine("forming-1", "meat", "patty", 3, true));
     machines.put("forming-2", new Machine("forming-2", "meat", "patty", 3, true, "forming"));
 
-    machineUnlockBalance.addGroup("chopping", 50);
+    machineUnlockBalance.addGroup("chopping", 50f);
     machines.put(
         "chopping-tomato-1", new Machine("chopping-tomato-1", "tomato", "chopped tomato", 3, true));
     machines.put(
@@ -129,12 +142,12 @@ public class ScenarioGameMaster extends GameMaster {
     machines.put("fridge-potato", new Machine("fridge-potato", "", "potato", 0, false));
     machines.put("fridge-beans", new Machine("fridge-beans", "", "beans", 0, false));
 
-    machineUnlockBalance.addGroup("potato", 150);
+    machineUnlockBalance.addGroup("potato", 150f);
     machines.put("oven-potato-1", new Machine("oven-potato-1", "potato", "jacket", 3, true));
     machines.put(
         "oven-potato-2", new Machine("oven-potato-2", "potato", "jacket", 3, true, "potato"));
 
-    machineUnlockBalance.addGroup("pizza", 150);
+    machineUnlockBalance.addGroup("pizza", 150f);
     machines.put("oven-pizza-1", new Machine("oven-pizza-1", "raw pizza", "pizza", 3, true));
     machines.put(
         "oven-pizza-2", new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true, "pizza"));
@@ -162,11 +175,13 @@ public class ScenarioGameMaster extends GameMaster {
         break;
     }
 
-    machineUnlockBalance.addGroup("ingredients-staff", 150);
-    machineUnlockBalance.addGroup("server-staff", 50);
+    machineUnlockBalance.addGroup("ingredients-staff", 150f);
+    machineUnlockBalance.addGroup("server-staff", 50f);
 
     // It is a square hence, width = height, just get one.
     tilewidth = (int) map.getProperties().get("tilewidth");
+
+    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);
   }
 
   /**
@@ -317,6 +332,18 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
+   * Generates the display text for reputation point count
+   *
+   * @return String containing the display text.
+   */
+  public String generateReputationPointText() {
+    String comp = "";
+    comp += "Reputation points: ";
+    comp += reputationPoints;
+    return comp;
+  }
+
+  /**
    * Generates the display text for the chef's timer.
    *
    * @param chefno chef number to check.
@@ -351,14 +378,23 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Updates timers on all machines and the total timer. To be called every frame render.
+   * Updates all in game timers, performs any checks or functions required every frame. To be called
+   * every frame render.
    *
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-    // TODO: Use increment variable to handle powerup -
-    // just use get delta everytime.
-    float increment = delta;
+    // TODO: play test and adjust difficulty scaling according to feedback
+    checkOrderExpired();
+    if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
+      game.setScreen(
+          new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
+    }
+    if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
+      createCustomers();
+    }
+    float increment = powerups.updateValues(delta);
+
     for (String machine : machines.keySet()) {
       Machine tempMachine = machines.get(machine);
       if (tempMachine.getActive()) {
@@ -366,11 +402,8 @@ public class ScenarioGameMaster extends GameMaster {
         tempMachine.attemptGetOutput();
       }
     }
+
     totalTimer += increment;
-    if (maxCustomers == -1 || (maxCustomers > 0 && customersServed < maxCustomers)) {
-      createCustomers();
-    }
-    checkOrderExpired();
   }
 
   /**
@@ -378,11 +411,12 @@ public class ScenarioGameMaster extends GameMaster {
    * order expired and removes a reputation point
    */
   private void checkOrderExpired() {
-    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);
+    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45) - (5 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
-        // TODO: add reputation point decrement and fail message
+        // TODO: add fail message
         customers.poll();
+        reputationPoints -= 1;
       }
     }
   }
@@ -394,16 +428,25 @@ public class ScenarioGameMaster extends GameMaster {
   private void createCustomers() {
     waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
     if (lastCustomer + waitTime <= totalTimer) {
+      /*
+      Random chance to stall next customer's arrival to vary customer arrival times
+      Stalls scaled by difficulty to make harder difficulties slightly faster paced
+      Chance to stall and time stalled by difficulty:
+          Easy    30%   1s
+          Medium  20%   0.75s
+          Hard    10%   0.5s
+      */
+
       float randomFloat = ThreadLocalRandom.current().nextFloat();
-      if (randomFloat > 0.90 && customers.size() != 0) {
-        lastCustomer += 0.5;
+      if (customers.size() != 0 && randomFloat > (0.9 - 0.1 * (3 - difficulty))) {
+        lastCustomer += 0.5 + 0.25 * (3 - difficulty);
       } else {
         int partySize = generatePartySize();
         for (int i = 0; i < partySize; i++) {
-          // Max number of customers in the queue starts at 5, increases by 1 every 5 served, caps
-          // at 10
+          // Max number of customers in the queue starts at 5, increases by 1 every 5 served
+          // Queue caps at 10 customers
           if (customers.size() < Math.min(5 + (customersServed / 5), 10)
-              && customersServed < maxCustomers) {
+              && (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers))) {
             int randomInt = ThreadLocalRandom.current().nextInt(0, 4);
             customers.add(
                 new Customer(
@@ -412,6 +455,7 @@ public class ScenarioGameMaster extends GameMaster {
                     -1,
                     recipes.get(randomInt),
                     totalTimer));
+            customersGenerated += 1;
           } else {
             break;
           }
@@ -486,7 +530,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public Rectangle loadRectangle(MapObject object) {
     RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
-    // now you can get the position of the rectangle like this:
+    // Now you can get the position of the rectangle like this:
     return rectangleMapObject.getRectangle();
   }
 
@@ -565,16 +609,6 @@ public class ScenarioGameMaster extends GameMaster {
 
     MapObjects miscObjects = getObjectLayers("Misc Layer");
 
-    System.out.println(loadRectangle(miscObjects.get("bin")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("bin")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("serving")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("serving")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-1")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-1")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-2")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("tray-2")).getY() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getX() / tilewidth);
-    System.out.println(loadRectangle(miscObjects.get("fast-track-collect")).getY() / tilewidth);
     if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       chef.removeTopFromInventory();
       trash.play(soundVolume);
@@ -660,9 +694,9 @@ public class ScenarioGameMaster extends GameMaster {
   /** Method to handle giving food to the customer. */
   public void serveFood() {
     if (customersServed == maxCustomers) {
-      game.setScreen(new GameWinScreen(game, (int) totalTimer, true, false, false, 0));
+      game.setScreen(
+          new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
     }
-
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
     // If the order isn't pizza and the server is unlocked,
@@ -682,13 +716,27 @@ public class ScenarioGameMaster extends GameMaster {
 
     if (customers.peek().getOrder() == inv.peek()) {
       inv.pop();
-      customers.remove(0);
+      customers.poll();
       serving.play(soundVolume);
       // +$100 on completion of a recipe.
       machineUnlockBalance.incrementBalance();
       // Once an order is complete, allow ingredient staff to
       // collect another order.
       staffOne.setGenerate(true);
+
+      // Activate random power up if a recipe is complete.
+      if (isPowerUp) {
+        this.powerups.activateRandomPowerUp();
+      }
     }
+  }
+
+  /**
+   * Getter method for the game's PowerUpRunner instance
+   *
+   * @return Instance of PowerUpRunner used in the game
+   */
+  public PowerUpRunner getPowerUpRunner() {
+    return powerups;
   }
 }

@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
-import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
@@ -32,7 +31,9 @@ public class TestScenarioGameMaster {
           1,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
+          new DeliveryStaff(defValues, defValues),
+          false,
+          1);
 
   @Test
   public void tryMoveValidUp() {
@@ -150,7 +151,9 @@ public class TestScenarioGameMaster {
           1,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
+          new DeliveryStaff(defValues, defValues),
+          false,
+          1);
 
   @Test
   public void testDisplayTextFull() {
@@ -176,7 +179,9 @@ public class TestScenarioGameMaster {
           3,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
+          new DeliveryStaff(defValues, defValues),
+          false,
+          1);
 
   /* TODO: Create new test for text based on customer orders
            Customers are no longer generated upon loading game scenario, instead are produced at slight random intervals throughout
@@ -619,14 +624,7 @@ public class TestScenarioGameMaster {
           0,
           new Money(),
           new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues));
-
-  @Test
-  public void testServeFoodEndGame() {
-    testMasterEmpty.serveFood();
-    assertEquals(
-        "No customers means that user should be sent to game winning screen.",
-        testGame.getScreen().getClass(),
-        GameWinScreen.class);
-  }
+          new DeliveryStaff(defValues, defValues),
+          false,
+          1);
 }

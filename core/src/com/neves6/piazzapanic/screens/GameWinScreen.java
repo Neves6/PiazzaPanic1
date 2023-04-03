@@ -31,7 +31,7 @@ public class GameWinScreen extends ScreenAdapter {
   Skin skin;
   TextureAtlas atlas;
   int completionTime;
-  boolean winOrLose;
+  boolean isWin;
   boolean isEndless;
   boolean isPowerUp;
   int difficulty;
@@ -41,11 +41,15 @@ public class GameWinScreen extends ScreenAdapter {
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param completionTime Time taken to complete the game.
+   * @param isWin Did the player win the game.
+   * @param isEndless Was the game set to endless mode.
+   * @param isPowerUp Were power ups enabled.
+   * @param difficulty Game difficulty setting
    */
   public GameWinScreen(
       PiazzaPanicGame game,
       int completionTime,
-      boolean winOrLose,
+      boolean isWin,
       boolean isEndless,
       boolean isPowerUp,
       int difficulty) {
@@ -53,7 +57,7 @@ public class GameWinScreen extends ScreenAdapter {
     this.completionTime = completionTime;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
-    this.winOrLose = winOrLose;
+    this.isWin = isWin;
     this.isEndless = isEndless;
     this.isPowerUp = isPowerUp;
     this.difficulty = difficulty;
@@ -138,7 +142,7 @@ public class GameWinScreen extends ScreenAdapter {
             bg.getWidth() * bgScaleFactor,
             bg.getHeight() * bgScaleFactor);
     String winOrLoseText;
-    if (winOrLose) {
+    if (isWin) {
       winOrLoseText = "Congratulations!";
     } else {
       winOrLoseText = "Unlucky!";

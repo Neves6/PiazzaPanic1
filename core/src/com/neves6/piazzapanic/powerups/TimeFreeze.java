@@ -6,9 +6,10 @@ public class TimeFreeze extends BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
+   * @param s
    */
-  public TimeFreeze(Long effectTime) {
-    super(effectTime);
+  public TimeFreeze(Long effectTime, String s) {
+    super(effectTime, s);
   }
 
   /**
@@ -18,7 +19,7 @@ public class TimeFreeze extends BasePowerUp {
    * @return The increment for the time that will be applied to the output.
    */
   public float getDelta(float delta) {
-    if (getAquiredStatus()) {
+    if (getAcquiredStatus()) {
       if (endTime() == false) {
         setStartTime();
         return 0;

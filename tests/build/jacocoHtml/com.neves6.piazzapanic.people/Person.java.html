@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Person.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.people</a> &gt; <span class="el_source">Person.java</span></div><h1>Person.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.people;
+
+/** Base person class. */
+public class Person {
+  private final String name;
+  private int xcoord;
+  private int ycoord;
+  // For powerups.
+  private int deltaMultiplier;
+
+  /**
+   * Person constructor.
+   *
+   * @param name Name of person.
+   * @param xcoord logical x coordinate of person.
+   * @param ycoord logical y coordinate of person.
+   */
+<span class="nc" id="L18">  public Person(String name, int xcoord, int ycoord) {</span>
+<span class="nc" id="L19">    this.name = name;</span>
+<span class="nc" id="L20">    this.xcoord = xcoord;</span>
+<span class="nc" id="L21">    this.ycoord = ycoord;</span>
+<span class="nc" id="L22">    this.deltaMultiplier = 1;</span>
+<span class="nc" id="L23">  }</span>
+
+  /**
+   * Getter method for xcoord variable.
+   *
+   * @return The integer representing the x coordinate of the person who is being displayed.
+   */
+  public int getxCoord() {
+<span class="nc" id="L31">    return xcoord;</span>
+  }
+
+  /**
+   * Getter method for ycoord variable.
+   *
+   * @return The integer representing the y coordinate of the person who is being displayed.
+   */
+  public int getyCoord() {
+<span class="nc" id="L40">    return ycoord;</span>
+  }
+
+  /**
+   * Getter method for name variable.
+   *
+   * @return The string representing a identifier for the person.
+   */
+  public String getName() {
+<span class="nc" id="L49">    return name;</span>
+  }
+
+  /**
+   * Setter method for the xcoord variable.
+   *
+   * @param xcoord The new positive integer representing the coordinates of the person.
+   */
+  public void setxCoord(int xcoord) {
+<span class="nc bnc" id="L58" title="All 2 branches missed.">    if (xcoord &gt; -1) {</span>
+<span class="nc" id="L59">      this.xcoord = xcoord;</span>
+    } else {
+<span class="nc" id="L61">      throw new IllegalArgumentException();</span>
+    }
+<span class="nc" id="L63">  }</span>
+
+  /**
+   * Setter method for the ycoord variable.
+   *
+   * @param ycoord The new positive integer representing the coordinates of the person.
+   */
+  public void setyCoord(int ycoord) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">    if (ycoord &gt; -1) {</span>
+<span class="nc" id="L72">      this.ycoord = ycoord;</span>
+    } else {
+<span class="nc" id="L74">      throw new IllegalArgumentException();</span>
+    }
+<span class="nc" id="L76">  }</span>
+
+  /**
+   * Alter the xcoordinate based upon the delta pace.
+   *
+   * @param xdelta How many places across the person needs to move.
+   */
+  public void alterxCoord(int xdelta) {
+<span class="nc" id="L84">    this.xcoord += xdelta * deltaMultiplier;</span>
+<span class="nc" id="L85">  }</span>
+
+  /**
+   * Alter the ycoordinate based upon the delta pace.
+   *
+   * @param ydelta How many places up the person needs to move.
+   */
+  public void alteryCoord(int ydelta) {
+<span class="nc" id="L93">    this.ycoord += ydelta * deltaMultiplier;</span>
+<span class="nc" id="L94">  }</span>
+
+  // TODO: Power-ups.
+
+  /**
+   * Setter method for delta multiplier.
+   *
+   * @param newMultipler An integer that represents the speed of the person when moving.
+   */
+  public void alterSpeed(int newMultipler) {
+<span class="nc" id="L104">    this.deltaMultiplier = newMultipler;</span>
+<span class="nc" id="L105">  }</span>
+
+  /**
+   * Getter method for delta multiplier.
+   *
+   * @return An integer that represents the speed of the person when moving.
+   */
+  public int getSpeed() {
+<span class="nc" id="L113">    return this.deltaMultiplier;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

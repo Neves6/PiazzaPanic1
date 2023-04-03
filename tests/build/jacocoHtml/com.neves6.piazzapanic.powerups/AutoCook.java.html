@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AutoCook.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.powerups</a> &gt; <span class="el_source">AutoCook.java</span></div><h1>AutoCook.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.powerups;
+
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import java.util.Map;
+
+/** Finds the first current recipe that is being process and skips the cook time for it. */
+public class AutoCook extends BasePowerUp {
+  /**
+   * Constructor.
+   *
+   * @param effectTime How long the power up lasts.
+   * @param noWaitOnAMachine
+   */
+  public AutoCook(Long effectTime, String noWaitOnAMachine) {
+<span class="nc" id="L15">    super(effectTime, noWaitOnAMachine);</span>
+<span class="nc" id="L16">  }</span>
+
+  /**
+   * Applies power-up if any machines are currently running.
+   *
+   * @param machines List of machines on the map.
+   */
+  public void applyPowerUp(Map&lt;String, Machine&gt; machines) {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">    if (!(this.acquired)) {</span>
+<span class="nc" id="L25">      return;</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">    } else if (endTime()){</span>
+<span class="nc" id="L27">      return;</span>
+    }
+<span class="nc bnc" id="L29" title="All 2 branches missed.">    for (String machine : machines.keySet()) {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">      if (machines.get(machine).getActive() == true) {</span>
+<span class="nc" id="L31">        machines</span>
+<span class="nc" id="L32">            .get(machine)</span>
+<span class="nc" id="L33">            .incrementRuntime(</span>
+<span class="nc" id="L34">                machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());</span>
+<span class="nc" id="L35">        this.acquired = false;</span>
+<span class="nc" id="L36">        this.startTime = 0L;</span>
+<span class="nc" id="L37">        return;</span>
+      }
+<span class="nc" id="L39">    }</span>
+<span class="nc" id="L40">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -24,7 +24,7 @@ public class TestMoney {
     Assert.assertEquals(
         "Increment balance should add 100 to the balance and should be displayed in the format"
             + " 'Balance: $x'",
-        "Balance: $100",
+        "Balance: $100.0",
         test.displayBalance());
   }
 
@@ -32,25 +32,25 @@ public class TestMoney {
   public void testInitialValue() {
     assertEquals(
         "Initial balance should be 0 and display in the format 'Balance: $0'",
-        "Balance: $0",
+        "Balance: $0.0",
         test.displayBalance());
   }
 
   @Test
   public void testAddGroupAuto() {
-    assertFalse("Any pre-existing groups should not be overridden", test.addGroup("auto", 1000));
+    assertFalse("Any pre-existing groups should not be overridden", test.addGroup("auto", 1000f));
   }
 
   @Test
   public void testAddGroupValid() {
-    test.addGroup("test", 100);
+    test.addGroup("test", 100f);
     assertFalse("By default, any new groups added should be locked.", test.isUnlocked("test"));
   }
 
   @Test
   public void testValidPurchaseBorder() {
     test.incrementBalance();
-    test.addGroup("test", 100);
+    test.addGroup("test", 100f);
     assertTrue(
         "Machine should be unlocked if the user has enough money even it leads to them having a 0"
             + " balance.",
@@ -60,7 +60,7 @@ public class TestMoney {
   @Test
   public void testValidPurchase() {
     test.incrementBalance();
-    test.addGroup("test", 50);
+    test.addGroup("test", 50f);
     assertTrue(
         "Machine should be unlocked if the user has enough money", test.unlockMachine("test"));
   }
@@ -68,7 +68,7 @@ public class TestMoney {
   @Test
   public void testInvalidPurchase() {
     test.incrementBalance();
-    test.addGroup("test", 150);
+    test.addGroup("test", 150f);
     assertFalse(
         "Machine should not be unlocked if there is not enough money", test.unlockMachine("test"));
   }
