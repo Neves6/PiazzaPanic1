@@ -627,13 +627,4 @@ public class TestScenarioGameMaster {
           new DeliveryStaff(defValues, defValues),
           false,
           1);
-
-  /*@Test
-  public void testServeFoodEndGame() {
-    testMasterEmpty.serveFood();
-    assertEquals(
-        "No customers means that user should be sent to game winning screen.",
-        testGame.getScreen().getClass(),
-        GameWinScreen.class);
-  }**/
 }
