@@ -17,7 +17,6 @@ import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.staff.BaseStaff;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -381,7 +380,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     if (keycode == Input.Keys.E) {
       gm.tryInteract();
     }
-    if (keycode == Input.Keys.S){
+    if (keycode == Input.Keys.S) {
       try {
         gm.getSave().closeClass(game);
       } catch (IOException e) {

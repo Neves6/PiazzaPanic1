@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic.gamemaster;
 
+import static java.util.Arrays.asList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapLayer;
@@ -20,12 +22,9 @@ import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
-import static java.util.Arrays.asList;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
