@@ -1,7 +1,5 @@
 package com.neves6.piazzapanic.gamemaster;
 
-import static java.util.Arrays.asList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapLayer;
@@ -11,6 +9,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
+import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
@@ -21,8 +20,12 @@ import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
+
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.Arrays.asList;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
@@ -60,6 +63,8 @@ public class ScenarioGameMaster extends GameMaster {
   PowerUpRunner powerups;
   int reputationPoints = 3;
   int difficulty;
+  GameSaver save;
+
   /**
    * ScenarioGameMaster constructor.
    *
@@ -92,6 +97,15 @@ public class ScenarioGameMaster extends GameMaster {
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
     this.isPowerUp = !disablePowerup;
     this.difficulty = difficulty;
+
+    try {
+      this.save = new GameSaver("here.json");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    this.save.setDifficulty(difficulty);
+    this.save.setPowerUp(disablePowerup);
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -384,6 +398,8 @@ public class ScenarioGameMaster extends GameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
+    this.save.setCustomersRemaining(getCustomersRemaining());
+
     // TODO: play test and adjust difficulty scaling according to feedback
     checkOrderExpired();
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
@@ -738,5 +754,9 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public PowerUpRunner getPowerUpRunner() {
     return powerups;
+  }
+
+  public GameSaver getSave() {
+    return save;
   }
 }
