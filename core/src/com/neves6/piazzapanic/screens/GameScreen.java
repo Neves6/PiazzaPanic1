@@ -19,6 +19,7 @@ import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
+import static java.util.Arrays.asList;
 
 /** A screen that displays the main game. */
 public class GameScreen extends ScreenAdapter implements InputProcessor {
@@ -43,6 +44,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   Texture lock;
   Money machineUnlockBalance;
   IngredientsStaff ingredientsHelper;
+  ArrayList<Boolean> wasd =
+          new ArrayList<>(asList(false, false, false, false));
 
   /**
    * Constructor method.
@@ -123,6 +126,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void render(float delta) {
+    if (wasd.get(0)) {gm.tryMove("up");}
+    if (wasd.get(1)) {gm.tryMove("left");}
+    if (wasd.get(2)) {gm.tryMove("down");}
+    if (wasd.get(3)) {gm.tryMove("right");}
     gm.tickUpdate(delta);
 
     gm.setRecipeToStaff();
@@ -355,17 +362,20 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
+    //Detects which key is pressed by the user
+    //If WASD (movement keys) pressed, set appropriate variable to true for use in render method
+    //If action key pressed, attempt to perform action
     if (keycode == Input.Keys.W) {
-      gm.tryMove("up");
+      wasd.set(0, true);
     }
     if (keycode == Input.Keys.A) {
-      gm.tryMove("left");
+      wasd.set(1, true);
     }
     if (keycode == Input.Keys.S) {
-      gm.tryMove("down");
+      wasd.set(2, true);
     }
     if (keycode == Input.Keys.D) {
-      gm.tryMove("right");
+      wasd.set(3, true);
     }
     if (keycode == Input.Keys.NUM_1) {
       gm.setSelectedChef(1);
@@ -383,13 +393,27 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * Method which runs when user lifts a key up.
    *
    * @param keycode one of the constants in {@link Input.Keys}
    * @return false
    */
   @Override
   public boolean keyUp(int keycode) {
+    //Detects which key is released by the user
+    //If WASD (movement keys) released, set appropriate variable to false, stopping movement
+    if (keycode == Input.Keys.W) {
+      wasd.set(0, false);
+    }
+    if (keycode == Input.Keys.A) {
+      wasd.set(1, false);
+    }
+    if (keycode == Input.Keys.S) {
+      wasd.set(2, false);
+    }
+    if (keycode == Input.Keys.D) {
+      wasd.set(3, false);
+    }
     return false;
   }
 

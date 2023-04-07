@@ -60,6 +60,7 @@ public class ScenarioGameMaster extends GameMaster {
   PowerUpRunner powerups;
   int reputationPoints = 3;
   int difficulty;
+
   /**
    * ScenarioGameMaster constructor.
    *
@@ -233,6 +234,10 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tryMove(String direction) {
     Chef chef = chefs.get(selectedChef);
+    if (totalTimer < (chef.getLastMove() + 1F/5F)) {
+      return;
+    }
+    chef.setLastMove(totalTimer);
     switch (direction) {
       case "up":
         if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {
@@ -541,11 +546,6 @@ public class ScenarioGameMaster extends GameMaster {
   public void tryInteract() {
     Chef chef = chefs.get(selectedChef);
 
-    // If the chef is stuck, it is not allowed to move.
-    if (chef.getIsStickied()) {
-      return;
-    }
-
     int targetx;
     int targety;
     switch (chef.getFacing()) {
@@ -593,17 +593,22 @@ public class ScenarioGameMaster extends GameMaster {
     // Cooking Objects - contain all machines
     MapObjects cookingObjects = getObjectLayers("Cooking Layer");
 
+    String invTop = "";
     if (chef.getInventory().size() != 0) {
       // Work stations
-      String invTop = chef.getInventory().peek();
+      invTop = chef.getInventory().peek();
+    }
 
-      for (MapObject ob : cookingObjects) {
-        // Only use a machine if you are trying to interact with it and have the correct
-        // input.
-        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
-            && machines.get(ob.getName()).getInput() == invTop) {
-          machines.get(ob.getName()).process(chef, machineUnlockBalance);
-        }
+    for (MapObject ob : cookingObjects) {
+      // Only use a machine if you are trying to interact with it and have the correct
+      // input.
+      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+          && machines.get(ob.getName()) == chef.getMachineInteractingWith()) {
+        machines.get(ob.getName()).attemptCompleteAction();
+      }else if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+          && chef.getMachineInteractingWith() == null
+          && machines.get(ob.getName()).getInput() == invTop) {
+        machines.get(ob.getName()).process(chef, machineUnlockBalance);
       }
     }
 
@@ -677,9 +682,7 @@ public class ScenarioGameMaster extends GameMaster {
         deliveryStaff.collectItem(customers.peek().getOrder());
         serveFood();
       } else {
-        if (inv.isEmpty()) {
-          inv.add(customers.peek().getOrder());
-        }
+        inv.add(customers.peek().getOrder());
       }
       serving.play(soundVolume);
     }
