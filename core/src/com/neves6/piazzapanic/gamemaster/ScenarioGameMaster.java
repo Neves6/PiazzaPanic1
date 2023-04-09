@@ -409,6 +409,7 @@ public class ScenarioGameMaster extends GameMaster {
     checkOrderExpired();
     this.save.setChefDetails(chefs, selectedChef);
     this.save.setReputationPoints(reputationPoints);
+    this.save.setTime(totalTimer);
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
       game.setScreen(
           new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
@@ -772,5 +773,9 @@ public class ScenarioGameMaster extends GameMaster {
 
   public void setReputationPoints(int reputationPoints) {
     this.reputationPoints = reputationPoints;
+  }
+
+  public void setTimeElapsed(float timeElapsed) {
+    this.totalTimer = timeElapsed;
   }
 }

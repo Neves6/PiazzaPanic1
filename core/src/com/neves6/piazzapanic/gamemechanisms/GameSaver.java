@@ -37,7 +37,7 @@ public class GameSaver {
   }
 
   public Boolean setCustomersRemaining(int value) {
-    if (value == 0) {
+    if (value <= 0) {
       return false;
     } else {
       gameDetails.put("Customers remaining", value);
@@ -55,6 +55,9 @@ public class GameSaver {
   }
 
   public Boolean decrementCustomers() {
+    if (!(gameDetails.containsKey("Customer remaining"))){
+      return false;
+    }
     int customersCurrent = (int) gameDetails.get("Customers remaining");
     if (customersCurrent != -1) {
       gameDetails.put("Customers remaining", customersCurrent - 1);
@@ -103,7 +106,7 @@ public class GameSaver {
     }
   }
 
-  public Boolean setTime(Long timeElapsed){
+  public Boolean setTime(Float timeElapsed){
     if (timeElapsed > 0) {
       gameDetails.put("Time Elapsed", timeElapsed);
       return true;

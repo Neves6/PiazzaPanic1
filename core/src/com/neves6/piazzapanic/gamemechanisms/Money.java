@@ -110,7 +110,7 @@ public class Money {
 
   public void loadPreviousValues(JSONObject prevValues) {
     for (Object key: prevValues.keySet()){
-      unlockDetails.get(key).set(1, ((Long) prevValues.get(key)).floatValue());
+      unlockDetails.get(key).set(1, ((Double) prevValues.get(key)).floatValue());
     }
 
   }

@@ -47,11 +47,18 @@ public class GameReader {
         machineUnlockBalance.setBalance(((Double) currencySystem.get("Balance")).floatValue());
         machineUnlockBalance.loadPreviousValues(machineData);
         configuredMaster.setReputationPoints(((Long) saveData.get("Reputation Points")).intValue());
+        configuredMaster.setTimeElapsed(((Double) saveData.get("Time Elapsed")).floatValue());
 
-        for (int i=1; i<chefLocations.size(); i++){
+        for (int i=0; i<chefLocations.size(); i++){
             JSONArray pairCoord = (JSONArray) chefLocations.get(i);
-            configuredMaster.getChef(i).setxCoord(((Long) pairCoord.get(0)).intValue());
-            configuredMaster.getChef(i).setxCoord(((Long) pairCoord.get(1)).intValue());
+            configuredMaster.getChef(i+1).setxCoord(((Long) pairCoord.get(0)).intValue());
+            configuredMaster.getChef(i+1).setyCoord(((Long) pairCoord.get(1)).intValue());
+            JSONArray chefItems = (JSONArray) chefStacks.get(i);
+            System.out.println(chefItems);
+            System.out.println(i);
+            for (int x=0; x<chefItems.size(); x++){
+                configuredMaster.getChef(i+1).addToInventory((String) chefItems.get(x));
+            }
         }
         return configuredMaster;
     }
