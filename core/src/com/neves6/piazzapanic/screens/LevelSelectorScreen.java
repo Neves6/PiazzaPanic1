@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
 import java.io.File;
 
 /** Screen used to select which level wants to be played. */
@@ -158,24 +157,23 @@ public class LevelSelectorScreen extends ScreenAdapter {
     if (json.exists() && json.length() != 0) {
       resumeButton = new TextButton("Resume", buttonStyle);
       resumeButton.setPosition(
-              Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 + hardButton.getWidth() * 2f,
-              Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
+          Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 + hardButton.getWidth() * 2f,
+          Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
       resumeButton.addListener(
-              new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                  game.setScreen(
-                          new TutorialScreen(
-                                  game,
-                                  "resume",
-                                  customerGameModeButton.isChecked(),
-                                  powerupGameModeButton.isChecked()));
-                }
-              });
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              game.setScreen(
+                  new TutorialScreen(
+                      game,
+                      "resume",
+                      customerGameModeButton.isChecked(),
+                      powerupGameModeButton.isChecked()));
+            }
+          });
       stage.addActor(resumeButton);
       resumeFlag = true;
     }
-
   }
 
   /**

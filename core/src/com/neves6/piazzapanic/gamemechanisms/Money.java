@@ -1,10 +1,9 @@
 package com.neves6.piazzapanic.gamemechanisms;
 
-import org.json.simple.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.simple.JSONObject;
 
 /** Class to handle money which can be used to unlocked machines. */
 public class Money {
@@ -92,11 +91,11 @@ public class Money {
     return unlockDetails;
   }
 
-  public void saveMoneyDetails(GameSaver saver){
+  public void saveMoneyDetails(GameSaver saver) {
     JSONObject moneyDetails = new JSONObject();
     moneyDetails.put("Balance", this.balance);
     JSONObject machineUnlocks = new JSONObject();
-    for (String key: unlockDetails.keySet()){
+    for (String key : unlockDetails.keySet()) {
       ArrayList<Float> tempList = unlockDetails.get(key);
       machineUnlocks.put(key, tempList.get(1));
     }
@@ -109,9 +108,8 @@ public class Money {
   }
 
   public void loadPreviousValues(JSONObject prevValues) {
-    for (Object key: prevValues.keySet()){
+    for (Object key : prevValues.keySet()) {
       unlockDetails.get(key).set(1, ((Long) prevValues.get(key)).floatValue());
     }
-
   }
 }

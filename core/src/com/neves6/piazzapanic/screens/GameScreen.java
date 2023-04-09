@@ -15,11 +15,10 @@ import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.staff.BaseStaff;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import org.json.simple.parser.ParseException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.json.simple.parser.ParseException;
 
 /** A screen that displays the main game. */
 public class GameScreen extends ScreenAdapter implements InputProcessor {
@@ -58,28 +57,28 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
       map = new TmxMapLoader().load("tilemaps/level1.tmx");
       if (scenerio) {
         gm =
-                new ScenarioGameMaster(
-                        game,
-                        map,
-                        3,
-                        5,
-                        machineUnlockBalance,
-                        ingredientsHelper,
-                        deliveryStaff,
-                        disablePowerup,
-                        level);
+            new ScenarioGameMaster(
+                game,
+                map,
+                3,
+                5,
+                machineUnlockBalance,
+                ingredientsHelper,
+                deliveryStaff,
+                disablePowerup,
+                level);
       } else {
         gm =
-                new ScenarioGameMaster(
-                        game,
-                        map,
-                        3,
-                        -1,
-                        machineUnlockBalance,
-                        ingredientsHelper,
-                        deliveryStaff,
-                        disablePowerup,
-                        level);
+            new ScenarioGameMaster(
+                game,
+                map,
+                3,
+                -1,
+                machineUnlockBalance,
+                ingredientsHelper,
+                deliveryStaff,
+                disablePowerup,
+                level);
       }
     }
   }
@@ -94,25 +93,23 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
       throw new RuntimeException(e);
     }
     map = new TmxMapLoader().load("tilemaps/level1.tmx");
-    gm = gr.createGameMaster(game, map, machineUnlockBalance,
-            ingredientsHelper, deliveryStaff);
-
+    gm = gr.createGameMaster(game, map, machineUnlockBalance, ingredientsHelper, deliveryStaff);
   }
 
-  public void sharedSetup(){
+  public void sharedSetup() {
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
     font.getData().setScale(0.75F);
     this.INITIAL_WIDTH = Gdx.graphics.getWidth();
     this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
     this.machineUnlockBalance = new Money();
     this.deliveryStaff =
-            new DeliveryStaff(
-                    new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
-                    (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
+        new DeliveryStaff(
+            new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
+            (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
     this.ingredientsHelper =
-            new IngredientsStaff(
-                    new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
-                    (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
+        new IngredientsStaff(
+            new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
+            (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
     selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     recipes = new Texture(Gdx.files.internal("recipes.png"));
     lock = new Texture(Gdx.files.internal("levellocked.png"));
