@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /** All staff need some form of animation which can be handled from the base class. */
 public class BaseStaff {
-<span class="nc" id="L8">  Long time = 0L;</span>
+<span class="fc" id="L8">  Long time = 0L;</span>
   ArrayList&lt;Integer&gt; xsequence;
   ArrayList&lt;Integer&gt; ysequence;
   int counter;
@@ -18,15 +18,15 @@ public class BaseStaff {
    * @param xsequence List of x coordinates in order.
    * @param ysequence List of y coordinates in order.
    */
-<span class="nc" id="L21">  public BaseStaff(ArrayList&lt;Integer&gt; xsequence, ArrayList&lt;Integer&gt; ysequence) {</span>
-<span class="nc bnc" id="L22" title="All 2 branches missed.">    if (xsequence.size() != ysequence.size()) {</span>
-<span class="nc" id="L23">      throw new IllegalArgumentException();</span>
+<span class="fc" id="L21">  public BaseStaff(ArrayList&lt;Integer&gt; xsequence, ArrayList&lt;Integer&gt; ysequence) {</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">    if (xsequence.size() != ysequence.size()) {</span>
+<span class="fc" id="L23">      throw new IllegalArgumentException();</span>
     }
-<span class="nc" id="L25">    this.xsequence = xsequence;</span>
-<span class="nc" id="L26">    this.ysequence = ysequence;</span>
+<span class="fc" id="L25">    this.xsequence = xsequence;</span>
+<span class="fc" id="L26">    this.ysequence = ysequence;</span>
     // To count what frame we are up to.
-<span class="nc" id="L28">    this.counter = -1;</span>
-<span class="nc" id="L29">  }</span>
+<span class="fc" id="L28">    this.counter = -1;</span>
+<span class="fc" id="L29">  }</span>
 
   /**
    * Gets the coordinate based upon the time since the last movement (to ensure smoothness), as well
@@ -36,14 +36,14 @@ public class BaseStaff {
    * @return A pair of coordinates in the format [x, y].
    */
   public ArrayList&lt;Integer&gt; getCoordInSeq() {
-<span class="nc bnc" id="L39" title="All 2 branches missed.">    if (counter + 1 &gt;= xsequence.size()) {</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">    if (counter + 1 &gt;= xsequence.size()) {</span>
 <span class="nc" id="L40">      counter = 0;</span>
 <span class="nc" id="L41">      this.collect = false;</span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">    } else if (System.currentTimeMillis() - time &gt; 500) {</span>
-<span class="nc" id="L43">      counter++;</span>
-<span class="nc" id="L44">      time = System.currentTimeMillis();</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">    } else if (System.currentTimeMillis() - time &gt; 500) {</span>
+<span class="fc" id="L43">      counter++;</span>
+<span class="fc" id="L44">      time = System.currentTimeMillis();</span>
     }
-<span class="nc" id="L46">    return new ArrayList&lt;&gt;(Arrays.asList(xsequence.get(counter), ysequence.get(counter)));</span>
+<span class="fc" id="L46">    return new ArrayList&lt;&gt;(Arrays.asList(xsequence.get(counter), ysequence.get(counter)));</span>
   }
 
   /**
@@ -52,7 +52,7 @@ public class BaseStaff {
    * @return Whether the inventory needs updating.
    */
   public boolean getCollect() {
-<span class="nc" id="L55">    return this.collect;</span>
+<span class="fc" id="L55">    return this.collect;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

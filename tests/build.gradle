@@ -10,3 +10,4 @@ project.ext.assetsDir = new File("../assets")
 eclipse.project {
     name = appName + "-tests"
 }
+targetCompatibility = JavaVersion.VERSION_1_8

@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
+import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
@@ -32,11 +33,11 @@ public class ScenarioGameMaster extends GameMaster {
   PiazzaPanicGame game;
   TiledMap map;
   TiledMapTileLayer collisionLayer;
-<span class="nc" id="L35">  ArrayList&lt;Chef&gt; chefs = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L36">  Queue&lt;Customer&gt; customers = new LinkedList&lt;&gt;();</span>
-<span class="nc" id="L37">  Map&lt;String, Machine&gt; machines = new HashMap();</span>
-<span class="nc" id="L38">  ArrayList&lt;String&gt; tray1 = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L39">  ArrayList&lt;String&gt; tray2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">  ArrayList&lt;Chef&gt; chefs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">  Queue&lt;Customer&gt; customers = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L38">  Map&lt;String, Machine&gt; machines = new HashMap();</span>
+<span class="fc" id="L39">  ArrayList&lt;String&gt; tray1 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L40">  ArrayList&lt;String&gt; tray2 = new ArrayList&lt;&gt;();</span>
   int selectedChef;
   float totalTimer;
   Sound grill;
@@ -48,16 +49,25 @@ public class ScenarioGameMaster extends GameMaster {
   float soundVolume;
   ArrayList&lt;String&gt; settings;
   Money machineUnlockBalance;
-<span class="nc" id="L51">  ArrayList&lt;String&gt; recipes =</span>
-<span class="nc" id="L52">      new ArrayList&lt;&gt;(asList(&quot;salad&quot;, &quot;hamburger&quot;, &quot;jacket potato&quot;, &quot;pizza&quot;));</span>
+<span class="fc" id="L52">  ArrayList&lt;String&gt; recipes =</span>
+<span class="fc" id="L53">      new ArrayList&lt;&gt;(asList(&quot;salad&quot;, &quot;hamburger&quot;, &quot;jacket potato&quot;, &quot;pizza&quot;));</span>
   int customersServed;
   int maxCustomers;
   int customersGenerated;
   int timeAllowed;
   float lastCustomer;
   float waitTime;
-  Boolean disablePowerUp;
+  Boolean isPowerUp;
   PowerUpRunner powerups;
+<span class="fc" id="L62">  int reputationPoints = 3;</span>
+  int difficulty;
+  GameSaver save;
+<span class="fc" id="L65">  ArrayList&lt;String&gt; salad =</span>
+<span class="fc" id="L66">      new ArrayList&lt;&gt;(Arrays.asList(&quot;chopped tomato&quot;, &quot;chopped onion&quot;, &quot;chopped lettuce&quot;));</span>
+<span class="fc" id="L67">  ArrayList&lt;String&gt; jacketPotato = new ArrayList&lt;&gt;(Arrays.asList(&quot;jacket&quot;, &quot;beans&quot;));</span>
+<span class="fc" id="L68">  ArrayList&lt;String&gt; burger = new ArrayList&lt;&gt;(Arrays.asList(&quot;burger&quot;, &quot;toasted bun&quot;));</span>
+<span class="fc" id="L69">  ArrayList&lt;String&gt; rawPizza = new ArrayList&lt;&gt;(Arrays.asList(&quot;chopped tomato&quot;, &quot;dough&quot;, &quot;cheese&quot;));</span>
+
   /**
    * ScenarioGameMaster constructor.
    *
@@ -67,6 +77,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @param custno Number of customers.
    * @param machineUnlockBalance A class that controls the in game currency.
    * @param ingredientsHelper Staff member which can get ingredients.
+   * @param deliveryStaff Staff member who serves customers.
+   * @param disablePowerup Turn power ups off.
+   * @param difficulty Game difficulty setting.
    */
   public ScenarioGameMaster(
       PiazzaPanicGame game,
@@ -76,106 +89,116 @@ public class ScenarioGameMaster extends GameMaster {
       Money machineUnlockBalance,
       IngredientsStaff ingredientsHelper,
       DeliveryStaff deliveryStaff,
-<span class="nc" id="L79">      Boolean disablePowerup) {</span>
-<span class="nc" id="L80">    this.machineUnlockBalance = machineUnlockBalance;</span>
-<span class="nc" id="L81">    this.staffOne = ingredientsHelper;</span>
-<span class="nc" id="L82">    this.deliveryStaff = deliveryStaff;</span>
-<span class="nc" id="L83">    this.game = game;</span>
-<span class="nc" id="L84">    settings = Utility.getSettings();</span>
-<span class="nc" id="L85">    this.map = map;</span>
-<span class="nc" id="L86">    collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);</span>
-<span class="nc" id="L87">    this.disablePowerUp = disablePowerup;</span>
+      Boolean disablePowerup,
+<span class="fc" id="L93">      int difficulty) {</span>
+<span class="fc" id="L94">    this.machineUnlockBalance = machineUnlockBalance;</span>
+<span class="fc" id="L95">    this.staffOne = ingredientsHelper;</span>
+<span class="fc" id="L96">    this.deliveryStaff = deliveryStaff;</span>
+<span class="fc" id="L97">    this.game = game;</span>
+<span class="fc" id="L98">    settings = Utility.getSettings();</span>
+<span class="fc" id="L99">    this.map = map;</span>
+<span class="fc" id="L100">    collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">    this.isPowerUp = !disablePowerup;</span>
+<span class="fc" id="L102">    this.difficulty = difficulty;</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">    for (int i = 0; i &lt; chefno; i++) {</span>
-<span class="nc" id="L90">      chefs.add(new Chef(&quot;Chef&quot;, 6 + i, 5, 1, 1, 1, false, new Stack&lt;String&gt;(), i + 1));</span>
+<span class="fc" id="L104">    this.save = new GameSaver(&quot;here.json&quot;);</span>
+
+<span class="fc" id="L106">    this.save.setDifficulty(difficulty);</span>
+<span class="fc" id="L107">    this.save.setPowerUp(disablePowerup);</span>
+<span class="fc" id="L108">    this.save.setCustomersRemaining(custno);</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">    for (int i = 0; i &lt; chefno; i++) {</span>
+<span class="fc" id="L111">      chefs.add(new Chef(&quot;Chef&quot;, 6 + i, 5, 1, 1, 1, false, new Stack&lt;String&gt;(), i + 1));</span>
     }
-<span class="nc" id="L92">    this.maxCustomers = custno;</span>
+<span class="fc" id="L113">    this.maxCustomers = custno;</span>
 
-<span class="nc" id="L94">    totalTimer = 0f;</span>
+<span class="fc" id="L115">    totalTimer = 0f;</span>
 
     // Assessment 1 (index 0-16)
-<span class="nc" id="L97">    machines.put(&quot;fridge-meat&quot;, new Machine(&quot;fridge-meat&quot;, &quot;&quot;, &quot;meat&quot;, 0, false));</span>
-<span class="nc" id="L98">    machines.put(&quot;fridge-tomato&quot;, new Machine(&quot;fridge-tomato&quot;, &quot;&quot;, &quot;tomato&quot;, 0, false));</span>
-<span class="nc" id="L99">    machines.put(&quot;fridge-lettuce&quot;, new Machine(&quot;fridge-lettuce&quot;, &quot;&quot;, &quot;lettuce&quot;, 0, false));</span>
-<span class="nc" id="L100">    machines.put(&quot;fridge-onion&quot;, new Machine(&quot;fridge-onion&quot;, &quot;&quot;, &quot;onion&quot;, 0, false));</span>
-<span class="nc" id="L101">    machines.put(&quot;fridge-bun&quot;, new Machine(&quot;fridge-bun&quot;, &quot;&quot;, &quot;bun&quot;, 0, false));</span>
+<span class="fc" id="L118">    machines.put(&quot;fridge-meat&quot;, new Machine(&quot;fridge-meat&quot;, &quot;&quot;, &quot;meat&quot;, 0, false));</span>
+<span class="fc" id="L119">    machines.put(&quot;fridge-tomato&quot;, new Machine(&quot;fridge-tomato&quot;, &quot;&quot;, &quot;tomato&quot;, 0, false));</span>
+<span class="fc" id="L120">    machines.put(&quot;fridge-lettuce&quot;, new Machine(&quot;fridge-lettuce&quot;, &quot;&quot;, &quot;lettuce&quot;, 0, false));</span>
+<span class="fc" id="L121">    machines.put(&quot;fridge-onion&quot;, new Machine(&quot;fridge-onion&quot;, &quot;&quot;, &quot;onion&quot;, 0, false));</span>
+<span class="fc" id="L122">    machines.put(&quot;fridge-bun&quot;, new Machine(&quot;fridge-bun&quot;, &quot;&quot;, &quot;bun&quot;, 0, false));</span>
 
-<span class="nc" id="L103">    machineUnlockBalance.addGroup(&quot;grill&quot;, 100f);</span>
-<span class="nc" id="L104">    machines.put(&quot;grill-patty-1&quot;, new Machine(&quot;grill-patty-1&quot;, &quot;patty&quot;, &quot;burger&quot;, 3, true));</span>
-<span class="nc" id="L105">    machines.put(</span>
-<span class="nc" id="L106">        &quot;grill-patty-2&quot;, new Machine(&quot;grill-patty-2&quot;, &quot;patty&quot;, &quot;burger&quot;, 3, true, &quot;grill&quot;));</span>
-<span class="nc" id="L107">    machines.put(&quot;grill-bun-1&quot;, new Machine(&quot;grill-bun-1&quot;, &quot;bun&quot;, &quot;toasted bun&quot;, 3, true));</span>
-<span class="nc" id="L108">    machines.put(&quot;grill-bun-2&quot;, new Machine(&quot;grill-bun-2&quot;, &quot;bun&quot;, &quot;toasted bun&quot;, 3, true, &quot;grill&quot;));</span>
+<span class="fc" id="L124">    machineUnlockBalance.addGroup(&quot;grill&quot;, 100f);</span>
+<span class="fc" id="L125">    machines.put(&quot;grill-patty-1&quot;, new Machine(&quot;grill-patty-1&quot;, &quot;patty&quot;, &quot;burger&quot;, 3, true));</span>
+<span class="fc" id="L126">    machines.put(</span>
+<span class="fc" id="L127">        &quot;grill-patty-2&quot;, new Machine(&quot;grill-patty-2&quot;, &quot;patty&quot;, &quot;burger&quot;, 3, true, &quot;grill&quot;));</span>
+<span class="fc" id="L128">    machines.put(&quot;grill-bun-1&quot;, new Machine(&quot;grill-bun-1&quot;, &quot;bun&quot;, &quot;toasted bun&quot;, 3, true));</span>
+<span class="fc" id="L129">    machines.put(&quot;grill-bun-2&quot;, new Machine(&quot;grill-bun-2&quot;, &quot;bun&quot;, &quot;toasted bun&quot;, 3, true, &quot;grill&quot;));</span>
 
-<span class="nc" id="L110">    machineUnlockBalance.addGroup(&quot;forming&quot;, 50f);</span>
-<span class="nc" id="L111">    machines.put(&quot;forming-1&quot;, new Machine(&quot;forming-1&quot;, &quot;meat&quot;, &quot;patty&quot;, 3, true));</span>
-<span class="nc" id="L112">    machines.put(&quot;forming-2&quot;, new Machine(&quot;forming-2&quot;, &quot;meat&quot;, &quot;patty&quot;, 3, true, &quot;forming&quot;));</span>
+<span class="fc" id="L131">    machineUnlockBalance.addGroup(&quot;forming&quot;, 50f);</span>
+<span class="fc" id="L132">    machines.put(&quot;forming-1&quot;, new Machine(&quot;forming-1&quot;, &quot;meat&quot;, &quot;patty&quot;, 3, true));</span>
+<span class="fc" id="L133">    machines.put(&quot;forming-2&quot;, new Machine(&quot;forming-2&quot;, &quot;meat&quot;, &quot;patty&quot;, 3, true, &quot;forming&quot;));</span>
 
-<span class="nc" id="L114">    machineUnlockBalance.addGroup(&quot;chopping&quot;, 50f);</span>
-<span class="nc" id="L115">    machines.put(</span>
-<span class="nc" id="L116">        &quot;chopping-tomato-1&quot;, new Machine(&quot;chopping-tomato-1&quot;, &quot;tomato&quot;, &quot;chopped tomato&quot;, 3, true));</span>
-<span class="nc" id="L117">    machines.put(</span>
+<span class="fc" id="L135">    machineUnlockBalance.addGroup(&quot;chopping&quot;, 50f);</span>
+<span class="fc" id="L136">    machines.put(</span>
+<span class="fc" id="L137">        &quot;chopping-tomato-1&quot;, new Machine(&quot;chopping-tomato-1&quot;, &quot;tomato&quot;, &quot;chopped tomato&quot;, 3, true));</span>
+<span class="fc" id="L138">    machines.put(</span>
         &quot;chopping-tomato-2&quot;,
-<span class="nc" id="L119">        new Machine(&quot;chopping-tomato-2&quot;, &quot;tomato&quot;, &quot;chopped tomato&quot;, 3, true, &quot;chopping&quot;));</span>
-<span class="nc" id="L120">    machines.put(</span>
+<span class="fc" id="L140">        new Machine(&quot;chopping-tomato-2&quot;, &quot;tomato&quot;, &quot;chopped tomato&quot;, 3, true, &quot;chopping&quot;));</span>
+<span class="fc" id="L141">    machines.put(</span>
         &quot;chopping-lettuce-1&quot;,
-<span class="nc" id="L122">        new Machine(&quot;chopping-lettuce-1&quot;, &quot;lettuce&quot;, &quot;chopped lettuce&quot;, 3, true));</span>
-<span class="nc" id="L123">    machines.put(</span>
+<span class="fc" id="L143">        new Machine(&quot;chopping-lettuce-1&quot;, &quot;lettuce&quot;, &quot;chopped lettuce&quot;, 3, true));</span>
+<span class="fc" id="L144">    machines.put(</span>
         &quot;chopping-lettuce-2&quot;,
-<span class="nc" id="L125">        new Machine(&quot;chopping-lettuce-2&quot;, &quot;lettuce&quot;, &quot;chopped lettuce&quot;, 3, true, &quot;chopping&quot;));</span>
-<span class="nc" id="L126">    machines.put(</span>
-<span class="nc" id="L127">        &quot;chopping-onion-1&quot;, new Machine(&quot;chopping-onion-1&quot;, &quot;onion&quot;, &quot;chopped onion&quot;, 3, true));</span>
-<span class="nc" id="L128">    machines.put(</span>
+<span class="fc" id="L146">        new Machine(&quot;chopping-lettuce-2&quot;, &quot;lettuce&quot;, &quot;chopped lettuce&quot;, 3, true, &quot;chopping&quot;));</span>
+<span class="fc" id="L147">    machines.put(</span>
+<span class="fc" id="L148">        &quot;chopping-onion-1&quot;, new Machine(&quot;chopping-onion-1&quot;, &quot;onion&quot;, &quot;chopped onion&quot;, 3, true));</span>
+<span class="fc" id="L149">    machines.put(</span>
         &quot;chopping-onion-2&quot;,
-<span class="nc" id="L130">        new Machine(&quot;chopping-onion-2&quot;, &quot;onion&quot;, &quot;chopped onion&quot;, 3, true, &quot;chopping&quot;));</span>
+<span class="fc" id="L151">        new Machine(&quot;chopping-onion-2&quot;, &quot;onion&quot;, &quot;chopped onion&quot;, 3, true, &quot;chopping&quot;));</span>
 
     // Assessment 2 (index 17-24)
-<span class="nc" id="L133">    machines.put(&quot;fridge-dough&quot;, new Machine(&quot;fridge-dough&quot;, &quot;&quot;, &quot;dough&quot;, 0, false));</span>
-<span class="nc" id="L134">    machines.put(&quot;fridge-cheese&quot;, new Machine(&quot;fridge-cheese&quot;, &quot;&quot;, &quot;cheese&quot;, 0, false));</span>
-<span class="nc" id="L135">    machines.put(&quot;fridge-potato&quot;, new Machine(&quot;fridge-potato&quot;, &quot;&quot;, &quot;potato&quot;, 0, false));</span>
-<span class="nc" id="L136">    machines.put(&quot;fridge-beans&quot;, new Machine(&quot;fridge-beans&quot;, &quot;&quot;, &quot;beans&quot;, 0, false));</span>
+<span class="fc" id="L154">    machines.put(&quot;fridge-dough&quot;, new Machine(&quot;fridge-dough&quot;, &quot;&quot;, &quot;dough&quot;, 0, false));</span>
+<span class="fc" id="L155">    machines.put(&quot;fridge-cheese&quot;, new Machine(&quot;fridge-cheese&quot;, &quot;&quot;, &quot;cheese&quot;, 0, false));</span>
+<span class="fc" id="L156">    machines.put(&quot;fridge-potato&quot;, new Machine(&quot;fridge-potato&quot;, &quot;&quot;, &quot;potato&quot;, 0, false));</span>
+<span class="fc" id="L157">    machines.put(&quot;fridge-beans&quot;, new Machine(&quot;fridge-beans&quot;, &quot;&quot;, &quot;beans&quot;, 0, false));</span>
 
-<span class="nc" id="L138">    machineUnlockBalance.addGroup(&quot;potato&quot;, 150f);</span>
-<span class="nc" id="L139">    machines.put(&quot;oven-potato-1&quot;, new Machine(&quot;oven-potato-1&quot;, &quot;potato&quot;, &quot;jacket&quot;, 3, true));</span>
-<span class="nc" id="L140">    machines.put(</span>
-<span class="nc" id="L141">        &quot;oven-potato-2&quot;, new Machine(&quot;oven-potato-2&quot;, &quot;potato&quot;, &quot;jacket&quot;, 3, true, &quot;potato&quot;));</span>
+<span class="fc" id="L159">    machineUnlockBalance.addGroup(&quot;potato&quot;, 150f);</span>
+<span class="fc" id="L160">    machines.put(&quot;oven-potato-1&quot;, new Machine(&quot;oven-potato-1&quot;, &quot;potato&quot;, &quot;jacket&quot;, 3, true));</span>
+<span class="fc" id="L161">    machines.put(</span>
+<span class="fc" id="L162">        &quot;oven-potato-2&quot;, new Machine(&quot;oven-potato-2&quot;, &quot;potato&quot;, &quot;jacket&quot;, 3, true, &quot;potato&quot;));</span>
 
-<span class="nc" id="L143">    machineUnlockBalance.addGroup(&quot;pizza&quot;, 150f);</span>
-<span class="nc" id="L144">    machines.put(&quot;oven-pizza-1&quot;, new Machine(&quot;oven-pizza-1&quot;, &quot;raw pizza&quot;, &quot;pizza&quot;, 3, true));</span>
-<span class="nc" id="L145">    machines.put(</span>
-<span class="nc" id="L146">        &quot;oven-pizza-2&quot;, new Machine(&quot;oven-pizza-2&quot;, &quot;raw pizza&quot;, &quot;pizza&quot;, 3, true, &quot;pizza&quot;));</span>
+<span class="fc" id="L164">    machineUnlockBalance.addGroup(&quot;pizza&quot;, 150f);</span>
+<span class="fc" id="L165">    machines.put(&quot;oven-pizza-1&quot;, new Machine(&quot;oven-pizza-1&quot;, &quot;raw pizza&quot;, &quot;pizza&quot;, 3, true));</span>
+<span class="fc" id="L166">    machines.put(</span>
+<span class="fc" id="L167">        &quot;oven-pizza-2&quot;, new Machine(&quot;oven-pizza-2&quot;, &quot;raw pizza&quot;, &quot;pizza&quot;, 3, true, &quot;pizza&quot;));</span>
 
     // disposal and tray/serving handled separately
 
-<span class="nc" id="L150">    grill = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/grill.mp3&quot;));</span>
-<span class="nc" id="L151">    chopping = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/chopping.mp3&quot;));</span>
-<span class="nc" id="L152">    serving = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/serving.mp3&quot;));</span>
-<span class="nc" id="L153">    fridge = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/fridge.mp3&quot;));</span>
-<span class="nc" id="L154">    forming = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/forming.mp3&quot;));</span>
-<span class="nc" id="L155">    trash = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/trash.mp3&quot;));</span>
+<span class="fc" id="L171">    grill = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/grill.mp3&quot;));</span>
+<span class="fc" id="L172">    chopping = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/chopping.mp3&quot;));</span>
+<span class="fc" id="L173">    serving = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/serving.mp3&quot;));</span>
+<span class="fc" id="L174">    fridge = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/fridge.mp3&quot;));</span>
+<span class="fc" id="L175">    forming = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/forming.mp3&quot;));</span>
+<span class="fc" id="L176">    trash = Gdx.audio.newSound(Gdx.files.internal(&quot;sounds/trash.mp3&quot;));</span>
 
-<span class="nc bnc" id="L157" title="All 4 branches missed.">    switch (settings.get(1).trim()) {</span>
+<span class="pc bpc" id="L178" title="3 of 4 branches missed.">    switch (settings.get(1).trim()) {</span>
       case &quot;full&quot;:
-<span class="nc" id="L159">        soundVolume = 1f;</span>
-<span class="nc" id="L160">        break;</span>
+<span class="nc" id="L180">        soundVolume = 1f;</span>
+<span class="nc" id="L181">        break;</span>
       case &quot;half&quot;:
-<span class="nc" id="L162">        soundVolume = 0.5f;</span>
-<span class="nc" id="L163">        break;</span>
+<span class="nc" id="L183">        soundVolume = 0.5f;</span>
+<span class="nc" id="L184">        break;</span>
       case &quot;none&quot;:
-<span class="nc" id="L165">        soundVolume = 0f;</span>
-<span class="nc" id="L166">        break;</span>
+<span class="fc" id="L186">        soundVolume = 0f;</span>
+<span class="fc" id="L187">        break;</span>
       default:
         break;
     }
 
-<span class="nc" id="L171">    machineUnlockBalance.addGroup(&quot;ingredients-staff&quot;, 150f);</span>
-<span class="nc" id="L172">    machineUnlockBalance.addGroup(&quot;server-staff&quot;, 50f);</span>
+<span class="fc" id="L192">    machineUnlockBalance.addGroup(&quot;ingredients-staff&quot;, 150f);</span>
+<span class="fc" id="L193">    machineUnlockBalance.addGroup(&quot;server-staff&quot;, 50f);</span>
 
     // It is a square hence, width = height, just get one.
-<span class="nc" id="L175">    tilewidth = (int) map.getProperties().get(&quot;tilewidth&quot;);</span>
+<span class="fc" id="L196">    tilewidth = (int) map.getProperties().get(&quot;tilewidth&quot;);</span>
 
-<span class="nc" id="L177">    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);</span>
-<span class="nc" id="L178">  }</span>
+<span class="fc" id="L198">    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);</span>
+
+<span class="fc" id="L200">    this.machineUnlockBalance.saveMoneyDetails(this.save);</span>
+<span class="fc" id="L201">  }</span>
 
   /**
    * Setter method for selectedChef. Indexing is changed to represent java indexing starting from 0
@@ -184,8 +207,8 @@ public class ScenarioGameMaster extends GameMaster {
    * @param selectedChef Index of the chef that movement needs to be applied on.
    */
   public void setSelectedChef(int selectedChef) {
-<span class="nc" id="L187">    this.selectedChef = selectedChef - 1;</span>
-<span class="nc" id="L188">  }</span>
+<span class="fc" id="L210">    this.selectedChef = selectedChef - 1;</span>
+<span class="fc" id="L211">  }</span>
 
   /**
    * Getter method for selectedChef. Indexing is changed to represent java indexing starting from 0
@@ -194,7 +217,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @return Index of the chef that movement will be applied on.
    */
   public int getSelectedChef() {
-<span class="nc" id="L197">    return selectedChef + 1;</span>
+<span class="fc" id="L220">    return selectedChef + 1;</span>
   }
 
   /**
@@ -205,7 +228,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @return chef object based upon ith position passed in.
    */
   public Chef getChef(int i) {
-<span class="nc" id="L208">    return chefs.get(i - 1);</span>
+<span class="fc" id="L231">    return chefs.get(i - 1);</span>
   }
 
   /**
@@ -213,10 +236,10 @@ public class ScenarioGameMaster extends GameMaster {
    * unlocked.
    */
   public void setRecipeToStaff() {
-<span class="nc bnc" id="L216" title="All 2 branches missed.">    if (machineUnlockBalance.isUnlocked(&quot;ingredients-staff&quot;)) {</span>
-<span class="nc" id="L217">      staffOne.setCurrentRecipe(customers.peek().getOrder());</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">    if (machineUnlockBalance.isUnlocked(&quot;ingredients-staff&quot;)) {</span>
+<span class="nc" id="L240">      staffOne.setCurrentRecipe(customers.peek().getOrder());</span>
     }
-<span class="nc" id="L219">  }</span>
+<span class="nc" id="L242">  }</span>
 
   /**
    * Attempts to move the currently selected chef in a specified direction. If the move is valid,
@@ -225,36 +248,36 @@ public class ScenarioGameMaster extends GameMaster {
    * @param direction Direction to move.
    */
   public void tryMove(String direction) {
-<span class="nc" id="L228">    Chef chef = chefs.get(selectedChef);</span>
-<span class="nc bnc" id="L229" title="All 5 branches missed.">    switch (direction) {</span>
+<span class="fc" id="L251">    Chef chef = chefs.get(selectedChef);</span>
+<span class="pc bpc" id="L252" title="1 of 5 branches missed.">    switch (direction) {</span>
       case &quot;up&quot;:
-<span class="nc bnc" id="L231" title="All 2 branches missed.">        if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {</span>
-<span class="nc" id="L232">          chef.alteryCoord(+1);</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {</span>
+<span class="fc" id="L255">          chef.alteryCoord(+1);</span>
         }
-<span class="nc" id="L234">        chef.setFacing(&quot;up&quot;);</span>
-<span class="nc" id="L235">        break;</span>
+<span class="fc" id="L257">        chef.setFacing(&quot;up&quot;);</span>
+<span class="fc" id="L258">        break;</span>
       case &quot;down&quot;:
-<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() - 1, selectedChef)) {</span>
-<span class="nc" id="L238">          chef.alteryCoord(-1);</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() - 1, selectedChef)) {</span>
+<span class="fc" id="L261">          chef.alteryCoord(-1);</span>
         }
-<span class="nc" id="L240">        chef.setFacing(&quot;down&quot;);</span>
-<span class="nc" id="L241">        break;</span>
+<span class="fc" id="L263">        chef.setFacing(&quot;down&quot;);</span>
+<span class="fc" id="L264">        break;</span>
       case &quot;left&quot;:
-<span class="nc bnc" id="L243" title="All 2 branches missed.">        if (wouldNotCollide(chef.getxCoord() - 1, chef.getyCoord(), selectedChef)) {</span>
-<span class="nc" id="L244">          chef.alterxCoord(-1);</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        if (wouldNotCollide(chef.getxCoord() - 1, chef.getyCoord(), selectedChef)) {</span>
+<span class="fc" id="L267">          chef.alterxCoord(-1);</span>
         }
-<span class="nc" id="L246">        chef.setFacing(&quot;left&quot;);</span>
-<span class="nc" id="L247">        break;</span>
+<span class="fc" id="L269">        chef.setFacing(&quot;left&quot;);</span>
+<span class="fc" id="L270">        break;</span>
       case &quot;right&quot;:
-<span class="nc bnc" id="L249" title="All 2 branches missed.">        if (wouldNotCollide(chef.getxCoord() + 1, chef.getyCoord(), selectedChef)) {</span>
-<span class="nc" id="L250">          chef.alterxCoord(+1);</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (wouldNotCollide(chef.getxCoord() + 1, chef.getyCoord(), selectedChef)) {</span>
+<span class="fc" id="L273">          chef.alterxCoord(+1);</span>
         }
-<span class="nc" id="L252">        chef.setFacing(&quot;right&quot;);</span>
-<span class="nc" id="L253">        break;</span>
+<span class="fc" id="L275">        chef.setFacing(&quot;right&quot;);</span>
+<span class="fc" id="L276">        break;</span>
       default:
         break;
     }
-<span class="nc" id="L257">  }</span>
+<span class="fc" id="L280">  }</span>
 
   /**
    * Checks collision with the collision layer, other chefs, and being stickied.
@@ -265,16 +288,16 @@ public class ScenarioGameMaster extends GameMaster {
    * @return true if the chef would not collide, false otherwise.
    */
   public boolean wouldNotCollide(int x, int y, int chefno) {
-<span class="nc bnc" id="L268" title="All 2 branches missed.">    if (chefs.get(chefno).getIsStickied()) {</span>
-<span class="nc" id="L269">      return false;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">    if (chefs.get(chefno).getIsStickied()) {</span>
+<span class="fc" id="L292">      return false;</span>
     }
-<span class="nc bnc" id="L271" title="All 2 branches missed.">    for (int i = 0; i &lt; chefs.size(); i++) {</span>
-<span class="nc bnc" id="L272" title="All 6 branches missed.">      if (i != chefno &amp;&amp; chefs.get(i).getxCoord() == x &amp;&amp; chefs.get(i).getyCoord() == y) {</span>
-<span class="nc" id="L273">        return false;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">    for (int i = 0; i &lt; chefs.size(); i++) {</span>
+<span class="pc bpc" id="L295" title="1 of 6 branches missed.">      if (i != chefno &amp;&amp; chefs.get(i).getxCoord() == x &amp;&amp; chefs.get(i).getyCoord() == y) {</span>
+<span class="fc" id="L296">        return false;</span>
       }
     }
-<span class="nc" id="L276">    int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();</span>
-<span class="nc bnc" id="L277" title="All 4 branches missed.">    return tempCellTileID != 37 &amp;&amp; tempCellTileID != 39;</span>
+<span class="fc" id="L299">    int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();</span>
+<span class="fc bfc" id="L300" title="All 4 branches covered.">    return tempCellTileID != 37 &amp;&amp; tempCellTileID != 39;</span>
   }
 
   /**
@@ -283,12 +306,12 @@ public class ScenarioGameMaster extends GameMaster {
    * @return String containing the display text.
    */
   public String generateHoldingsText() {
-<span class="nc" id="L286">    String comp = &quot;&quot;;</span>
-<span class="nc bnc" id="L287" title="All 2 branches missed.">    for (int i = 0; i &lt; chefs.size(); i++) {</span>
-<span class="nc" id="L288">      comp += &quot;Chef &quot; + (i + 1) + &quot; is holding:\n&quot;;</span>
-<span class="nc" id="L289">      comp += chefs.get(i).getInventory().toString() + &quot;\n&quot;;</span>
+<span class="fc" id="L309">    String comp = &quot;&quot;;</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">    for (int i = 0; i &lt; chefs.size(); i++) {</span>
+<span class="fc" id="L311">      comp += &quot;Chef &quot; + (i + 1) + &quot; is holding:\n&quot;;</span>
+<span class="fc" id="L312">      comp += chefs.get(i).getInventory().toString() + &quot;\n&quot;;</span>
     }
-<span class="nc" id="L291">    return comp;</span>
+<span class="fc" id="L314">    return comp;</span>
   }
 
   /**
@@ -297,18 +320,18 @@ public class ScenarioGameMaster extends GameMaster {
    * @return String containing the display text.
    */
   public String generateCustomersTrayText() {
-<span class="nc" id="L300">    String comp = &quot;&quot;;</span>
-<span class="nc" id="L301">    comp += &quot;Customers remaining: &quot;;</span>
-<span class="nc" id="L302">    comp += customers.size();</span>
-<span class="nc bnc" id="L303" title="All 2 branches missed.">    if (customers.size() &gt; 0) {</span>
-<span class="nc" id="L304">      comp += &quot;\nOrder: &quot;;</span>
-<span class="nc" id="L305">      comp += customers.peek().getOrder();</span>
+<span class="nc" id="L323">    String comp = &quot;&quot;;</span>
+<span class="nc" id="L324">    comp += &quot;Customers remaining: &quot;;</span>
+<span class="nc" id="L325">    comp += customers.size();</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">    if (customers.size() &gt; 0) {</span>
+<span class="nc" id="L327">      comp += &quot;\nOrder: &quot;;</span>
+<span class="nc" id="L328">      comp += customers.peek().getOrder();</span>
     }
-<span class="nc" id="L307">    comp += &quot;\nTray 1 contents: &quot;;</span>
-<span class="nc" id="L308">    comp += tray1.toString();</span>
-<span class="nc" id="L309">    comp += &quot;\nTray 2 contents: &quot;;</span>
-<span class="nc" id="L310">    comp += tray2.toString();</span>
-<span class="nc" id="L311">    return comp;</span>
+<span class="nc" id="L330">    comp += &quot;\nTray 1 contents: &quot;;</span>
+<span class="nc" id="L331">    comp += tray1.toString();</span>
+<span class="nc" id="L332">    comp += &quot;\nTray 2 contents: &quot;;</span>
+<span class="nc" id="L333">    comp += tray2.toString();</span>
+<span class="nc" id="L334">    return comp;</span>
   }
 
   /**
@@ -317,11 +340,23 @@ public class ScenarioGameMaster extends GameMaster {
    * @return String containing the display text.
    */
   public String generateTimerText() {
-<span class="nc" id="L320">    String comp = &quot;&quot;;</span>
-<span class="nc" id="L321">    comp += &quot;Time elapsed: &quot;;</span>
-<span class="nc" id="L322">    comp += (int) totalTimer;</span>
-<span class="nc" id="L323">    comp += &quot; s&quot;;</span>
-<span class="nc" id="L324">    return comp;</span>
+<span class="fc" id="L343">    String comp = &quot;&quot;;</span>
+<span class="fc" id="L344">    comp += &quot;Time elapsed: &quot;;</span>
+<span class="fc" id="L345">    comp += (int) totalTimer;</span>
+<span class="fc" id="L346">    comp += &quot; s&quot;;</span>
+<span class="fc" id="L347">    return comp;</span>
+  }
+
+  /**
+   * Generates the display text for reputation point count
+   *
+   * @return String containing the display text.
+   */
+  public String generateReputationPointText() {
+<span class="nc" id="L356">    String comp = &quot;&quot;;</span>
+<span class="nc" id="L357">    comp += &quot;Reputation points: &quot;;</span>
+<span class="nc" id="L358">    comp += reputationPoints;</span>
+<span class="nc" id="L359">    return comp;</span>
   }
 
   /**
@@ -331,12 +366,12 @@ public class ScenarioGameMaster extends GameMaster {
    * @return String containing the display text.
    */
   public String getMachineTimerForChef(int chefno) {
-<span class="nc" id="L334">    Chef chef = chefs.get(chefno);</span>
-<span class="nc bnc" id="L335" title="All 2 branches missed.">    if (chef.getMachineInteractingWith() != null) {</span>
-<span class="nc" id="L336">      Machine machine = chef.getMachineInteractingWith();</span>
-<span class="nc" id="L337">      return ((int) (machine.getProcessingTime() - machine.getRuntime() + 1)) + &quot;&quot;;</span>
+<span class="fc" id="L369">    Chef chef = chefs.get(chefno);</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">    if (chef.getMachineInteractingWith() != null) {</span>
+<span class="fc" id="L371">      Machine machine = chef.getMachineInteractingWith();</span>
+<span class="fc" id="L372">      return ((int) (machine.getProcessingTime() - machine.getRuntime() + 1)) + &quot;&quot;;</span>
     } else {
-<span class="nc" id="L339">      return &quot;&quot;;</span>
+<span class="fc" id="L374">      return &quot;&quot;;</span>
     }
   }
 
@@ -346,7 +381,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @return The amount of customers which are yet to be served.
    */
   public int getCustomersRemaining() {
-<span class="nc" id="L349">    return customers.size();</span>
+<span class="nc" id="L384">    return customers.size();</span>
   }
 
   /**
@@ -355,82 +390,105 @@ public class ScenarioGameMaster extends GameMaster {
    * @return The customer which is at the start of the queue.
    */
   public Customer getFirstCustomer() {
-<span class="nc" id="L358">    return customers.peek();</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">    if (customers.size() &gt; 0) {</span>
+<span class="nc" id="L394">      return customers.peek();</span>
+    } else {
+<span class="nc" id="L396">      return null;</span>
+    }
   }
 
   /**
-   * Updates timers on all machines and the total timer. To be called every frame render.
+   * Updates all in game timers, performs any checks or functions required every frame. To be called
+   * every frame render.
    *
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-<span class="nc bnc" id="L367" title="All 4 branches missed.">    if (customersGenerated == maxCustomers &amp;&amp; customers.size() == 0) {</span>
-<span class="nc" id="L368">      game.setScreen(new GameWinScreen(game, (int) totalTimer, false, false, false, 0));</span>
+    // TODO: play test and adjust difficulty scaling according to feedback
+<span class="nc" id="L408">    checkOrderExpired();</span>
+<span class="nc" id="L409">    this.save.setChefDetails(chefs, selectedChef);</span>
+<span class="nc" id="L410">    this.save.setReputationPoints(reputationPoints);</span>
+<span class="nc" id="L411">    this.save.setTime(totalTimer);</span>
+<span class="nc bnc" id="L412" title="All 6 branches missed.">    if ((customersGenerated == maxCustomers &amp;&amp; customers.size() == 0) || reputationPoints == 0) {</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">      game.setScreen(</span>
+<span class="nc" id="L414">          new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));</span>
     }
-<span class="nc" id="L370">    float increment = powerups.updateValues(delta);</span>
+<span class="nc bnc" id="L416" title="All 6 branches missed.">    if (maxCustomers == -1 || (maxCustomers &gt; 0 &amp;&amp; customersGenerated &lt; maxCustomers)) {</span>
+<span class="nc" id="L417">      createCustomers();</span>
+    }
+<span class="nc" id="L419">    float increment = powerups.updateValues(delta);</span>
 
-<span class="nc bnc" id="L372" title="All 2 branches missed.">    for (String machine : machines.keySet()) {</span>
-<span class="nc" id="L373">      Machine tempMachine = machines.get(machine);</span>
-<span class="nc bnc" id="L374" title="All 2 branches missed.">      if (tempMachine.getActive()) {</span>
-<span class="nc" id="L375">        tempMachine.incrementRuntime(delta);</span>
-<span class="nc" id="L376">        tempMachine.attemptGetOutput();</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">    for (String machine : machines.keySet()) {</span>
+<span class="nc" id="L422">      Machine tempMachine = machines.get(machine);</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">      if (tempMachine.getActive()) {</span>
+<span class="nc" id="L424">        tempMachine.incrementRuntime(delta);</span>
+<span class="nc" id="L425">        tempMachine.attemptGetOutput();</span>
       }
-<span class="nc" id="L378">    }</span>
-<span class="nc" id="L379">    totalTimer += increment;</span>
-<span class="nc bnc" id="L380" title="All 6 branches missed.">    if (maxCustomers == -1 || (maxCustomers &gt; 0 &amp;&amp; customersGenerated &lt; maxCustomers)) {</span>
-<span class="nc" id="L381">      createCustomers();</span>
-    }
-<span class="nc" id="L383">    checkOrderExpired();</span>
-<span class="nc" id="L384">  }</span>
+<span class="nc" id="L427">    }</span>
+
+<span class="nc" id="L429">    totalTimer += increment;</span>
+
+<span class="nc" id="L431">    this.save.setRecipe(getFirstCustomer());</span>
+<span class="nc" id="L432">  }</span>
 
   /**
    * Checks if time allowed to complete any customer orders has elapsed Removes customers whose
    * order expired and removes a reputation point
    */
   private void checkOrderExpired() {
-<span class="nc" id="L391">    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45);</span>
-<span class="nc bnc" id="L392" title="All 2 branches missed.">    for (int i = 0; i &lt; customers.size(); i++) {</span>
-<span class="nc bnc" id="L393" title="All 2 branches missed.">      if (customers.peek().getTimeArrived() + timeAllowed &lt; totalTimer) {</span>
-        // TODO: add reputation point decrement and fail message
-<span class="nc" id="L395">        customers.poll();</span>
+<span class="nc" id="L439">    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45) - (5 * difficulty);</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">    for (int i = 0; i &lt; customers.size(); i++) {</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">      if (customers.peek().getTimeArrived() + timeAllowed &lt; totalTimer) {</span>
+        // TODO: add fail message
+<span class="nc" id="L443">        customers.poll();</span>
+<span class="nc" id="L444">        reputationPoints -= 1;</span>
       }
     }
-<span class="nc" id="L398">  }</span>
+<span class="nc" id="L447">  }</span>
 
   /**
    * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of
    * customers served increases Will occasionally 0.5s stalls to vary customer arrival times
    */
   private void createCustomers() {
-<span class="nc" id="L405">    waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);</span>
-<span class="nc bnc" id="L406" title="All 2 branches missed.">    if (lastCustomer + waitTime &lt;= totalTimer) {</span>
-<span class="nc" id="L407">      float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
-<span class="nc bnc" id="L408" title="All 4 branches missed.">      if (randomFloat &gt; 0.90 &amp;&amp; customers.size() != 0) {</span>
-<span class="nc" id="L409">        lastCustomer += 0.5;</span>
+<span class="nc" id="L454">    waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">    if (lastCustomer + waitTime &lt;= totalTimer) {</span>
+      /*
+      Random chance to stall next customer's arrival to vary customer arrival times
+      Stalls scaled by difficulty to make harder difficulties slightly faster paced
+      Chance to stall and time stalled by difficulty:
+          Easy    30%   1s
+          Medium  20%   0.75s
+          Hard    10%   0.5s
+      */
+
+<span class="nc" id="L465">      float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
+<span class="nc bnc" id="L466" title="All 4 branches missed.">      if (customers.size() != 0 &amp;&amp; randomFloat &gt; (0.9 - 0.1 * (3 - difficulty))) {</span>
+<span class="nc" id="L467">        lastCustomer += 0.5 + 0.25 * (3 - difficulty);</span>
       } else {
-<span class="nc" id="L411">        int partySize = generatePartySize();</span>
-<span class="nc bnc" id="L412" title="All 2 branches missed.">        for (int i = 0; i &lt; partySize; i++) {</span>
-          // Max number of customers in the queue starts at 5, increases by 1 every 5 served, caps
-          // at 10
-<span class="nc bnc" id="L415" title="All 8 branches missed.">          if (customers.size() &lt; Math.min(5 + (customersServed / 5), 10)</span>
+<span class="nc" id="L469">        int partySize = generatePartySize();</span>
+<span class="nc bnc" id="L470" title="All 2 branches missed.">        for (int i = 0; i &lt; partySize; i++) {</span>
+          // Max number of customers in the queue starts at 5, increases by 1 every 5 served
+          // Queue caps at 10 customers
+<span class="nc bnc" id="L473" title="All 8 branches missed.">          if (customers.size() &lt; Math.min(5 + (customersServed / 5), 10)</span>
               &amp;&amp; (maxCustomers == -1 || (maxCustomers &gt; 0 &amp;&amp; customersGenerated &lt; maxCustomers))) {
-<span class="nc" id="L417">            int randomInt = ThreadLocalRandom.current().nextInt(0, 4);</span>
-<span class="nc" id="L418">            customers.add(</span>
+<span class="nc" id="L475">            int randomInt = ThreadLocalRandom.current().nextInt(0, 4);</span>
+<span class="nc" id="L476">            customers.add(</span>
                 new Customer(
-<span class="nc" id="L420">                    &quot;Customer&quot; + (customers.size() + 1),</span>
+<span class="nc" id="L478">                    &quot;Customer&quot; + (customers.size() + 1),</span>
                     -1,
                     -1,
-<span class="nc" id="L423">                    recipes.get(randomInt),</span>
+<span class="nc" id="L481">                    recipes.get(randomInt),</span>
                     totalTimer));
-<span class="nc" id="L425">            customersGenerated += 1;</span>
+<span class="nc" id="L483">            customersGenerated += 1;</span>
           } else {
             break;
           }
         }
-<span class="nc" id="L430">        lastCustomer = totalTimer;</span>
+<span class="nc" id="L488">        lastCustomer = totalTimer;</span>
       }
     }
-<span class="nc" id="L433">  }</span>
+<span class="nc" id="L491">  }</span>
 
   /**
    * Randomly generates a value 1 to 3 dependent on the number of customers served to be used as
@@ -450,17 +508,17 @@ public class ScenarioGameMaster extends GameMaster {
         20-24:  1 = 0%,     2 = 20%,    3 = 80%
         25+:    1 = 0%,     2 = 0%,     3 = 100%
     */
-<span class="nc" id="L453">    float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
+<span class="nc" id="L511">    float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
     int partySize;
-<span class="nc bnc" id="L455" title="All 2 branches missed.">    if (randomFloat &lt;= (0.8 - 0.4 * (customersServed / 5))) {</span>
-<span class="nc" id="L456">      partySize = 1;</span>
-<span class="nc bnc" id="L457" title="All 4 branches missed.">    } else if (randomFloat &gt; (0.8 - 0.4 * (customersServed / 5))</span>
+<span class="nc bnc" id="L513" title="All 2 branches missed.">    if (randomFloat &lt;= (0.8 - 0.4 * (customersServed / 5))) {</span>
+<span class="nc" id="L514">      partySize = 1;</span>
+<span class="nc bnc" id="L515" title="All 4 branches missed.">    } else if (randomFloat &gt; (0.8 - 0.4 * (customersServed / 5))</span>
         &amp;&amp; randomFloat &lt;= (1 - 0.2 * (customersServed / 5))) {
-<span class="nc" id="L459">      partySize = 2;</span>
+<span class="nc" id="L517">      partySize = 2;</span>
     } else {
-<span class="nc" id="L461">      partySize = 3;</span>
+<span class="nc" id="L519">      partySize = 3;</span>
     }
-<span class="nc" id="L463">    return partySize;</span>
+<span class="nc" id="L521">    return partySize;</span>
   }
 
   /**
@@ -470,8 +528,8 @@ public class ScenarioGameMaster extends GameMaster {
    * @return All objects from the layer indicated by the key.
    */
   public MapObjects getObjectLayers(String key) {
-<span class="nc" id="L473">    MapLayer unlockLayer = map.getLayers().get(key);</span>
-<span class="nc" id="L474">    return unlockLayer.getObjects();</span>
+<span class="fc" id="L531">    MapLayer unlockLayer = map.getLayers().get(key);</span>
+<span class="fc" id="L532">    return unlockLayer.getObjects();</span>
   }
 
   /**
@@ -485,8 +543,8 @@ public class ScenarioGameMaster extends GameMaster {
    *     rectangle passed in.
    */
   public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord) {
-<span class="nc bnc" id="L488" title="All 2 branches missed.">    return xcoord == Math.round(object.getX() / tilewidth)</span>
-<span class="nc bnc" id="L489" title="All 2 branches missed.">        &amp;&amp; ycoord == Math.round(object.getY() / tilewidth);</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">    return xcoord == Math.round(object.getX() / tilewidth)</span>
+<span class="fc bfc" id="L547" title="All 2 branches covered.">        &amp;&amp; ycoord == Math.round(object.getY() / tilewidth);</span>
   }
 
   /**
@@ -496,9 +554,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @return Returns a rectangle representing the object.
    */
   public Rectangle loadRectangle(MapObject object) {
-<span class="nc" id="L499">    RectangleMapObject rectangleMapObject = (RectangleMapObject) object;</span>
-    // now you can get the position of the rectangle like this:
-<span class="nc" id="L501">    return rectangleMapObject.getRectangle();</span>
+<span class="fc" id="L557">    RectangleMapObject rectangleMapObject = (RectangleMapObject) object;</span>
+    // Now you can get the position of the rectangle like this:
+<span class="fc" id="L559">    return rectangleMapObject.getRectangle();</span>
   }
 
   /**
@@ -506,98 +564,98 @@ public class ScenarioGameMaster extends GameMaster {
    * of them.
    */
   public void tryInteract() {
-<span class="nc" id="L509">    Chef chef = chefs.get(selectedChef);</span>
+<span class="fc" id="L567">    Chef chef = chefs.get(selectedChef);</span>
 
     // If the chef is stuck, it is not allowed to move.
-<span class="nc bnc" id="L512" title="All 2 branches missed.">    if (chef.getIsStickied()) {</span>
-<span class="nc" id="L513">      return;</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">    if (chef.getIsStickied()) {</span>
+<span class="fc" id="L571">      return;</span>
     }
 
     int targetx;
     int targety;
-<span class="nc bnc" id="L518" title="All 5 branches missed.">    switch (chef.getFacing()) {</span>
+<span class="pc bpc" id="L576" title="1 of 5 branches missed.">    switch (chef.getFacing()) {</span>
       case &quot;up&quot;:
-<span class="nc" id="L520">        targetx = chef.getxCoord();</span>
-<span class="nc" id="L521">        targety = chef.getyCoord() + 1;</span>
-<span class="nc" id="L522">        break;</span>
+<span class="fc" id="L578">        targetx = chef.getxCoord();</span>
+<span class="fc" id="L579">        targety = chef.getyCoord() + 1;</span>
+<span class="fc" id="L580">        break;</span>
       case &quot;down&quot;:
-<span class="nc" id="L524">        targetx = chef.getxCoord();</span>
-<span class="nc" id="L525">        targety = chef.getyCoord() - 1;</span>
-<span class="nc" id="L526">        break;</span>
+<span class="fc" id="L582">        targetx = chef.getxCoord();</span>
+<span class="fc" id="L583">        targety = chef.getyCoord() - 1;</span>
+<span class="fc" id="L584">        break;</span>
       case &quot;left&quot;:
-<span class="nc" id="L528">        targetx = chef.getxCoord() - 1;</span>
-<span class="nc" id="L529">        targety = chef.getyCoord();</span>
-<span class="nc" id="L530">        break;</span>
+<span class="fc" id="L586">        targetx = chef.getxCoord() - 1;</span>
+<span class="fc" id="L587">        targety = chef.getyCoord();</span>
+<span class="fc" id="L588">        break;</span>
       case &quot;right&quot;:
-<span class="nc" id="L532">        targetx = chef.getxCoord() + 1;</span>
-<span class="nc" id="L533">        targety = chef.getyCoord();</span>
-<span class="nc" id="L534">        break;</span>
+<span class="fc" id="L590">        targetx = chef.getxCoord() + 1;</span>
+<span class="fc" id="L591">        targety = chef.getyCoord();</span>
+<span class="fc" id="L592">        break;</span>
       default:
-<span class="nc" id="L536">        targetx = chef.getxCoord();</span>
-<span class="nc" id="L537">        targety = chef.getyCoord();</span>
+<span class="nc" id="L594">        targetx = chef.getxCoord();</span>
+<span class="nc" id="L595">        targety = chef.getyCoord();</span>
         break;
     }
 
     // Unlock layer - interactions with any stations that need to be
     // purchased using credits.
-<span class="nc" id="L543">    MapObjects unlockObjects = getObjectLayers(&quot;Unlock Layer&quot;);</span>
+<span class="fc" id="L601">    MapObjects unlockObjects = getObjectLayers(&quot;Unlock Layer&quot;);</span>
 
-<span class="nc bnc" id="L545" title="All 2 branches missed.">    for (MapObject ob : unlockObjects) {</span>
-<span class="nc bnc" id="L546" title="All 2 branches missed.">      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {</span>
-<span class="nc" id="L547">        machineUnlockBalance.unlockMachine(ob.getName());</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">    for (MapObject ob : unlockObjects) {</span>
+<span class="pc bpc" id="L604" title="1 of 2 branches missed.">      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {</span>
+<span class="nc" id="L605">        machineUnlockBalance.unlockMachine(ob.getName());</span>
       }
-<span class="nc" id="L549">    }</span>
+<span class="fc" id="L607">    }</span>
 
     // Fridge layer - contains all fridges in order to pick up ingredients.
-<span class="nc" id="L552">    MapObjects fridgeObjects = getObjectLayers(&quot;Fridge Layer&quot;);</span>
-<span class="nc bnc" id="L553" title="All 2 branches missed.">    for (MapObject ob : fridgeObjects) {</span>
-<span class="nc bnc" id="L554" title="All 2 branches missed.">      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {</span>
-<span class="nc" id="L555">        machines.get(ob.getName()).process(chef, machineUnlockBalance);</span>
-<span class="nc" id="L556">        fridge.play(soundVolume);</span>
+<span class="fc" id="L610">    MapObjects fridgeObjects = getObjectLayers(&quot;Fridge Layer&quot;);</span>
+<span class="fc bfc" id="L611" title="All 2 branches covered.">    for (MapObject ob : fridgeObjects) {</span>
+<span class="fc bfc" id="L612" title="All 2 branches covered.">      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {</span>
+<span class="fc" id="L613">        machines.get(ob.getName()).process(chef, machineUnlockBalance);</span>
+<span class="fc" id="L614">        fridge.play(soundVolume);</span>
       }
-<span class="nc" id="L558">    }</span>
+<span class="fc" id="L616">    }</span>
 
     // Cooking Objects - contain all machines
-<span class="nc" id="L561">    MapObjects cookingObjects = getObjectLayers(&quot;Cooking Layer&quot;);</span>
+<span class="fc" id="L619">    MapObjects cookingObjects = getObjectLayers(&quot;Cooking Layer&quot;);</span>
 
-<span class="nc bnc" id="L563" title="All 2 branches missed.">    if (chef.getInventory().size() != 0) {</span>
+<span class="fc bfc" id="L621" title="All 2 branches covered.">    if (chef.getInventory().size() != 0) {</span>
       // Work stations
-<span class="nc" id="L565">      String invTop = chef.getInventory().peek();</span>
+<span class="fc" id="L623">      String invTop = chef.getInventory().peek();</span>
 
-<span class="nc bnc" id="L567" title="All 2 branches missed.">      for (MapObject ob : cookingObjects) {</span>
+<span class="fc bfc" id="L625" title="All 2 branches covered.">      for (MapObject ob : cookingObjects) {</span>
         // Only use a machine if you are trying to interact with it and have the correct
         // input.
-<span class="nc bnc" id="L570" title="All 2 branches missed.">        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)</span>
-<span class="nc bnc" id="L571" title="All 2 branches missed.">            &amp;&amp; machines.get(ob.getName()).getInput() == invTop) {</span>
-<span class="nc" id="L572">          machines.get(ob.getName()).process(chef, machineUnlockBalance);</span>
+<span class="fc bfc" id="L628" title="All 2 branches covered.">        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)</span>
+<span class="pc bpc" id="L629" title="1 of 2 branches missed.">            &amp;&amp; machines.get(ob.getName()).getInput() == invTop) {</span>
+<span class="fc" id="L630">          machines.get(ob.getName()).process(chef, machineUnlockBalance);</span>
         }
-<span class="nc" id="L574">      }</span>
+<span class="fc" id="L632">      }</span>
     }
 
-<span class="nc" id="L577">    MapObjects miscObjects = getObjectLayers(&quot;Misc Layer&quot;);</span>
+<span class="fc" id="L635">    MapObjects miscObjects = getObjectLayers(&quot;Misc Layer&quot;);</span>
 
-<span class="nc bnc" id="L579" title="All 2 branches missed.">    if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get(&quot;bin&quot;)), targetx, targety)) {</span>
-<span class="nc" id="L580">      chef.removeTopFromInventory();</span>
-<span class="nc" id="L581">      trash.play(soundVolume);</span>
-<span class="nc bnc" id="L582" title="All 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
-<span class="nc" id="L583">        loadRectangle(miscObjects.get(&quot;serving&quot;)), targetx, targety)) {</span>
-<span class="nc" id="L584">      serveFood();</span>
-<span class="nc bnc" id="L585" title="All 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
-<span class="nc" id="L586">        loadRectangle(miscObjects.get(&quot;tray-1&quot;)), targetx, targety)) {</span>
-<span class="nc" id="L587">      addToTray(1);</span>
-<span class="nc bnc" id="L588" title="All 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
-<span class="nc" id="L589">        loadRectangle(miscObjects.get(&quot;tray-2&quot;)), targetx, targety)) {</span>
-<span class="nc" id="L590">      addToTray(2);</span>
-<span class="nc bnc" id="L591" title="All 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
-<span class="nc" id="L592">        loadRectangle(miscObjects.get(&quot;fast-track-collect&quot;)), targetx, targety)) {</span>
-<span class="nc" id="L593">      String item = staffOne.collectItem();</span>
+<span class="fc bfc" id="L637" title="All 2 branches covered.">    if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get(&quot;bin&quot;)), targetx, targety)) {</span>
+<span class="fc" id="L638">      chef.removeTopFromInventory();</span>
+<span class="fc" id="L639">      trash.play(soundVolume);</span>
+<span class="pc bpc" id="L640" title="1 of 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
+<span class="fc" id="L641">        loadRectangle(miscObjects.get(&quot;serving&quot;)), targetx, targety)) {</span>
+<span class="nc" id="L642">      serveFood();</span>
+<span class="pc bpc" id="L643" title="1 of 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
+<span class="fc" id="L644">        loadRectangle(miscObjects.get(&quot;tray-1&quot;)), targetx, targety)) {</span>
+<span class="nc" id="L645">      addToTray(1);</span>
+<span class="pc bpc" id="L646" title="1 of 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
+<span class="fc" id="L647">        loadRectangle(miscObjects.get(&quot;tray-2&quot;)), targetx, targety)) {</span>
+<span class="nc" id="L648">      addToTray(2);</span>
+<span class="pc bpc" id="L649" title="1 of 2 branches missed.">    } else if (detectInteractionFromTiledObject(</span>
+<span class="fc" id="L650">        loadRectangle(miscObjects.get(&quot;fast-track-collect&quot;)), targetx, targety)) {</span>
+<span class="nc" id="L651">      String item = staffOne.collectItem();</span>
       // Don't add a null pointer onto the chefs stack.
-<span class="nc bnc" id="L595" title="All 2 branches missed.">      if (item != null) {</span>
-<span class="nc" id="L596">        Machine tempMachine = new Machine(&quot;staff&quot;, item, item, 0, true, &quot;ingredients-staff&quot;);</span>
-<span class="nc" id="L597">        tempMachine.processStaffInteraction(chef, machineUnlockBalance);</span>
+<span class="nc bnc" id="L653" title="All 2 branches missed.">      if (item != null) {</span>
+<span class="nc" id="L654">        Machine tempMachine = new Machine(&quot;staff&quot;, item, item, 0, true, &quot;ingredients-staff&quot;);</span>
+<span class="nc" id="L655">        tempMachine.processStaffInteraction(chef, machineUnlockBalance);</span>
       }
     }
-<span class="nc" id="L600">  }</span>
+<span class="fc" id="L658">  }</span>
 
   /**
    * Getter method for the money class.
@@ -605,7 +663,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @return Instance of the money class that is being used within scenario game master.
    */
   public Money getUnlockClass() {
-<span class="nc" id="L608">    return machineUnlockBalance;</span>
+<span class="fc" id="L666">    return machineUnlockBalance;</span>
   }
 
   /**
@@ -614,91 +672,111 @@ public class ScenarioGameMaster extends GameMaster {
    * @param station Indicates which tray station is being used.
    */
   private void addToTray(int station) {
-<span class="nc" id="L617">    Chef chef = chefs.get(selectedChef);</span>
-<span class="nc" id="L618">    Stack&lt;String&gt; inv = chef.getInventory();</span>
+<span class="nc" id="L675">    Chef chef = chefs.get(selectedChef);</span>
+<span class="nc" id="L676">    Stack&lt;String&gt; inv = chef.getInventory();</span>
     ArrayList&lt;String&gt; tray;
-<span class="nc bnc" id="L620" title="All 2 branches missed.">    if (station == 1) {</span>
-<span class="nc" id="L621">      tray = tray1;</span>
-<span class="nc bnc" id="L622" title="All 2 branches missed.">    } else if (station == 2) {</span>
-<span class="nc" id="L623">      tray = tray2;</span>
+<span class="nc bnc" id="L678" title="All 2 branches missed.">    if (station == 1) {</span>
+<span class="nc" id="L679">      tray = tray1;</span>
+<span class="nc bnc" id="L680" title="All 2 branches missed.">    } else if (station == 2) {</span>
+<span class="nc" id="L681">      tray = tray2;</span>
     } else {
-<span class="nc" id="L625">      return;</span>
+<span class="nc" id="L683">      return;</span>
     }
 
     // Force user to order in the correct way (The Easiest difficulty):
-<span class="nc bnc" id="L629" title="All 2 branches missed.">    if (inv.size() &gt; 0) {</span>
-<span class="nc bnc" id="L630" title="All 2 branches missed.">      if (customers.peek().helper(inv.peek())) {</span>
-<span class="nc" id="L631">        tray.add(inv.pop());</span>
-      }
+<span class="nc bnc" id="L687" title="All 2 branches missed.">    if (inv.size() &gt; 0) {</span>
+<span class="nc" id="L688">      tray.add(inv.pop());</span>
     }
 
     // Pizza cannot be handled by staff because you need to put it in the oven then
     // take it to the customer.
-<span class="nc bnc" id="L637" title="All 6 branches missed.">    if (tray.contains(&quot;dough&quot;) &amp;&amp; tray.contains(&quot;chopped tomato&quot;) &amp;&amp; tray.contains(&quot;cheese&quot;)) {</span>
-<span class="nc" id="L638">      tray.clear();</span>
-<span class="nc" id="L639">      inv.add(&quot;raw pizza&quot;);</span>
-<span class="nc" id="L640">      serving.play(soundVolume);</span>
-<span class="nc bnc" id="L641" title="All 2 branches missed.">    } else if (customers.peek().finishedRecipe()) {</span>
-<span class="nc" id="L642">      tray.clear();</span>
-<span class="nc bnc" id="L643" title="All 2 branches missed.">      if (machineUnlockBalance.isUnlocked(&quot;server-staff&quot;)) {</span>
-<span class="nc" id="L644">        deliveryStaff.collectItem(customers.peek().getOrder());</span>
-<span class="nc" id="L645">        serveFood();</span>
+<span class="nc bnc" id="L693" title="All 6 branches missed.">    if (tray.contains(&quot;dough&quot;) &amp;&amp; tray.contains(&quot;chopped tomato&quot;) &amp;&amp; tray.contains(&quot;cheese&quot;)) {</span>
+<span class="nc" id="L694">      tray.clear();</span>
+<span class="nc" id="L695">      inv.add(&quot;raw pizza&quot;);</span>
+<span class="nc" id="L696">      serving.play(soundVolume);</span>
+<span class="nc bnc" id="L697" title="All 2 branches missed.">    } else if (tray.containsAll(salad)</span>
+<span class="nc bnc" id="L698" title="All 2 branches missed.">        || tray.containsAll(jacketPotato)</span>
+<span class="nc bnc" id="L699" title="All 2 branches missed.">        || tray.containsAll(burger)) {</span>
+<span class="nc" id="L700">      tray.clear();</span>
+<span class="nc bnc" id="L701" title="All 2 branches missed.">      if (machineUnlockBalance.isUnlocked(&quot;server-staff&quot;)) {</span>
+<span class="nc" id="L702">        deliveryStaff.collectItem(customers.peek().getOrder());</span>
+<span class="nc" id="L703">        serveFood();</span>
       } else {
-<span class="nc bnc" id="L647" title="All 2 branches missed.">        if (inv.isEmpty()) {</span>
-<span class="nc" id="L648">          inv.add(customers.peek().getOrder());</span>
+<span class="nc bnc" id="L705" title="All 2 branches missed.">        if (inv.isEmpty()) {</span>
+<span class="nc" id="L706">          inv.add(customers.peek().getOrder());</span>
         }
       }
-<span class="nc" id="L651">      serving.play(soundVolume);</span>
+<span class="nc" id="L709">      serving.play(soundVolume);</span>
     }
 
-<span class="nc bnc" id="L654" title="All 2 branches missed.">    if (station == 1) {</span>
-<span class="nc" id="L655">      tray1 = tray;</span>
-<span class="nc bnc" id="L656" title="All 2 branches missed.">    } else if (station == 2) {</span>
-<span class="nc" id="L657">      tray2 = tray;</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed.">    if (station == 1) {</span>
+<span class="nc" id="L713">      tray1 = tray;</span>
+<span class="nc bnc" id="L714" title="All 2 branches missed.">    } else if (station == 2) {</span>
+<span class="nc" id="L715">      tray2 = tray;</span>
     }
-<span class="nc" id="L659">  }</span>
+<span class="nc" id="L717">  }</span>
 
   /** Method to handle giving food to the customer. */
   public void serveFood() {
-<span class="nc bnc" id="L663" title="All 2 branches missed.">    if (customersServed == maxCustomers) {</span>
-<span class="nc" id="L664">      game.setScreen(new GameWinScreen(game, (int) totalTimer, true, false, false, 0));</span>
+<span class="nc bnc" id="L721" title="All 2 branches missed.">    if (customersServed == maxCustomers) {</span>
+<span class="nc bnc" id="L722" title="All 2 branches missed.">      game.setScreen(</span>
+<span class="nc" id="L723">          new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));</span>
     }
-<span class="nc" id="L666">    Chef chef = chefs.get(selectedChef);</span>
+<span class="nc" id="L725">    Chef chef = chefs.get(selectedChef);</span>
     Stack&lt;String&gt; inv;
     // If the order isn't pizza and the server is unlocked,
     // get the order from the staff members inventory.
     // Otherwise, get the chefs inventory and operate
     // from there.
-<span class="nc bnc" id="L672" title="All 2 branches missed.">    if (machineUnlockBalance.isUnlocked(&quot;server-staff&quot;)</span>
-<span class="nc bnc" id="L673" title="All 2 branches missed.">        &amp;&amp; !(customers.peek().getOrder() == &quot;pizza&quot;)) {</span>
-<span class="nc" id="L674">      inv = deliveryStaff.getItems();</span>
+<span class="nc bnc" id="L731" title="All 2 branches missed.">    if (machineUnlockBalance.isUnlocked(&quot;server-staff&quot;)</span>
+<span class="nc bnc" id="L732" title="All 2 branches missed.">        &amp;&amp; !(customers.peek().getOrder() == &quot;pizza&quot;)) {</span>
+<span class="nc" id="L733">      inv = deliveryStaff.getItems();</span>
     } else {
-<span class="nc" id="L676">      inv = chef.getInventory();</span>
+<span class="nc" id="L735">      inv = chef.getInventory();</span>
     }
 
-<span class="nc bnc" id="L679" title="All 2 branches missed.">    if (inv.size() == 0) {</span>
-<span class="nc" id="L680">      return;</span>
+<span class="nc bnc" id="L738" title="All 2 branches missed.">    if (inv.size() == 0) {</span>
+<span class="nc" id="L739">      return;</span>
     }
 
-<span class="nc bnc" id="L683" title="All 2 branches missed.">    if (customers.peek().getOrder() == inv.peek()) {</span>
-<span class="nc" id="L684">      inv.pop();</span>
-<span class="nc" id="L685">      customers.poll();</span>
-<span class="nc" id="L686">      serving.play(soundVolume);</span>
+<span class="nc bnc" id="L742" title="All 2 branches missed.">    if (customers.peek().getOrder() == inv.peek()) {</span>
+<span class="nc" id="L743">      inv.pop();</span>
+<span class="nc" id="L744">      customers.poll();</span>
+<span class="nc" id="L745">      this.save.decrementCustomers();</span>
+<span class="nc" id="L746">      serving.play(soundVolume);</span>
       // +$100 on completion of a recipe.
-<span class="nc" id="L688">      machineUnlockBalance.incrementBalance();</span>
+<span class="nc" id="L748">      machineUnlockBalance.incrementBalance();</span>
       // Once an order is complete, allow ingredient staff to
       // collect another order.
-<span class="nc" id="L691">      staffOne.setGenerate(true);</span>
+<span class="nc" id="L751">      staffOne.setGenerate(true);</span>
+<span class="nc" id="L752">      this.machineUnlockBalance.saveMoneyDetails(this.save);</span>
 
       // Activate random power up if a recipe is complete.
-<span class="nc bnc" id="L694" title="All 2 branches missed.">      if (!(disablePowerUp)) {</span>
-<span class="nc" id="L695">        this.powerups.activateRandomPowerUp();</span>
+<span class="nc bnc" id="L755" title="All 2 branches missed.">      if (isPowerUp) {</span>
+<span class="nc" id="L756">        this.powerups.activateRandomPowerUp();</span>
       }
     }
-<span class="nc" id="L698">  }</span>
+<span class="nc" id="L759">  }</span>
 
+  /**
+   * Getter method for the game's PowerUpRunner instance
+   *
+   * @return Instance of PowerUpRunner used in the game
+   */
   public PowerUpRunner getPowerUpRunner() {
-<span class="nc" id="L701">    return powerups;</span>
+<span class="nc" id="L767">    return powerups;</span>
   }
+
+  public GameSaver getSave() {
+<span class="nc" id="L771">    return save;</span>
+  }
+
+  public void setReputationPoints(int reputationPoints) {
+<span class="nc" id="L775">    this.reputationPoints = reputationPoints;</span>
+<span class="nc" id="L776">  }</span>
+
+  public void setTimeElapsed(float timeElapsed) {
+<span class="nc" id="L779">    this.totalTimer = timeElapsed;</span>
+<span class="nc" id="L780">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

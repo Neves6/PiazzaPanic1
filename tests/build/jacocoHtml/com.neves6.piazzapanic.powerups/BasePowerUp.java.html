@@ -21,10 +21,10 @@ public class BasePowerUp {
 
   /** Sets start time if it already hasn't been run and the power up is acquired. */
   public void setStartTime() {
-<span class="nc bnc" id="L24" title="All 2 branches missed.">    if (this.startTime == 0L) {</span>
-<span class="nc" id="L25">      this.startTime = System.currentTimeMillis();</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">    if (this.startTime == 0L) {</span>
+<span class="fc" id="L25">      this.startTime = System.currentTimeMillis();</span>
     }
-<span class="nc" id="L27">  }</span>
+<span class="fc" id="L27">  }</span>
 
   /**
    * If the time that the power up last for is over, it sets the end time.
@@ -32,12 +32,12 @@ public class BasePowerUp {
    * @return Whether the time has been stopped or not.
    */
   public Boolean endTime() {
-<span class="nc bnc" id="L35" title="All 4 branches missed.">    if (System.currentTimeMillis() - this.startTime &gt; effectTime &amp;&amp; this.startTime != 0L) {</span>
-<span class="nc" id="L36">      this.acquired = false;</span>
-<span class="nc" id="L37">      this.startTime = 0L;</span>
-<span class="nc" id="L38">      return true;</span>
+<span class="fc bfc" id="L35" title="All 4 branches covered.">    if (System.currentTimeMillis() - this.startTime &gt; effectTime &amp;&amp; this.startTime != 0L) {</span>
+<span class="fc" id="L36">      this.acquired = false;</span>
+<span class="fc" id="L37">      this.startTime = 0L;</span>
+<span class="fc" id="L38">      return true;</span>
     } else {
-<span class="nc" id="L40">      return false;</span>
+<span class="fc" id="L40">      return false;</span>
     }
   }
 
@@ -47,7 +47,7 @@ public class BasePowerUp {
    * @return whether you have the power-up or not
    */
   public Boolean getAcquiredStatus() {
-<span class="nc" id="L50">    return this.acquired;</span>
+<span class="fc" id="L50">    return this.acquired;</span>
   }
 
   /** Set boolean value if the power up has just been attained. */
@@ -62,24 +62,15 @@ public class BasePowerUp {
    * @return the time the power up was applied.
    */
   public Long getStartTime() {
-<span class="nc" id="L65">    return startTime;</span>
-  }
-
-  /**
-   * Getter method.
-   *
-   * @return how long the power up lasts.
-   */
-  public Long getEffectTime() {
-<span class="nc" id="L74">    return effectTime;</span>
+<span class="fc" id="L65">    return startTime;</span>
   }
 
   public String prettyPrint() {
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">    if (this.acquired) {</span>
-<span class="fc" id="L79">      Long inSeconds = (System.currentTimeMillis() - startTime) / 1000;</span>
-<span class="fc" id="L80">      return name + &quot;:&quot; + inSeconds.toString() + &quot;s \n&quot;;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">    if (this.acquired) {</span>
+<span class="fc" id="L70">      Long inSeconds = (System.currentTimeMillis() - startTime) / 1000;</span>
+<span class="fc" id="L71">      return name + &quot;:&quot; + inSeconds.toString() + &quot;s \n&quot;;</span>
     } else {
-<span class="nc" id="L82">      return &quot;&quot;;</span>
+<span class="fc" id="L73">      return &quot;&quot;;</span>
     }
   }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestAutoCook" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-04-09T20:19:37" hostname="HP-PAV14" time="0.052">
+  <properties/>
+  <testcase name="testApplyPowerUpRanOutOfTime" classname="com.neves6.piazzapanic.tests.poweruptests.TestAutoCook" time="0.008"/>
+  <testcase name="testApplyPowerUpCompleteMachine" classname="com.neves6.piazzapanic.tests.poweruptests.TestAutoCook" time="0.002"/>
+  <testcase name="testApplyPowerUpInactive" classname="com.neves6.piazzapanic.tests.poweruptests.TestAutoCook" time="0.002"/>
+  <testcase name="testApplyPowerUpNoRunningMachine" classname="com.neves6.piazzapanic.tests.poweruptests.TestAutoCook" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

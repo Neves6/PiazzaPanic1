@@ -40,20 +40,20 @@ public class Chef extends Person {
       boolean isStickied,
       Stack&lt;String&gt; inventory,
       int textureSet) {
-<span class="nc" id="L43">    super(name, xcoord, ycoord);</span>
-<span class="nc" id="L44">    this.isStickied = isStickied;</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">    if (inventory.size() == 0) {</span>
-<span class="nc" id="L46">      this.inventory = new Stack&lt;String&gt;();</span>
+<span class="fc" id="L43">    super(name, xcoord, ycoord);</span>
+<span class="fc" id="L44">    this.isStickied = isStickied;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    if (inventory.size() == 0) {</span>
+<span class="fc" id="L46">      this.inventory = new Stack&lt;String&gt;();</span>
     } else {
-<span class="nc" id="L48">      this.inventory = inventory;</span>
+<span class="fc" id="L48">      this.inventory = inventory;</span>
     }
-<span class="nc" id="L50">    this.facing = &quot;down&quot;;</span>
-<span class="nc" id="L51">    this.txUp = new Texture(&quot;people/chef&quot; + textureSet + &quot;up.png&quot;);</span>
-<span class="nc" id="L52">    this.txDown = new Texture(&quot;people/chef&quot; + textureSet + &quot;down.png&quot;);</span>
-<span class="nc" id="L53">    this.txLeft = new Texture(&quot;people/chef&quot; + textureSet + &quot;left.png&quot;);</span>
-<span class="nc" id="L54">    this.txRight = new Texture(&quot;people/chef&quot; + textureSet + &quot;right.png&quot;);</span>
-<span class="nc" id="L55">    this.txNow = txDown;</span>
-<span class="nc" id="L56">  }</span>
+<span class="fc" id="L50">    this.facing = &quot;down&quot;;</span>
+<span class="fc" id="L51">    this.txUp = new Texture(&quot;people/chef&quot; + textureSet + &quot;up.png&quot;);</span>
+<span class="fc" id="L52">    this.txDown = new Texture(&quot;people/chef&quot; + textureSet + &quot;down.png&quot;);</span>
+<span class="fc" id="L53">    this.txLeft = new Texture(&quot;people/chef&quot; + textureSet + &quot;left.png&quot;);</span>
+<span class="fc" id="L54">    this.txRight = new Texture(&quot;people/chef&quot; + textureSet + &quot;right.png&quot;);</span>
+<span class="fc" id="L55">    this.txNow = txDown;</span>
+<span class="fc" id="L56">  }</span>
 
   /**
    * Getter method used to see whether chef can move or not.
@@ -61,7 +61,7 @@ public class Chef extends Person {
    * @return Can the chef move.
    */
   public boolean getIsStickied() {
-<span class="nc" id="L64">    return isStickied;</span>
+<span class="fc" id="L64">    return isStickied;</span>
   }
 
   /**
@@ -79,8 +79,8 @@ public class Chef extends Person {
    * @param flag Whether the chef is stuck to one coordinates.
    */
   public void setIsStickied(boolean flag) {
-<span class="nc" id="L82">    this.isStickied = flag;</span>
-<span class="nc" id="L83">  }</span>
+<span class="fc" id="L82">    this.isStickied = flag;</span>
+<span class="fc" id="L83">  }</span>
 
   /**
    * Setter method to show what the chef is currently using.
@@ -88,8 +88,8 @@ public class Chef extends Person {
    * @param machine The machine that the chef is interacting with.
    */
   public void setMachineInteractingWith(Machine machine) {
-<span class="nc" id="L91">    this.machineInteractingWith = machine;</span>
-<span class="nc" id="L92">  }</span>
+<span class="fc" id="L91">    this.machineInteractingWith = machine;</span>
+<span class="fc" id="L92">  }</span>
 
   /**
    * Getter method to see what machine the chef is using.
@@ -97,7 +97,7 @@ public class Chef extends Person {
    * @return The machine that the chef is interacting with.
    */
   public Machine getMachineInteractingWith() {
-<span class="nc" id="L100">    return machineInteractingWith;</span>
+<span class="fc" id="L100">    return machineInteractingWith;</span>
   }
 
   /**
@@ -106,7 +106,7 @@ public class Chef extends Person {
    * @return The items that the chef has in its possession.
    */
   public Stack&lt;String&gt; getInventory() {
-<span class="nc" id="L109">    return inventory;</span>
+<span class="fc" id="L109">    return inventory;</span>
   }
 
   /**
@@ -115,13 +115,13 @@ public class Chef extends Person {
    * @param item A ingredient to be added to the inventory.
    */
   public void addToInventory(String item) {
-<span class="nc" id="L118">    this.inventory.push(item);</span>
-<span class="nc" id="L119">  }</span>
+<span class="fc" id="L118">    this.inventory.push(item);</span>
+<span class="fc" id="L119">  }</span>
 
   /** Removes the item at the top of the chefs inventory. */
   public void removeTopFromInventory() {
-<span class="nc" id="L123">    this.inventory.pop();</span>
-<span class="nc" id="L124">  }</span>
+<span class="fc" id="L123">    this.inventory.pop();</span>
+<span class="fc" id="L124">  }</span>
 
   /**
    * Getter method for which way the chef is facing.
@@ -129,7 +129,7 @@ public class Chef extends Person {
    * @return Which way the chef is facing.
    */
   public String getFacing() {
-<span class="nc" id="L132">    return facing;</span>
+<span class="fc" id="L132">    return facing;</span>
   }
 
   /**
@@ -138,23 +138,23 @@ public class Chef extends Person {
    * @param facing sprite facing direction.
    */
   public void setFacing(String facing) {
-<span class="nc" id="L141">    this.facing = facing;</span>
-<span class="nc bnc" id="L142" title="All 5 branches missed.">    switch (facing) {</span>
+<span class="fc" id="L141">    this.facing = facing;</span>
+<span class="pc bpc" id="L142" title="1 of 5 branches missed.">    switch (facing) {</span>
       case &quot;up&quot;:
-<span class="nc" id="L144">        this.txNow = txUp;</span>
-<span class="nc" id="L145">        break;</span>
+<span class="fc" id="L144">        this.txNow = txUp;</span>
+<span class="fc" id="L145">        break;</span>
       case &quot;down&quot;:
-<span class="nc" id="L147">        this.txNow = txDown;</span>
-<span class="nc" id="L148">        break;</span>
+<span class="fc" id="L147">        this.txNow = txDown;</span>
+<span class="fc" id="L148">        break;</span>
       case &quot;left&quot;:
-<span class="nc" id="L150">        this.txNow = txLeft;</span>
-<span class="nc" id="L151">        break;</span>
+<span class="fc" id="L150">        this.txNow = txLeft;</span>
+<span class="fc" id="L151">        break;</span>
       case &quot;right&quot;:
-<span class="nc" id="L153">        this.txNow = txRight;</span>
-<span class="nc" id="L154">        break;</span>
+<span class="fc" id="L153">        this.txNow = txRight;</span>
+<span class="fc" id="L154">        break;</span>
       default:
         break;
     }
-<span class="nc" id="L158">  }</span>
+<span class="fc" id="L158">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

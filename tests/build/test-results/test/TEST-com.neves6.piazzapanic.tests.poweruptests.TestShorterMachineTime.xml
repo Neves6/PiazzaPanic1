@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestShorterMachineTime" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-04-09T20:19:40" hostname="HP-PAV14" time="0.085">
+  <properties/>
+  <testcase name="testApplyPowerUpEmpty" classname="com.neves6.piazzapanic.tests.poweruptests.TestShorterMachineTime" time="0.001"/>
+  <testcase name="testEndPowerUpUnattained" classname="com.neves6.piazzapanic.tests.poweruptests.TestShorterMachineTime" time="0.001"/>
+  <testcase name="testEndPowerUpEmpty" classname="com.neves6.piazzapanic.tests.poweruptests.TestShorterMachineTime" time="0.001"/>
+  <testcase name="testApplyPowerUpUnattained" classname="com.neves6.piazzapanic.tests.poweruptests.TestShorterMachineTime" time="0.0"/>
+  <testcase name="testEndPowerUpAttained" classname="com.neves6.piazzapanic.tests.poweruptests.TestShorterMachineTime" time="0.012"/>
+  <testcase name="testApplyPowerUpAttained" classname="com.neves6.piazzapanic.tests.poweruptests.TestShorterMachineTime" time="0.0"/>
+  <system-out><![CDATA[2.5
+5.0
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

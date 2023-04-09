@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.gamemechanisms</a> &gt; <span class="el_source">GameReader.java</span></div><h1>GameReader.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.gamemechanisms;
+
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.screens.PiazzaPanicGame;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
+import java.io.FileReader;
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+public class GameReader {
+  JSONObject chefData;
+  JSONArray chefLocations;
+  JSONArray chefStacks;
+  JSONObject machineData;
+  JSONObject saveData;
+  JSONObject currencySystem;
+
+<span class="nc" id="L23">  public GameReader(String filename) throws ParseException, IOException {</span>
+<span class="nc" id="L24">    JSONParser parser = new JSONParser();</span>
+<span class="nc" id="L25">    saveData = (JSONObject) parser.parse(new FileReader(filename));</span>
+<span class="nc" id="L26">    currencySystem = (JSONObject) saveData.get(&quot;Currency System&quot;);</span>
+<span class="nc" id="L27">    machineData = (JSONObject) currencySystem.get(&quot;Machines&quot;);</span>
+<span class="nc" id="L28">    chefData = (JSONObject) saveData.get(&quot;Chefs&quot;);</span>
+<span class="nc" id="L29">    chefLocations = (JSONArray) chefData.get(&quot;Chef Location&quot;);</span>
+<span class="nc" id="L30">    chefStacks = (JSONArray) chefData.get(&quot;Chef Stacks&quot;);</span>
+<span class="nc" id="L31">  }</span>
+
+  public ScenarioGameMaster createGameMaster(
+      PiazzaPanicGame game,
+      TiledMap map,
+      Money machineUnlockBalance,
+      IngredientsStaff ingredientsHelper,
+      DeliveryStaff deliveryStaff) {
+<span class="nc" id="L39">    ScenarioGameMaster configuredMaster =</span>
+        new ScenarioGameMaster(
+            game,
+            map,
+<span class="nc" id="L43">            ((Long) chefData.get(&quot;Number of Chefs&quot;)).intValue(),</span>
+<span class="nc" id="L44">            ((Long) saveData.get(&quot;Customers remaining&quot;)).intValue(),</span>
+            machineUnlockBalance,
+            ingredientsHelper,
+            deliveryStaff,
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            !((Boolean) saveData.get(&quot;Power-ups&quot;)),</span>
+<span class="nc" id="L49">            ((Long) saveData.get(&quot;Difficulty&quot;)).intValue());</span>
+<span class="nc" id="L50">    configuredMaster.setSelectedChef(1 + ((Long) chefData.get(&quot;Selected Chef&quot;)).intValue());</span>
+<span class="nc" id="L51">    machineUnlockBalance.setBalance(((Double) currencySystem.get(&quot;Balance&quot;)).floatValue());</span>
+<span class="nc" id="L52">    machineUnlockBalance.loadPreviousValues(machineData);</span>
+<span class="nc" id="L53">    configuredMaster.setReputationPoints(((Long) saveData.get(&quot;Reputation Points&quot;)).intValue());</span>
+<span class="nc" id="L54">    configuredMaster.setTimeElapsed(((Double) saveData.get(&quot;Time Elapsed&quot;)).floatValue());</span>
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">    for (int i = 0; i &lt; chefLocations.size(); i++) {</span>
+<span class="nc" id="L57">      JSONArray pairCoord = (JSONArray) chefLocations.get(i);</span>
+<span class="nc" id="L58">      configuredMaster.getChef(i + 1).setxCoord(((Long) pairCoord.get(0)).intValue());</span>
+<span class="nc" id="L59">      configuredMaster.getChef(i + 1).setyCoord(((Long) pairCoord.get(1)).intValue());</span>
+<span class="nc" id="L60">      JSONArray chefItems = (JSONArray) chefStacks.get(i);</span>
+<span class="nc" id="L61">      System.out.println(chefItems);</span>
+<span class="nc" id="L62">      System.out.println(i);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">      for (int x = 0; x &lt; chefItems.size(); x++) {</span>
+<span class="nc" id="L64">        configuredMaster.getChef(i + 1).addToInventory((String) chefItems.get(x));</span>
+      }
+    }
+<span class="nc" id="L67">    return configuredMaster;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

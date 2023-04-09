@@ -1,11 +1,22 @@
 package com.neves6.piazzapanic.tests.gamemechanisms;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neves6.piazzapanic.gamemechanisms.GameSaver;
+import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.people.Chef;
+import com.neves6.piazzapanic.people.Customer;
 import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 
 @RunWith(GdxTestRunner.class)
 public class TestGameSaver {
@@ -63,9 +74,35 @@ public class TestGameSaver {
   }
 
   @Test
-  public void testCorrectFileFormat() {
+  public void testCorrectFileFormat() throws IOException {
     testSaver.setDifficulty(2);
     testSaver.setPowerUp(true);
     testSaver.setCustomersRemaining(2);
+
+    Money testMoney = new Money();
+    testMoney.addGroup("test1", 200f);
+    testMoney.addGroup("test2", 25.5f);
+    testMoney.incrementBalance();
+    testMoney.incrementBalance();
+    testMoney.unlockMachine("test1");
+    testMoney.saveMoneyDetails(testSaver);
+
+    Chef testChef = new Chef("c1", 1, 1, 1, 1, 1, false, new Stack<>(), 1);
+    testChef.addToInventory("object");
+    ArrayList<Chef> testChefs = new ArrayList<>(Arrays.asList(testChef));
+    testSaver.setChefDetails(testChefs, 1);
+
+    Customer testCustomer = new Customer("c1", 1, 1, "potato", 2f);
+
+    testSaver.setRecipe(testCustomer);
+
+    testSaver.setReputationPoints(2);
+    testSaver.setTime(2f);
+
+    testSaver.closeClass();
+
+    ObjectMapper mapper = new ObjectMapper();
+    assertEquals("The file must contain all data required to reload the game",
+            mapper.readTree(new FileReader("ignore.json")), mapper.readTree(new FileReader("testCorrectFileFormatCorrect.json")));
   }
 }

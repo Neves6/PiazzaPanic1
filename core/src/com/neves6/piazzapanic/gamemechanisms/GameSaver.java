@@ -44,13 +44,11 @@ public class GameSaver {
     }
   }
 
-  public void closeClass(PiazzaPanicGame game) throws IOException {
+  public void closeClass() throws IOException {
     FileWriter file = new FileWriter(fileLoc);
     file.write(gameDetails.toJSONString());
-    System.out.println(gameDetails.toJSONString());
     file.flush();
     file.close();
-    game.setScreen(new IntroScreen(game));
   }
 
   public Boolean decrementCustomers() {

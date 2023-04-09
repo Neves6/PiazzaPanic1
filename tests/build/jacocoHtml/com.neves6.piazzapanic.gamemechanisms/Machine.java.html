@@ -29,15 +29,15 @@ public class Machine {
       String output,
       float processingTime,
       Boolean sticky,
-<span class="nc" id="L32">      String unlockID) {</span>
-<span class="nc" id="L33">    this.type = type;</span>
-<span class="nc" id="L34">    this.input = input;</span>
-<span class="nc" id="L35">    this.output = output;</span>
-<span class="nc" id="L36">    this.processingTime = processingTime;</span>
-<span class="nc" id="L37">    this.sticky = sticky;</span>
-<span class="nc" id="L38">    this.active = false;</span>
-<span class="nc" id="L39">    this.unlockID = unlockID;</span>
-<span class="nc" id="L40">  }</span>
+<span class="fc" id="L32">      String unlockID) {</span>
+<span class="fc" id="L33">    this.type = type;</span>
+<span class="fc" id="L34">    this.input = input;</span>
+<span class="fc" id="L35">    this.output = output;</span>
+<span class="fc" id="L36">    this.processingTime = processingTime;</span>
+<span class="fc" id="L37">    this.sticky = sticky;</span>
+<span class="fc" id="L38">    this.active = false;</span>
+<span class="fc" id="L39">    this.unlockID = unlockID;</span>
+<span class="fc" id="L40">  }</span>
 
   /**
    * Machine constructor.
@@ -48,15 +48,15 @@ public class Machine {
    * @param processingTime Processing time.
    * @param sticky Whether the machine locks the chef in place during use.
    */
-<span class="nc" id="L51">  public Machine(String type, String input, String output, float processingTime, Boolean sticky) {</span>
-<span class="nc" id="L52">    this.type = type;</span>
-<span class="nc" id="L53">    this.input = input;</span>
-<span class="nc" id="L54">    this.output = output;</span>
-<span class="nc" id="L55">    this.processingTime = processingTime;</span>
-<span class="nc" id="L56">    this.sticky = sticky;</span>
-<span class="nc" id="L57">    this.active = false;</span>
-<span class="nc" id="L58">    this.unlockID = &quot;auto&quot;;</span>
-<span class="nc" id="L59">  }</span>
+<span class="fc" id="L51">  public Machine(String type, String input, String output, float processingTime, Boolean sticky) {</span>
+<span class="fc" id="L52">    this.type = type;</span>
+<span class="fc" id="L53">    this.input = input;</span>
+<span class="fc" id="L54">    this.output = output;</span>
+<span class="fc" id="L55">    this.processingTime = processingTime;</span>
+<span class="fc" id="L56">    this.sticky = sticky;</span>
+<span class="fc" id="L57">    this.active = false;</span>
+<span class="fc" id="L58">    this.unlockID = &quot;auto&quot;;</span>
+<span class="fc" id="L59">  }</span>
 
   /**
    * Begins the machine processing of the ingredient.
@@ -64,19 +64,19 @@ public class Machine {
    * @param chef Which chef is using the machine.
    */
   public void process(Chef chef, Money currency) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">    if (!(currency.isUnlocked(this.unlockID))) {</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">    if (!(currency.isUnlocked(this.unlockID))) {</span>
 <span class="nc" id="L68">      return;</span>
     }
-<span class="nc bnc" id="L70" title="All 4 branches missed.">    if (input == &quot;&quot; &amp;&amp; processingTime == 0) {</span>
-<span class="nc" id="L71">      chef.addToInventory(output);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">    } else if (chef.getInventory().peek() == input) {</span>
-<span class="nc" id="L73">      active = true;</span>
-<span class="nc" id="L74">      chef.getInventory().pop();</span>
-<span class="nc" id="L75">      chef.setIsStickied(sticky);</span>
-<span class="nc" id="L76">      chef.setMachineInteractingWith(this);</span>
-<span class="nc" id="L77">      operator = chef;</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">    if (input == &quot;&quot; &amp;&amp; processingTime == 0) {</span>
+<span class="fc" id="L71">      chef.addToInventory(output);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">    } else if (chef.getInventory().peek() == input) {</span>
+<span class="fc" id="L73">      active = true;</span>
+<span class="fc" id="L74">      chef.getInventory().pop();</span>
+<span class="fc" id="L75">      chef.setIsStickied(sticky);</span>
+<span class="fc" id="L76">      chef.setMachineInteractingWith(this);</span>
+<span class="fc" id="L77">      operator = chef;</span>
     }
-<span class="nc" id="L79">  }</span>
+<span class="fc" id="L79">  }</span>
 
   public void processStaffInteraction(Chef chef, Money currency) {
 <span class="nc bnc" id="L82" title="All 2 branches missed.">    if (!(currency.isUnlocked(this.unlockID))) {</span>
@@ -90,15 +90,15 @@ public class Machine {
    * Handles unsticking the chef.
    */
   public void attemptGetOutput() {
-<span class="nc" id="L93">    Chef chef = operator;</span>
-<span class="nc bnc" id="L94" title="All 4 branches missed.">    if (active &amp;&amp; runtime &gt;= processingTime) {</span>
-<span class="nc" id="L95">      chef.addToInventory(output);</span>
-<span class="nc" id="L96">      chef.setIsStickied(false);</span>
-<span class="nc" id="L97">      chef.setMachineInteractingWith(null);</span>
-<span class="nc" id="L98">      active = false;</span>
-<span class="nc" id="L99">      runtime = 0;</span>
+<span class="fc" id="L93">    Chef chef = operator;</span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">    if (active &amp;&amp; runtime &gt;= processingTime) {</span>
+<span class="fc" id="L95">      chef.addToInventory(output);</span>
+<span class="fc" id="L96">      chef.setIsStickied(false);</span>
+<span class="fc" id="L97">      chef.setMachineInteractingWith(null);</span>
+<span class="fc" id="L98">      active = false;</span>
+<span class="fc" id="L99">      runtime = 0;</span>
     }
-<span class="nc" id="L101">  }</span>
+<span class="fc" id="L101">  }</span>
 
   /**
    * Getter method for the input variable.
@@ -106,7 +106,7 @@ public class Machine {
    * @return Input required to use the machine.
    */
   public String getInput() {
-<span class="nc" id="L109">    return input;</span>
+<span class="fc" id="L109">    return input;</span>
   }
 
   /**
@@ -115,8 +115,8 @@ public class Machine {
    * @param delta Time since last render.
    */
   public void incrementRuntime(float delta) {
-<span class="nc" id="L118">    this.runtime += delta;</span>
-<span class="nc" id="L119">  }</span>
+<span class="fc" id="L118">    this.runtime += delta;</span>
+<span class="fc" id="L119">  }</span>
 
   /**
    * Getter method for the runtime variable.
@@ -124,7 +124,7 @@ public class Machine {
    * @return Time since the machine started running.
    */
   public float getRuntime() {
-<span class="nc" id="L127">    return runtime;</span>
+<span class="fc" id="L127">    return runtime;</span>
   }
 
   /**
@@ -133,7 +133,7 @@ public class Machine {
    * @return Boolean variable indicating whether the machine is being used for not.
    */
   public boolean getActive() {
-<span class="nc" id="L136">    return active;</span>
+<span class="fc" id="L136">    return active;</span>
   }
 
   /**
@@ -142,7 +142,7 @@ public class Machine {
    * @return Float variable which indicates how long the machine takes to process.
    */
   public float getProcessingTime() {
-<span class="nc" id="L145">    return processingTime;</span>
+<span class="fc" id="L145">    return processingTime;</span>
   }
 
   // Use this for auto cook and shorter cook.
@@ -153,7 +153,7 @@ public class Machine {
    * @param newTime Float variable which indicates how long the machine should now take.
    */
   public void changeProcessingTime(float newTime) {
-<span class="nc" id="L156">    this.processingTime = newTime;</span>
-<span class="nc" id="L157">  }</span>
+<span class="fc" id="L156">    this.processingTime = newTime;</span>
+<span class="fc" id="L157">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

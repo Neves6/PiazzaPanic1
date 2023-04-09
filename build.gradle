@@ -77,6 +77,7 @@ project(":tests") {
         implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
 
         testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
         testImplementation "org.mockito:mockito-core:5.1.1"

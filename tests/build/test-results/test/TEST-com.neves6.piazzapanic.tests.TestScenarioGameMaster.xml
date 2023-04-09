@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.TestScenarioGameMaster" tests="38" skipped="0" failures="0" errors="0" timestamp="2023-04-09T20:19:30" hostname="HP-PAV14" time="1.525">
+  <properties/>
+  <testcase name="testInteractWithCookingLayerRight" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.044"/>
+  <testcase name="testInteractWithFridgeLayerUp" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.033"/>
+  <testcase name="tryMoveValidRight" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.038"/>
+  <testcase name="testInvalidTiledOverlap" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.032"/>
+  <testcase name="tryMoveValidUp" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.027"/>
+  <testcase name="testValidTiledOverlap" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.03"/>
+  <testcase name="testCookingLayer" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.021"/>
+  <testcase name="tryMoveInvalidDown" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.023"/>
+  <testcase name="tryMoveInvalidLeft" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.025"/>
+  <testcase name="testInteractWithUnlockLayerUp" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.026"/>
+  <testcase name="testInteractWithCookingLayerUp" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.021"/>
+  <testcase name="testInteractWithFridgeLayerDown" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testInteractWithFridgeLayerLeft" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testGetMachineTimerForChef" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testChefCanNotCoverAnotherChef" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testDisplayTextEmpty" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.02"/>
+  <testcase name="testGetCorrectChef" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.018"/>
+  <testcase name="testChefIsFrozenWhenStuck" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="tryMoveInvalidRight" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testGetFridgeLayer" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.028"/>
+  <testcase name="testInteractWithUnlockLayerDown" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.018"/>
+  <testcase name="testInteractWithUnlockLayerLeft" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.018"/>
+  <testcase name="tryMoveInvalidUp" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.017"/>
+  <testcase name="testInteractWithFridgeLayerRight" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.018"/>
+  <testcase name="testGenerateTimerText" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.017"/>
+  <testcase name="testGetMachineTimerForChefNull" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.017"/>
+  <testcase name="testInteractWithUnlockLayerRight" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.018"/>
+  <testcase name="testBinInteraction" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.023"/>
+  <testcase name="testLockedChef" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.03"/>
+  <testcase name="tryMoveValidDown" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.02"/>
+  <testcase name="tryMoveValidLeft" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.022"/>
+  <testcase name="testMiscLayer" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testIngredientsStaffInteractionLocked" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.035"/>
+  <testcase name="testGetUnlockLayer" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testInteractWithCookingLayerDown" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.019"/>
+  <testcase name="testInteractWithCookingLayerLeft" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.021"/>
+  <testcase name="testIngredientsStaffInteractionUnlocked" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.018"/>
+  <testcase name="testDisplayTextFull" classname="com.neves6.piazzapanic.tests.TestScenarioGameMaster" time="0.027"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

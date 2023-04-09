@@ -30,39 +30,39 @@ public class IntroScreen extends ScreenAdapter {
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
-<span class="nc" id="L33">  public IntroScreen(PiazzaPanicGame game) {</span>
-<span class="nc" id="L34">    this.game = game;</span>
-<span class="nc" id="L35">    camera = new OrthographicCamera();</span>
-<span class="nc" id="L36">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
-<span class="nc" id="L37">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
+<span class="fc" id="L33">  public IntroScreen(PiazzaPanicGame game) {</span>
+<span class="fc" id="L34">    this.game = game;</span>
+<span class="fc" id="L35">    camera = new OrthographicCamera();</span>
+<span class="fc" id="L36">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="fc" id="L37">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
     // Added to set screen size using settings from text file
-<span class="nc" id="L39">    settings = Utility.getSettings();</span>
-<span class="nc bnc" id="L40" title="All 2 branches missed.">    if (settings.get(0).trim().equals(&quot;fullscreen&quot;)) {</span>
-<span class="nc" id="L41">      Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());</span>
+<span class="fc" id="L39">    settings = Utility.getSettings();</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">    if (settings.get(0).trim().equals(&quot;fullscreen&quot;)) {</span>
+<span class="fc" id="L41">      Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());</span>
 <span class="nc bnc" id="L42" title="All 2 branches missed.">    } else if (settings.get(0).trim().equals(&quot;windowed&quot;)) {</span>
 <span class="nc" id="L43">      Gdx.graphics.setWindowedMode(1280, 720);</span>
     }
-<span class="nc" id="L45">  }</span>
+<span class="fc" id="L45">  }</span>
 
   /** What to show when this screen is loaded. */
   public void show() {
     // INTRO ANIMATION
-<span class="nc" id="L50">    FRAME_COLS = 8;</span>
-<span class="nc" id="L51">    FRAME_ROWS = 1;</span>
-<span class="nc" id="L52">    introSheet = new Texture(Gdx.files.internal(&quot;intro_sheet.png&quot;));</span>
-<span class="nc" id="L53">    TextureRegion[][] tmp =</span>
-<span class="nc" id="L54">        TextureRegion.split(</span>
-<span class="nc" id="L55">            introSheet, introSheet.getWidth() / FRAME_COLS, introSheet.getHeight() / FRAME_ROWS);</span>
-<span class="nc" id="L56">    TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];</span>
-<span class="nc" id="L57">    int index = 0;</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">    for (int i = 0; i &lt; FRAME_ROWS; i++) {</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">      for (int j = 0; j &lt; FRAME_COLS; j++) {</span>
-<span class="nc" id="L60">        walkFrames[index++] = tmp[i][j];</span>
+<span class="fc" id="L50">    FRAME_COLS = 8;</span>
+<span class="fc" id="L51">    FRAME_ROWS = 1;</span>
+<span class="fc" id="L52">    introSheet = new Texture(Gdx.files.internal(&quot;intro_sheet.png&quot;));</span>
+<span class="fc" id="L53">    TextureRegion[][] tmp =</span>
+<span class="fc" id="L54">        TextureRegion.split(</span>
+<span class="fc" id="L55">            introSheet, introSheet.getWidth() / FRAME_COLS, introSheet.getHeight() / FRAME_ROWS);</span>
+<span class="fc" id="L56">    TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];</span>
+<span class="fc" id="L57">    int index = 0;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    for (int i = 0; i &lt; FRAME_ROWS; i++) {</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">      for (int j = 0; j &lt; FRAME_COLS; j++) {</span>
+<span class="fc" id="L60">        walkFrames[index++] = tmp[i][j];</span>
       }
     }
-<span class="nc" id="L63">    introAnimation = new Animation&lt;TextureRegion&gt;(0.125f, walkFrames);</span>
-<span class="nc" id="L64">    stateTime = 0f;</span>
-<span class="nc" id="L65">  }</span>
+<span class="fc" id="L63">    introAnimation = new Animation&lt;TextureRegion&gt;(0.125f, walkFrames);</span>
+<span class="fc" id="L64">    stateTime = 0f;</span>
+<span class="fc" id="L65">  }</span>
 
   /**
    * What to process in every frame.
@@ -71,24 +71,24 @@ public class IntroScreen extends ScreenAdapter {
    */
   @Override
   public void render(float delta) {
-<span class="nc" id="L74">    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
-<span class="nc" id="L75">    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen</span>
-<span class="nc" id="L76">    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time</span>
-<span class="nc" id="L77">    winWidth = Gdx.graphics.getWidth();</span>
-<span class="nc" id="L78">    winHeight = Gdx.graphics.getHeight();</span>
+<span class="fc" id="L74">    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="fc" id="L75">    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen</span>
+<span class="fc" id="L76">    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time</span>
+<span class="fc" id="L77">    winWidth = Gdx.graphics.getWidth();</span>
+<span class="fc" id="L78">    winHeight = Gdx.graphics.getHeight();</span>
 
     // Get current frame of animation for the current stateTime
-<span class="nc" id="L81">    TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);</span>
+<span class="fc" id="L81">    TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);</span>
 
-<span class="nc" id="L83">    camera.update();</span>
+<span class="fc" id="L83">    camera.update();</span>
 
-<span class="nc bnc" id="L85" title="All 2 branches missed.">    if (stateTime &gt; 2f) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">    if (stateTime &gt; 2f) {</span>
       // dispose();
-<span class="nc" id="L87">      game.setScreen(new TitleScreen(game));</span>
+<span class="fc" id="L87">      game.setScreen(new TitleScreen(game));</span>
     }
 
-<span class="nc bnc" id="L90" title="All 2 branches missed.">    if (game.testMode) {</span>
-<span class="nc" id="L91">      return;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">    if (game.testMode) {</span>
+<span class="fc" id="L91">      return;</span>
     }
 
 <span class="nc" id="L94">    game.getBatch().setProjectionMatrix(camera.combined);</span>
@@ -120,9 +120,9 @@ public class IntroScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-<span class="nc" id="L123">    super.resize(width, height);</span>
-<span class="nc" id="L124">    camera.setToOrtho(false, width, height);</span>
-<span class="nc" id="L125">  }</span>
+<span class="fc" id="L123">    super.resize(width, height);</span>
+<span class="fc" id="L124">    camera.setToOrtho(false, width, height);</span>
+<span class="fc" id="L125">  }</span>
 
   /** Method which runs when the screen transitions to another. */
   @Override

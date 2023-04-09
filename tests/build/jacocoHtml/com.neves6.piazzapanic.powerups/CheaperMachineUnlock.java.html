@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.Map;
 
+/** Allows all machines to be unlocked for half the price. */
 public class CheaperMachineUnlock extends BasePowerUp {
   /**
    * Constructor.
@@ -11,25 +12,41 @@ public class CheaperMachineUnlock extends BasePowerUp {
    * @param name
    */
   public CheaperMachineUnlock(Long effectTime, String name) {
-<span class="nc" id="L14">    super(effectTime, name);</span>
-<span class="nc" id="L15">  }</span>
+<span class="fc" id="L15">    super(effectTime, name);</span>
+<span class="fc" id="L16">  }</span>
 
+  /**
+   * Sets all values within the array list that represent price to unlock group of machines to half
+   * price.
+   *
+   * @param machineStatus A map containing a string key and an array with 2 values where index 1 is
+   *     the price and index 2 tells you whether it is unlocked or not.
+   * @return Map of machines at half the price.
+   */
   public Map&lt;String, ArrayList&lt;Float&gt;&gt; applyPowerUp(Map&lt;String, ArrayList&lt;Float&gt;&gt; machineStatus) {
-<span class="nc bnc" id="L18" title="All 2 branches missed.">    if (getAcquiredStatus()) {</span>
-<span class="nc" id="L19">      setStartTime();</span>
-<span class="nc bnc" id="L20" title="All 2 branches missed.">      for (String status : machineStatus.keySet())</span>
-<span class="nc" id="L21">        machineStatus.get(status).set(0, machineStatus.get(status).get(0) / 2);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">    if (getAcquiredStatus()) {</span>
+<span class="fc" id="L28">      setStartTime();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">      for (String status : machineStatus.keySet())</span>
+<span class="fc" id="L30">        machineStatus.get(status).set(0, machineStatus.get(status).get(0) / 2);</span>
     }
-<span class="nc" id="L23">    return machineStatus;</span>
+<span class="fc" id="L32">    return machineStatus;</span>
   }
 
+  /**
+   * Sets all values within the array list that represent price to unlock group of machines to full
+   * price if power-up has ended its runtime.
+   *
+   * @param machineStatus A map containing a string key and an array with 2 values where index 1 is
+   *     the price and index 2 tells you whether it is unlocked or not.
+   * @return A map of machines at the original price if they were originally modified.
+   */
   public Map&lt;String, ArrayList&lt;Float&gt;&gt; endPowerUp(Map&lt;String, ArrayList&lt;Float&gt;&gt; machineStatus) {
-<span class="nc bnc" id="L27" title="All 2 branches missed.">    if (endTime()) {</span>
-<span class="nc bnc" id="L28" title="All 2 branches missed.">      for (String status : machineStatus.keySet()) {</span>
-<span class="nc" id="L29">        machineStatus.get(status).set(0, machineStatus.get(status).get(0) * 2);</span>
-<span class="nc" id="L30">      }</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">    if (endTime()) {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">      for (String status : machineStatus.keySet()) {</span>
+<span class="fc" id="L46">        machineStatus.get(status).set(0, machineStatus.get(status).get(0) * 2);</span>
+<span class="fc" id="L47">      }</span>
     }
-<span class="nc" id="L32">    return machineStatus;</span>
+<span class="fc" id="L49">    return machineStatus;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

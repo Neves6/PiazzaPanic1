@@ -12,8 +12,8 @@ public class ShorterMachineTime extends BasePowerUp {
    * @param s
    */
   public ShorterMachineTime(Long effectTime, String s) {
-<span class="nc" id="L15">    super(effectTime, s);</span>
-<span class="nc" id="L16">  }</span>
+<span class="fc" id="L15">    super(effectTime, s);</span>
+<span class="fc" id="L16">  }</span>
 
   /**
    * Takes all active machines in the game and changes their processing speed if the power up has
@@ -23,15 +23,15 @@ public class ShorterMachineTime extends BasePowerUp {
    * @return Machines with decreasing processing speed.
    */
   public Map&lt;String, Machine&gt; applyPowerUp(Map&lt;String, Machine&gt; machines) {
-<span class="nc bnc" id="L26" title="All 2 branches missed.">    if (machines.size() &lt; 1) {</span>
-<span class="nc" id="L27">      throw new IllegalArgumentException(&quot;Chefs list must have at least two chefs in.&quot;);</span>
-<span class="nc bnc" id="L28" title="All 2 branches missed.">    } else if (getAcquiredStatus()) {</span>
-<span class="nc" id="L29">      setStartTime();</span>
-<span class="nc bnc" id="L30" title="All 2 branches missed.">      for (String machine : machines.keySet()) {</span>
-<span class="nc" id="L31">        machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() / 2);</span>
-<span class="nc" id="L32">      }</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">    if (machines.size() &lt; 1) {</span>
+<span class="fc" id="L27">      throw new IllegalArgumentException(&quot;Chefs list must have at least two chefs in.&quot;);</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">    } else if (getAcquiredStatus()) {</span>
+<span class="fc" id="L29">      setStartTime();</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">      for (String machine : machines.keySet()) {</span>
+<span class="fc" id="L31">        machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() / 2);</span>
+<span class="fc" id="L32">      }</span>
     }
-<span class="nc" id="L34">    return machines;</span>
+<span class="fc" id="L34">    return machines;</span>
   }
 
   /**
@@ -42,16 +42,16 @@ public class ShorterMachineTime extends BasePowerUp {
    * @return Machines with normal processing speed.
    */
   public Map&lt;String, Machine&gt; endPowerUp(Map&lt;String, Machine&gt; machines) {
-<span class="nc bnc" id="L45" title="All 2 branches missed.">    if (machines.size() &lt; 1) {</span>
-<span class="nc" id="L46">      throw new IllegalArgumentException(&quot;Chefs list must have at least two chefs in.&quot;);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    if (machines.size() &lt; 1) {</span>
+<span class="fc" id="L46">      throw new IllegalArgumentException(&quot;Chefs list must have at least two chefs in.&quot;);</span>
     }
-<span class="nc bnc" id="L48" title="All 2 branches missed.">    if (endTime()) {</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">      for (String machine : machines.keySet()) {</span>
-<span class="nc" id="L50">        System.out.println(machines.get(machine).getProcessingTime());</span>
-<span class="nc" id="L51">        machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() * 2);</span>
-<span class="nc" id="L52">      }</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">    if (endTime()) {</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">      for (String machine : machines.keySet()) {</span>
+<span class="fc" id="L50">        System.out.println(machines.get(machine).getProcessingTime());</span>
+<span class="fc" id="L51">        machines.get(machine).changeProcessingTime(machines.get(machine).getProcessingTime() * 2);</span>
+<span class="fc" id="L52">      }</span>
     }
-<span class="nc" id="L54">    return machines;</span>
+<span class="fc" id="L54">    return machines;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

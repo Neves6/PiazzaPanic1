@@ -394,7 +394,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
     if (keycode == Input.Keys.ESCAPE) {
       try {
-        gm.getSave().closeClass(game);
+        gm.getSave().closeClass();
+        game.setScreen(new IntroScreen(game));
       } catch (IOException e) {
         throw new RuntimeException(e);
       }

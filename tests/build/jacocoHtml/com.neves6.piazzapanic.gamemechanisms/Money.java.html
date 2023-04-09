@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.simple.JSONObject;
 
 /** Class to handle money which can be used to unlocked machines. */
 public class Money {
@@ -10,17 +11,17 @@ public class Money {
   private Map&lt;String, ArrayList&lt;Float&gt;&gt; unlockDetails;
 
   /** Constructor where you always start with 0 balance. */
-<span class="nc" id="L13">  public Money() {</span>
-<span class="nc" id="L14">    this.balance = (float) 0;</span>
-<span class="nc" id="L15">    this.unlockDetails = new HashMap();</span>
+<span class="fc" id="L14">  public Money() {</span>
+<span class="fc" id="L15">    this.balance = (float) 0;</span>
+<span class="fc" id="L16">    this.unlockDetails = new HashMap();</span>
     // Anything that doesn't need unlocking.
-<span class="nc" id="L17">    ArrayList&lt;Float&gt; tempNull = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L18">    ArrayList&lt;Float&gt; tempNull = new ArrayList&lt;&gt;();</span>
     // First index represents the price and seconds represents a boolean value represented as an
     // int.
-<span class="nc" id="L20">    tempNull.add(0f);</span>
-<span class="nc" id="L21">    tempNull.add(1f);</span>
-<span class="nc" id="L22">    unlockDetails.put(&quot;auto&quot;, tempNull);</span>
-<span class="nc" id="L23">  }</span>
+<span class="fc" id="L21">    tempNull.add(0f);</span>
+<span class="fc" id="L22">    tempNull.add(1f);</span>
+<span class="fc" id="L23">    unlockDetails.put(&quot;auto&quot;, tempNull);</span>
+<span class="fc" id="L24">  }</span>
 
   /**
    * Pretty print method to display the balance.
@@ -28,13 +29,13 @@ public class Money {
    * @return A message that states what the balance is.
    */
   public String displayBalance() {
-<span class="nc" id="L31">    return &quot;Balance: $&quot; + this.balance;</span>
+<span class="fc" id="L32">    return &quot;Balance: $&quot; + this.balance;</span>
   }
 
   /** Increments balance by a fixed amount. */
   public void incrementBalance() {
-<span class="nc" id="L36">    this.balance += 100;</span>
-<span class="nc" id="L37">  }</span>
+<span class="fc" id="L37">    this.balance += 100;</span>
+<span class="fc" id="L38">  }</span>
 
   /**
    * Method to add a group of unlockable machines.
@@ -45,14 +46,14 @@ public class Money {
    */
   public boolean addGroup(String key, Float unlockFee) {
     // If the key doesn't already exist don't add it.
-<span class="nc bnc" id="L48" title="All 2 branches missed.">    if (unlockDetails.containsKey(key)) {</span>
-<span class="nc" id="L49">      return false;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">    if (unlockDetails.containsKey(key)) {</span>
+<span class="fc" id="L50">      return false;</span>
     } else {
-<span class="nc" id="L51">      ArrayList&lt;Float&gt; tempList = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L52">      tempList.add(unlockFee);</span>
-<span class="nc" id="L53">      tempList.add(0f);</span>
-<span class="nc" id="L54">      unlockDetails.put(key, tempList);</span>
-<span class="nc" id="L55">      return true;</span>
+<span class="fc" id="L52">      ArrayList&lt;Float&gt; tempList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">      tempList.add(unlockFee);</span>
+<span class="fc" id="L54">      tempList.add(0f);</span>
+<span class="fc" id="L55">      unlockDetails.put(key, tempList);</span>
+<span class="fc" id="L56">      return true;</span>
     }
   }
 
@@ -63,8 +64,8 @@ public class Money {
    * @return Boolean value indicating whether a group has already been unlocked or not.
    */
   public boolean isUnlocked(String unlockID) {
-<span class="nc" id="L66">    ArrayList&lt;Float&gt; i = unlockDetails.get(unlockID);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">    return i.get(1) == 1f;</span>
+<span class="fc" id="L67">    ArrayList&lt;Float&gt; i = unlockDetails.get(unlockID);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">    return i.get(1) == 1f;</span>
   }
 
   /**
@@ -74,20 +75,42 @@ public class Money {
    * @return Boolean value to represent if the machine has successfully been unlocked or not.
    */
   public boolean unlockMachine(String unlockID) {
-<span class="nc" id="L77">    ArrayList&lt;Float&gt; i = unlockDetails.get(unlockID);</span>
+<span class="fc" id="L78">    ArrayList&lt;Float&gt; i = unlockDetails.get(unlockID);</span>
     // Must not already be unlocked and have enough money
     // to unlock it.
-<span class="nc bnc" id="L80" title="All 4 branches missed.">    if (this.balance &gt;= i.get(0) &amp;&amp; i.get(1) == 0) {</span>
-<span class="nc" id="L81">      this.balance -= i.get(0);</span>
-<span class="nc" id="L82">      i.set(1, 1f);</span>
-<span class="nc" id="L83">      return true;</span>
+<span class="fc bfc" id="L81" title="All 4 branches covered.">    if (this.balance &gt;= i.get(0) &amp;&amp; i.get(1) == 0) {</span>
+<span class="fc" id="L82">      this.balance -= i.get(0);</span>
+<span class="fc" id="L83">      i.set(1, 1f);</span>
+<span class="fc" id="L84">      return true;</span>
     } else {
-<span class="nc" id="L85">      return false;</span>
+<span class="fc" id="L86">      return false;</span>
     }
   }
 
   public Map&lt;String, ArrayList&lt;Float&gt;&gt; getUnlockDetails() {
-<span class="nc" id="L90">    return unlockDetails;</span>
+<span class="fc" id="L91">    return unlockDetails;</span>
   }
+
+  public void saveMoneyDetails(GameSaver saver) {
+<span class="fc" id="L95">    JSONObject moneyDetails = new JSONObject();</span>
+<span class="fc" id="L96">    moneyDetails.put(&quot;Balance&quot;, this.balance);</span>
+<span class="fc" id="L97">    JSONObject machineUnlocks = new JSONObject();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">    for (String key : unlockDetails.keySet()) {</span>
+<span class="fc" id="L99">      ArrayList&lt;Float&gt; tempList = unlockDetails.get(key);</span>
+<span class="fc" id="L100">      machineUnlocks.put(key, tempList.get(1));</span>
+<span class="fc" id="L101">    }</span>
+<span class="fc" id="L102">    moneyDetails.put(&quot;Machines&quot;, machineUnlocks);</span>
+<span class="fc" id="L103">    saver.setCurrencyDetails(moneyDetails);</span>
+<span class="fc" id="L104">  }</span>
+
+  public void setBalance(float balance) {
+<span class="nc" id="L107">    this.balance = balance;</span>
+<span class="nc" id="L108">  }</span>
+
+  public void loadPreviousValues(JSONObject prevValues) {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">    for (Object key : prevValues.keySet()) {</span>
+<span class="nc" id="L112">      unlockDetails.get(key).set(1, ((Double) prevValues.get(key)).floatValue());</span>
+<span class="nc" id="L113">    }</span>
+<span class="nc" id="L114">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

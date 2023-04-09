@@ -39,36 +39,50 @@
 </file>
 <file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestScenarioGameMaster.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="185" severity="warning" message="Line is longer than 100 characters (found 131)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="266" severity="warning" message="Line is longer than 100 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="384" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_X&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
-<error line="385" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_Y&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
+<error line="187" severity="warning" message="Line is longer than 100 characters (found 131)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="268" severity="warning" message="Line is longer than 100 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="386" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_X&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
+<error line="387" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_Y&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
 </file>
 <file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestScreenTransitions.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 <error line="6" column="38" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - com.neves6.piazzapanic.screens.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="98" severity="warning" message="Summary javadoc is missing." source="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck"/>
+<error line="100" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
+<error line="101" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
+<error line="102" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
+<error line="103" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
+<error line="104" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
+<error line="105" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
+<error line="106" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
+<error line="108" column="3" severity="warning" message="&apos;METHOD_DEF&apos; should be separated from previous statement." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
 </file>
 <file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\UtilityTests.java">
+<error line="31" severity="warning" message="Javadoc comment at column 67 has parse error. Missed HTML close tag &apos;String&apos;. Sometimes it means that close tag missed for one of previous tags." source="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\ShorterMachineTimeTests.java">
-<error line="12" column="1" severity="warning" message="Extra separation in import group before &apos;com.neves6.piazzapanic.tests.GdxTestRunner&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="12" column="1" severity="warning" message="Wrong lexicographical order for &apos;com.neves6.piazzapanic.tests.GdxTestRunner&apos; import. Should be before &apos;java.util.concurrent.TimeUnit&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\gamemechanisms\TestGameSaver.java">
+<error line="15" column="1" severity="warning" message="Extra separation in import group before &apos;java.io.FileReader&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="15" column="1" severity="warning" message="Wrong lexicographical order for &apos;java.io.FileReader&apos; import. Should be before &apos;org.junit.runner.RunWith&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="16" column="1" severity="warning" message="Wrong lexicographical order for &apos;java.io.IOException&apos; import. Should be before &apos;org.junit.runner.RunWith&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="17" column="1" severity="warning" message="Wrong lexicographical order for &apos;java.util.ArrayList&apos; import. Should be before &apos;org.junit.runner.RunWith&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="18" column="1" severity="warning" message="Wrong lexicographical order for &apos;java.util.Arrays&apos; import. Should be before &apos;org.junit.runner.RunWith&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="19" column="1" severity="warning" message="Wrong lexicographical order for &apos;java.util.Stack&apos; import. Should be before &apos;org.junit.runner.RunWith&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
+<error line="106" severity="warning" message="Line is longer than 100 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestAutoCook.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="10" column="1" severity="warning" message="Extra separation in import group before &apos;java.util.HashMap&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="15" column="1" severity="warning" message="Extra separation in import group before &apos;com.neves6.piazzapanic.tests.GdxTestRunner&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="15" column="1" severity="warning" message="Wrong lexicographical order for &apos;com.neves6.piazzapanic.tests.GdxTestRunner&apos; import. Should be before &apos;java.util.concurrent.TimeUnit&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="60" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestBasePowerUp.java">
-<error line="8" column="1" severity="warning" message="Extra separation in import group before &apos;java.util.concurrent.TimeUnit&apos;" source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="8" column="1" severity="warning" message="Wrong lexicographical order for &apos;java.util.concurrent.TimeUnit&apos; import. Should be before &apos;org.junit.runner.RunWith&apos;." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="10" column="1" severity="warning" message="Import statement for &apos;org.junit.Assert.*&apos; is in the wrong order. Should be in the &apos;STATIC&apos; group, expecting not assigned imports on this line." source="com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck"/>
-<error line="10" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="27" column="15" severity="warning" message="Abbreviation in name &apos;testConstructorIII&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
-<error line="56" column="36" severity="warning" message="WhitespaceAround: &apos;{&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
-<error line="61" column="34" severity="warning" message="WhitespaceAround: &apos;{&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
+<error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestCheaperMachineUnlock.java">
+</file>
+<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestDoubleMoney.java">
+</file>
+<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestPowerUpRunner.java">
+<error line="10" column="17" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - java.util.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestShorterMachineTime.java">
 </file>
 <file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestTimeFreeze.java">
 </file>

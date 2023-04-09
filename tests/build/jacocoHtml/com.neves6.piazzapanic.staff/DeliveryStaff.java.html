@@ -18,9 +18,9 @@ public class DeliveryStaff extends BaseStaff {
    * @param ysequence List of y coordinates in order.
    */
   public DeliveryStaff(ArrayList&lt;Integer&gt; xsequence, ArrayList&lt;Integer&gt; ysequence) {
-<span class="nc" id="L21">    super(xsequence, ysequence);</span>
-<span class="nc" id="L22">    this.items = new Stack&lt;&gt;();</span>
-<span class="nc" id="L23">  }</span>
+<span class="fc" id="L21">    super(xsequence, ysequence);</span>
+<span class="fc" id="L22">    this.items = new Stack&lt;&gt;();</span>
+<span class="fc" id="L23">  }</span>
 
   /**
    * Collects a complete order.
@@ -28,9 +28,9 @@ public class DeliveryStaff extends BaseStaff {
    * @param item An assembled recipe.
    */
   public void collectItem(String item) {
-<span class="nc" id="L31">    items.push(item);</span>
-<span class="nc" id="L32">    this.collect = true;</span>
-<span class="nc" id="L33">  }</span>
+<span class="fc" id="L31">    items.push(item);</span>
+<span class="fc" id="L32">    this.collect = true;</span>
+<span class="fc" id="L33">  }</span>
 
   /**
    * Gets the recipe that the staff member currently has.
@@ -38,9 +38,9 @@ public class DeliveryStaff extends BaseStaff {
    * @return Stack containing the complete recipe.
    */
   public Stack&lt;String&gt; getItems() {
-<span class="nc" id="L41">    Stack&lt;String&gt; copy = (Stack&lt;String&gt;) items.clone();</span>
-<span class="nc" id="L42">    items.pop();</span>
-<span class="nc" id="L43">    return copy;</span>
+<span class="fc" id="L41">    Stack&lt;String&gt; copy = (Stack&lt;String&gt;) items.clone();</span>
+<span class="fc" id="L42">    items.pop();</span>
+<span class="fc" id="L43">    return copy;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.people</a> &gt; <span class="el_source">Customer.java</span></div><h1>Customer.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.people;
 
 import com.badlogic.gdx.graphics.Texture;
-import java.util.Stack;
 
 /** Automated customers which extends the original person class in order to use movement. */
 public class Customer extends Person {
@@ -9,7 +8,6 @@ public class Customer extends Person {
   private String order;
   private final Texture txUp;
   private final Texture txLeft;
-  private Stack&lt;String&gt; remainingSteps;
   private float timeArrived;
 
   /**
@@ -21,13 +19,12 @@ public class Customer extends Person {
    * @param order Order of customer.
    */
   public Customer(String name, int xcoord, int ycoord, String order, float timeArrived) {
-<span class="nc" id="L24">    super(name, xcoord, ycoord);</span>
-<span class="nc" id="L25">    this.order = order;</span>
-<span class="nc" id="L26">    generateHelper();</span>
-<span class="nc" id="L27">    this.txUp = new Texture(&quot;people/cust1up.png&quot;);</span>
-<span class="nc" id="L28">    this.txLeft = new Texture(&quot;people/cust1left.png&quot;);</span>
-<span class="nc" id="L29">    this.timeArrived = timeArrived;</span>
-<span class="nc" id="L30">  }</span>
+<span class="fc" id="L22">    super(name, xcoord, ycoord);</span>
+<span class="fc" id="L23">    this.order = order;</span>
+<span class="fc" id="L24">    this.txUp = new Texture(&quot;people/cust1up.png&quot;);</span>
+<span class="fc" id="L25">    this.txLeft = new Texture(&quot;people/cust1left.png&quot;);</span>
+<span class="fc" id="L26">    this.timeArrived = timeArrived;</span>
+<span class="fc" id="L27">  }</span>
 
   /**
    * Getter method for the order that the customer has.
@@ -35,7 +32,7 @@ public class Customer extends Person {
    * @return String that represents the customers order.
    */
   public String getOrder() {
-<span class="nc" id="L38">    return order;</span>
+<span class="fc" id="L35">    return order;</span>
   }
 
   /**
@@ -44,7 +41,7 @@ public class Customer extends Person {
    * @return Texture representing the customer facing upwards.
    */
   public Texture getTxUp() {
-<span class="nc" id="L47">    return txUp;</span>
+<span class="nc" id="L44">    return txUp;</span>
   }
 
   /**
@@ -53,59 +50,11 @@ public class Customer extends Person {
    * @return Texture representing the customer facing left.
    */
   public Texture getTxLeft() {
-<span class="nc" id="L56">    return txLeft;</span>
-  }
-
-  /**
-   * Generates a stack relating to the customers order indicating which order the items need to be
-   * placed on top of the tray.
-   */
-  public void generateHelper() {
-<span class="nc" id="L64">    remainingSteps = new Stack&lt;&gt;();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">    if (order == &quot;salad&quot;) {</span>
-<span class="nc" id="L66">      this.remainingSteps.push(&quot;chopped onion&quot;);</span>
-<span class="nc" id="L67">      this.remainingSteps.push(&quot;chopped tomato&quot;);</span>
-<span class="nc" id="L68">      this.remainingSteps.push(&quot;chopped lettuce&quot;);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">    } else if (order == &quot;jacket potato&quot;) {</span>
-<span class="nc" id="L70">      this.remainingSteps.push(&quot;beans&quot;);</span>
-<span class="nc" id="L71">      this.remainingSteps.push(&quot;jacket&quot;);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">    } else if (order == &quot;pizza&quot;) {</span>
-<span class="nc" id="L73">      this.remainingSteps.push(&quot;cheese&quot;);</span>
-<span class="nc" id="L74">      this.remainingSteps.push(&quot;chopped tomato&quot;);</span>
-<span class="nc" id="L75">      this.remainingSteps.push(&quot;dough&quot;);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">    } else if (order == &quot;hamburger&quot;) {</span>
-<span class="nc" id="L77">      this.remainingSteps.push(&quot;burger&quot;);</span>
-<span class="nc" id="L78">      this.remainingSteps.push(&quot;toasted bun&quot;);</span>
-    }
-<span class="nc" id="L80">  }</span>
-
-  /**
-   * Method to get the next item that need to be put onto the tray for the customers order.
-   *
-   * @param inv The top of the chefs stack.
-   * @return Boolean value indicating whether the chef and the customer stack matches.
-   */
-  public Boolean helper(String inv) {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">    if (!this.remainingSteps.isEmpty()) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">      if (inv == this.remainingSteps.peek()) {</span>
-<span class="nc" id="L91">        this.remainingSteps.pop();</span>
-<span class="nc" id="L92">        return true;</span>
-      }
-    }
-<span class="nc" id="L95">    return false;</span>
-  }
-
-  /**
-   * Calculates the size of the array and compares to 0.
-   *
-   * @return Boolean value indicating whether all items are on the tray for the customers order.
-   */
-  public Boolean finishedRecipe() {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">    return remainingSteps.size() == 0;</span>
+<span class="nc" id="L53">    return txLeft;</span>
   }
 
   public float getTimeArrived() {
-<span class="nc" id="L108">    return timeArrived;</span>
+<span class="fc" id="L57">    return timeArrived;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

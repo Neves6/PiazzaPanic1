@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.TestGameScreen" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-04-09T20:19:29" hostname="HP-PAV14" time="0.5">
+  <properties/>
+  <testcase name="testMoveValidDownViaInput" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.2"/>
+  <testcase name="testMoveValidRightViaInput" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.049"/>
+  <testcase name="tryAttainChefOne" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.038"/>
+  <testcase name="tryAttainChefTwo" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.049"/>
+  <testcase name="testMoveChefUpViaInput" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.035"/>
+  <testcase name="tryAttainChefThree" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.039"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

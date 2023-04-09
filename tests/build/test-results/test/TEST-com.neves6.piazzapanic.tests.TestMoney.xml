@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.TestMoney" tests="8" skipped="0" failures="0" errors="0" timestamp="2023-04-09T20:19:29" hostname="HP-PAV14" time="0.118">
+  <properties/>
+  <testcase name="testValidPurchaseBorder" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
+  <testcase name="testValidPurchase" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
+  <testcase name="testAddGroupValid" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
+  <testcase name="testIncrement" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.002"/>
+  <testcase name="testAddGroupAuto" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.001"/>
+  <testcase name="testAutoGeneration" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.001"/>
+  <testcase name="testInvalidPurchase" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.001"/>
+  <testcase name="testInitialValue" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -40,34 +40,34 @@ public class SettingsScreen extends ScreenAdapter {
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
-<span class="nc" id="L43">  public SettingsScreen(PiazzaPanicGame game) {</span>
-<span class="nc" id="L44">    this.game = game;</span>
-<span class="nc" id="L45">    settings = Utility.getSettings();</span>
-<span class="nc" id="L46">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
-<span class="nc" id="L47">    bg = new Texture(Gdx.files.internal(&quot;title_screen_large-min.png&quot;));</span>
-<span class="nc" id="L48">  }</span>
+<span class="fc" id="L43">  public SettingsScreen(PiazzaPanicGame game) {</span>
+<span class="fc" id="L44">    this.game = game;</span>
+<span class="fc" id="L45">    settings = Utility.getSettings();</span>
+<span class="fc" id="L46">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
+<span class="fc" id="L47">    bg = new Texture(Gdx.files.internal(&quot;title_screen_large-min.png&quot;));</span>
+<span class="fc" id="L48">  }</span>
 
   /** What to show when this screen is loaded. */
   @Override
   public void show() {
-<span class="nc" id="L53">    camera = new OrthographicCamera();</span>
-<span class="nc" id="L54">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="fc" id="L53">    camera = new OrthographicCamera();</span>
+<span class="fc" id="L54">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
 
-<span class="nc" id="L56">    skin = new Skin();</span>
-<span class="nc" id="L57">    atlas = new TextureAtlas(Gdx.files.internal(&quot;buttons/title/unnamed.atlas&quot;));</span>
-<span class="nc" id="L58">    skin.addRegions(atlas);</span>
-<span class="nc" id="L59">    buttonStyle = new TextButton.TextButtonStyle();</span>
-<span class="nc" id="L60">    buttonStyle.font = font;</span>
-<span class="nc" id="L61">    buttonStyle.up = skin.getDrawable(&quot;black_alpha_mid&quot;);</span>
-<span class="nc" id="L62">    buttonStyle.down = skin.getDrawable(&quot;black_alpha_mid&quot;);</span>
-<span class="nc" id="L63">    buttonStyle.checked = skin.getDrawable(&quot;black_alpha_mid&quot;);</span>
+<span class="fc" id="L56">    skin = new Skin();</span>
+<span class="fc" id="L57">    atlas = new TextureAtlas(Gdx.files.internal(&quot;buttons/title/unnamed.atlas&quot;));</span>
+<span class="fc" id="L58">    skin.addRegions(atlas);</span>
+<span class="fc" id="L59">    buttonStyle = new TextButton.TextButtonStyle();</span>
+<span class="fc" id="L60">    buttonStyle.font = font;</span>
+<span class="fc" id="L61">    buttonStyle.up = skin.getDrawable(&quot;black_alpha_mid&quot;);</span>
+<span class="fc" id="L62">    buttonStyle.down = skin.getDrawable(&quot;black_alpha_mid&quot;);</span>
+<span class="fc" id="L63">    buttonStyle.checked = skin.getDrawable(&quot;black_alpha_mid&quot;);</span>
 
-<span class="nc" id="L65">    fullscreenButton = new TextButton(&quot;Toggle Screen: &quot; + settings.get(0), buttonStyle);</span>
-<span class="nc" id="L66">    fullscreenButton.setPosition(</span>
-<span class="nc" id="L67">        Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,</span>
-<span class="nc" id="L68">        Gdx.graphics.getHeight() / 2f + fullscreenButton.getHeight() / 2);</span>
-<span class="nc" id="L69">    fullscreenButton.addListener(</span>
-<span class="nc" id="L70">        new ChangeListener() {</span>
+<span class="fc" id="L65">    fullscreenButton = new TextButton(&quot;Toggle Screen: &quot; + settings.get(0), buttonStyle);</span>
+<span class="fc" id="L66">    fullscreenButton.setPosition(</span>
+<span class="fc" id="L67">        Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,</span>
+<span class="fc" id="L68">        Gdx.graphics.getHeight() / 2f + fullscreenButton.getHeight() / 2);</span>
+<span class="fc" id="L69">    fullscreenButton.addListener(</span>
+<span class="fc" id="L70">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc bnc" id="L73" title="All 2 branches missed.">            if (settings.get(0).trim().equals(&quot;fullscreen&quot;)) {</span>
@@ -85,12 +85,12 @@ public class SettingsScreen extends ScreenAdapter {
 <span class="nc" id="L85">          }</span>
         });
 
-<span class="nc" id="L88">    volumeFullButton = new TextButton(&quot;Volume: Full&quot;, buttonStyle);</span>
-<span class="nc" id="L89">    volumeFullButton.setPosition(</span>
-<span class="nc" id="L90">        Gdx.graphics.getWidth() / 2f - volumeFullButton.getWidth() / 2,</span>
-<span class="nc" id="L91">        Gdx.graphics.getHeight() / 2f - volumeFullButton.getHeight() / 2);</span>
-<span class="nc" id="L92">    volumeFullButton.addListener(</span>
-<span class="nc" id="L93">        new ChangeListener() {</span>
+<span class="fc" id="L88">    volumeFullButton = new TextButton(&quot;Volume: Full&quot;, buttonStyle);</span>
+<span class="fc" id="L89">    volumeFullButton.setPosition(</span>
+<span class="fc" id="L90">        Gdx.graphics.getWidth() / 2f - volumeFullButton.getWidth() / 2,</span>
+<span class="fc" id="L91">        Gdx.graphics.getHeight() / 2f - volumeFullButton.getHeight() / 2);</span>
+<span class="fc" id="L92">    volumeFullButton.addListener(</span>
+<span class="fc" id="L93">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc" id="L96">            settings.set(1, &quot;full&quot;);</span>
@@ -99,12 +99,12 @@ public class SettingsScreen extends ScreenAdapter {
 <span class="nc" id="L99">          }</span>
         });
 
-<span class="nc" id="L102">    volumeHalfButton = new TextButton(&quot;Volume: Half&quot;, buttonStyle);</span>
-<span class="nc" id="L103">    volumeHalfButton.setPosition(</span>
-<span class="nc" id="L104">        Gdx.graphics.getWidth() / 2f - volumeHalfButton.getWidth() / 2,</span>
-<span class="nc" id="L105">        Gdx.graphics.getHeight() / 2f - volumeHalfButton.getHeight() * 3 / 2);</span>
-<span class="nc" id="L106">    volumeHalfButton.addListener(</span>
-<span class="nc" id="L107">        new ChangeListener() {</span>
+<span class="fc" id="L102">    volumeHalfButton = new TextButton(&quot;Volume: Half&quot;, buttonStyle);</span>
+<span class="fc" id="L103">    volumeHalfButton.setPosition(</span>
+<span class="fc" id="L104">        Gdx.graphics.getWidth() / 2f - volumeHalfButton.getWidth() / 2,</span>
+<span class="fc" id="L105">        Gdx.graphics.getHeight() / 2f - volumeHalfButton.getHeight() * 3 / 2);</span>
+<span class="fc" id="L106">    volumeHalfButton.addListener(</span>
+<span class="fc" id="L107">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc" id="L110">            settings.set(1, &quot;half&quot;);</span>
@@ -113,12 +113,12 @@ public class SettingsScreen extends ScreenAdapter {
 <span class="nc" id="L113">          }</span>
         });
 
-<span class="nc" id="L116">    volumeNoneButton = new TextButton(&quot;Volume: None&quot;, buttonStyle);</span>
-<span class="nc" id="L117">    volumeNoneButton.setPosition(</span>
-<span class="nc" id="L118">        Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,</span>
-<span class="nc" id="L119">        Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 5 / 2);</span>
-<span class="nc" id="L120">    volumeNoneButton.addListener(</span>
-<span class="nc" id="L121">        new ChangeListener() {</span>
+<span class="fc" id="L116">    volumeNoneButton = new TextButton(&quot;Volume: None&quot;, buttonStyle);</span>
+<span class="fc" id="L117">    volumeNoneButton.setPosition(</span>
+<span class="fc" id="L118">        Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,</span>
+<span class="fc" id="L119">        Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 5 / 2);</span>
+<span class="fc" id="L120">    volumeNoneButton.addListener(</span>
+<span class="fc" id="L121">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc" id="L124">            settings.set(1, &quot;none&quot;);</span>
@@ -127,8 +127,8 @@ public class SettingsScreen extends ScreenAdapter {
 <span class="nc" id="L127">          }</span>
         });
 
-<span class="nc bnc" id="L130" title="All 2 branches missed.">    if (game.testMode) {</span>
-<span class="nc" id="L131">      return;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">    if (game.testMode) {</span>
+<span class="fc" id="L131">      return;</span>
     }
 
 <span class="nc" id="L134">    stage = new Stage();</span>
@@ -176,8 +176,8 @@ public class SettingsScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-<span class="nc bnc" id="L179" title="All 2 branches missed.">    if (game.testMode) {</span>
-<span class="nc" id="L180">      return;</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">    if (game.testMode) {</span>
+<span class="fc" id="L180">      return;</span>
     }
 
 <span class="nc" id="L183">    super.resize(width, height);</span>

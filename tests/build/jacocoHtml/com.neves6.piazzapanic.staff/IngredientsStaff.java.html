@@ -18,10 +18,10 @@ public class IngredientsStaff extends BaseStaff {
    * @param ysequence List of y coordinates in order.
    */
   public IngredientsStaff(ArrayList&lt;Integer&gt; xsequence, ArrayList&lt;Integer&gt; ysequence) {
-<span class="nc" id="L21">    super(xsequence, ysequence);</span>
-<span class="nc" id="L22">    this.stack = new Stack&lt;&gt;();</span>
-<span class="nc" id="L23">    this.generate = false;</span>
-<span class="nc" id="L24">  }</span>
+<span class="fc" id="L21">    super(xsequence, ysequence);</span>
+<span class="fc" id="L22">    this.stack = new Stack&lt;&gt;();</span>
+<span class="fc" id="L23">    this.generate = false;</span>
+<span class="fc" id="L24">  }</span>
 
   /**
    * Depending on what recipe is needed, the stack is generated and designed to put the ingredients
@@ -29,24 +29,24 @@ public class IngredientsStaff extends BaseStaff {
    * the user for maximum time saving.
    */
   public void generateStack() {
-<span class="nc bnc" id="L32" title="All 2 branches missed.">    if (currentRecipe == &quot;salad&quot;) {</span>
-<span class="nc" id="L33">      this.stack.push(&quot;onion&quot;);</span>
-<span class="nc" id="L34">      this.stack.push(&quot;tomato&quot;);</span>
-<span class="nc" id="L35">      this.stack.push(&quot;lettuce&quot;);</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">    } else if (currentRecipe == &quot;jacket potato&quot;) {</span>
-<span class="nc" id="L37">      this.stack.push(&quot;beans&quot;);</span>
-<span class="nc" id="L38">      this.stack.push(&quot;potato&quot;);</span>
-<span class="nc bnc" id="L39" title="All 2 branches missed.">    } else if (currentRecipe == &quot;pizza&quot;) {</span>
-<span class="nc" id="L40">      this.stack.push(&quot;cheese&quot;);</span>
-<span class="nc" id="L41">      this.stack.push(&quot;tomato&quot;);</span>
-<span class="nc" id="L42">      this.stack.push(&quot;dough&quot;);</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">    } else if (currentRecipe == &quot;hamburger&quot;) {</span>
-<span class="nc" id="L44">      this.stack.push(&quot;meat&quot;);</span>
-<span class="nc" id="L45">      this.stack.push(&quot;bun&quot;);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">    if (currentRecipe == &quot;salad&quot;) {</span>
+<span class="fc" id="L33">      this.stack.push(&quot;onion&quot;);</span>
+<span class="fc" id="L34">      this.stack.push(&quot;tomato&quot;);</span>
+<span class="fc" id="L35">      this.stack.push(&quot;lettuce&quot;);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">    } else if (currentRecipe == &quot;jacket potato&quot;) {</span>
+<span class="fc" id="L37">      this.stack.push(&quot;beans&quot;);</span>
+<span class="fc" id="L38">      this.stack.push(&quot;potato&quot;);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">    } else if (currentRecipe == &quot;pizza&quot;) {</span>
+<span class="fc" id="L40">      this.stack.push(&quot;cheese&quot;);</span>
+<span class="fc" id="L41">      this.stack.push(&quot;tomato&quot;);</span>
+<span class="fc" id="L42">      this.stack.push(&quot;dough&quot;);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    } else if (currentRecipe == &quot;hamburger&quot;) {</span>
+<span class="fc" id="L44">      this.stack.push(&quot;meat&quot;);</span>
+<span class="fc" id="L45">      this.stack.push(&quot;bun&quot;);</span>
     } else {
-<span class="nc" id="L47">      throw new IllegalArgumentException(&quot;Must be a valid recipe.&quot;);</span>
+<span class="fc" id="L47">      throw new IllegalArgumentException(&quot;Must be a valid recipe.&quot;);</span>
     }
-<span class="nc" id="L49">  }</span>
+<span class="fc" id="L49">  }</span>
 
   /**
    * Sets current recipe if the flag is set.
@@ -54,13 +54,13 @@ public class IngredientsStaff extends BaseStaff {
    * @param recipe The recipe that is currently being processed.
    */
   public void setCurrentRecipe(String recipe) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">    if (this.generate) {</span>
-<span class="nc" id="L58">      this.currentRecipe = recipe;</span>
-<span class="nc" id="L59">      generateStack();</span>
-<span class="nc" id="L60">      this.collect = true;</span>
-<span class="nc" id="L61">      this.generate = false;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">    if (this.generate) {</span>
+<span class="fc" id="L58">      this.currentRecipe = recipe;</span>
+<span class="fc" id="L59">      generateStack();</span>
+<span class="fc" id="L60">      this.collect = true;</span>
+<span class="fc" id="L61">      this.generate = false;</span>
     }
-<span class="nc" id="L63">  }</span>
+<span class="fc" id="L63">  }</span>
 
   /**
    * Collect ingredients that have been collected by the staff member.
@@ -68,10 +68,10 @@ public class IngredientsStaff extends BaseStaff {
    * @return The ingredients at the top of the stack.
    */
   public String collectItem() {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">    if (this.stack.size() &gt; 0) {</span>
-<span class="nc" id="L72">      return this.stack.pop();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">    if (this.stack.size() &gt; 0) {</span>
+<span class="fc" id="L72">      return this.stack.pop();</span>
     } else {
-<span class="nc" id="L74">      return null;</span>
+<span class="fc" id="L74">      return null;</span>
     }
   }
 
@@ -81,7 +81,7 @@ public class IngredientsStaff extends BaseStaff {
    * @param generate Whether a new recipes ingredients needs to be collected yet.
    */
   public void setGenerate(boolean generate) {
-<span class="nc" id="L84">    this.generate = generate;</span>
-<span class="nc" id="L85">  }</span>
+<span class="fc" id="L84">    this.generate = generate;</span>
+<span class="fc" id="L85">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

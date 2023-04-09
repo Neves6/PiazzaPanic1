@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /** Helper/convenience class. Currently only handles retrieving and saving settings. */
 public final class Utility {
 
-<span class="nc" id="L12">  public static String settingsFilepath = &quot;./settings.txt&quot;;</span>
+<span class="fc" id="L12">  public static String settingsFilepath = &quot;./settings.txt&quot;;</span>
 
   /** Utility constructor. SHOULD NOT BE INITIALIZED! */
   private Utility() {} // not intended to be instantiated
@@ -20,26 +20,26 @@ public final class Utility {
    * @return ArrayList of settings values.
    */
   public static ArrayList&lt;String&gt; getSettings() {
-<span class="nc" id="L23">    settingsFileExistenceHandler();</span>
-<span class="nc" id="L24">    ArrayList&lt;String&gt; settings = new ArrayList&lt;String&gt;();</span>
-<span class="nc" id="L25">    try (FileReader f = new FileReader(settingsFilepath)) {</span>
-<span class="nc" id="L26">      StringBuffer sb = new StringBuffer();</span>
-<span class="nc bnc" id="L27" title="All 2 branches missed.">      while (f.ready()) {</span>
-<span class="nc" id="L28">        char c = (char) f.read();</span>
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (c == '\n') {</span>
-<span class="nc" id="L30">          settings.add(sb.toString());</span>
-<span class="nc" id="L31">          sb = new StringBuffer();</span>
+<span class="fc" id="L23">    settingsFileExistenceHandler();</span>
+<span class="fc" id="L24">    ArrayList&lt;String&gt; settings = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L25">    try (FileReader f = new FileReader(settingsFilepath)) {</span>
+<span class="fc" id="L26">      StringBuffer sb = new StringBuffer();</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">      while (f.ready()) {</span>
+<span class="fc" id="L28">        char c = (char) f.read();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (c == '\n') {</span>
+<span class="fc" id="L30">          settings.add(sb.toString());</span>
+<span class="fc" id="L31">          sb = new StringBuffer();</span>
         } else {
-<span class="nc" id="L33">          sb.append(c);</span>
+<span class="fc" id="L33">          sb.append(c);</span>
         }
-<span class="nc" id="L35">      }</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">      if (sb.length() &gt; 0) {</span>
+<span class="fc" id="L35">      }</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">      if (sb.length() &gt; 0) {</span>
 <span class="nc" id="L37">        settings.add(sb.toString());</span>
       }
 <span class="nc" id="L39">    } catch (Exception e) {</span>
 <span class="nc" id="L40">      e.printStackTrace();</span>
-<span class="nc" id="L41">    }</span>
-<span class="nc" id="L42">    return settings;</span>
+<span class="fc" id="L41">    }</span>
+<span class="fc" id="L42">    return settings;</span>
   }
 
   /**
@@ -48,42 +48,42 @@ public final class Utility {
    * @param settings ArrayList of settings values to be saved.
    */
   public static void setSettings(ArrayList&lt;String&gt; settings) {
-<span class="nc" id="L51">    settingsFileExistenceHandler();</span>
+<span class="fc" id="L51">    settingsFileExistenceHandler();</span>
     try {
-<span class="nc" id="L53">      BufferedWriter outputWriter = null;</span>
-<span class="nc" id="L54">      outputWriter = new BufferedWriter(new FileWriter(settingsFilepath));</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">      for (String setting : settings) {</span>
-<span class="nc" id="L56">        outputWriter.write(setting + &quot;&quot;);</span>
+<span class="fc" id="L53">      BufferedWriter outputWriter = null;</span>
+<span class="fc" id="L54">      outputWriter = new BufferedWriter(new FileWriter(settingsFilepath));</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">      for (String setting : settings) {</span>
+<span class="fc" id="L56">        outputWriter.write(setting + &quot;&quot;);</span>
         // outputWriter.newLine();
-<span class="nc" id="L58">        outputWriter.write(&quot;\n&quot;);</span>
-<span class="nc" id="L59">      }</span>
-<span class="nc" id="L60">      outputWriter.flush();</span>
-<span class="nc" id="L61">      outputWriter.close();</span>
+<span class="fc" id="L58">        outputWriter.write(&quot;\n&quot;);</span>
+<span class="fc" id="L59">      }</span>
+<span class="fc" id="L60">      outputWriter.flush();</span>
+<span class="fc" id="L61">      outputWriter.close();</span>
 <span class="nc" id="L62">    } catch (Exception e) {</span>
 <span class="nc" id="L63">      e.printStackTrace();</span>
-<span class="nc" id="L64">    }</span>
-<span class="nc" id="L65">  }</span>
+<span class="fc" id="L64">    }</span>
+<span class="fc" id="L65">  }</span>
 
   /** Checks if file exists, creates it if it doesn't and saves default values. */
   private static void settingsFileExistenceHandler() {
-<span class="nc" id="L69">    File f = new File(settingsFilepath);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">    if (f.isFile()) {</span>
-<span class="nc" id="L71">      return;</span>
+<span class="fc" id="L69">    File f = new File(settingsFilepath);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">    if (f.isFile()) {</span>
+<span class="fc" id="L71">      return;</span>
     } else {
       try {
-<span class="nc" id="L74">        f.createNewFile();</span>
-<span class="nc" id="L75">        ArrayList&lt;String&gt; defaults = new ArrayList&lt;String&gt;();</span>
-<span class="nc" id="L76">        defaults.add(&quot;windowed&quot;);</span>
-<span class="nc" id="L77">        defaults.add(&quot;full&quot;);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        for (int i = 0; i &lt; 36; i++) {</span>
-<span class="nc" id="L79">          defaults.add(&quot;0&quot;);</span>
+<span class="fc" id="L74">        f.createNewFile();</span>
+<span class="fc" id="L75">        ArrayList&lt;String&gt; defaults = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L76">        defaults.add(&quot;windowed&quot;);</span>
+<span class="fc" id="L77">        defaults.add(&quot;full&quot;);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (int i = 0; i &lt; 36; i++) {</span>
+<span class="fc" id="L79">          defaults.add(&quot;0&quot;);</span>
         }
-<span class="nc" id="L81">        setSettings(defaults);</span>
+<span class="fc" id="L81">        setSettings(defaults);</span>
 <span class="nc" id="L82">      } catch (Exception e) {</span>
 <span class="nc" id="L83">        e.printStackTrace();</span>
-<span class="nc" id="L84">      }</span>
+<span class="fc" id="L84">      }</span>
     }
-<span class="nc" id="L86">  }</span>
+<span class="fc" id="L86">  }</span>
 
   boolean isEndless;
   boolean isPowerUp;
