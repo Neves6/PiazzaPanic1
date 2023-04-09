@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.json.simple.parser.ParseException;
 
 /** Screen used to demonstrate gameplay to users. */
 public class TutorialScreen extends ScreenAdapter implements InputProcessor {
@@ -100,6 +101,13 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
         break;
       case "hardGame":
         game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp));
+        break;
+      case "resume":
+        try {
+          game.setScreen(new GameScreen(game));
+        } catch (ParseException e) {
+          throw new RuntimeException(e);
+        }
         break;
       default:
         game.setScreen(new TitleScreen(game));

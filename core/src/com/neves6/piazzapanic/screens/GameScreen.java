@@ -1,9 +1,6 @@
 package com.neves6.piazzapanic.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,10 +10,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.gamemechanisms.GameReader;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.staff.BaseStaff;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
+import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,58 +52,73 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    * @param level The difficulty that the user has selected.
    */
   public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
-    this.machineUnlockBalance = new Money();
-    this.deliveryStaff =
-        new DeliveryStaff(
-            new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
-            (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
+    sharedSetup();
     this.game = game;
-    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
-    font.getData().setScale(0.75F);
-    // bg = new Texture(Gdx.files.internal("title_screen_large.png"));
-    this.INITIAL_WIDTH = Gdx.graphics.getWidth();
-    this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
-    this.ingredientsHelper =
-        new IngredientsStaff(
-            new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
-            (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
     if (level == 1) {
       map = new TmxMapLoader().load("tilemaps/level1.tmx");
       if (scenerio) {
         gm =
-            new ScenarioGameMaster(
-                game,
-                map,
-                3,
-                5,
-                machineUnlockBalance,
-                ingredientsHelper,
-                deliveryStaff,
-                disablePowerup,
-                level);
+                new ScenarioGameMaster(
+                        game,
+                        map,
+                        3,
+                        5,
+                        machineUnlockBalance,
+                        ingredientsHelper,
+                        deliveryStaff,
+                        disablePowerup,
+                        level);
       } else {
         gm =
-            new ScenarioGameMaster(
-                game,
-                map,
-                3,
-                -1,
-                machineUnlockBalance,
-                ingredientsHelper,
-                deliveryStaff,
-                disablePowerup,
-                level);
-      }
-      unitScale = Gdx.graphics.getHeight() / (12f * 32f);
-      wScale = unitScale * 32f;
-      hScale = unitScale * 32f;
-      if (game.testMode == false) {
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+                new ScenarioGameMaster(
+                        game,
+                        map,
+                        3,
+                        -1,
+                        machineUnlockBalance,
+                        ingredientsHelper,
+                        deliveryStaff,
+                        disablePowerup,
+                        level);
       }
     }
+  }
+
+  public GameScreen(PiazzaPanicGame game) throws ParseException {
+    sharedSetup();
+    this.game = game;
+    GameReader gr = null;
+    try {
+      gr = new GameReader("here.json");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    map = new TmxMapLoader().load("tilemaps/level1.tmx");
+    gm = gr.createGameMaster(game, map, machineUnlockBalance,
+            ingredientsHelper, deliveryStaff);
+
+  }
+
+  public void sharedSetup(){
+    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
+    font.getData().setScale(0.75F);
+    this.INITIAL_WIDTH = Gdx.graphics.getWidth();
+    this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
+    this.machineUnlockBalance = new Money();
+    this.deliveryStaff =
+            new DeliveryStaff(
+                    new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
+                    (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
+    this.ingredientsHelper =
+            new IngredientsStaff(
+                    new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
+                    (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
     selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     recipes = new Texture(Gdx.files.internal("recipes.png"));
     lock = new Texture(Gdx.files.internal("levellocked.png"));
+    unitScale = Gdx.graphics.getHeight() / (12f * 32f);
+    wScale = unitScale * 32f;
+    hScale = unitScale * 32f;
   }
 
   /** What to show when this screen is loaded. */
@@ -380,7 +395,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     if (keycode == Input.Keys.E) {
       gm.tryInteract();
     }
-    if (keycode == Input.Keys.S) {
+    if (keycode == Input.Keys.ESCAPE) {
       try {
         gm.getSave().closeClass(game);
       } catch (IOException e) {

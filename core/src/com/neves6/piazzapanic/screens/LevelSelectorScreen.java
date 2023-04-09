@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.io.File;
+
 /** Screen used to select which level wants to be played. */
 public class LevelSelectorScreen extends ScreenAdapter {
   PiazzaPanicGame game;
@@ -34,11 +36,13 @@ public class LevelSelectorScreen extends ScreenAdapter {
   TextButton easyButton;
   TextButton mediumButton;
   TextButton hardButton;
+  TextButton resumeButton;
   TextButton.TextButtonStyle buttonStyle;
   Button customerGameModeButton;
   Button powerupGameModeButton;
   Skin skin;
   TextureAtlas atlas;
+  boolean resumeFlag = false;
 
   /**
    * Constructor method
@@ -136,7 +140,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
             new TextureRegionDrawable(rightPowerupMode));
     powerupGameModeButton.setPosition(
         Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 3f - easyButton.getHeight() / 2);
+        Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
 
     if (game.testMode) {
       return;
@@ -149,6 +153,29 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(hardButton);
     stage.addActor(customerGameModeButton);
     stage.addActor(powerupGameModeButton);
+
+    File json = new File("here.json");
+    if (json.exists() && json.length() != 0) {
+      resumeButton = new TextButton("Resume", buttonStyle);
+      resumeButton.setPosition(
+              Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 + hardButton.getWidth() * 2f,
+              Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
+      resumeButton.addListener(
+              new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                  game.setScreen(
+                          new TutorialScreen(
+                                  game,
+                                  "resume",
+                                  customerGameModeButton.isChecked(),
+                                  powerupGameModeButton.isChecked()));
+                }
+              });
+      stage.addActor(resumeButton);
+      resumeFlag = true;
+    }
+
   }
 
   /**
@@ -221,6 +248,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(hardButton);
     stage.addActor(customerGameModeButton);
     stage.addActor(powerupGameModeButton);
+    if (resumeFlag) {
+      stage.addActor(resumeButton);
+    }
     stage.getViewport().update(width, height);
     camera.setToOrtho(false, width, height);
   }

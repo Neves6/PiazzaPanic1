@@ -1,7 +1,5 @@
 package com.neves6.piazzapanic.gamemaster;
 
-import static java.util.Arrays.asList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapLayer;
@@ -22,9 +20,11 @@ import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import java.io.IOException;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.Arrays.asList;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
@@ -63,6 +63,11 @@ public class ScenarioGameMaster extends GameMaster {
   int reputationPoints = 3;
   int difficulty;
   GameSaver save;
+  ArrayList<String> salad = new ArrayList<>(Arrays.asList("chopped tomato", "chopped onion", "chopped lettuce"));
+  ArrayList<String> jacketPotato = new ArrayList<>(Arrays.asList("jacket", "beans"));
+  ArrayList<String> burger = new ArrayList<>(Arrays.asList("burger", "toasted bun"));
+  ArrayList<String> rawPizza = new ArrayList<>(Arrays.asList("chopped tomato", "dough", "cheese"));
+
 
   /**
    * ScenarioGameMaster constructor.
@@ -97,14 +102,11 @@ public class ScenarioGameMaster extends GameMaster {
     this.isPowerUp = !disablePowerup;
     this.difficulty = difficulty;
 
-    try {
-      this.save = new GameSaver("here.json");
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    this.save = new GameSaver("here.json");
 
     this.save.setDifficulty(difficulty);
     this.save.setPowerUp(disablePowerup);
+    this.save.setCustomersRemaining(custno);
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -195,6 +197,8 @@ public class ScenarioGameMaster extends GameMaster {
     tilewidth = (int) map.getProperties().get("tilewidth");
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);
+
+    this.machineUnlockBalance.saveMoneyDetails(this.save);
   }
 
   /**
@@ -387,7 +391,11 @@ public class ScenarioGameMaster extends GameMaster {
    * @return The customer which is at the start of the queue.
    */
   public Customer getFirstCustomer() {
-    return customers.peek();
+    if (customers.size() > 0){
+     return customers.peek();}
+    else {
+      return null;
+    }
   }
 
   /**
@@ -397,10 +405,10 @@ public class ScenarioGameMaster extends GameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-    this.save.setCustomersRemaining(getCustomersRemaining());
-
     // TODO: play test and adjust difficulty scaling according to feedback
     checkOrderExpired();
+    this.save.setChefDetails(chefs, selectedChef);
+    this.save.setReputationPoints(reputationPoints);
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
       game.setScreen(
           new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
@@ -419,6 +427,8 @@ public class ScenarioGameMaster extends GameMaster {
     }
 
     totalTimer += increment;
+
+    this.save.setRecipe(getFirstCustomer());
   }
 
   /**
@@ -675,9 +685,7 @@ public class ScenarioGameMaster extends GameMaster {
 
     // Force user to order in the correct way (The Easiest difficulty):
     if (inv.size() > 0) {
-      if (customers.peek().helper(inv.peek())) {
-        tray.add(inv.pop());
-      }
+      tray.add(inv.pop());
     }
 
     // Pizza cannot be handled by staff because you need to put it in the oven then
@@ -686,7 +694,8 @@ public class ScenarioGameMaster extends GameMaster {
       tray.clear();
       inv.add("raw pizza");
       serving.play(soundVolume);
-    } else if (customers.peek().finishedRecipe()) {
+    } else if (tray.containsAll(salad) || tray.containsAll(jacketPotato) ||
+      tray.containsAll(burger)) {
       tray.clear();
       if (machineUnlockBalance.isUnlocked("server-staff")) {
         deliveryStaff.collectItem(customers.peek().getOrder());
@@ -732,12 +741,14 @@ public class ScenarioGameMaster extends GameMaster {
     if (customers.peek().getOrder() == inv.peek()) {
       inv.pop();
       customers.poll();
+      this.save.decrementCustomers();
       serving.play(soundVolume);
       // +$100 on completion of a recipe.
       machineUnlockBalance.incrementBalance();
       // Once an order is complete, allow ingredient staff to
       // collect another order.
       staffOne.setGenerate(true);
+      this.machineUnlockBalance.saveMoneyDetails(this.save);
 
       // Activate random power up if a recipe is complete.
       if (isPowerUp) {
@@ -757,5 +768,9 @@ public class ScenarioGameMaster extends GameMaster {
 
   public GameSaver getSave() {
     return save;
+  }
+
+  public void setReputationPoints(int reputationPoints) {
+    this.reputationPoints = reputationPoints;
   }
 }
