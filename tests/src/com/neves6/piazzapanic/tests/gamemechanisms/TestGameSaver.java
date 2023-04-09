@@ -9,14 +9,13 @@ import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
 import com.neves6.piazzapanic.tests.GdxTestRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class TestGameSaver {
@@ -102,7 +101,9 @@ public class TestGameSaver {
     testSaver.closeClass();
 
     ObjectMapper mapper = new ObjectMapper();
-    assertEquals("The file must contain all data required to reload the game",
-            mapper.readTree(new FileReader("ignore.json")), mapper.readTree(new FileReader("testCorrectFileFormatCorrect.json")));
+    assertEquals(
+        "The file must contain all data required to reload the game",
+        mapper.readTree(new FileReader("ignore.json")),
+        mapper.readTree(new FileReader("testCorrectFileFormatCorrect.json")));
   }
 }

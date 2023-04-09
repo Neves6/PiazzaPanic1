@@ -2,8 +2,6 @@ package com.neves6.piazzapanic.gamemechanisms;
 
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
-import com.neves6.piazzapanic.screens.IntroScreen;
-import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
