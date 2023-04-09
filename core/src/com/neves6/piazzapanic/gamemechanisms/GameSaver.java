@@ -4,20 +4,19 @@ import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
 import com.neves6.piazzapanic.screens.IntroScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /** Class used to save game data from a current game runtime to a json file. */
 public class GameSaver {
   JSONObject gameDetails;
   String fileLoc;
 
-  public GameSaver(String fileLoc){
+  public GameSaver(String fileLoc) {
     gameDetails = new JSONObject();
     this.fileLoc = fileLoc;
   }
@@ -55,7 +54,7 @@ public class GameSaver {
   }
 
   public Boolean decrementCustomers() {
-    if (!(gameDetails.containsKey("Customer remaining"))){
+    if (!(gameDetails.containsKey("Customer remaining"))) {
       return false;
     }
     int customersCurrent = (int) gameDetails.get("Customers remaining");
@@ -66,14 +65,15 @@ public class GameSaver {
       return false;
     }
   }
+
   public void setCurrencyDetails(JSONObject moneyDetails) {
     gameDetails.put("Currency System", moneyDetails);
   }
 
-  public void setChefDetails(ArrayList<Chef> chefs, int selectedChef){
+  public void setChefDetails(ArrayList<Chef> chefs, int selectedChef) {
     JSONArray chefCoords = new JSONArray();
     JSONArray chefStacks = new JSONArray();
-    for (Chef chef: chefs){
+    for (Chef chef : chefs) {
       chefCoords.add(Arrays.asList(chef.getxCoord(), chef.getyCoord()));
       chefStacks.add(chef.getInventory());
     }
@@ -85,34 +85,33 @@ public class GameSaver {
     gameDetails.put("Chefs", chefDetails);
   }
 
-  public Boolean setReputationPoints(int value){
+  public Boolean setReputationPoints(int value) {
     if (value > 0) {
       gameDetails.put("Reputation Points", value);
       return true;
-    } else{
+    } else {
       return false;
     }
   }
 
-  public Boolean setRecipe(Customer customer){
+  public Boolean setRecipe(Customer customer) {
     JSONObject customerDetails = new JSONObject();
     if (customer != null) {
       customerDetails.put("Order", customer.getOrder());
       customerDetails.put("Current Time", customer.getTimeArrived());
       gameDetails.put("Customer", customerDetails);
       return true;
-    } else{
+    } else {
       return false;
     }
   }
 
-  public Boolean setTime(Float timeElapsed){
+  public Boolean setTime(Float timeElapsed) {
     if (timeElapsed > 0) {
       gameDetails.put("Time Elapsed", timeElapsed);
       return true;
-    } else{
+    } else {
       return false;
     }
   }
-
 }
