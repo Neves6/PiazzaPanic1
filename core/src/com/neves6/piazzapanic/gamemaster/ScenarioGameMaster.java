@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic.gamemaster;
 
+import static java.util.Arrays.asList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapLayer;
@@ -20,11 +22,8 @@ import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
-import static java.util.Arrays.asList;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
@@ -63,11 +62,11 @@ public class ScenarioGameMaster extends GameMaster {
   int reputationPoints = 3;
   int difficulty;
   GameSaver save;
-  ArrayList<String> salad = new ArrayList<>(Arrays.asList("chopped tomato", "chopped onion", "chopped lettuce"));
+  ArrayList<String> salad =
+      new ArrayList<>(Arrays.asList("chopped tomato", "chopped onion", "chopped lettuce"));
   ArrayList<String> jacketPotato = new ArrayList<>(Arrays.asList("jacket", "beans"));
   ArrayList<String> burger = new ArrayList<>(Arrays.asList("burger", "toasted bun"));
   ArrayList<String> rawPizza = new ArrayList<>(Arrays.asList("chopped tomato", "dough", "cheese"));
-
 
   /**
    * ScenarioGameMaster constructor.
@@ -391,9 +390,9 @@ public class ScenarioGameMaster extends GameMaster {
    * @return The customer which is at the start of the queue.
    */
   public Customer getFirstCustomer() {
-    if (customers.size() > 0){
-     return customers.peek();}
-    else {
+    if (customers.size() > 0) {
+      return customers.peek();
+    } else {
       return null;
     }
   }
@@ -695,8 +694,9 @@ public class ScenarioGameMaster extends GameMaster {
       tray.clear();
       inv.add("raw pizza");
       serving.play(soundVolume);
-    } else if (tray.containsAll(salad) || tray.containsAll(jacketPotato) ||
-      tray.containsAll(burger)) {
+    } else if (tray.containsAll(salad)
+        || tray.containsAll(jacketPotato)
+        || tray.containsAll(burger)) {
       tray.clear();
       if (machineUnlockBalance.isUnlocked("server-staff")) {
         deliveryStaff.collectItem(customers.peek().getOrder());
