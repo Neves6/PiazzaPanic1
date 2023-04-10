@@ -61,7 +61,7 @@ public class Customer extends Person {
     this.order = order;
   }
 
-  public void setTimeArrived(float time){
+  public void setTimeArrived(float time) {
     this.timeArrived = time;
   }
 }

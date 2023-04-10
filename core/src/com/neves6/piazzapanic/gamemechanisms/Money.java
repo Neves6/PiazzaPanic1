@@ -92,9 +92,9 @@ public class Money {
   }
 
   /**
-   * Designed to save all relevant information
-   * required to replicate this money class when
-   * reloading the game.
+   * Designed to save all relevant information required to replicate this money class when reloading
+   * the game.
+   *
    * @param saver Class being used to save the game.
    */
   public void saveMoneyDetails(GameSaver saver) {
