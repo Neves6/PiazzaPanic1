@@ -778,4 +778,8 @@ public class ScenarioGameMaster extends GameMaster {
   public void setTimeElapsed(float timeElapsed) {
     this.totalTimer = timeElapsed;
   }
+
+  public float getTimer() {
+    return totalTimer;
+  }
 }

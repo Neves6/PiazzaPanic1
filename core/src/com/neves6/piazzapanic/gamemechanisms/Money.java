@@ -112,4 +112,8 @@ public class Money {
       unlockDetails.get(key).set(1, ((Double) prevValues.get(key)).floatValue());
     }
   }
+
+  public float getBalance() {
+    return balance;
+  }
 }
