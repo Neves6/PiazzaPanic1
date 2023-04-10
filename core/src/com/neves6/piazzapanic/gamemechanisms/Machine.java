@@ -13,6 +13,7 @@ public class Machine {
   private float runtime;
   private Chef operator;
   private String unlockID;
+  private boolean actionComplete = false;
 
   /**
    * Machine constructor.
@@ -71,6 +72,7 @@ public class Machine {
       chef.addToInventory(output);
     } else if (chef.getInventory().peek() == input) {
       active = true;
+      actionComplete = false;
       chef.getInventory().pop();
       chef.setIsStickied(sticky);
       chef.setMachineInteractingWith(this);
@@ -91,12 +93,32 @@ public class Machine {
    */
   public void attemptGetOutput() {
     Chef chef = operator;
-    if (active && runtime >= processingTime) {
+    if (active && actionComplete && runtime >= processingTime) {
       chef.addToInventory(output);
       chef.setIsStickied(false);
       chef.setMachineInteractingWith(null);
       active = false;
+      actionComplete = false;
       runtime = 0;
+    }else if (!actionComplete && runtime > (processingTime * 2F/3F)) {
+      chef.addToInventory("ruined " + output);
+      chef.setIsStickied(false);
+      chef.setMachineInteractingWith(null);
+      active = false;
+      actionComplete = false;
+      runtime = 0;
+    }
+  }
+
+  /**
+   * Checks if process is within valid time window, if so the action is marked as complete.
+   */
+  public void attemptCompleteAction() {
+    if (actionComplete) {
+      return;
+    }
+    if (active && runtime >= (processingTime * 1F/3F) && runtime <= (processingTime * 2F/3F)) {
+      actionComplete = true;
     }
   }
 

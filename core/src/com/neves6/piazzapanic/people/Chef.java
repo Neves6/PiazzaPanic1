@@ -16,6 +16,7 @@ public class Chef extends Person {
   private Texture txNow;
   private boolean isInteracting;
   private Machine machineInteractingWith;
+  private float lastMove;
 
   /**
    * Chef constructor.
@@ -156,4 +157,18 @@ public class Chef extends Person {
         break;
     }
   }
+
+  /**
+   * Getter method for the last time the chef moved.
+   *
+   * @return Time of the last attempted move action of the chef.
+   */
+  public float getLastMove() {return lastMove;}
+
+  /**
+   * Setter method for the time of last attempted move action of the chef.
+   *
+   * @param lastMove Time of last move action.
+   */
+  public void setLastMove(float lastMove) {this.lastMove = lastMove;}
 }

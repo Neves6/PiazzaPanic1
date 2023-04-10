@@ -60,6 +60,7 @@ public class ScenarioGameMaster extends GameMaster {
   Boolean isPowerUp;
   PowerUpRunner powerups;
   int reputationPoints = 3;
+  float lastRepPointLost = 0;
   int difficulty;
   GameSaver save;
   ArrayList<String> salad =
@@ -249,6 +250,10 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tryMove(String direction) {
     Chef chef = chefs.get(selectedChef);
+    if (totalTimer < (chef.getLastMove() + 1F/5F)) {
+      return;
+    }
+    chef.setLastMove(totalTimer);
     switch (direction) {
       case "up":
         if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {
@@ -327,10 +332,14 @@ public class ScenarioGameMaster extends GameMaster {
       comp += "\nOrder: ";
       comp += customers.peek().getOrder();
     }
-    comp += "\nTray 1 contents: ";
-    comp += tray1.toString();
-    comp += "\nTray 2 contents: ";
-    comp += tray2.toString();
+    if (!tray1.isEmpty()) {
+      comp += "\nTray 1 contents: ";
+      comp += tray1.toString();
+    }
+    if (!tray2.isEmpty()) {
+      comp += "\nTray 2 contents: ";
+      comp += tray2.toString();
+    }
     return comp;
   }
 
@@ -356,6 +365,16 @@ public class ScenarioGameMaster extends GameMaster {
     String comp = "";
     comp += "Reputation points: ";
     comp += reputationPoints;
+    if (totalTimer <= (lastRepPointLost + 3)) {
+      comp += " -1";
+    }
+    return comp;
+  }
+
+  public String generateCustomerLeftText() {
+    String comp = "";
+    comp += "A customer was tired of waiting";
+    comp += "\nReputation point lost";
     return comp;
   }
 
@@ -411,7 +430,7 @@ public class ScenarioGameMaster extends GameMaster {
     this.save.setTime(totalTimer);
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
       game.setScreen(
-          new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
+          new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, difficulty));
     }
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
       createCustomers();
@@ -439,9 +458,9 @@ public class ScenarioGameMaster extends GameMaster {
     timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45) - (5 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
-        // TODO: add fail message
         customers.poll();
         reputationPoints -= 1;
+        lastRepPointLost = totalTimer;
       }
     }
   }
@@ -566,11 +585,6 @@ public class ScenarioGameMaster extends GameMaster {
   public void tryInteract() {
     Chef chef = chefs.get(selectedChef);
 
-    // If the chef is stuck, it is not allowed to move.
-    if (chef.getIsStickied()) {
-      return;
-    }
-
     int targetx;
     int targety;
     switch (chef.getFacing()) {
@@ -618,17 +632,22 @@ public class ScenarioGameMaster extends GameMaster {
     // Cooking Objects - contain all machines
     MapObjects cookingObjects = getObjectLayers("Cooking Layer");
 
+    String invTop = "";
     if (chef.getInventory().size() != 0) {
       // Work stations
-      String invTop = chef.getInventory().peek();
+      invTop = chef.getInventory().peek();
+    }
 
-      for (MapObject ob : cookingObjects) {
-        // Only use a machine if you are trying to interact with it and have the correct
-        // input.
-        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
-            && machines.get(ob.getName()).getInput() == invTop) {
-          machines.get(ob.getName()).process(chef, machineUnlockBalance);
-        }
+    for (MapObject ob : cookingObjects) {
+      // Only use a machine if you are trying to interact with it and have the correct
+      // input.
+      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+          && machines.get(ob.getName()) == chef.getMachineInteractingWith()) {
+        machines.get(ob.getName()).attemptCompleteAction();
+      }else if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+          && chef.getMachineInteractingWith() == null
+          && machines.get(ob.getName()).getInput() == invTop) {
+        machines.get(ob.getName()).process(chef, machineUnlockBalance);
       }
     }
 
@@ -702,9 +721,7 @@ public class ScenarioGameMaster extends GameMaster {
         deliveryStaff.collectItem(customers.peek().getOrder());
         serveFood();
       } else {
-        if (inv.isEmpty()) {
-          inv.add(customers.peek().getOrder());
-        }
+        inv.add(customers.peek().getOrder());
       }
       serving.play(soundVolume);
     }

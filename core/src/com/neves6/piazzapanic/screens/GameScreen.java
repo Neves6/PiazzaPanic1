@@ -43,6 +43,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   Texture lock;
   Money machineUnlockBalance;
   IngredientsStaff ingredientsHelper;
+  ArrayList<Boolean> wasd =
+          new ArrayList<>(Arrays.asList(false, false, false, false));
 
   /**
    * Constructor method.
@@ -53,7 +55,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
     sharedSetup();
     this.game = game;
-    if (level == 1) {
       map = new TmxMapLoader().load("tilemaps/level1.tmx");
       if (scenerio) {
         gm =
@@ -80,7 +81,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                 disablePowerup,
                 level);
       }
-    }
   }
 
   public GameScreen(PiazzaPanicGame game) throws ParseException {
@@ -97,8 +97,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   public void sharedSetup() {
+    unitScale = Gdx.graphics.getHeight() / (12f * 32f);
+    wScale = unitScale * 32f;
+    hScale = unitScale * 32f;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
-    font.getData().setScale(0.75F);
+    font.getData().setScale(unitScale * 0.4F);
     this.INITIAL_WIDTH = Gdx.graphics.getWidth();
     this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
     this.machineUnlockBalance = new Money();
@@ -113,9 +116,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     recipes = new Texture(Gdx.files.internal("recipes.png"));
     lock = new Texture(Gdx.files.internal("levellocked.png"));
-    unitScale = Gdx.graphics.getHeight() / (12f * 32f);
-    wScale = unitScale * 32f;
-    hScale = unitScale * 32f;
   }
 
   /** What to show when this screen is loaded. */
@@ -136,6 +136,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void render(float delta) {
+    if (wasd.get(0)) {gm.tryMove("up");}
+    if (wasd.get(1)) {gm.tryMove("left");}
+    if (wasd.get(2)) {gm.tryMove("down");}
+    if (wasd.get(3)) {gm.tryMove("right");}
     gm.tickUpdate(delta);
 
     gm.setRecipeToStaff();
@@ -220,49 +224,57 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     font.draw(
         game.getBatch(),
         gm.generateHoldingsText(),
-        winWidth - (4.75f * (winWidth / 8f)),
-        winHeight - 20,
-        (3 * (winWidth / 8f)),
+        wScale * 8.25F,
+        hScale * 11.75F,
+        wScale * 6.5F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         gm.generateCustomersTrayText(),
-        winWidth - (3 * (winWidth / 8f)),
-        winHeight - 20,
-        (3 * (winWidth / 8f)),
+        wScale * 15F,
+        hScale * 11.75F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         gm.generateTimerText(),
-        winWidth - (winWidth / 3f),
-        40,
-        (winWidth / 3f),
+        wScale * 15.25F,
+        hScale * 3.75F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         gm.generateReputationPointText(),
-        winWidth - (winWidth / 3f),
-        60,
-        (winWidth / 3f),
+        wScale * 15.25F,
+        hScale * 4.25F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         machineUnlockBalance.displayBalance(),
-        winWidth - (winWidth / 3f),
-        80,
-        (winWidth / 3f),
+        wScale * 15.25F,
+        hScale * 4.75F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         gm.getPowerUpRunner().displayText(),
-        winWidth - (winWidth / 3f),
-        550,
-        (winWidth / 3f),
+      wScale * 14.25F,
+      hScale * 8.75F,
+      wScale * 8F,
+        -1,
+        true);
+    font.draw(
+        game.getBatch(),
+        gm.generateCustomerLeftText(),
+        wScale * 15.25F,
+        hScale * 6.75F,
+        wScale * 5.5F,
         -1,
         true);
 
@@ -368,17 +380,20 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
+    //Detects which key is pressed by the user
+    //If WASD (movement keys) pressed, set appropriate variable to true for use in render method
+    //If action key pressed, attempt to perform action
     if (keycode == Input.Keys.W) {
-      gm.tryMove("up");
+      wasd.set(0, true);
     }
     if (keycode == Input.Keys.A) {
-      gm.tryMove("left");
+      wasd.set(1, true);
     }
     if (keycode == Input.Keys.S) {
-      gm.tryMove("down");
+      wasd.set(2, true);
     }
     if (keycode == Input.Keys.D) {
-      gm.tryMove("right");
+      wasd.set(3, true);
     }
     if (keycode == Input.Keys.NUM_1) {
       gm.setSelectedChef(1);
@@ -404,13 +419,27 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * Method which runs when user lifts a key up.
    *
    * @param keycode one of the constants in {@link Input.Keys}
    * @return false
    */
   @Override
   public boolean keyUp(int keycode) {
+    //Detects which key is released by the user
+    //If WASD (movement keys) released, set appropriate variable to false, stopping movement
+    if (keycode == Input.Keys.W) {
+      wasd.set(0, false);
+    }
+    if (keycode == Input.Keys.A) {
+      wasd.set(1, false);
+    }
+    if (keycode == Input.Keys.S) {
+      wasd.set(2, false);
+    }
+    if (keycode == Input.Keys.D) {
+      wasd.set(3, false);
+    }
     return false;
   }
 
