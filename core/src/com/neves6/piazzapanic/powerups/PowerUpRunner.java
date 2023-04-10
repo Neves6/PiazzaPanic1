@@ -6,10 +6,9 @@ import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
-import org.json.simple.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Map;
+import org.json.simple.JSONObject;
 
 /** A class that can be used to control all the power-ups within the game. */
 public class PowerUpRunner {
@@ -32,7 +31,8 @@ public class PowerUpRunner {
    * @param machines Machines that are being used in the game.
    * @param money The currency system that is being used in the game.
    */
-  public PowerUpRunner(ArrayList<Chef> chefs, Map<String, Machine> machines, Money money, GameSaver saver) {
+  public PowerUpRunner(
+      ArrayList<Chef> chefs, Map<String, Machine> machines, Money money, GameSaver saver) {
     this.chefs = chefs;
     this.machines = machines;
     this.money = money;
@@ -96,10 +96,8 @@ public class PowerUpRunner {
         + timeFreeze.prettyPrint();
   }
 
-  /**
-   * Saves all power-ups within an object.
-   */
-  public void savePowerupStatus(){
+  /** Saves all power-ups within an object. */
+  public void savePowerupStatus() {
     JSONObject powerupStatus = new JSONObject();
     powerupStatus.put("Cheaper Machine", cheaperMachineUnlock.savePowerUp());
     powerupStatus.put("Double Money", doubleMoney.savePowerUp());
@@ -111,17 +109,15 @@ public class PowerUpRunner {
 
   /**
    * Loads in details of previous games power-ups.
-   * @param details Contains all the power-ups within the previous
-   *                game and whether they have been active and how long
-   *                for if this is the case.
+   *
+   * @param details Contains all the power-ups within the previous game and whether they have been
+   *     active and how long for if this is the case.
    */
-  public void reloadPowerupStatus(JSONObject details){
+  public void reloadPowerupStatus(JSONObject details) {
     cheaperMachineUnlock.loadPowerup((JSONObject) details.get("Cheaper Machine"));
     doubleMoney.loadPowerup((JSONObject) details.get("Double Money"));
     shorterMachineTime.loadPowerup((JSONObject) details.get("Shorter Machine"));
     autoCook.loadPowerup((JSONObject) details.get("Skip Machine"));
     timeFreeze.loadPowerup((JSONObject) details.get("Time Freeze"));
-
   }
-
 }

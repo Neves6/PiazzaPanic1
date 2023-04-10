@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic.tests.gamemechanisms;
 
+import static org.junit.Assert.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
@@ -11,11 +13,8 @@ import com.neves6.piazzapanic.tests.GdxTestRunner;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestGameSaver {
@@ -91,10 +90,12 @@ public class TestGameSaver {
     testSaver.setReputationPoints(2);
     testSaver.setTime(2f);
 
-    PowerUpRunner testPURunner = new PowerUpRunner(testChefs, new HashMap<String, Machine>(), testMoney, testSaver);
+    PowerUpRunner testPURunner =
+        new PowerUpRunner(testChefs, new HashMap<String, Machine>(), testMoney, testSaver);
     testPURunner.savePowerupStatus();
 
-    testSaver.setTrays(new ArrayList<>(Arrays.asList("test1")), new ArrayList<>(Arrays.asList("test2")));
+    testSaver.setTrays(
+        new ArrayList<>(Arrays.asList("test1")), new ArrayList<>(Arrays.asList("test2")));
 
     testSaver.closeClass();
 
@@ -106,16 +107,18 @@ public class TestGameSaver {
   }
 
   @Test
-  public void testDecrementCustomerEndless(){
+  public void testDecrementCustomerEndless() {
     testSaver.setCustomersRemaining(-1);
-    assertTrue("Should not decrement customer when in endless mode",
-            testSaver.decrementCustomers() == false);
+    assertTrue(
+        "Should not decrement customer when in endless mode",
+        testSaver.decrementCustomers() == false);
   }
 
   @Test
-  public void testDecrementCustomerValid(){
+  public void testDecrementCustomerValid() {
     testSaver.setCustomersRemaining(2);
-    assertTrue("Should not decrement customer when in endless mode",
-            testSaver.decrementCustomers() == true);
+    assertTrue(
+        "Should not decrement customer when in endless mode",
+        testSaver.decrementCustomers() == true);
   }
 }
