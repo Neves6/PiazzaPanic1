@@ -66,7 +66,7 @@ public class ScenarioGameMaster extends GameMaster {
   ArrayList<String> salad =
       new ArrayList<>(Arrays.asList("chopped tomato", "chopped onion", "chopped lettuce"));
   ArrayList<String> jacketPotato = new ArrayList<>(Arrays.asList("jacket", "beans"));
-  ArrayList<String> burger = new ArrayList<>(Arrays.asList("burger", "toasted bun"));
+  ArrayList<String> hamburger = new ArrayList<>(Arrays.asList("burger", "toasted bun"));
   ArrayList<String> rawPizza = new ArrayList<>(Arrays.asList("chopped tomato", "dough", "cheese"));
 
   /**
@@ -238,7 +238,9 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void setRecipeToStaff() {
     if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
-      staffOne.setCurrentRecipe(customers.peek().getOrder());
+      if (!customers.isEmpty()) {
+        staffOne.setCurrentRecipe(customers.peek().getOrder());
+      }
     }
   }
 
@@ -365,7 +367,7 @@ public class ScenarioGameMaster extends GameMaster {
     String comp = "";
     comp += "Reputation points: ";
     comp += reputationPoints;
-    if (totalTimer <= (lastRepPointLost + 3)) {
+    if (totalTimer <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
       comp += " -1";
     }
     return comp;
@@ -373,8 +375,10 @@ public class ScenarioGameMaster extends GameMaster {
 
   public String generateCustomerLeftText() {
     String comp = "";
-    comp += "A customer was tired of waiting";
-    comp += "\nReputation point lost";
+    if (totalTimer <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
+      comp += "A customer was tired of waiting";
+      comp += "\nReputation point lost";
+    }
     return comp;
   }
 
@@ -432,7 +436,7 @@ public class ScenarioGameMaster extends GameMaster {
     this.save.setRecipe(getFirstCustomer());
     this.save.setTrays(tray1, tray2);
 
-    if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
+    if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints <= 0) {
       game.setScreen(
           new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, difficulty));
     }
@@ -457,7 +461,7 @@ public class ScenarioGameMaster extends GameMaster {
    * order expired and removes a reputation point
    */
   private void checkOrderExpired() {
-    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45) - (5 * difficulty);
+    timeAllowed = Math.max(150 - 15 * (customersServed / 5), 90) - (5 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
         customers.poll();
@@ -472,7 +476,7 @@ public class ScenarioGameMaster extends GameMaster {
    * customers served increases Will occasionally 0.5s stalls to vary customer arrival times
    */
   public void createCustomers() {
-    waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
+    waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5F), 0.5);
     if (lastCustomer + waitTime <= totalTimer) {
       /*
       Random chance to stall next customer's arrival to vary customer arrival times
@@ -531,10 +535,10 @@ public class ScenarioGameMaster extends GameMaster {
     */
     float randomFloat = ThreadLocalRandom.current().nextFloat();
     int partySize;
-    if (randomFloat <= (0.8 - 0.4 * (customersServed / 5))) {
+    if (randomFloat <= (0.8 - 0.4 * (customersServed / 5F))) {
       partySize = 1;
-    } else if (randomFloat > (0.8 - 0.4 * (customersServed / 5))
-        && randomFloat <= (1 - 0.2 * (customersServed / 5))) {
+    } else if (randomFloat > (0.8 - 0.4 * (customersServed / 5F))
+        && randomFloat <= (1 - 0.2 * (customersServed / 5F))) {
       partySize = 2;
     } else {
       partySize = 3;
@@ -648,7 +652,7 @@ public class ScenarioGameMaster extends GameMaster {
         machines.get(ob.getName()).attemptCompleteAction();
       }else if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
           && chef.getMachineInteractingWith() == null
-          && machines.get(ob.getName()).getInput() == invTop) {
+          && machines.get(ob.getName()).getInput().equals(invTop)) {
         machines.get(ob.getName()).process(chef, machineUnlockBalance);
       }
     }
@@ -656,8 +660,10 @@ public class ScenarioGameMaster extends GameMaster {
     MapObjects miscObjects = getObjectLayers("Misc Layer");
 
     if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
+      if (!chef.getInventory().isEmpty()) {
       chef.removeTopFromInventory();
       trash.play(soundVolume);
+    }
     } else if (detectInteractionFromTiledObject(
         loadRectangle(miscObjects.get("serving")), targetx, targety)) {
       serveFood();
@@ -704,28 +710,53 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    // Force user to order in the correct way (The Easiest difficulty):
-    if (inv.size() > 0) {
-      tray.add(inv.pop());
+    if (inv.isEmpty() || recipes.contains(inv.peek())) {
+      return;
     }
 
+    tray.add(inv.pop());
     // Pizza cannot be handled by staff because you need to put it in the oven then
     // take it to the customer.
     if (tray.containsAll(rawPizza)) {
-      tray.clear();
-      inv.add("raw pizza");
-      serving.play(soundVolume);
-    } else if (tray.containsAll(salad)
-        || tray.containsAll(jacketPotato)
-        || tray.containsAll(burger)) {
-      tray.clear();
-      if (machineUnlockBalance.isUnlocked("server-staff")) {
-        deliveryStaff.collectItem(customers.peek().getOrder());
-        serveFood();
+      if (tray.size() != rawPizza.size()) {
+        inv.add("ruined raw pizza");
       } else {
-        inv.add(customers.peek().getOrder());
+        inv.add("raw pizza");
       }
+      tray.clear();
       serving.play(soundVolume);
+    } else if (tray.containsAll(salad)) {
+        if (tray.size() != salad.size()) {
+          inv.add("ruined salad");
+        } else {
+          inv.add("salad");
+        }
+        tray.clear();
+        serving.play(soundVolume);
+    } else if (tray.containsAll(hamburger)) {
+        if (tray.size() != hamburger.size()) {
+          inv.add("ruined hamburger");
+        } else {
+          inv.add("hamburger");
+        }
+        tray.clear();
+        serving.play(soundVolume);
+    } else if (tray.containsAll(jacketPotato)) {
+        if (tray.size() != jacketPotato.size()) {
+          inv.add("ruined jacket potato");
+        } else {
+          inv.add("jacket potato");
+        }
+        tray.clear();
+        serving.play(soundVolume);
+    }
+
+    if (machineUnlockBalance.isUnlocked("server-staff")
+            && customers.size() > 0 && !inv.isEmpty()
+            && customers.peek().getOrder().equals(inv.peek())) {
+      deliveryStaff.collectItem(customers.peek().getOrder());
+      inv.pop();
+      serveFood();
     }
 
     if (station == 1) {
@@ -737,9 +768,8 @@ public class ScenarioGameMaster extends GameMaster {
 
   /** Method to handle giving food to the customer. */
   public void serveFood() {
-    if (customersServed == maxCustomers) {
-      game.setScreen(
-          new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
+    if (customers.isEmpty()) {
+      return;
     }
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
@@ -748,7 +778,7 @@ public class ScenarioGameMaster extends GameMaster {
     // Otherwise, get the chefs inventory and operate
     // from there.
     if (machineUnlockBalance.isUnlocked("server-staff")
-        && !(customers.peek().getOrder() == "pizza")) {
+        && !(customers.peek().getOrder().equals("pizza"))) {
       inv = deliveryStaff.getItems();
     } else {
       inv = chef.getInventory();
@@ -758,11 +788,18 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    if (customers.peek().getOrder() == inv.peek()) {
+    if (customers.peek().getOrder().equals(inv.peek())) {
       inv.pop();
       customers.poll();
+      customersServed += 1;
       this.save.decrementCustomers();
       serving.play(soundVolume);
+
+      if (customersServed == maxCustomers) {
+        game.setScreen(
+                new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
+      }
+
       // +$100 on completion of a recipe.
       machineUnlockBalance.incrementBalance();
       // Once an order is complete, allow ingredient staff to

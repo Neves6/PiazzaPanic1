@@ -12,7 +12,7 @@ public class Machine {
   private Boolean active;
   private float runtime;
   private Chef operator;
-  private String unlockID;
+  private final String unlockID;
   private boolean actionComplete = false;
 
   /**
@@ -68,9 +68,9 @@ public class Machine {
     if (!(currency.isUnlocked(this.unlockID))) {
       return;
     }
-    if (input == "" && processingTime == 0) {
+    if (input.equals("") && processingTime == 0) {
       chef.addToInventory(output);
-    } else if (chef.getInventory().peek() == input) {
+    } else if (chef.getInventory().peek().equals(input)) {
       active = true;
       actionComplete = false;
       chef.getInventory().pop();
@@ -100,7 +100,7 @@ public class Machine {
       active = false;
       actionComplete = false;
       runtime = 0;
-    }else if (!actionComplete && runtime > (processingTime * 2F/3F)) {
+    }else if (!actionComplete && runtime > (processingTime * 2/3F)) {
       chef.addToInventory("ruined " + output);
       chef.setIsStickied(false);
       chef.setMachineInteractingWith(null);
@@ -117,7 +117,7 @@ public class Machine {
     if (actionComplete) {
       return;
     }
-    if (active && runtime >= (processingTime * 1F/3F) && runtime <= (processingTime * 2F/3F)) {
+    if (active && runtime >= (processingTime * 1/3F) && runtime <= (processingTime * 2/3F)) {
       actionComplete = true;
     }
   }
