@@ -425,9 +425,13 @@ public class ScenarioGameMaster extends GameMaster {
   public void tickUpdate(float delta) {
     // TODO: play test and adjust difficulty scaling according to feedback
     checkOrderExpired();
+
     this.save.setChefDetails(chefs, selectedChef);
     this.save.setReputationPoints(reputationPoints);
     this.save.setTime(totalTimer);
+    this.save.setRecipe(getFirstCustomer());
+    this.save.setTrays(tray1, tray2);
+
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
       game.setScreen(
           new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, difficulty));
@@ -446,8 +450,6 @@ public class ScenarioGameMaster extends GameMaster {
     }
 
     totalTimer += increment;
-
-    this.save.setRecipe(getFirstCustomer());
   }
 
   /**
@@ -731,8 +733,6 @@ public class ScenarioGameMaster extends GameMaster {
     } else if (station == 2) {
       tray2 = tray;
     }
-
-    save.setTrays(tray1, tray2);
   }
 
   /** Method to handle giving food to the customer. */
