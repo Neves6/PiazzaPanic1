@@ -84,7 +84,7 @@ public class GameSaver {
    * @return Whether the value was accepted or not.
    */
   public Boolean decrementCustomers() {
-    if (!(gameDetails.containsKey("Customer remaining"))) {
+    if (!(gameDetails.containsKey("Customers remaining"))) {
       return false;
     }
     int customersCurrent = (int) gameDetails.get("Customers remaining");
