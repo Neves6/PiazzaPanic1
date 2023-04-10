@@ -78,8 +78,10 @@ public class GameReader {
       configuredMaster.tickUpdate(1f);
     }
 
-    configuredMaster.getFirstCustomer().setRecipe((String) customerData.get("Order"));
-    configuredMaster.getFirstCustomer().setTimeArrived(((Double) customerData.get("Current Time")).floatValue());
+    if (customerData != null){
+      configuredMaster.getFirstCustomer().setRecipe((String) customerData.get("Order"));
+      configuredMaster.getFirstCustomer().setTimeArrived(((Double) customerData.get("Current Time")).floatValue());
+    }
 
 
     // JSON auto converts all int to a long and all float to a double.
