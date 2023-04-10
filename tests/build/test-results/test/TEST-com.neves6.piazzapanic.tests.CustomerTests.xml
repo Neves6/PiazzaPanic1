@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.neves6.piazzapanic.tests.CustomerTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-09T20:19:27" hostname="HP-PAV14" time="0.003">
-  <properties/>
-  <testcase name="testCustomerConstructorValid" classname="com.neves6.piazzapanic.tests.CustomerTests" time="0.003"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

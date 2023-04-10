@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-09T20:19:40" hostname="HP-PAV14" time="0.017">
-  <properties/>
-  <testcase name="testActivatedFreeze" classname="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" time="0.001"/>
-  <testcase name="testUnactivatedFreeze" classname="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
