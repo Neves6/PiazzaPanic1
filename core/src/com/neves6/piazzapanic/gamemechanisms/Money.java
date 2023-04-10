@@ -91,6 +91,12 @@ public class Money {
     return unlockDetails;
   }
 
+  /**
+   * Designed to save all relevant information
+   * required to replicate this money class when
+   * reloading the game.
+   * @param saver Class being used to save the game.
+   */
   public void saveMoneyDetails(GameSaver saver) {
     JSONObject moneyDetails = new JSONObject();
     moneyDetails.put("Balance", this.balance);

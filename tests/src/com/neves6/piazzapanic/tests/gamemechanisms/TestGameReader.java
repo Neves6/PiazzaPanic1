@@ -57,5 +57,10 @@ public class TestGameReader {
                 testgm.getChef(1).getyCoord() == 2);
         assertTrue("The chefs inventory should be maintained",
                 testgm.getChef(1).getInventory().equals(testStack));
-    }
+        assertTrue("Order for the first customer must be the same",
+                testgm.getFirstCustomer().getOrder() == "potato");
+        assertTrue("Order time for the first customer must be the same",
+                testgm.getFirstCustomer().getTimeArrived() == 2.0f);
+        }
+
 }

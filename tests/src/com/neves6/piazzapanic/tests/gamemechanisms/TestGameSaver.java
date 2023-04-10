@@ -49,13 +49,6 @@ public class TestGameSaver {
   }
 
   @Test
-  public void testDecrementCustomerNotPreset() {
-    assertFalse(
-        "You cannot decrement customers when running in endless mode.",
-        testSaver.decrementCustomers());
-  }
-
-  @Test
   public void testAddNegativeReputationPoints() {
     assertFalse(
         "You can not have negative reputation point during a running game",

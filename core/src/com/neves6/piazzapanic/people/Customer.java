@@ -56,4 +56,12 @@ public class Customer extends Person {
   public float getTimeArrived() {
     return timeArrived;
   }
+
+  public void setRecipe(String order) {
+    this.order = order;
+  }
+
+  public void setTimeArrived(float time){
+    this.timeArrived = time;
+  }
 }
