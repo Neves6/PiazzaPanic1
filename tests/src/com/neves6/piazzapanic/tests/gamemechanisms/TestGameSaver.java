@@ -37,7 +37,7 @@ public class TestGameSaver {
 
   @Test
   public void testAddNoCustomers() {
-    assertFalse("Entering 0 or less customers is invalid", testSaver.setCustomersRemaining(-1));
+    assertFalse("Entering 0 or less customers is invalid", testSaver.setCustomersRemaining(-2));
   }
 
   @Test

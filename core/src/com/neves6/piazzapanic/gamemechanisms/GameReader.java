@@ -92,9 +92,10 @@ public class GameReader {
         configuredMaster.getChef(i + 1).addToInventory((String) chefItems.get(x));
       }
     }
-    
-    configuredMaster.getFirstCustomer().setRecipe((String) customerData.get("Order"));
-    configuredMaster.getFirstCustomer().setTimeArrived(((Double) customerData.get("Current Time")).floatValue());
+
+    //configuredMaster.getFirstCustomer().setRecipe((String) customerData.get("Order"));
+    //configuredMaster.getFirstCustomer().setTimeArrived(((Double) customerData.get("Current Time")).floatValue());
+
     return configuredMaster;
   }
 }
