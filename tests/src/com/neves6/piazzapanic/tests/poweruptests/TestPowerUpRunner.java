@@ -2,7 +2,6 @@ package com.neves6.piazzapanic.tests.poweruptests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.neves6.piazzapanic.gamemaster.GameMaster;
 import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;

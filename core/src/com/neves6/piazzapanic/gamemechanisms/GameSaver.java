@@ -177,26 +177,27 @@ public class GameSaver {
 
   /**
    * Sets the contents of the tray to the json.
+   *
    * @param t1 The tray being used in the first station.
    * @param t2 The tray being used in the second station.
    * @return Whether the values are valid or not.
    */
-  public Boolean setTrays(ArrayList<String> t1, ArrayList<String> t2){
+  public Boolean setTrays(ArrayList<String> t1, ArrayList<String> t2) {
     JSONObject trays = new JSONObject();
-    trays.put("Tray 1",t1);
-    trays.put("Tray 2",t2);
+    trays.put("Tray 1", t1);
+    trays.put("Tray 2", t2);
     gameDetails.put("Trays", trays);
     return true;
   }
 
   /**
    * Saves all required details to recreate the power-up runner.
+   *
    * @param details Contains all the power-up runners details.
    * @return Whether the data is valid or not.
    */
-  public Boolean setPowerups(JSONObject details){
+  public Boolean setPowerups(JSONObject details) {
     gameDetails.put("Powerup Runner", details);
     return true;
   }
-
 }

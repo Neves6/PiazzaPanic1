@@ -783,10 +783,10 @@ public class ScenarioGameMaster extends GameMaster {
     return totalTimer;
   }
 
-  public void addtoTray(int number, String item){
-    if (number == 1){
+  public void addtoTray(int number, String item) {
+    if (number == 1) {
       tray1.add(item);
-    } else if (number == 2){
+    } else if (number == 2) {
       tray2.add(item);
     }
   }
