@@ -2,6 +2,8 @@ package com.neves6.piazzapanic.tests.poweruptests;
 
 import static org.junit.Assert.assertTrue;
 
+import com.neves6.piazzapanic.gamemaster.GameMaster;
+import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
@@ -22,7 +24,7 @@ public class TestPowerUpRunner {
   @Test
   public void testPrettyPrintNoPowerups() {
     machines.put("test", m1);
-    PowerUpRunner testRunner = new PowerUpRunner(testChefs, machines, mo1);
+    PowerUpRunner testRunner = new PowerUpRunner(testChefs, machines, mo1, new GameSaver("ignore"));
     assertTrue(
         "If no powerup has been activated, text must just contain Current Active Powerups: '",
         testRunner.displayText().equals("Current Active Powerups: \n"));
@@ -31,7 +33,7 @@ public class TestPowerUpRunner {
   @Test
   public void testPrettyPrintPowerups() {
     machines.put("test", m1);
-    PowerUpRunner testRunner = new PowerUpRunner(testChefs, machines, mo1);
+    PowerUpRunner testRunner = new PowerUpRunner(testChefs, machines, mo1, new GameSaver("ignore"));
     testRunner.activateRandomPowerUp();
     String comparisionString = testRunner.displayText();
     assertTrue(
@@ -49,7 +51,7 @@ public class TestPowerUpRunner {
   @Test
   public void testGetCorrectDelta() {
     machines.put("test", m1);
-    PowerUpRunner testRunner = new PowerUpRunner(testChefs, machines, mo1);
+    PowerUpRunner testRunner = new PowerUpRunner(testChefs, machines, mo1, new GameSaver("ignore"));
     testRunner.activateRandomPowerUp();
     assertTrue(
         "Delta must be 0 or the parameter entered",

@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic.powerups;
 
+import org.json.simple.JSONObject;
+
 /** Base class which is used for all powerups. Timing functions all located within this. */
 public class BasePowerUp {
   Boolean acquired;
@@ -19,7 +21,9 @@ public class BasePowerUp {
     this.name = name;
   }
 
-  /** Sets start time if it already hasn't been run and the power up is acquired. */
+  /**
+   * Sets start time if it already hasn't been run and the power up is acquired.
+   */
   public void setStartTime() {
     if (this.startTime == 0L) {
       this.startTime = System.currentTimeMillis();
@@ -50,7 +54,9 @@ public class BasePowerUp {
     return this.acquired;
   }
 
-  /** Set boolean value if the power up has just been attained. */
+  /**
+   * Set boolean value if the power up has just been attained.
+   */
   public void acquirePowerUp() {
     this.acquired = true;
     this.startTime = System.currentTimeMillis();
@@ -65,6 +71,12 @@ public class BasePowerUp {
     return startTime;
   }
 
+  /**
+   * Method to print status of power-up in a formatted way.
+   *
+   * @return String containing the name and the time that the
+   * power-up has been active for so far.
+   */
   public String prettyPrint() {
     if (this.acquired) {
       Long inSeconds = (System.currentTimeMillis() - startTime) / 1000;
@@ -73,4 +85,32 @@ public class BasePowerUp {
       return "";
     }
   }
+
+  /**
+   * Saves the properties of a single power-up.
+   * @return JSON object containing whether the power-up is active and
+   * the time it has run for so far if required.
+   */
+  public JSONObject savePowerUp() {
+    JSONObject powerup = new JSONObject();
+    powerup.put("active", acquired);
+    if (acquired) {
+      powerup.put("active time", System.currentTimeMillis() - this.startTime);
+    }
+    return powerup;
+  }
+
+  /**
+   * Loads a previously set up power-up.
+   * @param details JSONObject containing the time it has
+   *                run for so far if it has been previous activated.
+   */
+  public void loadPowerup(JSONObject details){
+    if((Boolean) details.get("active")){
+      this.acquired = true;
+      this.startTime = System.currentTimeMillis() - (Long) details.get("active time");
+    }
+  }
+
+
 }

@@ -195,7 +195,7 @@ public class ScenarioGameMaster extends GameMaster {
     // It is a square hence, width = height, just get one.
     tilewidth = (int) map.getProperties().get("tilewidth");
 
-    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);
+    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance, save);
 
     this.machineUnlockBalance.saveMoneyDetails(this.save);
   }
@@ -450,7 +450,7 @@ public class ScenarioGameMaster extends GameMaster {
    * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of
    * customers served increases Will occasionally 0.5s stalls to vary customer arrival times
    */
-  private void createCustomers() {
+  public void createCustomers() {
     waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
     if (lastCustomer + waitTime <= totalTimer) {
       /*
@@ -690,7 +690,7 @@ public class ScenarioGameMaster extends GameMaster {
 
     // Pizza cannot be handled by staff because you need to put it in the oven then
     // take it to the customer.
-    if (tray.contains("dough") && tray.contains("chopped tomato") && tray.contains("cheese")) {
+    if (tray.containsAll(rawPizza)) {
       tray.clear();
       inv.add("raw pizza");
       serving.play(soundVolume);
@@ -702,9 +702,7 @@ public class ScenarioGameMaster extends GameMaster {
         deliveryStaff.collectItem(customers.peek().getOrder());
         serveFood();
       } else {
-        if (inv.isEmpty()) {
-          inv.add(customers.peek().getOrder());
-        }
+        inv.add(customers.peek().getOrder());
       }
       serving.play(soundVolume);
     }
@@ -714,6 +712,8 @@ public class ScenarioGameMaster extends GameMaster {
     } else if (station == 2) {
       tray2 = tray;
     }
+
+    save.setTrays(tray1, tray2);
   }
 
   /** Method to handle giving food to the customer. */
@@ -781,5 +781,13 @@ public class ScenarioGameMaster extends GameMaster {
 
   public float getTimer() {
     return totalTimer;
+  }
+
+  public void addtoTray(int number, String item){
+    if (number == 1){
+      tray1.add(item);
+    } else if (number == 2){
+      tray2.add(item);
+    }
   }
 }

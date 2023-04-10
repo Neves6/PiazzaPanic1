@@ -21,6 +21,7 @@ public class GameReader {
   JSONObject saveData;
   JSONObject currencySystem;
   JSONObject customerData;
+  JSONObject trayInventory;
 
   /**
    * Constructor method.
@@ -38,6 +39,7 @@ public class GameReader {
     chefData = (JSONObject) saveData.get("Chefs");
     chefLocations = (JSONArray) chefData.get("Chef Location");
     chefStacks = (JSONArray) chefData.get("Chef Stacks");
+    trayInventory = (JSONObject) saveData.get("Trays");
   }
 
   /**
@@ -68,11 +70,20 @@ public class GameReader {
             machineUnlockBalance,
             ingredientsHelper,
             deliveryStaff,
-            !((Boolean) saveData.get("Power-ups")),
+            ((Boolean) saveData.get("Power-ups")),
             ((Long) saveData.get("Difficulty")).intValue());
 
+    // Customers are paced to release at random intervals so just wait till one exists.
+    while (configuredMaster.getFirstCustomer() == null){
+      configuredMaster.tickUpdate(1f);
+    }
+
+    configuredMaster.getFirstCustomer().setRecipe((String) customerData.get("Order"));
+    configuredMaster.getFirstCustomer().setTimeArrived(((Double) customerData.get("Current Time")).floatValue());
+
+
     // JSON auto converts all int to a long and all float to a double.
-    configuredMaster.setSelectedChef(((Long) chefData.get("Selected Chef")).intValue());
+    configuredMaster.setSelectedChef(1 + ((Long) chefData.get("Selected Chef")).intValue());
     machineUnlockBalance.setBalance(((Double) currencySystem.get("Balance")).floatValue());
     machineUnlockBalance.loadPreviousValues(machineData);
     configuredMaster.setReputationPoints(((Long) saveData.get("Reputation Points")).intValue());
@@ -82,17 +93,25 @@ public class GameReader {
     // from the old stack.
     for (int i = 0; i < chefLocations.size(); i++) {
       JSONArray pairCoord = (JSONArray) chefLocations.get(i);
-      configuredMaster.getChef(i + 1).setxCoord(((Long) pairCoord.get(0)).intValue());
-      configuredMaster.getChef(i + 1).setyCoord(((Long) pairCoord.get(1)).intValue());
+      configuredMaster.getChef(i+1).setxCoord(((Long) pairCoord.get(0)).intValue());
+      configuredMaster.getChef(i+1).setyCoord(((Long) pairCoord.get(1)).intValue());
       JSONArray chefItems = (JSONArray) chefStacks.get(i);
       for (int x = 0; x < chefItems.size(); x++) {
-        configuredMaster.getChef(i + 1).addToInventory((String) chefItems.get(x));
+        configuredMaster.getChef(i+1).addToInventory((String) chefItems.get(x));
       }
     }
 
-    // configuredMaster.getFirstCustomer().setRecipe((String) customerData.get("Order"));
-    // configuredMaster.getFirstCustomer().setTimeArrived(((Double) customerData.get("Current
-    // Time")).floatValue());
+    JSONArray trayOne = (JSONArray) trayInventory.get("Tray 1");
+    for (int i = 0; i < trayOne.size();i++){
+      configuredMaster.addtoTray(1, (String) trayOne.get(i));
+    }
+
+    JSONArray trayTwo = (JSONArray) trayInventory.get("Tray 2");
+    for (int i = 0; i < trayTwo.size();i++){
+      configuredMaster.addtoTray(1, (String) trayTwo.get(i));
+    }
+
+    configuredMaster.getPowerUpRunner().reloadPowerupStatus((JSONObject) saveData.get("Powerup Runner"));
 
     return configuredMaster;
   }

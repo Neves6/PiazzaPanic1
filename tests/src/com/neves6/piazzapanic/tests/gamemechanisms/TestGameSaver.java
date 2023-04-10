@@ -5,15 +5,16 @@ import static org.junit.Assert.assertFalse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neves6.piazzapanic.gamemechanisms.GameSaver;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
+import com.neves6.piazzapanic.powerups.PowerUpRunner;
 import com.neves6.piazzapanic.tests.GdxTestRunner;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -90,6 +91,11 @@ public class TestGameSaver {
 
     testSaver.setReputationPoints(2);
     testSaver.setTime(2f);
+
+    PowerUpRunner testPURunner = new PowerUpRunner(testChefs, new HashMap<String, Machine>(), testMoney, testSaver);
+    testPURunner.savePowerupStatus();
+
+    testSaver.setTrays(new ArrayList<>(Arrays.asList("test1")), new ArrayList<>(Arrays.asList("test2")));
 
     testSaver.closeClass();
 
