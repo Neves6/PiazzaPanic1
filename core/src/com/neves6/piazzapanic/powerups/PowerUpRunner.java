@@ -2,11 +2,13 @@ package com.neves6.piazzapanic.powerups;
 
 import static java.lang.Math.random;
 
+import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
 import java.util.ArrayList;
 import java.util.Map;
+import org.json.simple.JSONObject;
 
 /** A class that can be used to control all the power-ups within the game. */
 public class PowerUpRunner {
@@ -20,6 +22,7 @@ public class PowerUpRunner {
   ArrayList<Chef> chefs;
   Map<String, Machine> machines;
   Money money;
+  GameSaver saver;
 
   /**
    * Constructor method.
@@ -28,10 +31,12 @@ public class PowerUpRunner {
    * @param machines Machines that are being used in the game.
    * @param money The currency system that is being used in the game.
    */
-  public PowerUpRunner(ArrayList<Chef> chefs, Map<String, Machine> machines, Money money) {
+  public PowerUpRunner(
+      ArrayList<Chef> chefs, Map<String, Machine> machines, Money money, GameSaver saver) {
     this.chefs = chefs;
     this.machines = machines;
     this.money = money;
+    this.saver = saver;
   }
 
   /**
@@ -69,6 +74,7 @@ public class PowerUpRunner {
    * @return The delta that should be used based upon whether time freeze is active.
    */
   public Float updateValues(Float delta) {
+    savePowerupStatus();
     shorterMachineTime.endPowerUp(machines);
     autoCook.applyPowerUp(machines);
     cheaperMachineUnlock.endPowerUp(money.getUnlockDetails());
@@ -88,5 +94,30 @@ public class PowerUpRunner {
         + shorterMachineTime.prettyPrint()
         + autoCook.prettyPrint()
         + timeFreeze.prettyPrint();
+  }
+
+  /** Saves all power-ups within an object. */
+  public void savePowerupStatus() {
+    JSONObject powerupStatus = new JSONObject();
+    powerupStatus.put("Cheaper Machine", cheaperMachineUnlock.savePowerUp());
+    powerupStatus.put("Double Money", doubleMoney.savePowerUp());
+    powerupStatus.put("Shorter Machine", shorterMachineTime.savePowerUp());
+    powerupStatus.put("Skip Machine", autoCook.savePowerUp());
+    powerupStatus.put("Time Freeze", timeFreeze.savePowerUp());
+    this.saver.setPowerups(powerupStatus);
+  }
+
+  /**
+   * Loads in details of previous games power-ups.
+   *
+   * @param details Contains all the power-ups within the previous game and whether they have been
+   *     active and how long for if this is the case.
+   */
+  public void reloadPowerupStatus(JSONObject details) {
+    cheaperMachineUnlock.loadPowerup((JSONObject) details.get("Cheaper Machine"));
+    doubleMoney.loadPowerup((JSONObject) details.get("Double Money"));
+    shorterMachineTime.loadPowerup((JSONObject) details.get("Shorter Machine"));
+    autoCook.loadPowerup((JSONObject) details.get("Skip Machine"));
+    timeFreeze.loadPowerup((JSONObject) details.get("Time Freeze"));
   }
 }

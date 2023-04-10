@@ -42,7 +42,7 @@ public class TestGameReader {
             new DeliveryStaff(
                 new ArrayList<>(Arrays.asList(1)), new ArrayList<>(Arrays.asList(1))));
 
-    assertTrue("The selected chef must be loaded from the json", 1 == testgm.getSelectedChef());
+    assertTrue("The selected chef must be loaded from the json", 2 == testgm.getSelectedChef());
     assertTrue("The balance must be loaded in from the file", 25.5f == testMoney.getBalance());
     assertTrue(
         "All unlocks should be used from previously saved game", testMoney.isUnlocked("auto"));
@@ -56,5 +56,14 @@ public class TestGameReader {
     assertTrue(
         "The chefs inventory should be maintained",
         testgm.getChef(1).getInventory().equals(testStack));
+    assertTrue(
+        "Order for the first customer must be the same",
+        testgm.getFirstCustomer().getOrder().equals("potato"));
+    assertTrue(
+        "Order time for the first customer must be the same",
+        testgm.getFirstCustomer().getTimeArrived() == 2.0f);
+    assertTrue(
+        "All the power-ups must only be active if they were activated before",
+        testgm.getPowerUpRunner().displayText().startsWith("Current Active Powerups: \n"));
   }
 }

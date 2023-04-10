@@ -1,19 +1,18 @@
 package com.neves6.piazzapanic.tests.gamemechanisms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neves6.piazzapanic.gamemechanisms.GameSaver;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
+import com.neves6.piazzapanic.powerups.PowerUpRunner;
 import com.neves6.piazzapanic.tests.GdxTestRunner;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,8 +40,8 @@ public class TestGameSaver {
   }
 
   @Test
-  public void testDecrementCustomerEndless() {
-    testSaver.setCustomersRemaining(-1);
+  public void testDecrementCustomerInvalid() {
+    testSaver.setCustomersRemaining(-2);
     assertFalse(
         "You cannot decrement customers when running in endless mode.",
         testSaver.decrementCustomers());
@@ -91,6 +90,13 @@ public class TestGameSaver {
     testSaver.setReputationPoints(2);
     testSaver.setTime(2f);
 
+    PowerUpRunner testPURunner =
+        new PowerUpRunner(testChefs, new HashMap<String, Machine>(), testMoney, testSaver);
+    testPURunner.savePowerupStatus();
+
+    testSaver.setTrays(
+        new ArrayList<>(Arrays.asList("test1")), new ArrayList<>(Arrays.asList("test2")));
+
     testSaver.closeClass();
 
     ObjectMapper mapper = new ObjectMapper();
@@ -98,5 +104,21 @@ public class TestGameSaver {
         "The file must contain all data required to reload the game",
         mapper.readTree(new FileReader("ignore.json")),
         mapper.readTree(new FileReader("testCorrectFileFormatCorrect.json")));
+  }
+
+  @Test
+  public void testDecrementCustomerEndless() {
+    testSaver.setCustomersRemaining(-1);
+    assertTrue(
+        "Should not decrement customer when in endless mode",
+        testSaver.decrementCustomers() == false);
+  }
+
+  @Test
+  public void testDecrementCustomerValid() {
+    testSaver.setCustomersRemaining(2);
+    assertTrue(
+        "Should not decrement customer when in endless mode",
+        testSaver.decrementCustomers() == true);
   }
 }
