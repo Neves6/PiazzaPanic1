@@ -34,7 +34,7 @@ public class AutoCook extends BasePowerUp {
         tempMachine.attemptCompleteAction();
         tempMachine.changeProcessingTime(tempTime);
         tempMachine.incrementRuntime(
-                machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());
+            machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());
         this.acquired = false;
         this.startTime = 0L;
         return;

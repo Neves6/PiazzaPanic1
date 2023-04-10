@@ -43,8 +43,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   Texture lock;
   Money machineUnlockBalance;
   IngredientsStaff ingredientsHelper;
-  ArrayList<Boolean> wasd =
-          new ArrayList<>(Arrays.asList(false, false, false, false));
+  ArrayList<Boolean> wasd = new ArrayList<>(Arrays.asList(false, false, false, false));
 
   /**
    * Constructor method.
@@ -55,32 +54,32 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
     sharedSetup();
     this.game = game;
-      map = new TmxMapLoader().load("tilemaps/level1.tmx");
-      if (scenerio) {
-        gm =
-            new ScenarioGameMaster(
-                game,
-                map,
-                3,
-                5,
-                machineUnlockBalance,
-                ingredientsHelper,
-                deliveryStaff,
-                disablePowerup,
-                level);
-      } else {
-        gm =
-            new ScenarioGameMaster(
-                game,
-                map,
-                3,
-                -1,
-                machineUnlockBalance,
-                ingredientsHelper,
-                deliveryStaff,
-                disablePowerup,
-                level);
-      }
+    map = new TmxMapLoader().load("tilemaps/level1.tmx");
+    if (scenerio) {
+      gm =
+          new ScenarioGameMaster(
+              game,
+              map,
+              3,
+              5,
+              machineUnlockBalance,
+              ingredientsHelper,
+              deliveryStaff,
+              disablePowerup,
+              level);
+    } else {
+      gm =
+          new ScenarioGameMaster(
+              game,
+              map,
+              3,
+              -1,
+              machineUnlockBalance,
+              ingredientsHelper,
+              deliveryStaff,
+              disablePowerup,
+              level);
+    }
   }
 
   public GameScreen(PiazzaPanicGame game) throws ParseException {
@@ -136,10 +135,18 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void render(float delta) {
-    if (wasd.get(0)) {gm.tryMove("up");}
-    if (wasd.get(1)) {gm.tryMove("left");}
-    if (wasd.get(2)) {gm.tryMove("down");}
-    if (wasd.get(3)) {gm.tryMove("right");}
+    if (wasd.get(0)) {
+      gm.tryMove("up");
+    }
+    if (wasd.get(1)) {
+      gm.tryMove("left");
+    }
+    if (wasd.get(2)) {
+      gm.tryMove("down");
+    }
+    if (wasd.get(3)) {
+      gm.tryMove("right");
+    }
     gm.tickUpdate(delta);
 
     gm.setRecipeToStaff();
@@ -264,9 +271,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     font.draw(
         game.getBatch(),
         gm.getPowerUpRunner().displayText(),
-      wScale * 14.25F,
-      hScale * 8.75F,
-      wScale * 8F,
+        wScale * 14.25F,
+        hScale * 8.75F,
+        wScale * 8F,
         -1,
         true);
     font.draw(
@@ -380,9 +387,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
-    //Detects which key is pressed by the user
-    //If WASD (movement keys) pressed, set appropriate variable to true for use in render method
-    //If action key pressed, attempt to perform action
+    // Detects which key is pressed by the user
+    // If WASD (movement keys) pressed, set appropriate variable to true for use in render method
+    // If action key pressed, attempt to perform action
     if (keycode == Input.Keys.W) {
       wasd.set(0, true);
     }
@@ -426,8 +433,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyUp(int keycode) {
-    //Detects which key is released by the user
-    //If WASD (movement keys) released, set appropriate variable to false, stopping movement
+    // Detects which key is released by the user
+    // If WASD (movement keys) released, set appropriate variable to false, stopping movement
     if (keycode == Input.Keys.W) {
       wasd.set(0, false);
     }

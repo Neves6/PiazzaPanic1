@@ -100,7 +100,7 @@ public class Machine {
       active = false;
       actionComplete = false;
       runtime = 0;
-    }else if (!actionComplete && runtime > (processingTime * 2/3F)) {
+    } else if (!actionComplete && runtime > (processingTime * 2 / 3F)) {
       chef.addToInventory("ruined " + output);
       chef.setIsStickied(false);
       chef.setMachineInteractingWith(null);
@@ -110,14 +110,12 @@ public class Machine {
     }
   }
 
-  /**
-   * Checks if process is within valid time window, if so the action is marked as complete.
-   */
+  /** Checks if process is within valid time window, if so the action is marked as complete. */
   public void attemptCompleteAction() {
     if (actionComplete) {
       return;
     }
-    if (active && runtime >= (processingTime * 1/3F) && runtime <= (processingTime * 2/3F)) {
+    if (active && runtime >= (processingTime * 1 / 3F) && runtime <= (processingTime * 2 / 3F)) {
       actionComplete = true;
     }
   }

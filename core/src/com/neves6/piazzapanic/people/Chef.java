@@ -163,12 +163,16 @@ public class Chef extends Person {
    *
    * @return Time of the last attempted move action of the chef.
    */
-  public float getLastMove() {return lastMove;}
+  public float getLastMove() {
+    return lastMove;
+  }
 
   /**
    * Setter method for the time of last attempted move action of the chef.
    *
    * @param lastMove Time of last move action.
    */
-  public void setLastMove(float lastMove) {this.lastMove = lastMove;}
+  public void setLastMove(float lastMove) {
+    this.lastMove = lastMove;
+  }
 }

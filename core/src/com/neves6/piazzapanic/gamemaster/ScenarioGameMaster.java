@@ -252,7 +252,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tryMove(String direction) {
     Chef chef = chefs.get(selectedChef);
-    if (totalTimer < (chef.getLastMove() + 1F/5F)) {
+    if (totalTimer < (chef.getLastMove() + 1F / 5F)) {
       return;
     }
     chef.setLastMove(totalTimer);
@@ -438,7 +438,8 @@ public class ScenarioGameMaster extends GameMaster {
 
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints <= 0) {
       game.setScreen(
-          new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, difficulty));
+          new GameWinScreen(
+              game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, difficulty));
     }
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
       createCustomers();
@@ -650,7 +651,7 @@ public class ScenarioGameMaster extends GameMaster {
       if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
           && machines.get(ob.getName()) == chef.getMachineInteractingWith()) {
         machines.get(ob.getName()).attemptCompleteAction();
-      }else if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+      } else if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
           && chef.getMachineInteractingWith() == null
           && machines.get(ob.getName()).getInput().equals(invTop)) {
         machines.get(ob.getName()).process(chef, machineUnlockBalance);
@@ -661,9 +662,9 @@ public class ScenarioGameMaster extends GameMaster {
 
     if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       if (!chef.getInventory().isEmpty()) {
-      chef.removeTopFromInventory();
-      trash.play(soundVolume);
-    }
+        chef.removeTopFromInventory();
+        trash.play(soundVolume);
+      }
     } else if (detectInteractionFromTiledObject(
         loadRectangle(miscObjects.get("serving")), targetx, targety)) {
       serveFood();
@@ -726,34 +727,35 @@ public class ScenarioGameMaster extends GameMaster {
       tray.clear();
       serving.play(soundVolume);
     } else if (tray.containsAll(salad)) {
-        if (tray.size() != salad.size()) {
-          inv.add("ruined salad");
-        } else {
-          inv.add("salad");
-        }
-        tray.clear();
-        serving.play(soundVolume);
+      if (tray.size() != salad.size()) {
+        inv.add("ruined salad");
+      } else {
+        inv.add("salad");
+      }
+      tray.clear();
+      serving.play(soundVolume);
     } else if (tray.containsAll(hamburger)) {
-        if (tray.size() != hamburger.size()) {
-          inv.add("ruined hamburger");
-        } else {
-          inv.add("hamburger");
-        }
-        tray.clear();
-        serving.play(soundVolume);
+      if (tray.size() != hamburger.size()) {
+        inv.add("ruined hamburger");
+      } else {
+        inv.add("hamburger");
+      }
+      tray.clear();
+      serving.play(soundVolume);
     } else if (tray.containsAll(jacketPotato)) {
-        if (tray.size() != jacketPotato.size()) {
-          inv.add("ruined jacket potato");
-        } else {
-          inv.add("jacket potato");
-        }
-        tray.clear();
-        serving.play(soundVolume);
+      if (tray.size() != jacketPotato.size()) {
+        inv.add("ruined jacket potato");
+      } else {
+        inv.add("jacket potato");
+      }
+      tray.clear();
+      serving.play(soundVolume);
     }
 
     if (machineUnlockBalance.isUnlocked("server-staff")
-            && customers.size() > 0 && !inv.isEmpty()
-            && customers.peek().getOrder().equals(inv.peek())) {
+        && customers.size() > 0
+        && !inv.isEmpty()
+        && customers.peek().getOrder().equals(inv.peek())) {
       deliveryStaff.collectItem(customers.peek().getOrder());
       inv.pop();
       serveFood();
@@ -797,7 +799,7 @@ public class ScenarioGameMaster extends GameMaster {
 
       if (customersServed == maxCustomers) {
         game.setScreen(
-                new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
+            new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
       }
 
       // +$100 on completion of a recipe.
