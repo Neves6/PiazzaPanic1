@@ -109,16 +109,31 @@ public class Money {
     saver.setCurrencyDetails(moneyDetails);
   }
 
+  /**
+   * Setter method for player balance.
+   *
+   * @param balance Amount of money being set.
+   */
   public void setBalance(float balance) {
     this.balance = balance;
   }
 
+  /**
+   * Loads all machine unlock details from JSON object.
+   *
+   * @param prevValues JSONObject containing details ot retrieve.
+   */
   public void loadPreviousValues(JSONObject prevValues) {
     for (Object key : prevValues.keySet()) {
       unlockDetails.get(key).set(1, ((Double) prevValues.get(key)).floatValue());
     }
   }
 
+  /**
+   * Getter method for player balance.
+   *
+   * @return Amount of money player has.
+   */
   public float getBalance() {
     return balance;
   }

@@ -9,7 +9,7 @@ public class AutoCook extends BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
-   * @param noWaitOnAMachine Description of this power up.
+   * @param noWaitOnAMachine Display name given to the power up.
    */
   public AutoCook(Long effectTime, String noWaitOnAMachine) {
     super(effectTime, noWaitOnAMachine);

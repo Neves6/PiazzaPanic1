@@ -30,6 +30,7 @@ public class PowerUpRunner {
    * @param chefs Chefs that are being displayed in the game.
    * @param machines Machines that are being used in the game.
    * @param money The currency system that is being used in the game.
+   * @param saver Instance of GameSaver being used by the game.
    */
   public PowerUpRunner(
       ArrayList<Chef> chefs, Map<String, Machine> machines, Money money, GameSaver saver) {

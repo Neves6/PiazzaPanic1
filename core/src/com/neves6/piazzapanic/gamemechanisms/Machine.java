@@ -63,6 +63,7 @@ public class Machine {
    * Begins the machine processing of the ingredient.
    *
    * @param chef Which chef is using the machine.
+   * @param currency Money instance used in game.
    */
   public void process(Chef chef, Money currency) {
     if (!(currency.isUnlocked(this.unlockID))) {
@@ -80,6 +81,12 @@ public class Machine {
     }
   }
 
+  /**
+   * Performs output process of machine
+   *
+   * @param chef Which chef is using the machine.
+   * @param currency Money instance used in game.
+   */
   public void processStaffInteraction(Chef chef, Money currency) {
     if (!(currency.isUnlocked(this.unlockID))) {
       return;
@@ -110,7 +117,9 @@ public class Machine {
     }
   }
 
-  /** Checks if process is within valid time window, if so the action is marked as complete. */
+  /**
+   *  Checks if process is within valid time window, if so the action is marked as complete.
+   */
   public void attemptCompleteAction() {
     if (actionComplete) {
       return;

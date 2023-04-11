@@ -52,6 +52,15 @@ public class PiazzaPanicGame extends Game {
     super.resize(width, height);
   }
 
+  /**
+   * Getter method for whether test mode is active.
+   *
+   * @return Whether or not test mode is active.
+   */
+  public Boolean getTestMode() {
+    return testMode;
+  }
+
   /** UNUSED METHOD * */
   public void render(float delta) {}
 

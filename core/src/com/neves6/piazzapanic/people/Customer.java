@@ -53,14 +53,29 @@ public class Customer extends Person {
     return txLeft;
   }
 
+  /**
+   * Getter method for time at which the customer was generated.
+   *
+   * @return Time customer arrived.
+   */
   public float getTimeArrived() {
     return timeArrived;
   }
 
+  /**
+   * Setter method for customer order.
+   *
+   * @param order Name of recipe to set order to.
+   */
   public void setRecipe(String order) {
     this.order = order;
   }
 
+  /**
+   * Setter method for time at which the customer was generated.
+   *
+   * @param time Time customer arrived.
+   */
   public void setTimeArrived(float time) {
     this.timeArrived = time;
   }

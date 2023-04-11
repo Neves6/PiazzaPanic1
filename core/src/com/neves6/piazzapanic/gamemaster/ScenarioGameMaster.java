@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
-  int tilewidth;
+  int tileWidth;
   DeliveryStaff deliveryStaff;
   IngredientsStaff staffOne;
   PiazzaPanicGame game;
@@ -194,7 +194,7 @@ public class ScenarioGameMaster extends GameMaster {
     machineUnlockBalance.addGroup("server-staff", 50f);
 
     // It is a square hence, width = height, just get one.
-    tilewidth = (int) map.getProperties().get("tilewidth");
+    tileWidth = (int) map.getProperties().get("tilewidth");
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance, save);
 
@@ -252,7 +252,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tryMove(String direction) {
     Chef chef = chefs.get(selectedChef);
-    if (totalTimer < (chef.getLastMove() + 1F / 5F)) {
+    if (!game.getTestMode() && totalTimer < (chef.getLastMove() + 1F / 5F)) {
       return;
     }
     chef.setLastMove(totalTimer);
@@ -373,6 +373,11 @@ public class ScenarioGameMaster extends GameMaster {
     return comp;
   }
 
+  /**
+   * Generates display text for customer having left.
+   *
+   * @return String containing the display text.
+   */
   public String generateCustomerLeftText() {
     String comp = "";
     if (totalTimer <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
@@ -569,8 +574,8 @@ public class ScenarioGameMaster extends GameMaster {
    *     rectangle passed in.
    */
   public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord) {
-    return xcoord == Math.round(object.getX() / tilewidth)
-        && ycoord == Math.round(object.getY() / tilewidth);
+    return xcoord == Math.round(object.getX() / tileWidth)
+        && ycoord == Math.round(object.getY() / tileWidth);
   }
 
   /**
@@ -817,30 +822,57 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Getter method for the game's PowerUpRunner instance
+   * Getter method for the game's PowerUpRunner instance.
    *
-   * @return Instance of PowerUpRunner used in the game
+   * @return Instance of PowerUpRunner used in the game.
    */
   public PowerUpRunner getPowerUpRunner() {
     return powerups;
   }
 
+  /**
+   * Getter method for the game's GameSaver instance.
+   *
+   * @return Instance of GameSaver used in the game.
+   */
   public GameSaver getSave() {
     return save;
   }
 
+  /**
+   * Setter method for reputation points.
+   *
+   * @param reputationPoints Number of reputation points.
+   */
   public void setReputationPoints(int reputationPoints) {
     this.reputationPoints = reputationPoints;
   }
 
+  /**
+   * Setter method for game runtime.
+   *
+   * @param timeElapsed Amount of time the game has been running.
+   */
   public void setTimeElapsed(float timeElapsed) {
     this.totalTimer = timeElapsed;
   }
 
+  /**
+   * Getter method for game runtime.
+   *
+   * @return Amount of time the game has been running.
+   */
   public float getTimer() {
     return totalTimer;
   }
 
+  /**
+   * Adds given item to a specified tray.
+   * Bypasses order completion checks, only use 
+   *
+   * @param number
+   * @param item
+   */
   public void addtoTray(int number, String item) {
     if (number == 1) {
       tray1.add(item);

@@ -52,8 +52,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    * @param level The difficulty that the user has selected.
    */
   public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
-    sharedSetup();
     this.game = game;
+    sharedSetup();
     map = new TmxMapLoader().load("tilemaps/level1.tmx");
     if (scenerio) {
       gm =
@@ -100,7 +100,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     wScale = unitScale * 32f;
     hScale = unitScale * 32f;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
-    font.getData().setScale(unitScale * 0.4F);
+    if (!game.testMode) {
+      font.getData().setScale(unitScale * 0.4F);
+    }
     this.INITIAL_WIDTH = Gdx.graphics.getWidth();
     this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
     this.machineUnlockBalance = new Money();
@@ -224,6 +226,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         gm.getMachineTimerForChef(1),
         gm.getChef(2).getxCoord() * wScale,
         gm.getChef(2).getyCoord() * hScale + 2 * (hScale / 3f),
+        32 * unitScale,
+        1,
+        true);
+    font.draw(
+        game.getBatch(),
+        gm.getMachineTimerForChef(2),
+        gm.getChef(3).getxCoord() * wScale,
+        gm.getChef(3).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
         1,
         true);

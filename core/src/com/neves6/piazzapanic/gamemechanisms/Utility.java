@@ -489,19 +489,3 @@ public final class Utility {
     }
   }
 }
-
-/**
- * GAMETYPE IF-ELSE SECTION if (isEndless){ if (isPowerUp){ if (difficulty==0){ //easy powerup
- * endless }else if (difficulty==1){ //medium powerup endless }else if (difficulty==2){ //hard
- * powerup endless }else{ //error difficulty out of range throw new
- * IllegalArgumentException("Difficulty variable out of range"); } }else{ if (difficulty==0){ //easy
- * not powerup endless }else if (difficulty==1){ //medium not powerup endless }else if
- * (difficulty==2){ //hard not powerup endless }else{ //error difficulty out of range throw new
- * IllegalArgumentException("Difficulty variable out of range"); } } }else{ if (isPowerUp){ if
- * (difficulty==0){ //easy powerup scenario }else if (difficulty==1){ //medium powerup scenario
- * }else if (difficulty==2){ //hard powerup scenario }else{ //error difficulty out of range throw
- * new IllegalArgumentException("Difficulty variable out of range"); } }else{ if (difficulty==0){
- * //easy not powerup scenario }else if (difficulty==1){ //medium not powerup scenario }else if
- * (difficulty==2){ //hard not powerup scenario }else{ //error difficulty out of range throw new
- * IllegalArgumentException("Difficulty variable out of range"); } } }
- */

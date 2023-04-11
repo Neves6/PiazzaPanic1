@@ -9,10 +9,10 @@ public class ShorterMachineTime extends BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
-   * @param s
+   * @param name Display name given to the power up.
    */
-  public ShorterMachineTime(Long effectTime, String s) {
-    super(effectTime, s);
+  public ShorterMachineTime(Long effectTime, String name) {
+    super(effectTime, name);
   }
 
   /**
