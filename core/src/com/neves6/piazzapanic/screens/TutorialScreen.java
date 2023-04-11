@@ -85,7 +85,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * @param keycode one of the constants in {@link Input.Keys}
-   *
    * @return true
    */
   @Override
@@ -121,7 +120,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * UNUSED METHOD.
    *
    * @param keycode one of the constants in {@link Input.Keys}
-   *
    * @return false
    */
   @Override
@@ -133,7 +131,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * UNUSED METHOD.
    *
    * @param character The character
-   *
    * @return false
    */
   @Override
@@ -148,7 +145,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
    * @param button the button
-   *
    * @return false
    */
   @Override
@@ -163,7 +159,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
    * @param button the button
-   *
    * @return false
    */
   @Override
@@ -177,7 +172,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
-   *
    * @return false
    */
   @Override
@@ -190,7 +184,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    *
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner
-   *
    * @return false
    */
   @Override
@@ -205,7 +198,6 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    *     the wheel was scrolled.
    * @param amountY the vertical scroll amount, negative or positive depending on the direction the
    *     wheel was scrolled.
-   *
    * @return false
    */
   @Override

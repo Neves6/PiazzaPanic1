@@ -117,9 +117,7 @@ public class Machine {
     }
   }
 
-  /**
-   *  Checks if process is within valid time window, if so the action is marked as complete.
-   */
+  /** Checks if process is within valid time window, if so the action is marked as complete. */
   public void attemptCompleteAction() {
     if (actionComplete) {
       return;
