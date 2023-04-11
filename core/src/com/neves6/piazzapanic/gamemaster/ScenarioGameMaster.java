@@ -867,8 +867,7 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Adds given item to a specified tray.
-   * Bypasses order completion checks, only use 
+   * Adds given item to a specified tray. Bypasses order completion checks, only use
    *
    * @param number
    * @param item
