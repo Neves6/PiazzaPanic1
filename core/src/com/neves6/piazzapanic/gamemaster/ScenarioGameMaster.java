@@ -433,22 +433,18 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tickUpdate(float delta) {
     // TODO: play test and adjust difficulty scaling according to feedback
-    checkOrderExpired();
 
-    this.save.setChefDetails(chefs, selectedChef);
-    this.save.setReputationPoints(reputationPoints);
-    this.save.setTime(totalTimer);
-    this.save.setRecipe(getFirstCustomer());
-    this.save.setTrays(tray1, tray2);
+      checkOrderExpired();
+      if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
+        createCustomers();
+      }
 
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints <= 0) {
       game.setScreen(
           new GameWinScreen(
               game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, difficulty));
     }
-    if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
-      createCustomers();
-    }
+
     float increment = powerups.updateValues(delta);
 
     for (String machine : machines.keySet()) {
@@ -460,6 +456,12 @@ public class ScenarioGameMaster extends GameMaster {
     }
 
     totalTimer += increment;
+
+    this.save.setChefDetails(chefs, selectedChef);
+    this.save.setReputationPoints(reputationPoints);
+    this.save.setTime(totalTimer);
+    this.save.setRecipe(getFirstCustomer());
+    this.save.setTrays(tray1, tray2);
   }
 
   /**
@@ -716,7 +718,7 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    if (inv.isEmpty() || recipes.contains(inv.peek())) {
+    if (inv.isEmpty() || recipes.contains(inv.peek()) || inv.peek().equals("raw pizza") || inv.peek().contains("ruined")) {
       return;
     }
 
@@ -868,10 +870,10 @@ public class ScenarioGameMaster extends GameMaster {
 
   /**
    * Adds given item to a specified tray.
-   * Bypasses order completion checks, only use 
+   * Bypasses order completion checks, only use with GameReader.
    *
-   * @param number
-   * @param item
+   * @param number Number of the tray being added to.
+   * @param item Name of item being added to the tray.
    */
   public void addtoTray(int number, String item) {
     if (number == 1) {
