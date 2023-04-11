@@ -434,10 +434,10 @@ public class ScenarioGameMaster extends GameMaster {
   public void tickUpdate(float delta) {
     // TODO: play test and adjust difficulty scaling according to feedback
 
-      checkOrderExpired();
-      if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
-        createCustomers();
-      }
+    checkOrderExpired();
+    if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
+      createCustomers();
+    }
 
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints <= 0) {
       game.setScreen(
@@ -718,7 +718,10 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    if (inv.isEmpty() || recipes.contains(inv.peek()) || inv.peek().equals("raw pizza") || inv.peek().contains("ruined")) {
+    if (inv.isEmpty()
+        || recipes.contains(inv.peek())
+        || inv.peek().equals("raw pizza")
+        || inv.peek().contains("ruined")) {
       return;
     }
 
@@ -869,8 +872,8 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Adds given item to a specified tray.
-   * Bypasses order completion checks, only use with GameReader.
+   * Adds given item to a specified tray. Bypasses order completion checks, only use with
+   * GameReader.
    *
    * @param number Number of the tray being added to.
    * @param item Name of item being added to the tray.
