@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.gamemaster.TextMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
@@ -137,10 +138,11 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testDisplayTextEmpty() {
+    TextMaster testTextMaster = new TextMaster();
     assertEquals(
         "Expected format for empty inventorys is: 'Chef 1 is holding:\n[]\n'",
         "Chef 1 is holding:\n[]\n",
-        testMaster.generateHoldingsText());
+            testTextMaster.generateHoldingsText(testMaster.getChefs()));
   }
 
   ScenarioGameMaster testMasterII =
@@ -157,10 +159,12 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testDisplayTextFull() {
+    TextMaster testTextMaster = new TextMaster();
     testMasterII.getChef(1).addToInventory("t");
     testMasterII.getChef(1).addToInventory("e");
     testMasterII.getChef(2).addToInventory("s");
     testMasterII.getChef(2).addToInventory("t");
+
     assertEquals(
         "Expected format for empty inventorys is: 'Chef 1 is holding:\n"
             + "[item1, item2, itemn]\n"
@@ -168,7 +172,7 @@ public class TestScenarioGameMaster {
             + "[item1..itemn]\n"
             + "'",
         "Chef 1 is holding:\n[t, e]\nChef 2 is holding:\n[s, t]\n",
-        testMasterII.generateHoldingsText());
+        testTextMaster.generateHoldingsText(testMasterII.getChefs()));
   }
 
   ScenarioGameMaster testMasterIV =
@@ -217,29 +221,31 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testGenerateTimerText() {
+    TextMaster tm = new TextMaster();
     assertEquals(
         "Timer text should be in the format: 'Time elapsed: x s",
         "Time elapsed: 0 s",
-        testMasterIV.generateTimerText());
+        tm.generateTimerText(testMaster.getTotalTimerDisplay()));
   }
 
   @Test
   public void testGetMachineTimerForChefNull() {
+    TextMaster tm = new TextMaster();
     assertEquals(
         "If chef is not assigned to a machine, the chef machine text should be blank",
         "",
-        testMasterIV.getMachineTimerForChef(1));
+        tm.getMachineTimerForChef(1, testMasterII.getChefs()));
   }
 
   @Test
   public void testGetMachineTimerForChef() {
     Machine cooker = new Machine("Cooker", "Patty", "Burger", 3, true, "1234");
+    TextMaster tm = new TextMaster();
     testMasterIV.getChef(2).setMachineInteractingWith(cooker);
     assertEquals(
         "If chef is assigned to a machine, the chef machine text should display the number of"
             + " seconds left of the interaction",
-        4 + "",
-        testMasterIV.getMachineTimerForChef(1));
+        4 + "", tm.getMachineTimerForChef(1, testMasterIV.getChefs()));
   }
 
   @Test
@@ -615,16 +621,4 @@ public class TestScenarioGameMaster {
         testMasterIV.getChef(1).getInventory().peek(),
         "keep");
   }
-
-  ScenarioGameMaster testMasterEmpty =
-      new ScenarioGameMaster(
-          testGame,
-          map,
-          1,
-          0,
-          new Money(),
-          new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues),
-          false,
-          1);
 }

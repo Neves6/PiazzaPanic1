@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.gamemaster.TextMaster;
 import com.neves6.piazzapanic.gamemechanisms.GameReader;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.staff.BaseStaff;
@@ -44,7 +45,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   Money machineUnlockBalance;
   IngredientsStaff ingredientsHelper;
   ArrayList<Boolean> wasd = new ArrayList<>(Arrays.asList(false, false, false, false));
-
+  TextMaster tm = new TextMaster();
   /**
    * Constructor method.
    *
@@ -215,7 +216,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
     font.draw(
         game.getBatch(),
-        gm.getMachineTimerForChef(0),
+        tm.getMachineTimerForChef(1, gm.getChefs()),
         gm.getChef(1).getxCoord() * wScale,
         gm.getChef(1).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
@@ -223,7 +224,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        gm.getMachineTimerForChef(1),
+        tm.getMachineTimerForChef(2, gm.getChefs()),
         gm.getChef(2).getxCoord() * wScale,
         gm.getChef(2).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
@@ -231,7 +232,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        gm.getMachineTimerForChef(2),
+        tm.getMachineTimerForChef(3, gm.getChefs()),
         gm.getChef(3).getxCoord() * wScale,
         gm.getChef(3).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
@@ -240,7 +241,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     game.getBatch().draw(recipes, 20, 20);
     font.draw(
         game.getBatch(),
-        gm.generateHoldingsText(),
+        tm.generateHoldingsText(gm.getChefs()),
         wScale * 8.25F,
         hScale * 11.75F,
         wScale * 6.5F,
@@ -248,7 +249,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        gm.generateCustomersTrayText(),
+        tm.generateCustomersTrayText(gm.getCustomers(), gm.getTray1(), gm.getTray2()),
         wScale * 15F,
         hScale * 11.75F,
         wScale * 6F,
@@ -256,7 +257,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        gm.generateTimerText(),
+        tm.generateTimerText(gm.getTotalTimerDisplay()),
         wScale * 15.25F,
         hScale * 3.75F,
         wScale * 6F,
@@ -264,7 +265,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        gm.generateReputationPointText(),
+        tm.generateReputationPointText(gm.getTotalTimerDisplay(), gm.getLastRepPointLost(), gm.getReputationPoints()),
         wScale * 15.25F,
         hScale * 4.25F,
         wScale * 6F,
@@ -288,7 +289,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        gm.generateCustomerLeftText(),
+        tm.generateCustomerLeftText(gm.getTotalTimerDisplay(), gm.getLastRepPointLost()),
         wScale * 15.25F,
         hScale * 6.75F,
         wScale * 5.5F,
