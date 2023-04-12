@@ -84,8 +84,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   public GameScreen(PiazzaPanicGame game) throws ParseException {
-    sharedSetup();
     this.game = game;
+    sharedSetup();
     GameReader gr = null;
     try {
       gr = new GameReader("here.json");

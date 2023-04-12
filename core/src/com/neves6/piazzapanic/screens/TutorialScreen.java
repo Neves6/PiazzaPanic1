@@ -14,7 +14,6 @@ import org.json.simple.parser.ParseException;
 public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   PiazzaPanicGame game;
   OrthographicCamera camera;
-  SpriteBatch batch;
   BitmapFont font;
   Texture tutorial;
   int winWidth;
