@@ -1,7 +1,6 @@
 package com.neves6.piazzapanic.people;
 
 import com.badlogic.gdx.graphics.Texture;
-import java.util.Stack;
 
 /** Automated customers which extends the original person class in order to use movement. */
 public class Customer extends Person {
@@ -9,7 +8,6 @@ public class Customer extends Person {
   private String order;
   private final Texture txUp;
   private final Texture txLeft;
-  private Stack<String> remainingSteps;
   private float timeArrived;
 
   /**
@@ -23,7 +21,6 @@ public class Customer extends Person {
   public Customer(String name, int xcoord, int ycoord, String order, float timeArrived) {
     super(name, xcoord, ycoord);
     this.order = order;
-    generateHelper();
     this.txUp = new Texture("people/cust1up.png");
     this.txLeft = new Texture("people/cust1left.png");
     this.timeArrived = timeArrived;
@@ -57,54 +54,29 @@ public class Customer extends Person {
   }
 
   /**
-   * Generates a stack relating to the customers order indicating which order the items need to be
-   * placed on top of the tray.
-   */
-  public void generateHelper() {
-    remainingSteps = new Stack<>();
-    if (order == "salad") {
-      this.remainingSteps.push("chopped onion");
-      this.remainingSteps.push("chopped tomato");
-      this.remainingSteps.push("chopped lettuce");
-    } else if (order == "jacket potato") {
-      this.remainingSteps.push("beans");
-      this.remainingSteps.push("jacket");
-    } else if (order == "pizza") {
-      this.remainingSteps.push("cheese");
-      this.remainingSteps.push("chopped tomato");
-      this.remainingSteps.push("dough");
-    } else if (order == "hamburger") {
-      this.remainingSteps.push("burger");
-      this.remainingSteps.push("toasted bun");
-    }
-  }
-
-  /**
-   * Method to get the next item that need to be put onto the tray for the customers order.
+   * Getter method for time at which the customer was generated.
    *
-   * @param inv The top of the chefs stack.
-   * @return Boolean value indicating whether the chef and the customer stack matches.
+   * @return Time customer arrived.
    */
-  public Boolean helper(String inv) {
-    if (!this.remainingSteps.isEmpty()) {
-      if (inv == this.remainingSteps.peek()) {
-        this.remainingSteps.pop();
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Calculates the size of the array and compares to 0.
-   *
-   * @return Boolean value indicating whether all items are on the tray for the customers order.
-   */
-  public Boolean finishedRecipe() {
-    return remainingSteps.size() == 0;
-  }
-
   public float getTimeArrived() {
     return timeArrived;
+  }
+
+  /**
+   * Setter method for customer order.
+   *
+   * @param order Name of recipe to set order to.
+   */
+  public void setRecipe(String order) {
+    this.order = order;
+  }
+
+  /**
+   * Setter method for time at which the customer was generated.
+   *
+   * @param time Time customer arrived.
+   */
+  public void setTimeArrived(float time) {
+    this.timeArrived = time;
   }
 }

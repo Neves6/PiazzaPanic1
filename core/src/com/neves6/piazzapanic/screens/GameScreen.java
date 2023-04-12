@@ -1,9 +1,6 @@
 package com.neves6.piazzapanic.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,12 +10,16 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.gamemaster.TextMaster;
+import com.neves6.piazzapanic.gamemechanisms.GameReader;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.staff.BaseStaff;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.json.simple.parser.ParseException;
 
 /** A screen that displays the main game. */
 public class GameScreen extends ScreenAdapter implements InputProcessor {
@@ -43,7 +44,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   Texture lock;
   Money machineUnlockBalance;
   IngredientsStaff ingredientsHelper;
-
+  ArrayList<Boolean> wasd = new ArrayList<>(Arrays.asList(false, false, false, false));
+  TextMaster tm = new TextMaster();
   /**
    * Constructor method.
    *
@@ -51,55 +53,68 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    * @param level The difficulty that the user has selected.
    */
   public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
+    this.game = game;
+    sharedSetup();
+    map = new TmxMapLoader().load("tilemaps/level1.tmx");
+    if (scenerio) {
+      gm =
+          new ScenarioGameMaster(
+              game,
+              map,
+              3,
+              5,
+              machineUnlockBalance,
+              ingredientsHelper,
+              deliveryStaff,
+              disablePowerup,
+              level);
+    } else {
+      gm =
+          new ScenarioGameMaster(
+              game,
+              map,
+              3,
+              -1,
+              machineUnlockBalance,
+              ingredientsHelper,
+              deliveryStaff,
+              disablePowerup,
+              level);
+    }
+  }
+
+  public GameScreen(PiazzaPanicGame game) throws ParseException {
+    this.game = game;
+    sharedSetup();
+    GameReader gr = null;
+    try {
+      gr = new GameReader("here.json");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    map = new TmxMapLoader().load("tilemaps/level1.tmx");
+    gm = gr.createGameMaster(game, map, machineUnlockBalance, ingredientsHelper, deliveryStaff);
+  }
+
+  public void sharedSetup() {
+    unitScale = Gdx.graphics.getHeight() / (12f * 32f);
+    wScale = unitScale * 32f;
+    hScale = unitScale * 32f;
+    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
+    if (!game.testMode) {
+      font.getData().setScale(unitScale * 0.4F);
+    }
+    this.INITIAL_WIDTH = Gdx.graphics.getWidth();
+    this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
     this.machineUnlockBalance = new Money();
     this.deliveryStaff =
         new DeliveryStaff(
             new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8)),
             (new ArrayList<>(Arrays.asList(4, 4, 4, 4, 4, 4))));
-    this.game = game;
-    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
-    font.getData().setScale(0.75F);
-    // bg = new Texture(Gdx.files.internal("title_screen_large.png"));
-    this.INITIAL_WIDTH = Gdx.graphics.getWidth();
-    this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
     this.ingredientsHelper =
         new IngredientsStaff(
             new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),
             (new ArrayList<>(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));
-    if (level == 1) {
-      map = new TmxMapLoader().load("tilemaps/level1.tmx");
-      if (scenerio) {
-        gm =
-            new ScenarioGameMaster(
-                game,
-                map,
-                3,
-                5,
-                machineUnlockBalance,
-                ingredientsHelper,
-                deliveryStaff,
-                disablePowerup,
-                level);
-      } else {
-        gm =
-            new ScenarioGameMaster(
-                game,
-                map,
-                3,
-                -1,
-                machineUnlockBalance,
-                ingredientsHelper,
-                deliveryStaff,
-                disablePowerup,
-                level);
-      }
-      unitScale = Gdx.graphics.getHeight() / (12f * 32f);
-      wScale = unitScale * 32f;
-      hScale = unitScale * 32f;
-      if (game.testMode == false) {
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
-      }
-    }
     selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     recipes = new Texture(Gdx.files.internal("recipes.png"));
     lock = new Texture(Gdx.files.internal("levellocked.png"));
@@ -123,6 +138,18 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void render(float delta) {
+    if (wasd.get(0)) {
+      gm.tryMove("up");
+    }
+    if (wasd.get(1)) {
+      gm.tryMove("left");
+    }
+    if (wasd.get(2)) {
+      gm.tryMove("down");
+    }
+    if (wasd.get(3)) {
+      gm.tryMove("right");
+    }
     gm.tickUpdate(delta);
 
     gm.setRecipeToStaff();
@@ -189,7 +216,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
     font.draw(
         game.getBatch(),
-        gm.getMachineTimerForChef(0),
+        tm.getMachineTimerForChef(0, gm.getChefs()),
         gm.getChef(1).getxCoord() * wScale,
         gm.getChef(1).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
@@ -197,59 +224,76 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        gm.getMachineTimerForChef(1),
+        tm.getMachineTimerForChef(1, gm.getChefs()),
         gm.getChef(2).getxCoord() * wScale,
         gm.getChef(2).getyCoord() * hScale + 2 * (hScale / 3f),
+        32 * unitScale,
+        1,
+        true);
+    font.draw(
+        game.getBatch(),
+        tm.getMachineTimerForChef(2, gm.getChefs()),
+        gm.getChef(3).getxCoord() * wScale,
+        gm.getChef(3).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
         1,
         true);
     game.getBatch().draw(recipes, 20, 20);
     font.draw(
         game.getBatch(),
-        gm.generateHoldingsText(),
-        winWidth - (4.75f * (winWidth / 8f)),
-        winHeight - 20,
-        (3 * (winWidth / 8f)),
+        tm.generateHoldingsText(gm.getChefs()),
+        wScale * 8.25F,
+        hScale * 11.75F,
+        wScale * 6.5F,
         -1,
         true);
     font.draw(
         game.getBatch(),
-        gm.generateCustomersTrayText(),
-        winWidth - (3 * (winWidth / 8f)),
-        winHeight - 20,
-        (3 * (winWidth / 8f)),
+        tm.generateCustomersTrayText(gm.getCustomers(), gm.getTray1(), gm.getTray2()),
+        wScale * 15F,
+        hScale * 11.75F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
-        gm.generateTimerText(),
-        winWidth - (winWidth / 3f),
-        40,
-        (winWidth / 3f),
+        tm.generateTimerText(gm.getTotalTimerDisplay()),
+        wScale * 15.25F,
+        hScale * 3.75F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
-        gm.generateReputationPointText(),
-        winWidth - (winWidth / 3f),
-        60,
-        (winWidth / 3f),
+        tm.generateReputationPointText(
+            gm.getTotalTimer(), gm.getLastRepPointLost(), gm.getReputationPoints()),
+        wScale * 15.25F,
+        hScale * 4.25F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         machineUnlockBalance.displayBalance(),
-        winWidth - (winWidth / 3f),
-        80,
-        (winWidth / 3f),
+        wScale * 15.25F,
+        hScale * 4.75F,
+        wScale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         gm.getPowerUpRunner().displayText(),
-        winWidth - (winWidth / 3f),
-        550,
-        (winWidth / 3f),
+        wScale * 14.25F,
+        hScale * 8.75F,
+        wScale * 8F,
+        -1,
+        true);
+    font.draw(
+        game.getBatch(),
+        tm.generateCustomerLeftText(gm.getTotalTimer(), gm.getLastRepPointLost()),
+        wScale * 15.25F,
+        hScale * 6.75F,
+        wScale * 5.5F,
         -1,
         true);
 
@@ -355,17 +399,20 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
+    // Detects which key is pressed by the user
+    // If WASD (movement keys) pressed, set appropriate variable to true for use in render method
+    // If action key pressed, attempt to perform action
     if (keycode == Input.Keys.W) {
-      gm.tryMove("up");
+      wasd.set(0, true);
     }
     if (keycode == Input.Keys.A) {
-      gm.tryMove("left");
+      wasd.set(1, true);
     }
     if (keycode == Input.Keys.S) {
-      gm.tryMove("down");
+      wasd.set(2, true);
     }
     if (keycode == Input.Keys.D) {
-      gm.tryMove("right");
+      wasd.set(3, true);
     }
     if (keycode == Input.Keys.NUM_1) {
       gm.setSelectedChef(1);
@@ -379,17 +426,39 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     if (keycode == Input.Keys.E) {
       gm.tryInteract();
     }
+    if (keycode == Input.Keys.ESCAPE) {
+      try {
+        gm.getSave().closeClass();
+        game.setScreen(new IntroScreen(game));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
     return true;
   }
 
   /**
-   * UNUSED METHOD
+   * Method which runs when user lifts a key up.
    *
    * @param keycode one of the constants in {@link Input.Keys}
    * @return false
    */
   @Override
   public boolean keyUp(int keycode) {
+    // Detects which key is released by the user
+    // If WASD (movement keys) released, set appropriate variable to false, stopping movement
+    if (keycode == Input.Keys.W) {
+      wasd.set(0, false);
+    }
+    if (keycode == Input.Keys.A) {
+      wasd.set(1, false);
+    }
+    if (keycode == Input.Keys.S) {
+      wasd.set(2, false);
+    }
+    if (keycode == Input.Keys.D) {
+      wasd.set(3, false);
+    }
     return false;
   }
 

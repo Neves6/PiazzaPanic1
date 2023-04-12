@@ -12,7 +12,8 @@ public class Machine {
   private Boolean active;
   private float runtime;
   private Chef operator;
-  private String unlockID;
+  private final String unlockID;
+  private boolean actionComplete = false;
 
   /**
    * Machine constructor.
@@ -62,15 +63,17 @@ public class Machine {
    * Begins the machine processing of the ingredient.
    *
    * @param chef Which chef is using the machine.
+   * @param currency Money instance used in game.
    */
   public void process(Chef chef, Money currency) {
     if (!(currency.isUnlocked(this.unlockID))) {
       return;
     }
-    if (input == "" && processingTime == 0) {
+    if (input.equals("") && processingTime == 0) {
       chef.addToInventory(output);
-    } else if (chef.getInventory().peek() == input) {
+    } else if (chef.getInventory().peek().equals(input)) {
       active = true;
+      actionComplete = false;
       chef.getInventory().pop();
       chef.setIsStickied(sticky);
       chef.setMachineInteractingWith(this);
@@ -78,6 +81,12 @@ public class Machine {
     }
   }
 
+  /**
+   * Performs output process of machine
+   *
+   * @param chef Which chef is using the machine.
+   * @param currency Money instance used in game.
+   */
   public void processStaffInteraction(Chef chef, Money currency) {
     if (!(currency.isUnlocked(this.unlockID))) {
       return;
@@ -91,12 +100,30 @@ public class Machine {
    */
   public void attemptGetOutput() {
     Chef chef = operator;
-    if (active && runtime >= processingTime) {
+    if (active && actionComplete && runtime >= processingTime) {
       chef.addToInventory(output);
       chef.setIsStickied(false);
       chef.setMachineInteractingWith(null);
       active = false;
+      actionComplete = false;
       runtime = 0;
+    } else if (!actionComplete && runtime > (processingTime * 2 / 3F)) {
+      chef.addToInventory("ruined " + output);
+      chef.setIsStickied(false);
+      chef.setMachineInteractingWith(null);
+      active = false;
+      actionComplete = false;
+      runtime = 0;
+    }
+  }
+
+  /** Checks if process is within valid time window, if so the action is marked as complete. */
+  public void attemptCompleteAction() {
+    if (actionComplete) {
+      return;
+    }
+    if (active && runtime >= (processingTime * 1 / 3F) && runtime <= (processingTime * 2 / 3F)) {
+      actionComplete = true;
     }
   }
 

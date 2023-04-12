@@ -1,5 +1,5 @@
 windowed
-full
+none
 0
 0
 0

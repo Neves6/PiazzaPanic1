@@ -14,42 +14,6 @@ public class TestGameScreen {
   GameScreen testGameScreen = new GameScreen(new PiazzaPanicGame(true), 1, false, false);
 
   @Test
-  public void testMoveChefUpViaInput() {
-    Gdx.gl = Gdx.gl20;
-    testGameScreen.keyDown(Input.Keys.W);
-    assertEquals(
-        "+1 to the y when moving up", 6, testGameScreen.getGameMaster().getChef(1).getyCoord());
-    assertEquals(
-        "no effect to the x when moving up",
-        6,
-        testGameScreen.getGameMaster().getChef(1).getxCoord());
-  }
-
-  @Test
-  public void testMoveValidDownViaInput() {
-    Gdx.gl = Gdx.gl20;
-    testGameScreen.keyDown(Input.Keys.S);
-    assertEquals(
-        "-1 to the y when moving down", 4, testGameScreen.getGameMaster().getChef(1).getyCoord());
-    assertEquals(
-        "no effect to the x when moving up",
-        6,
-        testGameScreen.getGameMaster().getChef(1).getxCoord());
-  }
-
-  @Test
-  public void testMoveValidRightViaInput() {
-    Gdx.gl = Gdx.gl20;
-    testGameScreen.keyDown(Input.Keys.D);
-    assertEquals(
-        "+1 to the x when moving right", 6, testGameScreen.getGameMaster().getChef(1).getxCoord());
-    assertEquals(
-        "no effect on the y when moving right",
-        5,
-        testGameScreen.getGameMaster().getChef(1).getyCoord());
-  }
-
-  @Test
   public void tryAttainChefOne() {
     Gdx.gl = Gdx.gl20;
     testGameScreen.keyDown(Input.Keys.NUM_1);

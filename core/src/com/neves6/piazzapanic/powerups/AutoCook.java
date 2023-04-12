@@ -9,7 +9,7 @@ public class AutoCook extends BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
-   * @param noWaitOnAMachine
+   * @param noWaitOnAMachine Display name given to the power up.
    */
   public AutoCook(Long effectTime, String noWaitOnAMachine) {
     super(effectTime, noWaitOnAMachine);
@@ -27,11 +27,14 @@ public class AutoCook extends BasePowerUp {
       return;
     }
     for (String machine : machines.keySet()) {
-      if (machines.get(machine).getActive() == true) {
-        machines
-            .get(machine)
-            .incrementRuntime(
-                machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());
+      Machine tempMachine = machines.get(machine);
+      if (tempMachine.getActive()) {
+        float tempTime = tempMachine.getProcessingTime();
+        tempMachine.changeProcessingTime(tempMachine.getRuntime() * 2F);
+        tempMachine.attemptCompleteAction();
+        tempMachine.changeProcessingTime(tempTime);
+        tempMachine.incrementRuntime(
+            machines.get(machine).getProcessingTime() - machines.get(machine).getRuntime());
         this.acquired = false;
         this.startTime = 0L;
         return;

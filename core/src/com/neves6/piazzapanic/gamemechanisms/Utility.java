@@ -1,18 +1,24 @@
 package com.neves6.piazzapanic.gamemechanisms;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /** Helper/convenience class. Currently only handles retrieving and saving settings. */
 public final class Utility {
-
+  JSONObject saveData;
   public static String settingsFilepath = "./settings.txt";
 
   /** Utility constructor. SHOULD NOT BE INITIALIZED! */
-  private Utility() {} // not intended to be instantiated
+  public Utility() {
+    if (!(new File("high-scores.json").exists())) {
+      createTemplateHighScoreFile();
+    }
+  } // not intended to be instantiated
 
   /**
    * Retrieves settings from file.
@@ -85,6 +91,7 @@ public final class Utility {
     }
   }
 
+  /* DON'T MEAN TO VOID JUST AN IDEA
   boolean isEndless;
   boolean isPowerUp;
   int difficulty;
@@ -488,20 +495,59 @@ public final class Utility {
       }
     }
   }
-}
+   */
 
-/**
- * GAMETYPE IF-ELSE SECTION if (isEndless){ if (isPowerUp){ if (difficulty==0){ //easy powerup
- * endless }else if (difficulty==1){ //medium powerup endless }else if (difficulty==2){ //hard
- * powerup endless }else{ //error difficulty out of range throw new
- * IllegalArgumentException("Difficulty variable out of range"); } }else{ if (difficulty==0){ //easy
- * not powerup endless }else if (difficulty==1){ //medium not powerup endless }else if
- * (difficulty==2){ //hard not powerup endless }else{ //error difficulty out of range throw new
- * IllegalArgumentException("Difficulty variable out of range"); } } }else{ if (isPowerUp){ if
- * (difficulty==0){ //easy powerup scenario }else if (difficulty==1){ //medium powerup scenario
- * }else if (difficulty==2){ //hard powerup scenario }else{ //error difficulty out of range throw
- * new IllegalArgumentException("Difficulty variable out of range"); } }else{ if (difficulty==0){
- * //easy not powerup scenario }else if (difficulty==1){ //medium not powerup scenario }else if
- * (difficulty==2){ //hard not powerup scenario }else{ //error difficulty out of range throw new
- * IllegalArgumentException("Difficulty variable out of range"); } } }
- */
+  public void setHighScore(Boolean endless, Boolean powerup, int level, float time)
+      throws IOException, ParseException {
+    JSONParser parser = new JSONParser();
+    saveData = (JSONObject) parser.parse(new FileReader("high-scores.json"));
+    String key1 = "";
+    if (endless) {
+      key1 = "endless";
+    } else {
+      key1 = "finite";
+    }
+    JSONObject powerups = (JSONObject) saveData.get(key1);
+
+    String key2 = "";
+    if (powerup) {
+      key2 = "powerup";
+    } else {
+      key2 = "no powerup";
+    }
+    JSONObject levels = (JSONObject) powerups.get(key2);
+
+    if (((Long) levels.get(Integer.toString(level))).floatValue() < time) {
+      levels.put(level, time);
+    }
+
+    powerups.put(key2, levels);
+    saveData.put(key1, powerups);
+    JSONSave(saveData);
+  }
+
+  public void createTemplateHighScoreFile() {
+    Map<Integer, Integer> levels = new HashMap<>();
+    levels.put(1, -1);
+    levels.put(2, -1);
+    levels.put(3, -1);
+    Map<String, Map<Integer, Integer>> powerupsEnabled = new HashMap<>();
+    powerupsEnabled.put("powerup", levels);
+    powerupsEnabled.put("no powerup", levels);
+    Map<String, Map<String, Map<Integer, Integer>>> gameMode = new HashMap<>();
+    gameMode.put("finite", powerupsEnabled);
+    gameMode.put("endless", powerupsEnabled);
+    try {
+      JSONSave(gameMode);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void JSONSave(Map<String, Map<String, Map<Integer, Integer>>> values) throws IOException {
+    FileWriter file = new FileWriter("high-scores.json");
+    file.write(String.valueOf(new JSONObject(values)));
+    file.flush();
+    file.close();
+  }
+}

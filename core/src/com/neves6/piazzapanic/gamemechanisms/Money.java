@@ -3,6 +3,7 @@ package com.neves6.piazzapanic.gamemechanisms;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.simple.JSONObject;
 
 /** Class to handle money which can be used to unlocked machines. */
 public class Money {
@@ -88,5 +89,52 @@ public class Money {
 
   public Map<String, ArrayList<Float>> getUnlockDetails() {
     return unlockDetails;
+  }
+
+  /**
+   * Designed to save all relevant information required to replicate this money class when reloading
+   * the game.
+   *
+   * @param saver Class being used to save the game.
+   */
+  public void saveMoneyDetails(GameSaver saver) {
+    JSONObject moneyDetails = new JSONObject();
+    moneyDetails.put("Balance", this.balance);
+    JSONObject machineUnlocks = new JSONObject();
+    for (String key : unlockDetails.keySet()) {
+      ArrayList<Float> tempList = unlockDetails.get(key);
+      machineUnlocks.put(key, tempList.get(1));
+    }
+    moneyDetails.put("Machines", machineUnlocks);
+    saver.setCurrencyDetails(moneyDetails);
+  }
+
+  /**
+   * Setter method for player balance.
+   *
+   * @param balance Amount of money being set.
+   */
+  public void setBalance(float balance) {
+    this.balance = balance;
+  }
+
+  /**
+   * Loads all machine unlock details from JSON object.
+   *
+   * @param prevValues JSONObject containing details ot retrieve.
+   */
+  public void loadPreviousValues(JSONObject prevValues) {
+    for (Object key : prevValues.keySet()) {
+      unlockDetails.get(key).set(1, ((Double) prevValues.get(key)).floatValue());
+    }
+  }
+
+  /**
+   * Getter method for player balance.
+   *
+   * @return Amount of money player has.
+   */
+  public float getBalance() {
+    return balance;
   }
 }

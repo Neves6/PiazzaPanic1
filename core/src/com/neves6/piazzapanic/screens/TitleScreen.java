@@ -221,20 +221,37 @@ public class TitleScreen extends ScreenAdapter {
   }
 
   /**
-   * @return
+   * Getter method for play button.
+   *
+   * @return A button with a change listener which can be used for testing.
    */
   public Button getPlayButton() {
     return playButton;
   }
 
+  /**
+   * Getter method for tutorial button.
+   *
+   * @return A button with a change listener which can be used for testing.
+   */
   public Button getTutorialButton() {
     return tutorialButton;
   }
 
+  /**
+   * Getter method for credits button.
+   *
+   * @return A button with a change listener which can be used for testing.
+   */
   public Button getCreditsButton() {
     return creditsButton;
   }
 
+  /**
+   * Getter method for settings button.
+   *
+   * @return A button with a change listener which can be used for testing.
+   */
   public Button getSettingsButton() {
     return settingsButton;
   }

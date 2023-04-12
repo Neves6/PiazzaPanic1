@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.gamemaster.TextMaster;
+import com.neves6.piazzapanic.gamemaster.TiledMapMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
@@ -22,6 +24,7 @@ import org.junit.runner.RunWith;
 public class TestScenarioGameMaster {
   PiazzaPanicGame testGame = new PiazzaPanicGame(true);
   TiledMap map = new TmxMapLoader().load("tilemaps/testdouble.tmx");
+  TiledMapMaster testTiledLoader = new TiledMapMaster(map);
   ArrayList<Integer> defValues = new ArrayList<>(Arrays.asList(1, 2));
   ScenarioGameMaster testMaster =
       new ScenarioGameMaster(
@@ -137,10 +140,11 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testDisplayTextEmpty() {
+    TextMaster testTextMaster = new TextMaster();
     assertEquals(
         "Expected format for empty inventorys is: 'Chef 1 is holding:\n[]\n'",
         "Chef 1 is holding:\n[]\n",
-        testMaster.generateHoldingsText());
+        testTextMaster.generateHoldingsText(testMaster.getChefs()));
   }
 
   ScenarioGameMaster testMasterII =
@@ -157,10 +161,12 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testDisplayTextFull() {
+    TextMaster testTextMaster = new TextMaster();
     testMasterII.getChef(1).addToInventory("t");
     testMasterII.getChef(1).addToInventory("e");
     testMasterII.getChef(2).addToInventory("s");
     testMasterII.getChef(2).addToInventory("t");
+
     assertEquals(
         "Expected format for empty inventorys is: 'Chef 1 is holding:\n"
             + "[item1, item2, itemn]\n"
@@ -168,7 +174,7 @@ public class TestScenarioGameMaster {
             + "[item1..itemn]\n"
             + "'",
         "Chef 1 is holding:\n[t, e]\nChef 2 is holding:\n[s, t]\n",
-        testMasterII.generateHoldingsText());
+        testTextMaster.generateHoldingsText(testMasterII.getChefs()));
   }
 
   ScenarioGameMaster testMasterIV =
@@ -217,29 +223,32 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testGenerateTimerText() {
+    TextMaster tm = new TextMaster();
     assertEquals(
         "Timer text should be in the format: 'Time elapsed: x s",
         "Time elapsed: 0 s",
-        testMasterIV.generateTimerText());
+        tm.generateTimerText(testMaster.getTotalTimerDisplay()));
   }
 
   @Test
   public void testGetMachineTimerForChefNull() {
+    TextMaster tm = new TextMaster();
     assertEquals(
         "If chef is not assigned to a machine, the chef machine text should be blank",
         "",
-        testMasterIV.getMachineTimerForChef(1));
+        tm.getMachineTimerForChef(1, testMasterII.getChefs()));
   }
 
   @Test
   public void testGetMachineTimerForChef() {
     Machine cooker = new Machine("Cooker", "Patty", "Burger", 3, true, "1234");
+    TextMaster tm = new TextMaster();
     testMasterIV.getChef(2).setMachineInteractingWith(cooker);
     assertEquals(
         "If chef is assigned to a machine, the chef machine text should display the number of"
             + " seconds left of the interaction",
         4 + "",
-        testMasterIV.getMachineTimerForChef(1));
+        tm.getMachineTimerForChef(1, testMasterIV.getChefs()));
   }
 
   @Test
@@ -289,7 +298,7 @@ public class TestScenarioGameMaster {
                 "server-staff",
                 "pizza",
                 "ingredients-staff"));
-    MapObjects testLayer = testMasterIV.getObjectLayers("Unlock Layer");
+    MapObjects testLayer = testTiledLoader.getObjectLayers("Unlock Layer");
     for (MapObject item : testLayer) {
       assertTrue(
           "All of the objects in the unlock layer should be detected.",
@@ -312,7 +321,7 @@ public class TestScenarioGameMaster {
                 "fridge-tomato",
                 "fridge-meat",
                 "fridge-bun"));
-    MapObjects testLayer = testMasterIV.getObjectLayers("Fridge Layer");
+    MapObjects testLayer = testTiledLoader.getObjectLayers("Fridge Layer");
     for (MapObject item : testLayer) {
       assertTrue(
           "All of the objects in the fridge layer should be detected.",
@@ -341,7 +350,7 @@ public class TestScenarioGameMaster {
                 "grill-patty-2",
                 "grill-bun-1",
                 "grill-patty-1"));
-    MapObjects testLayer = testMasterIV.getObjectLayers("Cooking Layer");
+    MapObjects testLayer = testTiledLoader.getObjectLayers("Cooking Layer");
     for (MapObject item : testLayer) {
       assertTrue(
           "All of the objects in the cooking layer should be detected.",
@@ -353,7 +362,7 @@ public class TestScenarioGameMaster {
   public void testMiscLayer() {
     ArrayList<String> testFinder =
         new ArrayList<>(Arrays.asList("bin", "fast-track-collect", "tray-1", "tray-2", "serving"));
-    MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
+    MapObjects testLayer = testTiledLoader.getObjectLayers("Misc Layer");
     for (MapObject item : testLayer) {
       assertTrue(
           "All of the objects in the misc layer should be detected.",
@@ -363,22 +372,22 @@ public class TestScenarioGameMaster {
 
   @Test
   public void testValidTiledOverlap() {
-    MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
-    Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
+    MapObjects testLayer = testTiledLoader.getObjectLayers("Misc Layer");
+    Rectangle testRec = testTiledLoader.loadRectangle(testLayer.get("bin"));
     assertTrue(
         "The user should be able to interact with objects on the tiled map if in the right"
             + " position",
-        testMaster.detectInteractionFromTiledObject(testRec, 14, 4));
+        testTiledLoader.detectInteractionFromTiledObject(testRec, 14, 4));
   }
 
   @Test
   public void testInvalidTiledOverlap() {
-    MapObjects testLayer = testMasterIV.getObjectLayers("Misc Layer");
-    Rectangle testRec = testMasterIV.loadRectangle(testLayer.get("bin"));
+    MapObjects testLayer = testTiledLoader.getObjectLayers("Misc Layer");
+    Rectangle testRec = testTiledLoader.loadRectangle(testLayer.get("bin"));
     assertFalse(
         "The user should not be able to interact with objects on the tiled map if the wrong"
             + " position",
-        testMaster.detectInteractionFromTiledObject(testRec, 4, 4));
+        testTiledLoader.detectInteractionFromTiledObject(testRec, 4, 4));
   }
 
   @Test
@@ -615,16 +624,4 @@ public class TestScenarioGameMaster {
         testMasterIV.getChef(1).getInventory().peek(),
         "keep");
   }
-
-  ScenarioGameMaster testMasterEmpty =
-      new ScenarioGameMaster(
-          testGame,
-          map,
-          1,
-          0,
-          new Money(),
-          new IngredientsStaff(defValues, defValues),
-          new DeliveryStaff(defValues, defValues),
-          false,
-          1);
 }

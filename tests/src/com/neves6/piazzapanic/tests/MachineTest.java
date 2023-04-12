@@ -42,6 +42,7 @@ public class MachineTest {
     Chef testChef = new Chef("Xavier", 0, 0, 5, 5, 5, false, inventory, 1);
     Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 0, true);
     testMachine.process(testChef, new Money());
+    testMachine.attemptCompleteAction();
     testMachine.attemptGetOutput();
     assertTrue(
         "Input must be popped from stack and output pushed to stack",

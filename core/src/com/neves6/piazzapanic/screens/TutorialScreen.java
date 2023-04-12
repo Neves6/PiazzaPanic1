@@ -7,13 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.json.simple.parser.ParseException;
 
 /** Screen used to demonstrate gameplay to users. */
 public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   PiazzaPanicGame game;
   OrthographicCamera camera;
-  SpriteBatch batch;
   BitmapFont font;
   Texture tutorial;
   int winWidth;
@@ -84,7 +83,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 
   /**
    * @param keycode one of the constants in {@link Input.Keys}
-   * @return
+   * @return true
    */
   @Override
   public boolean keyDown(int keycode) {
@@ -101,6 +100,13 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
       case "hardGame":
         game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp));
         break;
+      case "resume":
+        try {
+          game.setScreen(new GameScreen(game));
+        } catch (ParseException e) {
+          throw new RuntimeException(e);
+        }
+        break;
       default:
         game.setScreen(new TitleScreen(game));
         break;
@@ -112,7 +118,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * UNUSED METHOD.
    *
    * @param keycode one of the constants in {@link Input.Keys}
-   * @return
+   * @return false
    */
   @Override
   public boolean keyUp(int keycode) {
@@ -123,7 +129,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * UNUSED METHOD.
    *
    * @param character The character
-   * @return
+   * @return false
    */
   @Override
   public boolean keyTyped(char character) {
@@ -137,7 +143,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
    * @param button the button
-   * @return
+   * @return false
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -147,11 +153,11 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   /**
    * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
    * @param button the button
-   * @return
+   * @return false
    */
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
@@ -161,10 +167,10 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   /**
    * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
    * @param pointer the pointer for the event.
-   * @return
+   * @return false
    */
   @Override
   public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -174,9 +180,9 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   /**
    * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
-   * @return
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
+   * @return false
    */
   @Override
   public boolean mouseMoved(int screenX, int screenY) {
@@ -190,7 +196,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    *     the wheel was scrolled.
    * @param amountY the vertical scroll amount, negative or positive depending on the direction the
    *     wheel was scrolled.
-   * @return
+   * @return false
    */
   @Override
   public boolean scrolled(float amountX, float amountY) {

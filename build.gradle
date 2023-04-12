@@ -51,7 +51,6 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
     }
 
     processResources {
@@ -78,6 +77,7 @@ project(":tests") {
         implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
 
         testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
         testImplementation "org.mockito:mockito-core:5.1.1"
@@ -152,6 +152,7 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api 'com.googlecode.json-simple:json-simple:1.1.1'
     }
 }
 

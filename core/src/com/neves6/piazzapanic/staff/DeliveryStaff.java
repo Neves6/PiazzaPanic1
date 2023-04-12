@@ -39,7 +39,9 @@ public class DeliveryStaff extends BaseStaff {
    */
   public Stack<String> getItems() {
     Stack<String> copy = (Stack<String>) items.clone();
-    items.pop();
+    if (!items.isEmpty()) {
+      items.pop();
+    }
     return copy;
   }
 }

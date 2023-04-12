@@ -8,7 +8,7 @@ public class DoubleMoney extends BasePowerUp {
    * Constructor.
    *
    * @param effectTime How long the power up lasts.
-   * @param name Display name given to the powerup.
+   * @param name Display name given to the power up.
    */
   public DoubleMoney(Long effectTime, String name) {
     super(effectTime, name);

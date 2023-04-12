@@ -4,13 +4,11 @@ import static java.util.Arrays.asList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Rectangle;
+import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.gamemechanisms.Utility;
@@ -26,11 +24,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
-  int tilewidth;
   DeliveryStaff deliveryStaff;
   IngredientsStaff staffOne;
   PiazzaPanicGame game;
-  TiledMap map;
+  TiledMapMaster map;
   TiledMapTileLayer collisionLayer;
   ArrayList<Chef> chefs = new ArrayList<>();
   Queue<Customer> customers = new LinkedList<>();
@@ -59,7 +56,16 @@ public class ScenarioGameMaster extends GameMaster {
   Boolean isPowerUp;
   PowerUpRunner powerups;
   int reputationPoints = 3;
+  float lastRepPointLost = 0;
   int difficulty;
+  GameSaver save;
+  ArrayList<String> salad =
+      new ArrayList<>(Arrays.asList("chopped tomato", "chopped onion", "chopped lettuce"));
+  ArrayList<String> jacketPotato = new ArrayList<>(Arrays.asList("jacket", "beans"));
+  ArrayList<String> hamburger = new ArrayList<>(Arrays.asList("burger", "toasted bun"));
+  ArrayList<String> rawPizza = new ArrayList<>(Arrays.asList("chopped tomato", "dough", "cheese"));
+  float totalTimerDisplay;
+
   /**
    * ScenarioGameMaster constructor.
    *
@@ -88,10 +94,16 @@ public class ScenarioGameMaster extends GameMaster {
     this.deliveryStaff = deliveryStaff;
     this.game = game;
     settings = Utility.getSettings();
-    this.map = map;
+    this.map = new TiledMapMaster(map);
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
     this.isPowerUp = !disablePowerup;
     this.difficulty = difficulty;
+
+    this.save = new GameSaver("here.json");
+
+    this.save.setDifficulty(difficulty);
+    this.save.setPowerUp(disablePowerup);
+    this.save.setCustomersRemaining(custno);
 
     for (int i = 0; i < chefno; i++) {
       chefs.add(new Chef("Chef", 6 + i, 5, 1, 1, 1, false, new Stack<String>(), i + 1));
@@ -99,6 +111,7 @@ public class ScenarioGameMaster extends GameMaster {
     this.maxCustomers = custno;
 
     totalTimer = 0f;
+    totalTimerDisplay = 0f;
 
     // Assessment 1 (index 0-16)
     machines.put("fridge-meat", new Machine("fridge-meat", "", "meat", 0, false));
@@ -178,10 +191,9 @@ public class ScenarioGameMaster extends GameMaster {
     machineUnlockBalance.addGroup("ingredients-staff", 150f);
     machineUnlockBalance.addGroup("server-staff", 50f);
 
-    // It is a square hence, width = height, just get one.
-    tilewidth = (int) map.getProperties().get("tilewidth");
+    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance, save);
 
-    this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance);
+    this.machineUnlockBalance.saveMoneyDetails(this.save);
   }
 
   /**
@@ -221,7 +233,9 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void setRecipeToStaff() {
     if (machineUnlockBalance.isUnlocked("ingredients-staff")) {
-      staffOne.setCurrentRecipe(customers.peek().getOrder());
+      if (!customers.isEmpty()) {
+        staffOne.setCurrentRecipe(customers.peek().getOrder());
+      }
     }
   }
 
@@ -233,6 +247,10 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tryMove(String direction) {
     Chef chef = chefs.get(selectedChef);
+    if (!game.getTestMode() && totalTimer < (chef.getLastMove() + 1F / 5F)) {
+      return;
+    }
+    chef.setLastMove(totalTimer);
     switch (direction) {
       case "up":
         if (wouldNotCollide(chef.getxCoord(), chef.getyCoord() + 1, selectedChef)) {
@@ -285,81 +303,6 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Generates the display text for the chefs' inventories.
-   *
-   * @return String containing the display text.
-   */
-  public String generateHoldingsText() {
-    String comp = "";
-    for (int i = 0; i < chefs.size(); i++) {
-      comp += "Chef " + (i + 1) + " is holding:\n";
-      comp += chefs.get(i).getInventory().toString() + "\n";
-    }
-    return comp;
-  }
-
-  /**
-   * Generates the display text for the customers' tray and order.
-   *
-   * @return String containing the display text.
-   */
-  public String generateCustomersTrayText() {
-    String comp = "";
-    comp += "Customers remaining: ";
-    comp += customers.size();
-    if (customers.size() > 0) {
-      comp += "\nOrder: ";
-      comp += customers.peek().getOrder();
-    }
-    comp += "\nTray 1 contents: ";
-    comp += tray1.toString();
-    comp += "\nTray 2 contents: ";
-    comp += tray2.toString();
-    return comp;
-  }
-
-  /**
-   * Generates the display text for the timer.
-   *
-   * @return String containing the display text.
-   */
-  public String generateTimerText() {
-    String comp = "";
-    comp += "Time elapsed: ";
-    comp += (int) totalTimer;
-    comp += " s";
-    return comp;
-  }
-
-  /**
-   * Generates the display text for reputation point count
-   *
-   * @return String containing the display text.
-   */
-  public String generateReputationPointText() {
-    String comp = "";
-    comp += "Reputation points: ";
-    comp += reputationPoints;
-    return comp;
-  }
-
-  /**
-   * Generates the display text for the chef's timer.
-   *
-   * @param chefno chef number to check.
-   * @return String containing the display text.
-   */
-  public String getMachineTimerForChef(int chefno) {
-    Chef chef = chefs.get(chefno);
-    if (chef.getMachineInteractingWith() != null) {
-      Machine machine = chef.getMachineInteractingWith();
-      return ((int) (machine.getProcessingTime() - machine.getRuntime() + 1)) + "";
-    } else {
-      return "";
-    }
-  }
-
-  /**
    * Calculates size of customers array.
    *
    * @return The amount of customers which are yet to be served.
@@ -374,7 +317,11 @@ public class ScenarioGameMaster extends GameMaster {
    * @return The customer which is at the start of the queue.
    */
   public Customer getFirstCustomer() {
-    return customers.peek();
+    if (customers.size() > 0) {
+      return customers.peek();
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -385,14 +332,18 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void tickUpdate(float delta) {
     // TODO: play test and adjust difficulty scaling according to feedback
+
     checkOrderExpired();
-    if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints == 0) {
-      game.setScreen(
-          new GameWinScreen(game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, 0));
-    }
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
       createCustomers();
     }
+
+    if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints <= 0) {
+      game.setScreen(
+          new GameWinScreen(
+              game, (int) totalTimerDisplay, false, (maxCustomers == -1), isPowerUp, difficulty));
+    }
+
     float increment = powerups.updateValues(delta);
 
     for (String machine : machines.keySet()) {
@@ -403,7 +354,15 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
-    totalTimer += increment;
+    // Delta is needed to move chefs.
+    totalTimerDisplay += increment;
+    totalTimer += delta;
+
+    this.save.setChefDetails(chefs, selectedChef);
+    this.save.setReputationPoints(reputationPoints);
+    this.save.setTime(totalTimerDisplay);
+    this.save.setRecipe(getFirstCustomer());
+    this.save.setTrays(tray1, tray2);
   }
 
   /**
@@ -411,12 +370,12 @@ public class ScenarioGameMaster extends GameMaster {
    * order expired and removes a reputation point
    */
   private void checkOrderExpired() {
-    timeAllowed = Math.max(90 - 15 * (customersServed / 5), 45) - (5 * difficulty);
+    timeAllowed = Math.max(150 - 15 * (customersServed / 5), 90) - (5 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
-      if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
-        // TODO: add fail message
+      if (customers.peek().getTimeArrived() + timeAllowed < totalTimerDisplay) {
         customers.poll();
         reputationPoints -= 1;
+        lastRepPointLost = totalTimerDisplay;
       }
     }
   }
@@ -425,8 +384,8 @@ public class ScenarioGameMaster extends GameMaster {
    * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of
    * customers served increases Will occasionally 0.5s stalls to vary customer arrival times
    */
-  private void createCustomers() {
-    waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5), 0.5);
+  public void createCustomers() {
+    waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5F), 0.5);
     if (lastCustomer + waitTime <= totalTimer) {
       /*
       Random chance to stall next customer's arrival to vary customer arrival times
@@ -485,10 +444,10 @@ public class ScenarioGameMaster extends GameMaster {
     */
     float randomFloat = ThreadLocalRandom.current().nextFloat();
     int partySize;
-    if (randomFloat <= (0.8 - 0.4 * (customersServed / 5))) {
+    if (randomFloat <= (0.8 - 0.4 * (customersServed / 5F))) {
       partySize = 1;
-    } else if (randomFloat > (0.8 - 0.4 * (customersServed / 5))
-        && randomFloat <= (1 - 0.2 * (customersServed / 5))) {
+    } else if (randomFloat > (0.8 - 0.4 * (customersServed / 5F))
+        && randomFloat <= (1 - 0.2 * (customersServed / 5F))) {
       partySize = 2;
     } else {
       partySize = 3;
@@ -497,54 +456,11 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Helper method used to get the objects from a layer using its key.
-   *
-   * @param key Name of the layer.
-   * @return All objects from the layer indicated by the key.
-   */
-  public MapObjects getObjectLayers(String key) {
-    MapLayer unlockLayer = map.getLayers().get(key);
-    return unlockLayer.getObjects();
-  }
-
-  /**
-   * Converts the tiled map coordinates into the game coordinates then compares it to the target x
-   * and target y, to check whether the rectangle is being interacted with.
-   *
-   * @param object A tiled map representation of an point on the map.
-   * @param xcoord A game x coordinate.
-   * @param ycoord A game y coordinate.
-   * @return Boolean value representing whether the coordinates passed in are the coordinates of the
-   *     rectangle passed in.
-   */
-  public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord) {
-    return xcoord == Math.round(object.getX() / tilewidth)
-        && ycoord == Math.round(object.getY() / tilewidth);
-  }
-
-  /**
-   * Helper method to convert a map object to a rectangle map object.
-   *
-   * @param object A single part of a layer of the map.
-   * @return Returns a rectangle representing the object.
-   */
-  public Rectangle loadRectangle(MapObject object) {
-    RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
-    // Now you can get the position of the rectangle like this:
-    return rectangleMapObject.getRectangle();
-  }
-
-  /**
    * Attempts to cause an interaction between the currently selected chef and the machine in front
    * of them.
    */
   public void tryInteract() {
     Chef chef = chefs.get(selectedChef);
-
-    // If the chef is stuck, it is not allowed to move.
-    if (chef.getIsStickied()) {
-      return;
-    }
 
     int targetx;
     int targety;
@@ -573,56 +489,64 @@ public class ScenarioGameMaster extends GameMaster {
 
     // Unlock layer - interactions with any stations that need to be
     // purchased using credits.
-    MapObjects unlockObjects = getObjectLayers("Unlock Layer");
+    MapObjects unlockObjects = map.getObjectLayers("Unlock Layer");
 
     for (MapObject ob : unlockObjects) {
-      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
+      if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)) {
         machineUnlockBalance.unlockMachine(ob.getName());
       }
     }
 
     // Fridge layer - contains all fridges in order to pick up ingredients.
-    MapObjects fridgeObjects = getObjectLayers("Fridge Layer");
+    MapObjects fridgeObjects = map.getObjectLayers("Fridge Layer");
     for (MapObject ob : fridgeObjects) {
-      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
+      if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)) {
         machines.get(ob.getName()).process(chef, machineUnlockBalance);
         fridge.play(soundVolume);
       }
     }
 
     // Cooking Objects - contain all machines
-    MapObjects cookingObjects = getObjectLayers("Cooking Layer");
+    MapObjects cookingObjects = map.getObjectLayers("Cooking Layer");
 
+    String invTop = "";
     if (chef.getInventory().size() != 0) {
       // Work stations
-      String invTop = chef.getInventory().peek();
+      invTop = chef.getInventory().peek();
+    }
 
-      for (MapObject ob : cookingObjects) {
-        // Only use a machine if you are trying to interact with it and have the correct
-        // input.
-        if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
-            && machines.get(ob.getName()).getInput() == invTop) {
-          machines.get(ob.getName()).process(chef, machineUnlockBalance);
-        }
+    for (MapObject ob : cookingObjects) {
+      // Only use a machine if you are trying to interact with it and have the correct
+      // input.
+      if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)
+          && machines.get(ob.getName()) == chef.getMachineInteractingWith()) {
+        machines.get(ob.getName()).attemptCompleteAction();
+      } else if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)
+          && chef.getMachineInteractingWith() == null
+          && machines.get(ob.getName()).getInput().equals(invTop)) {
+        machines.get(ob.getName()).process(chef, machineUnlockBalance);
       }
     }
 
-    MapObjects miscObjects = getObjectLayers("Misc Layer");
+    MapObjects miscObjects = map.getObjectLayers("Misc Layer");
 
-    if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
-      chef.removeTopFromInventory();
-      trash.play(soundVolume);
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("serving")), targetx, targety)) {
+    if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("bin")), targetx, targety)) {
+      if (!chef.getInventory().isEmpty()) {
+        chef.removeTopFromInventory();
+        trash.play(soundVolume);
+      }
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("serving")), targetx, targety)) {
       serveFood();
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
       addToTray(1);
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
       addToTray(2);
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
       String item = staffOne.collectItem();
       // Don't add a null pointer onto the chefs stack.
       if (item != null) {
@@ -658,30 +582,57 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    // Force user to order in the correct way (The Easiest difficulty):
-    if (inv.size() > 0) {
-      if (customers.peek().helper(inv.peek())) {
-        tray.add(inv.pop());
-      }
+    if (inv.isEmpty()
+        || recipes.contains(inv.peek())
+        || inv.peek().equals("raw pizza")
+        || inv.peek().contains("ruined")) {
+      return;
     }
 
+    tray.add(inv.pop());
     // Pizza cannot be handled by staff because you need to put it in the oven then
     // take it to the customer.
-    if (tray.contains("dough") && tray.contains("chopped tomato") && tray.contains("cheese")) {
-      tray.clear();
-      inv.add("raw pizza");
-      serving.play(soundVolume);
-    } else if (customers.peek().finishedRecipe()) {
-      tray.clear();
-      if (machineUnlockBalance.isUnlocked("server-staff")) {
-        deliveryStaff.collectItem(customers.peek().getOrder());
-        serveFood();
+    if (tray.containsAll(rawPizza)) {
+      if (tray.size() != rawPizza.size()) {
+        inv.add("ruined raw pizza");
       } else {
-        if (inv.isEmpty()) {
-          inv.add(customers.peek().getOrder());
-        }
+        inv.add("raw pizza");
       }
+      tray.clear();
       serving.play(soundVolume);
+    } else if (tray.containsAll(salad)) {
+      if (tray.size() != salad.size()) {
+        inv.add("ruined salad");
+      } else {
+        inv.add("salad");
+      }
+      tray.clear();
+      serving.play(soundVolume);
+    } else if (tray.containsAll(hamburger)) {
+      if (tray.size() != hamburger.size()) {
+        inv.add("ruined hamburger");
+      } else {
+        inv.add("hamburger");
+      }
+      tray.clear();
+      serving.play(soundVolume);
+    } else if (tray.containsAll(jacketPotato)) {
+      if (tray.size() != jacketPotato.size()) {
+        inv.add("ruined jacket potato");
+      } else {
+        inv.add("jacket potato");
+      }
+      tray.clear();
+      serving.play(soundVolume);
+    }
+
+    if (machineUnlockBalance.isUnlocked("server-staff")
+        && customers.size() > 0
+        && !inv.isEmpty()
+        && customers.peek().getOrder().equals(inv.peek())) {
+      deliveryStaff.collectItem(customers.peek().getOrder());
+      inv.pop();
+      serveFood();
     }
 
     if (station == 1) {
@@ -693,9 +644,8 @@ public class ScenarioGameMaster extends GameMaster {
 
   /** Method to handle giving food to the customer. */
   public void serveFood() {
-    if (customersServed == maxCustomers) {
-      game.setScreen(
-          new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
+    if (customers.isEmpty()) {
+      return;
     }
     Chef chef = chefs.get(selectedChef);
     Stack<String> inv;
@@ -704,7 +654,7 @@ public class ScenarioGameMaster extends GameMaster {
     // Otherwise, get the chefs inventory and operate
     // from there.
     if (machineUnlockBalance.isUnlocked("server-staff")
-        && !(customers.peek().getOrder() == "pizza")) {
+        && !(customers.peek().getOrder().equals("pizza"))) {
       inv = deliveryStaff.getItems();
     } else {
       inv = chef.getInventory();
@@ -714,15 +664,25 @@ public class ScenarioGameMaster extends GameMaster {
       return;
     }
 
-    if (customers.peek().getOrder() == inv.peek()) {
+    if (customers.peek().getOrder().equals(inv.peek())) {
       inv.pop();
       customers.poll();
+      customersServed += 1;
+      this.save.decrementCustomers();
       serving.play(soundVolume);
+
+      if (customersServed == maxCustomers) {
+        game.setScreen(
+            new GameWinScreen(
+                game, (int) totalTimerDisplay, true, (maxCustomers == -1), isPowerUp, 0));
+      }
+
       // +$100 on completion of a recipe.
       machineUnlockBalance.incrementBalance();
       // Once an order is complete, allow ingredient staff to
       // collect another order.
       staffOne.setGenerate(true);
+      this.machineUnlockBalance.saveMoneyDetails(this.save);
 
       // Activate random power up if a recipe is complete.
       if (isPowerUp) {
@@ -732,11 +692,95 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Getter method for the game's PowerUpRunner instance
+   * Getter method for the game's PowerUpRunner instance.
    *
-   * @return Instance of PowerUpRunner used in the game
+   * @return Instance of PowerUpRunner used in the game.
    */
   public PowerUpRunner getPowerUpRunner() {
     return powerups;
+  }
+
+  /**
+   * Getter method for the game's GameSaver instance.
+   *
+   * @return Instance of GameSaver used in the game.
+   */
+  public GameSaver getSave() {
+    return save;
+  }
+
+  /**
+   * Setter method for reputation points.
+   *
+   * @param reputationPoints Number of reputation points.
+   */
+  public void setReputationPoints(int reputationPoints) {
+    this.reputationPoints = reputationPoints;
+  }
+
+  /**
+   * Setter method for game runtime.
+   *
+   * @param timeElapsed Amount of time the game has been running.
+   */
+  public void setTimeElapsed(float timeElapsed) {
+    this.totalTimer = timeElapsed;
+    this.totalTimerDisplay = timeElapsed;
+  }
+
+  /**
+   * Getter method for game runtime.
+   *
+   * @return Amount of time the game has been running.
+   */
+  public float getTimer() {
+    return totalTimerDisplay;
+  }
+
+  /**
+   * Adds given item to a specified tray. Bypasses order completion checks, only use with
+   * GameReader.
+   *
+   * @param number Number of the tray being added to.
+   * @param item Name of item being added to the tray.
+   */
+  public void addtoTray(int number, String item) {
+    if (number == 1) {
+      tray1.add(item);
+    } else if (number == 2) {
+      tray2.add(item);
+    }
+  }
+
+  public ArrayList<Chef> getChefs() {
+    return chefs;
+  }
+
+  public float getTotalTimerDisplay() {
+    return totalTimerDisplay;
+  }
+
+  public float getTotalTimer() {
+    return totalTimer;
+  }
+
+  public float getLastRepPointLost() {
+    return lastRepPointLost;
+  }
+
+  public int getReputationPoints() {
+    return reputationPoints;
+  }
+
+  public Queue<Customer> getCustomers() {
+    return customers;
+  }
+
+  public ArrayList<String> getTray1() {
+    return tray1;
+  }
+
+  public ArrayList<String> getTray2() {
+    return tray2;
   }
 }
