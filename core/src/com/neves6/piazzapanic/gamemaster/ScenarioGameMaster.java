@@ -68,6 +68,7 @@ public class ScenarioGameMaster extends GameMaster {
   ArrayList<String> jacketPotato = new ArrayList<>(Arrays.asList("jacket", "beans"));
   ArrayList<String> hamburger = new ArrayList<>(Arrays.asList("burger", "toasted bun"));
   ArrayList<String> rawPizza = new ArrayList<>(Arrays.asList("chopped tomato", "dough", "cheese"));
+  float totalTimerDisplay;
 
   /**
    * ScenarioGameMaster constructor.
@@ -114,6 +115,7 @@ public class ScenarioGameMaster extends GameMaster {
     this.maxCustomers = custno;
 
     totalTimer = 0f;
+    totalTimerDisplay = 0f;
 
     // Assessment 1 (index 0-16)
     machines.put("fridge-meat", new Machine("fridge-meat", "", "meat", 0, false));
@@ -353,7 +355,7 @@ public class ScenarioGameMaster extends GameMaster {
   public String generateTimerText() {
     String comp = "";
     comp += "Time elapsed: ";
-    comp += (int) totalTimer;
+    comp += (int) totalTimerDisplay;
     comp += " s";
     return comp;
   }
@@ -367,7 +369,7 @@ public class ScenarioGameMaster extends GameMaster {
     String comp = "";
     comp += "Reputation points: ";
     comp += reputationPoints;
-    if (totalTimer <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
+    if (totalTimerDisplay <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
       comp += " -1";
     }
     return comp;
@@ -380,7 +382,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public String generateCustomerLeftText() {
     String comp = "";
-    if (totalTimer <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
+    if (totalTimerDisplay <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
       comp += "A customer was tired of waiting";
       comp += "\nReputation point lost";
     }
@@ -442,7 +444,7 @@ public class ScenarioGameMaster extends GameMaster {
     if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints <= 0) {
       game.setScreen(
           new GameWinScreen(
-              game, (int) totalTimer, false, (maxCustomers == -1), isPowerUp, difficulty));
+              game, (int) totalTimerDisplay, false, (maxCustomers == -1), isPowerUp, difficulty));
     }
 
     float increment = powerups.updateValues(delta);
@@ -455,11 +457,13 @@ public class ScenarioGameMaster extends GameMaster {
       }
     }
 
-    totalTimer += increment;
+    // Delta is needed to move chefs.
+    totalTimerDisplay += increment;
+    totalTimer += delta;
 
     this.save.setChefDetails(chefs, selectedChef);
     this.save.setReputationPoints(reputationPoints);
-    this.save.setTime(totalTimer);
+    this.save.setTime(totalTimerDisplay);
     this.save.setRecipe(getFirstCustomer());
     this.save.setTrays(tray1, tray2);
   }
@@ -471,10 +475,10 @@ public class ScenarioGameMaster extends GameMaster {
   private void checkOrderExpired() {
     timeAllowed = Math.max(150 - 15 * (customersServed / 5), 90) - (5 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
-      if (customers.peek().getTimeArrived() + timeAllowed < totalTimer) {
+      if (customers.peek().getTimeArrived() + timeAllowed < totalTimerDisplay) {
         customers.poll();
         reputationPoints -= 1;
-        lastRepPointLost = totalTimer;
+        lastRepPointLost = totalTimerDisplay;
       }
     }
   }
@@ -809,7 +813,7 @@ public class ScenarioGameMaster extends GameMaster {
 
       if (customersServed == maxCustomers) {
         game.setScreen(
-            new GameWinScreen(game, (int) totalTimer, true, (maxCustomers == -1), isPowerUp, 0));
+            new GameWinScreen(game, (int) totalTimerDisplay, true, (maxCustomers == -1), isPowerUp, 0));
       }
 
       // +$100 on completion of a recipe.
@@ -860,6 +864,7 @@ public class ScenarioGameMaster extends GameMaster {
    */
   public void setTimeElapsed(float timeElapsed) {
     this.totalTimer = timeElapsed;
+    this.totalTimerDisplay = timeElapsed;
   }
 
   /**
@@ -868,7 +873,7 @@ public class ScenarioGameMaster extends GameMaster {
    * @return Amount of time the game has been running.
    */
   public float getTimer() {
-    return totalTimer;
+    return totalTimerDisplay;
   }
 
   /**
