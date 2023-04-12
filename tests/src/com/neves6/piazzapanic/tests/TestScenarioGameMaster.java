@@ -144,7 +144,7 @@ public class TestScenarioGameMaster {
     assertEquals(
         "Expected format for empty inventorys is: 'Chef 1 is holding:\n[]\n'",
         "Chef 1 is holding:\n[]\n",
-            testTextMaster.generateHoldingsText(testMaster.getChefs()));
+        testTextMaster.generateHoldingsText(testMaster.getChefs()));
   }
 
   ScenarioGameMaster testMasterII =
@@ -247,7 +247,8 @@ public class TestScenarioGameMaster {
     assertEquals(
         "If chef is assigned to a machine, the chef machine text should display the number of"
             + " seconds left of the interaction",
-        4 + "", tm.getMachineTimerForChef(1, testMasterIV.getChefs()));
+        4 + "",
+        tm.getMachineTimerForChef(1, testMasterIV.getChefs()));
   }
 
   @Test
@@ -376,7 +377,7 @@ public class TestScenarioGameMaster {
     assertTrue(
         "The user should be able to interact with objects on the tiled map if in the right"
             + " position",
-            testTiledLoader.detectInteractionFromTiledObject(testRec, 14, 4));
+        testTiledLoader.detectInteractionFromTiledObject(testRec, 14, 4));
   }
 
   @Test
@@ -386,7 +387,7 @@ public class TestScenarioGameMaster {
     assertFalse(
         "The user should not be able to interact with objects on the tiled map if the wrong"
             + " position",
-            testTiledLoader.detectInteractionFromTiledObject(testRec, 4, 4));
+        testTiledLoader.detectInteractionFromTiledObject(testRec, 4, 4));
   }
 
   @Test

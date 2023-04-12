@@ -2,15 +2,10 @@ package com.neves6.piazzapanic.tests;
 
 import com.neves6.piazzapanic.gamemechanisms.Utility;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
 public class UtilityTests {

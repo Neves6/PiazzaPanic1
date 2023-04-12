@@ -1,13 +1,12 @@
 package com.neves6.piazzapanic.gamemechanisms;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /** Helper/convenience class. Currently only handles retrieving and saving settings. */
 public final class Utility {
@@ -16,7 +15,7 @@ public final class Utility {
 
   /** Utility constructor. SHOULD NOT BE INITIALIZED! */
   public Utility() {
-    if (!(new File("high-scores.json").exists())){
+    if (!(new File("high-scores.json").exists())) {
       createTemplateHighScoreFile();
     }
   } // not intended to be instantiated
@@ -498,34 +497,36 @@ public final class Utility {
   }
    */
 
-  public void setHighScore(Boolean endless, Boolean powerup, int level, float time) throws IOException, ParseException {
+  public void setHighScore(Boolean endless, Boolean powerup, int level, float time)
+      throws IOException, ParseException {
     JSONParser parser = new JSONParser();
     saveData = (JSONObject) parser.parse(new FileReader("high-scores.json"));
     String key1 = "";
-    if (endless){
+    if (endless) {
       key1 = "endless";
-    } else{
+    } else {
       key1 = "finite";
     }
     JSONObject powerups = (JSONObject) saveData.get(key1);
 
     String key2 = "";
-    if (powerup){
+    if (powerup) {
       key2 = "powerup";
-    } else{
+    } else {
       key2 = "no powerup";
     }
     JSONObject levels = (JSONObject) powerups.get(key2);
 
-    if (((Long) levels.get(Integer.toString(level))).floatValue() < time){
-      levels.put(level, time);}
+    if (((Long) levels.get(Integer.toString(level))).floatValue() < time) {
+      levels.put(level, time);
+    }
 
     powerups.put(key2, levels);
     saveData.put(key1, powerups);
     JSONSave(saveData);
   }
 
-  public void createTemplateHighScoreFile(){
+  public void createTemplateHighScoreFile() {
     Map<Integer, Integer> levels = new HashMap<>();
     levels.put(1, -1);
     levels.put(2, -1);

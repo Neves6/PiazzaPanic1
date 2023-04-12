@@ -4,13 +4,10 @@ import static java.util.Arrays.asList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Rectangle;
 import com.neves6.piazzapanic.gamemechanisms.GameSaver;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
@@ -193,8 +190,6 @@ public class ScenarioGameMaster extends GameMaster {
 
     machineUnlockBalance.addGroup("ingredients-staff", 150f);
     machineUnlockBalance.addGroup("server-staff", 50f);
-
-
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance, save);
 
@@ -535,7 +530,8 @@ public class ScenarioGameMaster extends GameMaster {
 
     MapObjects miscObjects = map.getObjectLayers("Misc Layer");
 
-    if (map.detectInteractionFromTiledObject(map.loadRectangle(miscObjects.get("bin")), targetx, targety)) {
+    if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       if (!chef.getInventory().isEmpty()) {
         chef.removeTopFromInventory();
         trash.play(soundVolume);
@@ -677,7 +673,8 @@ public class ScenarioGameMaster extends GameMaster {
 
       if (customersServed == maxCustomers) {
         game.setScreen(
-            new GameWinScreen(game, (int) totalTimerDisplay, true, (maxCustomers == -1), isPowerUp, 0));
+            new GameWinScreen(
+                game, (int) totalTimerDisplay, true, (maxCustomers == -1), isPowerUp, 0));
       }
 
       // +$100 on completion of a recipe.

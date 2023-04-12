@@ -116,7 +116,7 @@ public class SettingsScreen extends ScreenAdapter {
 
     volumeNoneButton = new TextButton("Volume: None", buttonStyle);
     volumeNoneButton.setPosition(
-            Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,
+        Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,
         Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 5 / 2);
     volumeNoneButton.addListener(
         new ChangeListener() {
@@ -130,15 +130,15 @@ public class SettingsScreen extends ScreenAdapter {
 
     mainMenuButton = new TextButton("Exit to Main Menu", buttonStyle);
     mainMenuButton.setPosition(
-            Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,
-            Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 7 / 2);
+        Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 7 / 2);
     mainMenuButton.addListener(
-            new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new TitleScreen(game));
-              }
-            });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(new TitleScreen(game));
+          }
+        });
 
     if (game.testMode) {
       return;
@@ -208,8 +208,8 @@ public class SettingsScreen extends ScreenAdapter {
         Gdx.graphics.getWidth() / 2f - volumeNoneButton.getWidth() / 2,
         Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 5 / 2);
     mainMenuButton.setPosition(
-            Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,
-            Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 7 / 2);
+        Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,
+        Gdx.graphics.getHeight() / 2f - volumeNoneButton.getHeight() * 7 / 2);
     stage.clear();
     stage.addActor(fullscreenButton);
     stage.addActor(volumeFullButton);
