@@ -266,7 +266,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     font.draw(
         game.getBatch(),
         tm.generateReputationPointText(
-            gm.getTotalTimerDisplay(), gm.getLastRepPointLost(), gm.getReputationPoints()),
+            gm.getTotalTimer(), gm.getLastRepPointLost(), gm.getReputationPoints()),
         wScale * 15.25F,
         hScale * 4.25F,
         wScale * 6F,
@@ -290,7 +290,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        tm.generateCustomerLeftText(gm.getTotalTimerDisplay(), gm.getLastRepPointLost()),
+        tm.generateCustomerLeftText(gm.getTotalTimer(), gm.getLastRepPointLost()),
         wScale * 15.25F,
         hScale * 6.75F,
         wScale * 5.5F,

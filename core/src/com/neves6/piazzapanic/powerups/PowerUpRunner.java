@@ -45,7 +45,7 @@ public class PowerUpRunner {
    * uses this to pick a random power-up to activate.
    */
   public void activateRandomPowerUp() {
-    int random = 4; // (int) Math.round(random() / 0.25);
+    int random = (int) Math.round(random() / 0.25);
     switch (random) {
       case 0:
         cheaperMachineUnlock.acquirePowerUp();

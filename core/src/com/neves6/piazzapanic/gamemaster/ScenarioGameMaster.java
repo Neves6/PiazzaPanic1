@@ -760,6 +760,10 @@ public class ScenarioGameMaster extends GameMaster {
     return totalTimerDisplay;
   }
 
+  public float getTotalTimer() {
+    return totalTimer;
+  }
+
   public float getLastRepPointLost() {
     return lastRepPointLost;
   }

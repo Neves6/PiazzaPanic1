@@ -28,9 +28,9 @@ public class TextMaster {
    *
    * @return String containing the display text.
    */
-  public String generateCustomerLeftText(float totalTimerDisplay, float lastRepPointLost) {
+  public String generateCustomerLeftText(float totalTimer, float lastRepPointLost) {
     String comp = "";
-    if (totalTimerDisplay <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
+    if (totalTimer <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
       comp += "A customer was tired of waiting";
       comp += "\nReputation point lost";
     }
@@ -43,11 +43,11 @@ public class TextMaster {
    * @return String containing the display text.
    */
   public String generateReputationPointText(
-      float totalTimerDisplay, float lastRepPointLost, int reputationPoints) {
+      float totalTimer, float lastRepPointLost, int reputationPoints) {
     String comp = "";
     comp += "Reputation points: ";
     comp += reputationPoints;
-    if (totalTimerDisplay <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
+    if (totalTimer <= (lastRepPointLost + 3) && lastRepPointLost != 0) {
       comp += " -1";
     }
     return comp;
