@@ -39,6 +39,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
   TextButton.TextButtonStyle buttonStyle;
   Button customerGameModeButton;
   Button powerupGameModeButton;
+  Button returnButton;
   Skin skin;
   TextureAtlas atlas;
   boolean resumeFlag = false;
@@ -73,6 +74,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     buttonStyle.up = skin.getDrawable("black_alpha_square");
     buttonStyle.down = skin.getDrawable("black_alpha_square");
     buttonStyle.checked = skin.getDrawable("black_alpha_square");
+
     easyButton = new TextButton("Easy", buttonStyle);
     easyButton.setPosition(
         Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,
@@ -138,8 +140,20 @@ public class LevelSelectorScreen extends ScreenAdapter {
             new TextureRegionDrawable(rightPowerupMode),
             new TextureRegionDrawable(rightPowerupMode));
     powerupGameModeButton.setPosition(
-        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
+        Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,
         Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
+
+    returnButton =
+            new TextButton("Back", buttonStyle);
+    returnButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 + hardButton.getWidth() * 2f,
+            Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
+    returnButton.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        game.setScreen(new TitleScreen(game));
+      }
+    });
 
     if (game.testMode) {
       return;
@@ -152,6 +166,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(hardButton);
     stage.addActor(customerGameModeButton);
     stage.addActor(powerupGameModeButton);
+    stage.addActor(returnButton);
 
     File json = new File("here.json");
     if (json.exists() && json.length() != 0) {
@@ -240,12 +255,16 @@ public class LevelSelectorScreen extends ScreenAdapter {
     powerupGameModeButton.setPosition(
         Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
         Gdx.graphics.getHeight() / 3f - easyButton.getHeight() / 2);
+    returnButton.setPosition(
+            Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,
+            Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
     stage.clear();
     stage.addActor(easyButton);
     stage.addActor(mediumButton);
     stage.addActor(hardButton);
     stage.addActor(customerGameModeButton);
     stage.addActor(powerupGameModeButton);
+    stage.addActor(returnButton);
     if (resumeFlag) {
       stage.addActor(resumeButton);
     }

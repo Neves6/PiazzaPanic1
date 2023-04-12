@@ -27,11 +27,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster extends GameMaster {
-  int tileWidth;
   DeliveryStaff deliveryStaff;
   IngredientsStaff staffOne;
   PiazzaPanicGame game;
-  TiledMap map;
+  TiledMapMaster map;
   TiledMapTileLayer collisionLayer;
   ArrayList<Chef> chefs = new ArrayList<>();
   Queue<Customer> customers = new LinkedList<>();
@@ -98,7 +97,7 @@ public class ScenarioGameMaster extends GameMaster {
     this.deliveryStaff = deliveryStaff;
     this.game = game;
     settings = Utility.getSettings();
-    this.map = map;
+    this.map = new TiledMapMaster(map);
     collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
     this.isPowerUp = !disablePowerup;
     this.difficulty = difficulty;
@@ -195,8 +194,7 @@ public class ScenarioGameMaster extends GameMaster {
     machineUnlockBalance.addGroup("ingredients-staff", 150f);
     machineUnlockBalance.addGroup("server-staff", 50f);
 
-    // It is a square hence, width = height, just get one.
-    tileWidth = (int) map.getProperties().get("tilewidth");
+
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance, save);
 
@@ -463,44 +461,6 @@ public class ScenarioGameMaster extends GameMaster {
   }
 
   /**
-   * Helper method used to get the objects from a layer using its key.
-   *
-   * @param key Name of the layer.
-   * @return All objects from the layer indicated by the key.
-   */
-  public MapObjects getObjectLayers(String key) {
-    MapLayer unlockLayer = map.getLayers().get(key);
-    return unlockLayer.getObjects();
-  }
-
-  /**
-   * Converts the tiled map coordinates into the game coordinates then compares it to the target x
-   * and target y, to check whether the rectangle is being interacted with.
-   *
-   * @param object A tiled map representation of an point on the map.
-   * @param xcoord A game x coordinate.
-   * @param ycoord A game y coordinate.
-   * @return Boolean value representing whether the coordinates passed in are the coordinates of the
-   *     rectangle passed in.
-   */
-  public Boolean detectInteractionFromTiledObject(Rectangle object, int xcoord, int ycoord) {
-    return xcoord == Math.round(object.getX() / tileWidth)
-        && ycoord == Math.round(object.getY() / tileWidth);
-  }
-
-  /**
-   * Helper method to convert a map object to a rectangle map object.
-   *
-   * @param object A single part of a layer of the map.
-   * @return Returns a rectangle representing the object.
-   */
-  public Rectangle loadRectangle(MapObject object) {
-    RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
-    // Now you can get the position of the rectangle like this:
-    return rectangleMapObject.getRectangle();
-  }
-
-  /**
    * Attempts to cause an interaction between the currently selected chef and the machine in front
    * of them.
    */
@@ -534,25 +494,25 @@ public class ScenarioGameMaster extends GameMaster {
 
     // Unlock layer - interactions with any stations that need to be
     // purchased using credits.
-    MapObjects unlockObjects = getObjectLayers("Unlock Layer");
+    MapObjects unlockObjects = map.getObjectLayers("Unlock Layer");
 
     for (MapObject ob : unlockObjects) {
-      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
+      if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)) {
         machineUnlockBalance.unlockMachine(ob.getName());
       }
     }
 
     // Fridge layer - contains all fridges in order to pick up ingredients.
-    MapObjects fridgeObjects = getObjectLayers("Fridge Layer");
+    MapObjects fridgeObjects = map.getObjectLayers("Fridge Layer");
     for (MapObject ob : fridgeObjects) {
-      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)) {
+      if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)) {
         machines.get(ob.getName()).process(chef, machineUnlockBalance);
         fridge.play(soundVolume);
       }
     }
 
     // Cooking Objects - contain all machines
-    MapObjects cookingObjects = getObjectLayers("Cooking Layer");
+    MapObjects cookingObjects = map.getObjectLayers("Cooking Layer");
 
     String invTop = "";
     if (chef.getInventory().size() != 0) {
@@ -563,34 +523,34 @@ public class ScenarioGameMaster extends GameMaster {
     for (MapObject ob : cookingObjects) {
       // Only use a machine if you are trying to interact with it and have the correct
       // input.
-      if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+      if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)
           && machines.get(ob.getName()) == chef.getMachineInteractingWith()) {
         machines.get(ob.getName()).attemptCompleteAction();
-      } else if (detectInteractionFromTiledObject(loadRectangle(ob), targetx, targety)
+      } else if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)
           && chef.getMachineInteractingWith() == null
           && machines.get(ob.getName()).getInput().equals(invTop)) {
         machines.get(ob.getName()).process(chef, machineUnlockBalance);
       }
     }
 
-    MapObjects miscObjects = getObjectLayers("Misc Layer");
+    MapObjects miscObjects = map.getObjectLayers("Misc Layer");
 
-    if (detectInteractionFromTiledObject(loadRectangle(miscObjects.get("bin")), targetx, targety)) {
+    if (map.detectInteractionFromTiledObject(map.loadRectangle(miscObjects.get("bin")), targetx, targety)) {
       if (!chef.getInventory().isEmpty()) {
         chef.removeTopFromInventory();
         trash.play(soundVolume);
       }
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("serving")), targetx, targety)) {
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("serving")), targetx, targety)) {
       serveFood();
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
       addToTray(1);
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
       addToTray(2);
-    } else if (detectInteractionFromTiledObject(
-        loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
+    } else if (map.detectInteractionFromTiledObject(
+        map.loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
       String item = staffOne.collectItem();
       // Don't add a null pointer onto the chefs stack.
       if (item != null) {

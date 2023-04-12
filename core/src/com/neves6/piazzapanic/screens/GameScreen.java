@@ -216,7 +216,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
     font.draw(
         game.getBatch(),
-        tm.getMachineTimerForChef(1, gm.getChefs()),
+        tm.getMachineTimerForChef(0, gm.getChefs()),
         gm.getChef(1).getxCoord() * wScale,
         gm.getChef(1).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
@@ -224,7 +224,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        tm.getMachineTimerForChef(2, gm.getChefs()),
+        tm.getMachineTimerForChef(1, gm.getChefs()),
         gm.getChef(2).getxCoord() * wScale,
         gm.getChef(2).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
@@ -232,7 +232,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         true);
     font.draw(
         game.getBatch(),
-        tm.getMachineTimerForChef(3, gm.getChefs()),
+        tm.getMachineTimerForChef(2, gm.getChefs()),
         gm.getChef(3).getxCoord() * wScale,
         gm.getChef(3).getyCoord() * hScale + 2 * (hScale / 3f),
         32 * unitScale,
