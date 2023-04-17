@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.TestGameScreen" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:13" hostname="HP-PAV14" time="1.14">
+  <properties/>
+  <testcase name="tryAttainChefOne" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.748"/>
+  <testcase name="tryAttainChefTwo" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.191"/>
+  <testcase name="tryAttainChefThree" classname="com.neves6.piazzapanic.tests.TestGameScreen" time="0.166"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

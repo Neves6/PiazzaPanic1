@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.MachineTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:11" hostname="HP-PAV14" time="0.083">
+  <properties/>
+  <testcase name="testIncrementRuntime" classname="com.neves6.piazzapanic.tests.MachineTest" time="0.0"/>
+  <testcase name="testProcess" classname="com.neves6.piazzapanic.tests.MachineTest" time="0.031"/>
+  <testcase name="testAttemptGetOutput" classname="com.neves6.piazzapanic.tests.MachineTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

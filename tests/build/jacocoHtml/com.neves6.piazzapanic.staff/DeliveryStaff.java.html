@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeliveryStaff.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.staff</a> &gt; <span class="el_source">DeliveryStaff.java</span></div><h1>DeliveryStaff.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.staff;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+/**
+ * This class creates a staff member which automatically takes orders out once they have been
+ * assembled on the tray by any of the staff.
+ */
+public class DeliveryStaff extends BaseStaff {
+  private Stack&lt;String&gt; items;
+
+  /**
+   * Constructor method that takes 2 arrays which must be of the same length. Each index represent
+   * the nth value in the sequence of movement which must take place.
+   *
+   * @param xsequence List of x coordinates in order.
+   * @param ysequence List of y coordinates in order.
+   */
+  public DeliveryStaff(ArrayList&lt;Integer&gt; xsequence, ArrayList&lt;Integer&gt; ysequence) {
+<span class="fc" id="L21">    super(xsequence, ysequence);</span>
+<span class="fc" id="L22">    this.items = new Stack&lt;&gt;();</span>
+<span class="fc" id="L23">  }</span>
+
+  /**
+   * Collects a complete order.
+   *
+   * @param item An assembled recipe.
+   */
+  public void collectItem(String item) {
+<span class="fc" id="L31">    items.push(item);</span>
+<span class="fc" id="L32">    this.collect = true;</span>
+<span class="fc" id="L33">  }</span>
+
+  /**
+   * Gets the recipe that the staff member currently has.
+   *
+   * @return Stack containing the complete recipe.
+   */
+  public Stack&lt;String&gt; getItems() {
+<span class="fc" id="L41">    Stack&lt;String&gt; copy = (Stack&lt;String&gt;) items.clone();</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">    if (!items.isEmpty()) {</span>
+<span class="fc" id="L43">      items.pop();</span>
+    }
+<span class="fc" id="L45">    return copy;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

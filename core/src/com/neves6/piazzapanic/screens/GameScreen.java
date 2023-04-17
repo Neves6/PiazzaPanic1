@@ -286,24 +286,31 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     // Any machines that are unlockable add here to draw a lock on top of it.
     if (!(machineUnlockBalance.isUnlocked("chopping"))) {
       game.getBatch().draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(game.getBatch(), Float.toString(machineUnlockBalance.getUnlockPrice("chopping")), 12 * wScale, 7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("forming"))) {
       game.getBatch().draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(game.getBatch(), Float.toString(machineUnlockBalance.getUnlockPrice("forming")), 10 * wScale, 7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("grill"))) {
       game.getBatch().draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(game.getBatch(), Float.toString(machineUnlockBalance.getUnlockPrice("grill")), 7 * wScale, 7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("potato"))) {
       game.getBatch().draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(game.getBatch(), Float.toString(machineUnlockBalance.getUnlockPrice("potato")), 14 * wScale, 6 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("pizza"))) {
       game.getBatch().draw(lock, 1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(game.getBatch(), Float.toString(machineUnlockBalance.getUnlockPrice("pizza")), 1 * wScale, 6 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
       game.getBatch().draw(lock, 2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(game.getBatch(), Float.toString(machineUnlockBalance.getUnlockPrice("ingredients-staff")), 2 * wScale, 7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("server-staff"))) {
       game.getBatch().draw(lock, 1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(game.getBatch(), Float.toString(machineUnlockBalance.getUnlockPrice("server-staff")), 1 * wScale, 3 * hScale);
     }
 
     game.getBatch().end();

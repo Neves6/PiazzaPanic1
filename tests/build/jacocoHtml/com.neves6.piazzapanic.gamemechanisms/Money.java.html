@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Money.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.gamemechanisms</a> &gt; <span class="el_source">Money.java</span></div><h1>Money.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.gamemechanisms;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import org.json.simple.JSONObject;
+
+/** Class to handle money which can be used to unlocked machines. */
+public class Money {
+  private Float balance;
+  private Map&lt;String, ArrayList&lt;Float&gt;&gt; unlockDetails;
+
+  /** Constructor where you always start with 0 balance. */
+<span class="fc" id="L14">  public Money() {</span>
+<span class="fc" id="L15">    this.balance = (float) 0;</span>
+<span class="fc" id="L16">    this.unlockDetails = new HashMap();</span>
+    // Anything that doesn't need unlocking.
+<span class="fc" id="L18">    ArrayList&lt;Float&gt; tempNull = new ArrayList&lt;&gt;();</span>
+    // First index represents the price and seconds represents a boolean value represented as an
+    // int.
+<span class="fc" id="L21">    tempNull.add(0f);</span>
+<span class="fc" id="L22">    tempNull.add(1f);</span>
+<span class="fc" id="L23">    unlockDetails.put(&quot;auto&quot;, tempNull);</span>
+<span class="fc" id="L24">  }</span>
+
+  /**
+   * Pretty print method to display the balance.
+   *
+   * @return A message that states what the balance is.
+   */
+  public String displayBalance() {
+<span class="fc" id="L32">    return &quot;Balance: $&quot; + this.balance;</span>
+  }
+
+  /** Increments balance by a fixed amount. */
+  public void incrementBalance() {
+<span class="fc" id="L37">    this.balance += 100;</span>
+<span class="fc" id="L38">  }</span>
+
+  /**
+   * Method to add a group of unlockable machines.
+   *
+   * @param key String given to identify set of unlockable machines.
+   * @param unlockFee Integer given to identify how much money is needed to unlock the machine.
+   * @return Boolean value to indicate whether the new group has successfully been added.
+   */
+  public boolean addGroup(String key, Float unlockFee) {
+    // If the key doesn't already exist don't add it.
+<span class="fc bfc" id="L49" title="All 2 branches covered.">    if (unlockDetails.containsKey(key)) {</span>
+<span class="fc" id="L50">      return false;</span>
+    } else {
+<span class="fc" id="L52">      ArrayList&lt;Float&gt; tempList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">      tempList.add(unlockFee);</span>
+<span class="fc" id="L54">      tempList.add(0f);</span>
+<span class="fc" id="L55">      unlockDetails.put(key, tempList);</span>
+<span class="fc" id="L56">      return true;</span>
+    }
+  }
+
+  /**
+   * Tells you whether a group has already been unlocked.
+   *
+   * @param unlockID A string representing the group of machines.
+   * @return Boolean value indicating whether a group has already been unlocked or not.
+   */
+  public boolean isUnlocked(String unlockID) {
+<span class="fc" id="L67">    ArrayList&lt;Float&gt; i = unlockDetails.get(unlockID);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">    return i.get(1) == 1f;</span>
+  }
+
+  /**
+   * Method to unlock a machine.
+   *
+   * @param unlockID A string representing the group of machines.
+   * @return Boolean value to represent if the machine has successfully been unlocked or not.
+   */
+  public boolean unlockMachine(String unlockID) {
+<span class="fc" id="L78">    ArrayList&lt;Float&gt; i = unlockDetails.get(unlockID);</span>
+    // Must not already be unlocked and have enough money
+    // to unlock it.
+<span class="fc bfc" id="L81" title="All 4 branches covered.">    if (this.balance &gt;= i.get(0) &amp;&amp; i.get(1) == 0) {</span>
+<span class="fc" id="L82">      this.balance -= i.get(0);</span>
+<span class="fc" id="L83">      i.set(1, 1f);</span>
+<span class="fc" id="L84">      return true;</span>
+    } else {
+<span class="fc" id="L86">      return false;</span>
+    }
+  }
+
+  public Map&lt;String, ArrayList&lt;Float&gt;&gt; getUnlockDetails() {
+<span class="fc" id="L91">    return unlockDetails;</span>
+  }
+
+  /**
+   * Designed to save all relevant information required to replicate this money class when reloading
+   * the game.
+   *
+   * @param saver Class being used to save the game.
+   */
+  public void saveMoneyDetails(GameSaver saver) {
+<span class="fc" id="L101">    JSONObject moneyDetails = new JSONObject();</span>
+<span class="fc" id="L102">    moneyDetails.put(&quot;Balance&quot;, this.balance);</span>
+<span class="fc" id="L103">    JSONObject machineUnlocks = new JSONObject();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">    for (String key : unlockDetails.keySet()) {</span>
+<span class="fc" id="L105">      ArrayList&lt;Float&gt; tempList = unlockDetails.get(key);</span>
+<span class="fc" id="L106">      machineUnlocks.put(key, tempList.get(1));</span>
+<span class="fc" id="L107">    }</span>
+<span class="fc" id="L108">    moneyDetails.put(&quot;Machines&quot;, machineUnlocks);</span>
+<span class="fc" id="L109">    saver.setCurrencyDetails(moneyDetails);</span>
+<span class="fc" id="L110">  }</span>
+
+  /**
+   * Setter method for player balance.
+   *
+   * @param balance Amount of money being set.
+   */
+  public void setBalance(float balance) {
+<span class="fc" id="L118">    this.balance = balance;</span>
+<span class="fc" id="L119">  }</span>
+
+  /**
+   * Loads all machine unlock details from JSON object.
+   *
+   * @param prevValues JSONObject containing details ot retrieve.
+   */
+  public void loadPreviousValues(JSONObject prevValues) {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">    for (Object key : prevValues.keySet()) {</span>
+<span class="fc" id="L128">      unlockDetails.get(key).set(1, ((Double) prevValues.get(key)).floatValue());</span>
+<span class="fc" id="L129">    }</span>
+<span class="fc" id="L130">  }</span>
+
+  /**
+   * Getter method for player balance.
+   *
+   * @return Amount of money player has.
+   */
+  public float getBalance() {
+<span class="fc" id="L138">    return balance;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

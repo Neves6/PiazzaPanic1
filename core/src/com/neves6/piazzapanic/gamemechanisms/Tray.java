@@ -34,15 +34,14 @@ public class Tray {
      * @return
      */
     public void addToTray(Chef chef, DeliveryStaff deliveryStaff, Queue<Customer> customers, Money machineUnlockBalance) {
-        Stack<String> inv = chef.getInventory();
-        if (inv.isEmpty()
-                || recipes.keySet().contains(inv.peek())
-                || inv.peek().equals("raw pizza")
-                || inv.peek().contains("ruined")) {
+        if (chef.getInventory().isEmpty()
+                || recipes.keySet().contains(chef.getInventory().peek())
+                || chef.getInventory().peek().equals("raw pizza")
+                || chef.getInventory().peek().contains("ruined")) {
             return;
         }
 
-        content.add(inv.pop());
+        content.add(chef.getInventory().pop());
 
         // Pizza cannot be handled by staff because you need to put it in the oven then
         // take it to the customer.
@@ -59,10 +58,10 @@ public class Tray {
 
         if (machineUnlockBalance.isUnlocked("server-staff")
                 && customers.size() > 0
-                && !inv.isEmpty()
-                && customers.peek().getOrder().equals(inv.peek())) {
+                && !chef.getInventory().isEmpty()
+                && customers.peek().getOrder().equals(chef.getInventory().peek())) {
             deliveryStaff.collectItem(customers.peek().getOrder());
-            inv.pop();
+            chef.getInventory().pop();
         }
 
     }

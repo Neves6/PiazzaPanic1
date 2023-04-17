@@ -446,11 +446,9 @@ public class ScenarioGameMaster {
     } else if (map.detectInteractionFromTiledObject(
         map.loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
       tray1.addToTray(chefs.get(selectedChef), deliveryStaff, customers, machineUnlockBalance);
-      serveFood();
     } else if (map.detectInteractionFromTiledObject(
         map.loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
       tray2.addToTray(chefs.get(selectedChef), deliveryStaff, customers, machineUnlockBalance);
-      serveFood();
     } else if (map.detectInteractionFromTiledObject(
         map.loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
       String item = staffOne.collectItem();

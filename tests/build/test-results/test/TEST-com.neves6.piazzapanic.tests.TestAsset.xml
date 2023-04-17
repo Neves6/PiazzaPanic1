@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.TestAsset" tests="19" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:11" hostname="HP-PAV14" time="0.301">
+  <properties/>
+  <testcase name="testbuttonstitleunnamedExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.002"/>
+  <testcase name="testpeopleselectedExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.002"/>
+  <testcase name="testsoundsservingExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.002"/>
+  <testcase name="testfontsIBMPlexMonoSemiBoldBlackExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testsoundschoppingExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testtitlescreenlargeminpngExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testlevellockedpngExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testtutorialpngExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testControlAssetExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testtitlescreenlargepngExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testcreditspngExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testrecipespngExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testsoundsfridgeExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.002"/>
+  <testcase name="testsoundsformingExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.002"/>
+  <testcase name="testintrosheetpngExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testbuttonslevelselectorlevelselectorExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.003"/>
+  <testcase name="testsoundstrashExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testsoundsgrillExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <testcase name="testfontsIBMPlexMonoSemiBoldExists" classname="com.neves6.piazzapanic.tests.TestAsset" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestCheaperMachineUnlock" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:33" hostname="HP-PAV14" time="2.054">
+  <properties/>
+  <testcase name="testEndPowerupInactive" classname="com.neves6.piazzapanic.tests.poweruptests.TestCheaperMachineUnlock" time="0.0"/>
+  <testcase name="testEndPowerupActive" classname="com.neves6.piazzapanic.tests.poweruptests.TestCheaperMachineUnlock" time="2.002"/>
+  <testcase name="testActivatedPowerUp" classname="com.neves6.piazzapanic.tests.poweruptests.TestCheaperMachineUnlock" time="0.0"/>
+  <testcase name="testActivateUnactivePowerup" classname="com.neves6.piazzapanic.tests.poweruptests.TestCheaperMachineUnlock" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

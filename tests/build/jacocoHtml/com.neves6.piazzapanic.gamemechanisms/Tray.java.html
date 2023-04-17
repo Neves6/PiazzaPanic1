@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tray.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.gamemechanisms</a> &gt; <span class="el_source">Tray.java</span></div><h1>Tray.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.gamemechanisms;
+
+import com.neves6.piazzapanic.people.Chef;
+import com.neves6.piazzapanic.people.Customer;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+
+import java.util.*;
+
+public class Tray {
+<span class="fc" id="L10">    final static ArrayList&lt;String&gt; SALAD =</span>
+<span class="fc" id="L11">            new ArrayList&lt;&gt;(Arrays.asList(&quot;chopped tomato&quot;, &quot;chopped onion&quot;, &quot;chopped lettuce&quot;));</span>
+<span class="fc" id="L12">    final static ArrayList&lt;String&gt; JACKETPOTATO = new ArrayList&lt;&gt;(Arrays.asList(&quot;jacket&quot;, &quot;beans&quot;));</span>
+<span class="fc" id="L13">    final static ArrayList&lt;String&gt; HAMBURGER = new ArrayList&lt;&gt;(Arrays.asList(&quot;burger&quot;, &quot;toasted bun&quot;));</span>
+<span class="fc" id="L14">    final static ArrayList&lt;String&gt; RAWPIZZA = new ArrayList&lt;&gt;(Arrays.asList(&quot;chopped tomato&quot;, &quot;dough&quot;, &quot;cheese&quot;));</span>
+<span class="fc" id="L15">    Map&lt;String, ArrayList&lt;String&gt;&gt; recipes = new HashMap&lt;&gt;();</span>
+
+    ArrayList&lt;String&gt; content;
+<span class="fc" id="L18">    public Tray(){</span>
+<span class="fc" id="L19">        content = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">        recipes.put(&quot;salad&quot;, SALAD);</span>
+<span class="fc" id="L21">        recipes.put(&quot;jacket potato&quot;, JACKETPOTATO);</span>
+<span class="fc" id="L22">        recipes.put(&quot;hamburger&quot;, HAMBURGER);</span>
+<span class="fc" id="L23">        recipes.put(&quot;raw pizza&quot;, RAWPIZZA);</span>
+<span class="fc" id="L24">    }</span>
+
+    public ArrayList&lt;String&gt; getList() {
+<span class="fc" id="L27">        return content;</span>
+    }
+
+    /**
+     * Adds the top item from the currently selected chef's inventory to the tray.
+     *
+     * @param station Indicates which tray station is being used.
+     * @return
+     */
+    public void addToTray(Chef chef, DeliveryStaff deliveryStaff, Queue&lt;Customer&gt; customers, Money machineUnlockBalance) {
+<span class="nc" id="L37">        Stack&lt;String&gt; inv = chef.getInventory();</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (inv.isEmpty()</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">                || recipes.keySet().contains(inv.peek())</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                || inv.peek().equals(&quot;raw pizza&quot;)</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">                || inv.peek().contains(&quot;ruined&quot;)) {</span>
+<span class="nc" id="L42">            return;</span>
+        }
+
+<span class="nc" id="L45">        content.add(inv.pop());</span>
+
+        // Pizza cannot be handled by staff because you need to put it in the oven then
+        // take it to the customer.
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        for (String recipe : recipes.keySet()){</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (content.containsAll(recipes.get(recipe))){</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                if (content.size() != recipes.get(recipe).size()) {</span>
+<span class="nc" id="L52">                    chef.addToInventory(&quot;ruined &quot; + recipe);</span>
+                } else {
+<span class="nc" id="L54">                    chef.addToInventory(recipe);</span>
+                }
+<span class="nc" id="L56">                content.clear();</span>
+            }
+<span class="nc" id="L58">        }</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (machineUnlockBalance.isUnlocked(&quot;server-staff&quot;)</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                &amp;&amp; customers.size() &gt; 0</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                &amp;&amp; !inv.isEmpty()</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                &amp;&amp; customers.peek().getOrder().equals(inv.peek())) {</span>
+<span class="nc" id="L64">            deliveryStaff.collectItem(customers.peek().getOrder());</span>
+<span class="nc" id="L65">            inv.pop();</span>
+        }
+
+<span class="nc" id="L68">    }</span>
+
+    public void putOnTray(String item) {
+<span class="fc" id="L71">        content.add(item);</span>
+<span class="fc" id="L72">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

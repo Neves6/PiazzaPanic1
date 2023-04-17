@@ -137,4 +137,8 @@ public class Money {
   public float getBalance() {
     return balance;
   }
+
+  public float getUnlockPrice(String station) {
+    return unlockDetails.get(station).get(0);
+  }
 }

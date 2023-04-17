@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Chef.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.people</a> &gt; <span class="el_source">Chef.java</span></div><h1>Chef.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.people;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import java.util.Stack;
+
+/** Chef class which helps the user cook items and it inherits methods from the person class. */
+public class Chef extends Person {
+  private boolean isStickied;
+  private Stack&lt;String&gt; inventory;
+  private String facing;
+  private final Texture txUp;
+  private final Texture txDown;
+  private final Texture txLeft;
+  private final Texture txRight;
+  private Texture txNow;
+  private boolean isInteracting;
+  private Machine machineInteractingWith;
+  private float lastMove;
+
+  /**
+   * Chef constructor.
+   *
+   * @param name A label for chefs
+   * @param xcoord X coordinate of the chef.
+   * @param ycoord Y coordinate of the chef.
+   * @param chopSpeed Amount of time taken for the chef to chop an item.
+   * @param frySpeed Amount of time taken for the chef to fry an item.
+   * @param bakeSpeed Amount of time taken for the chef to bake an item.
+   * @param isStickied Whether the chef can move or not.
+   * @param inventory What items are in the chefs stack.
+   * @param textureSet What set of images are used to display the chef.
+   */
+  public Chef(
+      String name,
+      int xcoord,
+      int ycoord,
+      int chopSpeed,
+      int frySpeed,
+      int bakeSpeed,
+      boolean isStickied,
+      Stack&lt;String&gt; inventory,
+      int textureSet) {
+<span class="fc" id="L44">    super(name, xcoord, ycoord);</span>
+<span class="fc" id="L45">    this.isStickied = isStickied;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">    if (inventory.size() == 0) {</span>
+<span class="fc" id="L47">      this.inventory = new Stack&lt;String&gt;();</span>
+    } else {
+<span class="fc" id="L49">      this.inventory = inventory;</span>
+    }
+<span class="fc" id="L51">    this.facing = &quot;down&quot;;</span>
+<span class="fc" id="L52">    this.txUp = new Texture(&quot;people/chef&quot; + textureSet + &quot;up.png&quot;);</span>
+<span class="fc" id="L53">    this.txDown = new Texture(&quot;people/chef&quot; + textureSet + &quot;down.png&quot;);</span>
+<span class="fc" id="L54">    this.txLeft = new Texture(&quot;people/chef&quot; + textureSet + &quot;left.png&quot;);</span>
+<span class="fc" id="L55">    this.txRight = new Texture(&quot;people/chef&quot; + textureSet + &quot;right.png&quot;);</span>
+<span class="fc" id="L56">    this.txNow = txDown;</span>
+<span class="fc" id="L57">  }</span>
+
+  /**
+   * Getter method used to see whether chef can move or not.
+   *
+   * @return Can the chef move.
+   */
+  public boolean getIsStickied() {
+<span class="fc" id="L65">    return isStickied;</span>
+  }
+
+  /**
+   * Getter method used to set which texture is being used to render the chef.
+   *
+   * @return Texture being used to render the chef.
+   */
+  public Texture getTxNow() {
+<span class="nc" id="L74">    return txNow;</span>
+  }
+
+  /**
+   * Setter method to set whether the chef is stuck to one coordinates.
+   *
+   * @param flag Whether the chef is stuck to one coordinates.
+   */
+  public void setIsStickied(boolean flag) {
+<span class="fc" id="L83">    this.isStickied = flag;</span>
+<span class="fc" id="L84">  }</span>
+
+  /**
+   * Setter method to show what the chef is currently using.
+   *
+   * @param machine The machine that the chef is interacting with.
+   */
+  public void setMachineInteractingWith(Machine machine) {
+<span class="fc" id="L92">    this.machineInteractingWith = machine;</span>
+<span class="fc" id="L93">  }</span>
+
+  /**
+   * Getter method to see what machine the chef is using.
+   *
+   * @return The machine that the chef is interacting with.
+   */
+  public Machine getMachineInteractingWith() {
+<span class="fc" id="L101">    return machineInteractingWith;</span>
+  }
+
+  /**
+   * Getter method to see what items the chef has.
+   *
+   * @return The items that the chef has in its possession.
+   */
+  public Stack&lt;String&gt; getInventory() {
+<span class="fc" id="L110">    return inventory;</span>
+  }
+
+  /**
+   * Add a new item to the top of the chef inventory.
+   *
+   * @param item A ingredient to be added to the inventory.
+   */
+  public void addToInventory(String item) {
+<span class="fc" id="L119">    this.inventory.push(item);</span>
+<span class="fc" id="L120">  }</span>
+
+  /** Removes the item at the top of the chefs inventory. */
+  public void removeTopFromInventory() {
+<span class="fc" id="L124">    this.inventory.pop();</span>
+<span class="fc" id="L125">  }</span>
+
+  /**
+   * Getter method for which way the chef is facing.
+   *
+   * @return Which way the chef is facing.
+   */
+  public String getFacing() {
+<span class="fc" id="L133">    return facing;</span>
+  }
+
+  /**
+   * Sets the facing direction of the chef, then changes the current texture to match.
+   *
+   * @param facing sprite facing direction.
+   */
+  public void setFacing(String facing) {
+<span class="fc" id="L142">    this.facing = facing;</span>
+<span class="pc bpc" id="L143" title="1 of 5 branches missed.">    switch (facing) {</span>
+      case &quot;up&quot;:
+<span class="fc" id="L145">        this.txNow = txUp;</span>
+<span class="fc" id="L146">        break;</span>
+      case &quot;down&quot;:
+<span class="fc" id="L148">        this.txNow = txDown;</span>
+<span class="fc" id="L149">        break;</span>
+      case &quot;left&quot;:
+<span class="fc" id="L151">        this.txNow = txLeft;</span>
+<span class="fc" id="L152">        break;</span>
+      case &quot;right&quot;:
+<span class="fc" id="L154">        this.txNow = txRight;</span>
+<span class="fc" id="L155">        break;</span>
+      default:
+        break;
+    }
+<span class="fc" id="L159">  }</span>
+
+  /**
+   * Getter method for the last time the chef moved.
+   *
+   * @return Time of the last attempted move action of the chef.
+   */
+  public float getLastMove() {
+<span class="nc" id="L167">    return lastMove;</span>
+  }
+
+  /**
+   * Setter method for the time of last attempted move action of the chef.
+   *
+   * @param lastMove Time of last move action.
+   */
+  public void setLastMove(float lastMove) {
+<span class="fc" id="L176">    this.lastMove = lastMove;</span>
+<span class="fc" id="L177">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

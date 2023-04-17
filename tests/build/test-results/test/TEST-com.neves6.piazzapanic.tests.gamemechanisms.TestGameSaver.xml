@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" tests="10" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:32" hostname="HP-PAV14" time="0.6">
+  <properties/>
+  <testcase name="testAddNoCustomers" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.001"/>
+  <testcase name="testTimeNeg" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.0"/>
+  <testcase name="testInvalidDifficultyLower" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.0"/>
+  <testcase name="testCustomersNull" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.0"/>
+  <testcase name="testInvalidDifficultyHigher" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.0"/>
+  <testcase name="testDecrementCustomerValid" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.001"/>
+  <testcase name="testDecrementCustomerInvalid" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.0"/>
+  <testcase name="testAddNegativeReputationPoints" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.0"/>
+  <testcase name="testDecrementCustomerEndless" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.0"/>
+  <testcase name="testCorrectFileFormat" classname="com.neves6.piazzapanic.tests.gamemechanisms.TestGameSaver" time="0.45"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
