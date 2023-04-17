@@ -49,6 +49,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
   Skin skinSmall;
   TextureAtlas atlasSmall;
   TextButton.TextButtonStyle buttonStyleSmall;
+  TextButton textDisplay;
 
   /**
    * Constructor method
@@ -205,6 +206,11 @@ public class LevelSelectorScreen extends ScreenAdapter {
       }
     });
 
+    textDisplay = new TextButton("LEVEL SELECTION", buttonStyleSmall);
+    textDisplay.setPosition(Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
+            Gdx.graphics.getHeight() / 2f +  Gdx.graphics.getHeight() / 5f);
+
+
     stage = new Stage();
     Gdx.input.setInputProcessor(stage);
     stage.addActor(easyButton);
@@ -215,6 +221,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(returnButton);
     stage.addActor(plusButton);
     stage.addActor(minusButton);
+    stage.addActor(textDisplay);
 
 
     File json = new File("here.json");
@@ -265,14 +272,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
             0,
             bg.getWidth() * bgScaleFactor,
             bg.getHeight() * bgScaleFactor);
-    font.draw(
-        game.getBatch(),
-        "LEVEL SELECTION",
-        winWidth / 2f - winWidth / 10f,
-        winHeight / 2f + winHeight / 5f,
-        winWidth / 5f,
-        1,
-        false);
+    game.getBatch().end();
+
+    game.getBatch().begin();
     if (customerGameModeButton.isChecked()) {
       font.draw(
               game.getBatch(),
@@ -325,6 +327,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
     minusButton.setPosition(
             Gdx.graphics.getWidth() / 2 - minusButton.getWidth() * 1.5f,
             Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);
+    textDisplay.setPosition(    Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
+            Gdx.graphics.getHeight() / 2f +  Gdx.graphics.getHeight() / 5f);
 
     stage.clear();
     stage.addActor(easyButton);
@@ -335,6 +339,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(returnButton);
     stage.addActor(plusButton);
     stage.addActor(minusButton);
+    stage.addActor(textDisplay);
     if (resumeFlag) {
       stage.addActor(resumeButton);
     }
