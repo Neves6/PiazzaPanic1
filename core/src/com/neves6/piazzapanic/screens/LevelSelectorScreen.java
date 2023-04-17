@@ -182,34 +182,36 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
     plusButton = new TextButton("+", buttonStyleSmall);
     plusButton.setPosition(
-            Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),
-            Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);
-    plusButton.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        if (!(customers >= 5)){
-          customers ++;
-        }
-      }
-    });
+        Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),
+        Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);
+    plusButton.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            if (!(customers >= 5)) {
+              customers++;
+            }
+          }
+        });
 
     minusButton = new TextButton("-", buttonStyleSmall);
     minusButton.setPosition(
-            Gdx.graphics.getWidth() / 2 - minusButton.getWidth(),
-            Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);
-    minusButton.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        if (!(customers <= 1)){
-          customers --;
-        }
-      }
-    });
+        Gdx.graphics.getWidth() / 2 - minusButton.getWidth(),
+        Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);
+    minusButton.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            if (!(customers <= 1)) {
+              customers--;
+            }
+          }
+        });
 
     textDisplay = new TextButton("LEVEL SELECTION", buttonStyleSmall);
-    textDisplay.setPosition(Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
-            Gdx.graphics.getHeight() / 2f +  Gdx.graphics.getHeight() / 5f);
-
+    textDisplay.setPosition(
+        Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
+        Gdx.graphics.getHeight() / 2f + Gdx.graphics.getHeight() / 5f);
 
     stage = new Stage();
     Gdx.input.setInputProcessor(stage);
@@ -222,7 +224,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(plusButton);
     stage.addActor(minusButton);
     stage.addActor(textDisplay);
-
 
     File json = new File("here.json");
     if (json.exists() && json.length() != 0) {
@@ -277,13 +278,13 @@ public class LevelSelectorScreen extends ScreenAdapter {
     game.getBatch().begin();
     if (customerGameModeButton.isChecked()) {
       font.draw(
-              game.getBatch(),
-              "Customers: " + customers,
-              Gdx.graphics.getWidth() / 2 - (0.75f * minusButton.getWidth()),
-              Gdx.graphics.getHeight() / 10f,
-              winWidth / 5f,
-              1,
-              false);
+          game.getBatch(),
+          "Customers: " + customers,
+          Gdx.graphics.getWidth() / 2 - (0.75f * minusButton.getWidth()),
+          Gdx.graphics.getHeight() / 10f,
+          winWidth / 5f,
+          1,
+          false);
     }
 
     stage.draw();
@@ -305,8 +306,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
     super.resize(width, height);
 
     plusButton.setPosition(
-            Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),
-            Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);
+        Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),
+        Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);
     easyButton.setPosition(
         width / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,
         height / 2f - easyButton.getHeight() / 2);
@@ -325,10 +326,11 @@ public class LevelSelectorScreen extends ScreenAdapter {
         Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,
         Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
     minusButton.setPosition(
-            Gdx.graphics.getWidth() / 2 - minusButton.getWidth() * 1.5f,
-            Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);
-    textDisplay.setPosition(    Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
-            Gdx.graphics.getHeight() / 2f +  Gdx.graphics.getHeight() / 5f);
+        Gdx.graphics.getWidth() / 2 - minusButton.getWidth() * 1.5f,
+        Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);
+    textDisplay.setPosition(
+        Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
+        Gdx.graphics.getHeight() / 2f + Gdx.graphics.getHeight() / 5f);
 
     stage.clear();
     stage.addActor(easyButton);

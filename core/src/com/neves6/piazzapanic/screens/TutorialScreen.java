@@ -30,15 +30,19 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
     this.scenerio = endless;
     this.disablePowerUp = disablePowerup;
-    if (endless){
+    if (endless) {
       custNo = -1;
-    } else{
+    } else {
       custNo = 5;
     }
   }
 
   public TutorialScreen(
-          PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup, Integer custNo) {
+      PiazzaPanicGame game,
+      String continueTo,
+      Boolean endless,
+      Boolean disablePowerup,
+      Integer custNo) {
     this.game = game;
     this.continueTo = continueTo;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));

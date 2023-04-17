@@ -19,7 +19,6 @@ import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster {
@@ -327,12 +326,27 @@ public class ScenarioGameMaster {
   public void tickUpdate(float delta) {
     // TODO: play test and adjust difficulty scaling according to feedback
 
-    lastRepPointLost = checkOrderExpired(customers, totalTimerDisplay, difficulty, reputationPoints.getPoints(), customersServed, lastRepPointLost);
+    lastRepPointLost =
+        checkOrderExpired(
+            customers,
+            totalTimerDisplay,
+            difficulty,
+            reputationPoints.getPoints(),
+            customersServed,
+            lastRepPointLost);
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
-      createCustomers(customers, lastCustomer, customersServed, customersGenerated, maxCustomers, difficulty, totalTimer);
+      createCustomers(
+          customers,
+          lastCustomer,
+          customersServed,
+          customersGenerated,
+          maxCustomers,
+          difficulty,
+          totalTimer);
     }
 
-    if ((customersGenerated == maxCustomers && customers.size() == 0) || reputationPoints.getPoints() <= 0) {
+    if ((customersGenerated == maxCustomers && customers.size() == 0)
+        || reputationPoints.getPoints() <= 0) {
       game.setScreen(
           new GameWinScreen(
               game, (int) totalTimerDisplay, false, (maxCustomers == -1), isPowerUp, difficulty));
