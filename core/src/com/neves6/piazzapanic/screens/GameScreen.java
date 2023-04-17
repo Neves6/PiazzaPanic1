@@ -49,38 +49,24 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   /**
    * Constructor method.
    *
-   * @param game Instance of PiazzaPanicGame used to control screen transitions.
-   * @param level The difficulty that the user has selected.
+   * @param game   Instance of PiazzaPanicGame used to control screen transitions.
+   * @param level  The difficulty that the user has selected.
+   * @param custNo
    */
-  public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
+  public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup, int custNo) {
     this.game = game;
     sharedSetup();
     map = new TmxMapLoader().load("tilemaps/level1.tmx");
-    if (scenerio) {
-      gm =
-          new ScenarioGameMaster(
+      gm = new ScenarioGameMaster(
               game,
               map,
               3,
-              5,
+              custNo,
               machineUnlockBalance,
               ingredientsHelper,
               deliveryStaff,
               disablePowerup,
               level);
-    } else {
-      gm =
-          new ScenarioGameMaster(
-              game,
-              map,
-              3,
-              -1,
-              machineUnlockBalance,
-              ingredientsHelper,
-              deliveryStaff,
-              disablePowerup,
-              level);
-    }
   }
 
   public GameScreen(PiazzaPanicGame game) throws ParseException {

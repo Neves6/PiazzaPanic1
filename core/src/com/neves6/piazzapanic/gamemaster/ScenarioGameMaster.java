@@ -370,7 +370,7 @@ public class ScenarioGameMaster extends GameMaster {
    * order expired and removes a reputation point
    */
   private void checkOrderExpired() {
-    timeAllowed = Math.max(150 - 15 * (customersServed / 5), 90) - (5 * difficulty);
+    timeAllowed = Math.max(110 - 15 * (customersServed / 5), 90) - (10 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.peek().getTimeArrived() + timeAllowed < totalTimerDisplay) {
         customers.poll();
