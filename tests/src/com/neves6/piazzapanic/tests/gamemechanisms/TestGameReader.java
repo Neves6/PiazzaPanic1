@@ -105,7 +105,7 @@ public class TestGameReader {
         "All the power-ups must only be active if they were activated before",
         testgm.getPowerUpRunner().displayText().startsWith("Current Active Powerups: \n"));
     assertTrue(
-            "Any active powerups should be continued from the json",
-            testgm.getPowerUpRunner().displayText().contains("1/2 price machines for 30 seconds"));
+        "Any active powerups should be continued from the json",
+        testgm.getPowerUpRunner().displayText().contains("1/2 price machines for 30 seconds"));
   }
 }

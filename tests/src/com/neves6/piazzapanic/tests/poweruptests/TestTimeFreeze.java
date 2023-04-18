@@ -4,10 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import com.neves6.piazzapanic.powerups.TimeFreeze;
 import com.neves6.piazzapanic.tests.GdxTestRunner;
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.TimeUnit;
 
 @RunWith(GdxTestRunner.class)
 public class TestTimeFreeze {
