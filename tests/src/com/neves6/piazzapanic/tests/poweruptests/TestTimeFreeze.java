@@ -7,9 +7,11 @@ import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.TimeUnit;
+
 @RunWith(GdxTestRunner.class)
 public class TestTimeFreeze {
-  TimeFreeze testFreeze = new TimeFreeze(1L, "time freeze for 30 seconds");
+  TimeFreeze testFreeze = new TimeFreeze(1L, "time freeze for test");
 
   @Test
   public void testUnactivatedFreeze() {
@@ -20,5 +22,12 @@ public class TestTimeFreeze {
   public void testActivatedFreeze() {
     testFreeze.acquirePowerUp();
     assertEquals("If power up is acquired delta must be 0", 0, testFreeze.getDelta(1), 0.0);
+  }
+
+  @Test
+  public void testActivatedFreezeExpired() throws InterruptedException {
+    testFreeze.acquirePowerUp();
+    TimeUnit.MILLISECONDS.sleep(5);
+    assertEquals("If power up is acquired delta must be 0", 1.0, testFreeze.getDelta(1), 0.0);
   }
 }
