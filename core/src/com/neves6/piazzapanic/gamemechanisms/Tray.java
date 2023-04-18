@@ -42,7 +42,6 @@ public class Tray {
       Money machineUnlockBalance) {
     if (chef.getInventory().isEmpty()
         || recipes.keySet().contains(chef.getInventory().peek())
-        || chef.getInventory().peek().equals("raw pizza")
         || chef.getInventory().peek().contains("ruined")) {
       return;
     }
