@@ -148,8 +148,6 @@ public class TestScenarioGameMaster {
           false,
           1);
 
-
-
   ScenarioGameMaster testMasterIV =
       new ScenarioGameMaster(
           testGame,
@@ -193,10 +191,6 @@ public class TestScenarioGameMaster {
                     + "Tray 2 contents: []"));
   }
    */
-
-
-
-
 
   @Test
   public void testGetCorrectChef() {
