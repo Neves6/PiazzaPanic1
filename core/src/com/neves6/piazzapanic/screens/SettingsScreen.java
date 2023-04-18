@@ -140,10 +140,6 @@ public class SettingsScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testMode) {
-      return;
-    }
-
     stage = new Stage();
     stage.addActor(volumeNoneButton);
     stage.addActor(volumeHalfButton);
@@ -190,10 +186,6 @@ public class SettingsScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-    if (game.testMode) {
-      return;
-    }
-
     super.resize(width, height);
     fullscreenButton.setPosition(
         Gdx.graphics.getWidth() / 2f - fullscreenButton.getWidth() / 2,

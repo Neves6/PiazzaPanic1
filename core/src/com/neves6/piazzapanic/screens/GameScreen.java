@@ -89,9 +89,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     wScale = unitScale * 32f;
     hScale = unitScale * 32f;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
-    if (!game.testMode) {
-      font.getData().setScale(unitScale * 0.4F);
-    }
+    font.getData().setScale(unitScale * 0.4F);
     this.INITIAL_WIDTH = Gdx.graphics.getWidth();
     this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
     this.machineUnlockBalance = new Money();
@@ -377,10 +375,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void resize(int width, int height) {
-    if (game.testMode) {
-      return;
-    }
-
     if (width == INITIAL_WIDTH && height == INITIAL_HEIGHT) {
       super.resize(width, height);
       camera.setToOrtho(false, width, height);

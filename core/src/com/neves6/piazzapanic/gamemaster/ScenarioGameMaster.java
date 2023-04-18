@@ -240,7 +240,7 @@ public class ScenarioGameMaster {
    */
   public void tryMove(String direction) {
     Chef chef = chefs.get(selectedChef);
-    if (!game.getTestMode() && totalTimer < (chef.getLastMove() + 1F / 5F)) {
+    if (totalTimer < (chef.getLastMove() + 1F / 5F)) {
       return;
     }
     chef.setLastMove(totalTimer);
