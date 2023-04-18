@@ -1,14 +1,16 @@
-package com.neves6.piazzapanic.tests;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+package com.neves6.piazzapanic.tests.stafftests;
 
 import com.neves6.piazzapanic.staff.BaseStaff;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestBaseStaff {
@@ -36,6 +38,7 @@ public class TestBaseStaff {
     TimeUnit.MILLISECONDS.sleep(500);
     test.getCoordInSeq();
     TimeUnit.MILLISECONDS.sleep(500);
+    test.getCoordInSeq();
     assertFalse(
         "Once the mapping of the arrays has been iterated over, collect should be set to false.",
         test.getCollect());

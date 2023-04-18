@@ -57,7 +57,7 @@ public class IngredientsStaff extends BaseStaff {
     if (this.generate) {
       this.currentRecipe = recipe;
       generateStack();
-      this.collect = true;
+      this.setCollect(true);
       this.generate = false;
     }
   }

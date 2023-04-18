@@ -1,9 +1,11 @@
-package com.neves6.piazzapanic.tests;
+package com.neves6.piazzapanic.tests.stafftests;
 
 import static org.junit.Assert.*;
 
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import java.util.ArrayList;
+
+import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

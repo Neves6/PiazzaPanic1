@@ -26,6 +26,7 @@ public class BaseStaff {
     this.ysequence = ysequence;
     // To count what frame we are up to.
     this.counter = -1;
+    this.collect = false;
   }
 
   /**
@@ -54,4 +55,6 @@ public class BaseStaff {
   public boolean getCollect() {
     return this.collect;
   }
+
+  public void setCollect(Boolean collect){ this.collect = collect;}
 }
