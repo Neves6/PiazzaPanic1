@@ -23,20 +23,23 @@ public class TestUtility {
     Assert.assertTrue("New settings file cannot be created", settingsFile.exists());
   }
 
-   @Test public void testSettingsFileReadDefaultValues() {
+  @Test
+  public void testSettingsFileReadDefaultValues() {
     // Delete any existing file
-     File settingsFile = new File("./settings.txt");
-   if (settingsFile.exists()) {
-     settingsFile.delete();
-   } // ArrayList containing expected values
-     ArrayList<String> defaultSettings = new ArrayList<>();
-   defaultSettings.add("windowed");
-   defaultSettings.add("full");
-   // Creates new file with default values, reads values to ArrayList
-     ArrayList<String> settings = Utility.getSettings();
-     // Test if values read from file match expected values
-   Assert.assertTrue( "Default settings file contents don't match expected values",
-   settings.equals(defaultSettings)); }
+    File settingsFile = new File("./settings.txt");
+    if (settingsFile.exists()) {
+      settingsFile.delete();
+    } // ArrayList containing expected values
+    ArrayList<String> defaultSettings = new ArrayList<>();
+    defaultSettings.add("windowed");
+    defaultSettings.add("full");
+    // Creates new file with default values, reads values to ArrayList
+    ArrayList<String> settings = Utility.getSettings();
+    // Test if values read from file match expected values
+    Assert.assertTrue(
+        "Default settings file contents don't match expected values",
+        settings.equals(defaultSettings));
+  }
 
   @Test
   public void testSettingsFileReadWriteNewValues() {
