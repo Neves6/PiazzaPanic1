@@ -29,7 +29,7 @@ public class DeliveryStaff extends BaseStaff {
    */
   public void collectItem(String item) {
     items.push(item);
-    this.collect = true;
+    this.setCollect(true);
   }
 
   /**

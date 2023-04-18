@@ -1,9 +1,10 @@
-package com.neves6.piazzapanic.tests;
+package com.neves6.piazzapanic.tests.stafftests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.tests.GdxTestRunner;
 import java.util.ArrayList;
 import java.util.Stack;
 import org.junit.Test;
@@ -27,5 +28,13 @@ public class TestDeliveryServer {
     testStack.add("pizza");
     assertEquals(
         "Once an item is collected, it must be pushed onto the stack", test.getItems(), testStack);
+  }
+
+  @Test
+  public void testPickupEmpty() {
+    assertEquals(
+        "If the staff item, is empty it must just return an empty stack",
+        test.getItems(),
+        new Stack<>());
   }
 }
