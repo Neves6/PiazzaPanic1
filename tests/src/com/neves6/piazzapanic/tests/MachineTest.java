@@ -64,7 +64,7 @@ public class MachineTest {
   }
 
   @Test
-  public void testProcessStaffInteraction(){
+  public void testProcessStaffInteraction() {
     Stack<String> inventory = new Stack<>();
     inventory.push("Patty");
     Chef testChef = new Chef("Xavier", 0, 0, 5, 5, 5, false, inventory, 1);
@@ -74,11 +74,13 @@ public class MachineTest {
     testMoney.incrementBalance();
     testMoney.unlockMachine("test");
     testMachine.processStaffInteraction(testChef, testMoney);
-    assertTrue("Unlock machine with unlockID and if unlocked add machine output to chefs inventory", testChef.getInventory().pop().equals("Cooked Patty"));
+    assertTrue(
+        "Unlock machine with unlockID and if unlocked add machine output to chefs inventory",
+        testChef.getInventory().pop().equals("Cooked Patty"));
   }
 
   @Test
-  public void testRuinedOutput(){
+  public void testRuinedOutput() {
     Stack<String> inventory = new Stack<>();
     inventory.push("Patty");
     Chef testChef = new Chef("Xavier", 0, 0, 5, 5, 5, false, inventory, 1);
@@ -87,8 +89,8 @@ public class MachineTest {
     testMachine.incrementRuntime(5);
     testMachine.attemptGetOutput();
     assertTrue(
-            "No button pressed to ruin the burger",
-            Objects.equals(testChef.getInventory().peek(), "ruined Cooked Patty")
-                    && !testChef.getIsStickied());
+        "No button pressed to ruin the burger",
+        Objects.equals(testChef.getInventory().peek(), "ruined Cooked Patty")
+            && !testChef.getIsStickied());
   }
 }

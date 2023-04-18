@@ -72,9 +72,11 @@ public class TestMoney {
     assertFalse(
         "Machine should not be unlocked if there is not enough money", test.unlockMachine("test"));
   }
+
   @Test
-  public void testGetUnlockPrice(){
+  public void testGetUnlockPrice() {
     test.addGroup("test", 50f);
-    assertTrue("Display the unlock price for a certain station", test.getUnlockPrice("test") == 50f);
+    assertTrue(
+        "Display the unlock price for a certain station", test.getUnlockPrice("test") == 50f);
   }
 }
