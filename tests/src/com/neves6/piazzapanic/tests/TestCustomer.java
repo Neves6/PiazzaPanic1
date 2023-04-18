@@ -35,7 +35,6 @@ public class TestCustomer {
             && testCustomer.getTimeArrived() == time);
   }
 
-
   @Test
   public void testGetTxUp() {
     int x = 6;
@@ -45,7 +44,10 @@ public class TestCustomer {
     float time = 100;
     Customer testCustomer = new Customer(name, x, y, order, time);
     Texture txUp = new Texture("people/cust1up.png");
-    assertEquals("Customer up facing texture is not correct", txUp.toString(), testCustomer.getTxUp().toString());
+    assertEquals(
+        "Customer up facing texture is not correct",
+        txUp.toString(),
+        testCustomer.getTxUp().toString());
   }
 
   @Test
@@ -57,6 +59,9 @@ public class TestCustomer {
     float time = 100;
     Customer testCustomer = new Customer(name, x, y, order, time);
     Texture txLeft = new Texture("people/cust1left.png");
-    assertEquals("Customer left facing texture is not correct", txLeft.toString(), testCustomer.getTxLeft().toString());
+    assertEquals(
+        "Customer left facing texture is not correct",
+        txLeft.toString(),
+        testCustomer.getTxLeft().toString());
   }
 }
