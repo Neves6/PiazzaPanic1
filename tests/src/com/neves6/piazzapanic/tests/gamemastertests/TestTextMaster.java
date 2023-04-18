@@ -4,18 +4,20 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
 import com.neves6.piazzapanic.gamemaster.TextMaster;
-import com.neves6.piazzapanic.gamemaster.TiledMapMaster;
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
 import com.neves6.piazzapanic.tests.GdxTestRunner;
+import com.neves6.piazzapanic.people.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -104,7 +106,7 @@ public class TestTextMaster {
 
     @Test
     public void testReputationPointTextLost(){
-        assertTrue("If no reputation points have been lost in the past 3 seconds only the reputation points should be" +
+        assertTrue("If reputation points have been lost in the past 3 seconds only the reputation points should be along with -1" +
                 " shown", tm.generateReputationPointText(102f, 101f, 3).equals("Reputation points: 3 -1"));
     }
 
@@ -156,6 +158,27 @@ public class TestTextMaster {
                 tm.getMachineTimerForChef(1, testMasterII.getChefs()));
     }
 
+    @Test
+    public void testCustomerTrayText(){
+        Queue<Customer> customers = new LinkedList<>();
+        customers.add(new Customer("test", 1, 1, "pizza", 1f));
+        ArrayList<String> tray1 = new ArrayList<>(Arrays.asList("tomato"));
+        ArrayList<String> tray2 = new ArrayList<>(Arrays.asList("ruined burger"));
+        tm.generateCustomersTrayText(customers, tray1, tray2);
 
+        assertEquals("Order and tray contents must be shown",
+                tm.generateCustomersTrayText(customers, tray1, tray2), "Customers remaining: 1\nOrder: pizza\nTray 1 contents: [tomato]\nTray 2 contents: [ruined burger]");
+    }
+
+    @Test
+    public void testCustomerTrayTextEmpty(){
+        Queue<Customer> customers = new LinkedList<>();
+        ArrayList<String> tray1 = new ArrayList<>();
+        ArrayList<String> tray2 = new ArrayList<>();
+        tm.generateCustomersTrayText(customers, tray1, tray2);
+
+        assertEquals("Order and tray contents must be shown",
+                tm.generateCustomersTrayText(customers, tray1, tray2), "Customers remaining: 0");
+    }
 
 }
