@@ -1,16 +1,14 @@
 package com.neves6.piazzapanic.tests.stafftests;
 
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.staff.BaseStaff;
+import com.neves6.piazzapanic.tests.GdxTestRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import com.neves6.piazzapanic.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestBaseStaff {
