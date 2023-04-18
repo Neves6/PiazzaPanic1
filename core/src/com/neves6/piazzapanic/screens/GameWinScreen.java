@@ -106,10 +106,6 @@ public class GameWinScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testMode) {
-      return;
-    }
-
     stage = new Stage();
     stage.addActor(creditsButton);
     stage.addActor(titleButton);
@@ -167,10 +163,6 @@ public class GameWinScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-    if (game.testMode) {
-      return;
-    }
-
     super.resize(width, height);
     creditsButton.setPosition(
         width / 2f - creditsButton.getWidth() / 2, height / 3f + creditsButton.getHeight() / 2);
@@ -188,29 +180,10 @@ public class GameWinScreen extends ScreenAdapter {
   public void hide() {
     super.dispose();
     game.dispose();
-    batch.dispose();
     font.dispose();
     bg.dispose();
     stage.dispose();
     skin.dispose();
     atlas.dispose();
-  }
-
-  /**
-   * Getter method for credits button.
-   *
-   * @return A button with a change listener which can be used for testing.
-   */
-  public TextButton getCreditsScreen() {
-    return creditsButton;
-  }
-
-  /**
-   * Getter method for title button.
-   *
-   * @return A button with a change listener which can be used for testing.
-   */
-  public TextButton getTitleButton() {
-    return titleButton;
   }
 }

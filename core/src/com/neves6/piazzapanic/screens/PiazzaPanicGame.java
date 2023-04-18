@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /** Main class handling screen input. */
 public class PiazzaPanicGame extends Game {
   SpriteBatch _batch;
-  Boolean testMode;
 
   /**
    * A function which create a batch if it is null and returns it. If it is already created, return
@@ -24,16 +23,6 @@ public class PiazzaPanicGame extends Game {
   /** Default constructor method. */
   public PiazzaPanicGame() {
     super();
-    testMode = false;
-  }
-
-  /**
-   * Constructor method where you can set your test flag.
-   *
-   * @param tf Boolean value representing whether we are running in test mode or not.
-   */
-  public PiazzaPanicGame(Boolean tf) {
-    testMode = tf;
   }
 
   /** What to show when this screen is loaded. */
@@ -50,15 +39,6 @@ public class PiazzaPanicGame extends Game {
    */
   public void resize(int width, int height) {
     super.resize(width, height);
-  }
-
-  /**
-   * Getter method for whether test mode is active.
-   *
-   * @return Whether or not test mode is active.
-   */
-  public Boolean getTestMode() {
-    return testMode;
   }
 
   /** UNUSED METHOD * */

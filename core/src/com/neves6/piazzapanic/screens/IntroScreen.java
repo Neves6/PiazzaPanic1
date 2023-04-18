@@ -87,10 +87,6 @@ public class IntroScreen extends ScreenAdapter {
       game.setScreen(new TitleScreen(game));
     }
 
-    if (game.testMode) {
-      return;
-    }
-
     game.getBatch().setProjectionMatrix(camera.combined);
 
     game.getBatch().begin();

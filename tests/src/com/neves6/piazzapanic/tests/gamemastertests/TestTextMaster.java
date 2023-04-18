@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class TestTextMaster {
-  PiazzaPanicGame testGame = new PiazzaPanicGame(true);
+  PiazzaPanicGame testGame = new PiazzaPanicGame();
   TiledMap map = new TmxMapLoader().load("tilemaps/testdouble.tmx");
   TextMaster tm = new TextMaster();
   ArrayList<Integer> defValues = new ArrayList<>(Arrays.asList(1, 2));

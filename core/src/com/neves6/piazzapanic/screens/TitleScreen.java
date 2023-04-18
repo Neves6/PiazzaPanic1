@@ -119,10 +119,6 @@ public class TitleScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testMode) {
-      return;
-    }
-
     stage = new Stage();
     stage.addActor(exitButton);
     stage.addActor(settingsButton);
@@ -190,10 +186,6 @@ public class TitleScreen extends ScreenAdapter {
     exitButton.setPosition(
         width / 2f - exitButton.getWidth() / 2, height / 2f - exitButton.getHeight() * 7 / 2);
 
-    if (game.testMode) {
-      return;
-    }
-
     stage.clear();
     stage.addActor(playButton);
     stage.addActor(tutorialButton);
@@ -207,10 +199,6 @@ public class TitleScreen extends ScreenAdapter {
   /** Method which runs when the screen transitions to another. */
   @Override
   public void hide() {
-    if (game.testMode) {
-      return;
-    }
-
     super.dispose();
     game.dispose();
     font.dispose();
@@ -218,41 +206,5 @@ public class TitleScreen extends ScreenAdapter {
     stage.dispose();
     skin.dispose();
     atlas.dispose();
-  }
-
-  /**
-   * Getter method for play button.
-   *
-   * @return A button with a change listener which can be used for testing.
-   */
-  public Button getPlayButton() {
-    return playButton;
-  }
-
-  /**
-   * Getter method for tutorial button.
-   *
-   * @return A button with a change listener which can be used for testing.
-   */
-  public Button getTutorialButton() {
-    return tutorialButton;
-  }
-
-  /**
-   * Getter method for credits button.
-   *
-   * @return A button with a change listener which can be used for testing.
-   */
-  public Button getCreditsButton() {
-    return creditsButton;
-  }
-
-  /**
-   * Getter method for settings button.
-   *
-   * @return A button with a change listener which can be used for testing.
-   */
-  public Button getSettingsButton() {
-    return settingsButton;
   }
 }

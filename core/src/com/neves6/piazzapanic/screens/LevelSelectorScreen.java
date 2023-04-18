@@ -176,10 +176,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
           }
         });
 
-    if (game.testMode) {
-      return;
-    }
-
     plusButton = new TextButton("+", buttonStyleSmall);
     plusButton.setPosition(
         Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),
@@ -299,10 +295,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-    if (game.testMode) {
-      return;
-    }
-
     super.resize(width, height);
 
     plusButton.setPosition(
