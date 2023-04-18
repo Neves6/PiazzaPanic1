@@ -2,11 +2,9 @@ package com.neves6.piazzapanic.gamemechanisms;
 
 import java.io.*;
 import java.util.ArrayList;
-import org.json.simple.JSONObject;
 
 /** Helper/convenience class. Currently only handles retrieving and saving settings. */
 public final class Utility {
-  JSONObject saveData;
   public static String settingsFilepath = "./settings.txt";
 
   /** Utility constructor. SHOULD NOT BE INITIALIZED! */
@@ -73,9 +71,6 @@ public final class Utility {
         ArrayList<String> defaults = new ArrayList<String>();
         defaults.add("windowed");
         defaults.add("full");
-        for (int i = 0; i < 36; i++) {
-          defaults.add("0");
-        }
         setSettings(defaults);
       } catch (Exception e) {
         e.printStackTrace();

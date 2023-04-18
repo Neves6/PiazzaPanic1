@@ -11,7 +11,7 @@ public class Person {
   /**
    * Person constructor.
    *
-   * @param name Name of person.
+   * @param name   Name of person.
    * @param xcoord logical x coordinate of person.
    * @param ycoord logical y coordinate of person.
    */
@@ -91,25 +91,5 @@ public class Person {
    */
   public void alteryCoord(int ydelta) {
     this.ycoord += ydelta * deltaMultiplier;
-  }
-
-  // TODO: Power-ups.
-
-  /**
-   * Setter method for delta multiplier.
-   *
-   * @param newMultipler An integer that represents the speed of the person when moving.
-   */
-  public void alterSpeed(int newMultipler) {
-    this.deltaMultiplier = newMultipler;
-  }
-
-  /**
-   * Getter method for delta multiplier.
-   *
-   * @return An integer that represents the speed of the person when moving.
-   */
-  public int getSpeed() {
-    return this.deltaMultiplier;
   }
 }

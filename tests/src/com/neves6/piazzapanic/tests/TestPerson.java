@@ -52,14 +52,14 @@ public class TestPerson {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testYSetErronous() {
+  public void testYSSetErroneous() {
     // Cannot set negative coordinates.
     Person testPerson = new Person("Bob", 0, 0);
     testPerson.setyCoord(-1);
   }
 
   @Test
-  public void testMoveRight() {
+  public void testMoveUp() {
     Person testPerson = new Person("Bob", 5, 5);
     testPerson.alteryCoord(1);
     assertTrue(
@@ -68,7 +68,7 @@ public class TestPerson {
   }
 
   @Test
-  public void testMoveLeft() {
+  public void testMoveDown() {
     Person testPerson = new Person("Bob", 5, 5);
     testPerson.alteryCoord(-1);
     assertTrue(
@@ -77,7 +77,7 @@ public class TestPerson {
   }
 
   @Test
-  public void testMoveForward() {
+  public void testMoveRight() {
     Person testPerson = new Person("Bob", 5, 5);
     testPerson.alterxCoord(1);
     assertTrue(
@@ -86,7 +86,7 @@ public class TestPerson {
   }
 
   @Test
-  public void testMoveBackwards() {
+  public void testMoveLeft() {
     Person testPerson = new Person("Bob", 5, 5);
     testPerson.alterxCoord(-1);
     assertTrue(
