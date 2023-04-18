@@ -39,6 +39,7 @@ public class TestTray {
     testTray.addToTray(testChef3, testStaff, customers, testMoney);
     assertTrue(testTray.getList().equals(new ArrayList<>(Arrays.asList("cheese"))));
     testTray.addToTray(testChef4, testStaff, customers, testMoney);
+
     assertTrue(
         "Tray stays unaltered",
         testTray.getList().equals(new ArrayList<>(Arrays.asList("cheese"))));

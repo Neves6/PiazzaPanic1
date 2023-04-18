@@ -12,13 +12,13 @@ import org.json.simple.JSONObject;
 
 /** A class that can be used to control all the power-ups within the game. */
 public class PowerUpRunner {
-  CheaperMachineUnlock cheaperMachineUnlock =
+  final CheaperMachineUnlock CHEAPERMACHINEUNLOCK =
       new CheaperMachineUnlock(30000L, "1/2 price machines for 30 seconds");
-  ShorterMachineTime shorterMachineTime =
+  final ShorterMachineTime SHORTERMACHINETIME =
       new ShorterMachineTime(30000L, "1/2 machine time for 30 seconds");
-  AutoCook autoCook = new AutoCook(30000L, "no wait on a machine");
-  TimeFreeze timeFreeze = new TimeFreeze(30000L, "time freeze for 30 seconds");
-  DoubleMoney doubleMoney = new DoubleMoney(30000L, "double money for 30 seconds");
+  final AutoCook AUTOCOOK = new AutoCook(30000L, "no wait on a machine");
+  final TimeFreeze TIMEFREEZE = new TimeFreeze(30000L, "time freeze for 30 seconds");
+  final DoubleMoney DOUBLEMONEY = new DoubleMoney(30000L, "double money for 30 seconds");
   ArrayList<Chef> chefs;
   Map<String, Machine> machines;
   Money money;
@@ -48,24 +48,24 @@ public class PowerUpRunner {
     int random = (int) Math.round(random() / 0.25);
     switch (random) {
       case 0:
-        cheaperMachineUnlock.acquirePowerUp();
+        CHEAPERMACHINEUNLOCK.acquirePowerUp();
         break;
       case 1:
-        shorterMachineTime.acquirePowerUp();
+        SHORTERMACHINETIME.acquirePowerUp();
         break;
       case 2:
-        doubleMoney.acquirePowerUp();
+        DOUBLEMONEY.acquirePowerUp();
         break;
       case 3:
-        autoCook.acquirePowerUp();
+        AUTOCOOK.acquirePowerUp();
         break;
       case 4:
-        timeFreeze.acquirePowerUp();
+        TIMEFREEZE.acquirePowerUp();
         break;
     }
-    machines = shorterMachineTime.applyPowerUp(machines);
-    doubleMoney.applyPowerUp(money);
-    cheaperMachineUnlock.applyPowerUp(money.getUnlockDetails());
+    machines = SHORTERMACHINETIME.applyPowerUp(machines);
+    DOUBLEMONEY.applyPowerUp(money);
+    CHEAPERMACHINEUNLOCK.applyPowerUp(money.getUnlockDetails());
   }
 
   /**
@@ -76,11 +76,11 @@ public class PowerUpRunner {
    */
   public Float updateValues(Float delta) {
     savePowerupStatus();
-    shorterMachineTime.endPowerUp(machines);
-    autoCook.applyPowerUp(machines);
-    cheaperMachineUnlock.endPowerUp(money.getUnlockDetails());
-    doubleMoney.endTime();
-    return timeFreeze.getDelta(delta);
+    SHORTERMACHINETIME.endPowerUp(machines);
+    AUTOCOOK.applyPowerUp(machines);
+    CHEAPERMACHINEUNLOCK.endPowerUp(money.getUnlockDetails());
+    DOUBLEMONEY.endTime();
+    return TIMEFREEZE.getDelta(delta);
   }
 
   /**
@@ -90,21 +90,21 @@ public class PowerUpRunner {
    */
   public String displayText() {
     return "Current Active Powerups: \n"
-        + cheaperMachineUnlock.prettyPrint()
-        + doubleMoney.prettyPrint()
-        + shorterMachineTime.prettyPrint()
-        + autoCook.prettyPrint()
-        + timeFreeze.prettyPrint();
+        + CHEAPERMACHINEUNLOCK.prettyPrint()
+        + DOUBLEMONEY.prettyPrint()
+        + SHORTERMACHINETIME.prettyPrint()
+        + AUTOCOOK.prettyPrint()
+        + TIMEFREEZE.prettyPrint();
   }
 
   /** Saves all power-ups within an object. */
   public void savePowerupStatus() {
     JSONObject powerupStatus = new JSONObject();
-    powerupStatus.put("Cheaper Machine", cheaperMachineUnlock.savePowerUp());
-    powerupStatus.put("Double Money", doubleMoney.savePowerUp());
-    powerupStatus.put("Shorter Machine", shorterMachineTime.savePowerUp());
-    powerupStatus.put("Skip Machine", autoCook.savePowerUp());
-    powerupStatus.put("Time Freeze", timeFreeze.savePowerUp());
+    powerupStatus.put("Cheaper Machine", CHEAPERMACHINEUNLOCK.savePowerUp());
+    powerupStatus.put("Double Money", DOUBLEMONEY.savePowerUp());
+    powerupStatus.put("Shorter Machine", SHORTERMACHINETIME.savePowerUp());
+    powerupStatus.put("Skip Machine", AUTOCOOK.savePowerUp());
+    powerupStatus.put("Time Freeze", TIMEFREEZE.savePowerUp());
     this.saver.setPowerups(powerupStatus);
   }
 
@@ -115,10 +115,10 @@ public class PowerUpRunner {
    *     active and how long for if this is the case.
    */
   public void reloadPowerupStatus(JSONObject details) {
-    cheaperMachineUnlock.loadPowerup((JSONObject) details.get("Cheaper Machine"));
-    doubleMoney.loadPowerup((JSONObject) details.get("Double Money"));
-    shorterMachineTime.loadPowerup((JSONObject) details.get("Shorter Machine"));
-    autoCook.loadPowerup((JSONObject) details.get("Skip Machine"));
-    timeFreeze.loadPowerup((JSONObject) details.get("Time Freeze"));
+    CHEAPERMACHINEUNLOCK.loadPowerup((JSONObject) details.get("Cheaper Machine"));
+    DOUBLEMONEY.loadPowerup((JSONObject) details.get("Double Money"));
+    SHORTERMACHINETIME.loadPowerup((JSONObject) details.get("Shorter Machine"));
+    AUTOCOOK.loadPowerup((JSONObject) details.get("Skip Machine"));
+    TIMEFREEZE.loadPowerup((JSONObject) details.get("Time Freeze"));
   }
 }

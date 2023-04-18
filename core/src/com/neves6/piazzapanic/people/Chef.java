@@ -139,18 +139,21 @@ public class Chef extends Person {
    * @param facing sprite facing direction.
    */
   public void setFacing(String facing) {
-    this.facing = facing;
     switch (facing) {
       case "up":
+        this.facing = facing;
         this.txNow = txUp;
         break;
       case "down":
+        this.facing = facing;
         this.txNow = txDown;
         break;
       case "left":
+        this.facing = facing;
         this.txNow = txLeft;
         break;
       case "right":
+        this.facing = facing;
         this.txNow = txRight;
         break;
       default:
