@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PowerUpRunner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.powerups</a> &gt; <span class="el_source">PowerUpRunner.java</span></div><h1>PowerUpRunner.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.powerups;
+
+import static java.lang.Math.random;
+
+import com.neves6.piazzapanic.gamemechanisms.GameSaver;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.people.Chef;
+import java.util.ArrayList;
+import java.util.Map;
+import org.json.simple.JSONObject;
+
+/** A class that can be used to control all the power-ups within the game. */
+public class PowerUpRunner {
+<span class="fc" id="L15">  CheaperMachineUnlock cheaperMachineUnlock =</span>
+<span class="fc" id="L16">      new CheaperMachineUnlock(30000L, &quot;1/2 price machines for 30 seconds&quot;);</span>
+<span class="fc" id="L17">  ShorterMachineTime shorterMachineTime =</span>
+<span class="fc" id="L18">      new ShorterMachineTime(30000L, &quot;1/2 machine time for 30 seconds&quot;);</span>
+<span class="fc" id="L19">  AutoCook autoCook = new AutoCook(30000L, &quot;no wait on a machine&quot;);</span>
+<span class="fc" id="L20">  TimeFreeze timeFreeze = new TimeFreeze(30000L, &quot;time freeze for 30 seconds&quot;);</span>
+<span class="fc" id="L21">  DoubleMoney doubleMoney = new DoubleMoney(30000L, &quot;double money for 30 seconds&quot;);</span>
+  ArrayList&lt;Chef&gt; chefs;
+  Map&lt;String, Machine&gt; machines;
+  Money money;
+  GameSaver saver;
+
+  /**
+   * Constructor method.
+   *
+   * @param chefs Chefs that are being displayed in the game.
+   * @param machines Machines that are being used in the game.
+   * @param money The currency system that is being used in the game.
+   * @param saver Instance of GameSaver being used by the game.
+   */
+  public PowerUpRunner(
+<span class="fc" id="L36">      ArrayList&lt;Chef&gt; chefs, Map&lt;String, Machine&gt; machines, Money money, GameSaver saver) {</span>
+<span class="fc" id="L37">    this.chefs = chefs;</span>
+<span class="fc" id="L38">    this.machines = machines;</span>
+<span class="fc" id="L39">    this.money = money;</span>
+<span class="fc" id="L40">    this.saver = saver;</span>
+<span class="fc" id="L41">  }</span>
+
+  /**
+   * Choose a random number between 0 and 1 and convert to an integer in the range 0 to 4 and then
+   * uses this to pick a random power-up to activate.
+   */
+  public void activateRandomPowerUp() {
+<span class="fc" id="L48">    int random = (int) Math.round(random() / 0.25);</span>
+<span class="pc bpc" id="L49" title="4 of 6 branches missed.">    switch (random) {</span>
+      case 0:
+<span class="nc" id="L51">        cheaperMachineUnlock.acquirePowerUp();</span>
+<span class="nc" id="L52">        break;</span>
+      case 1:
+<span class="fc" id="L54">        shorterMachineTime.acquirePowerUp();</span>
+<span class="fc" id="L55">        break;</span>
+      case 2:
+<span class="nc" id="L57">        doubleMoney.acquirePowerUp();</span>
+<span class="nc" id="L58">        break;</span>
+      case 3:
+<span class="fc" id="L60">        autoCook.acquirePowerUp();</span>
+<span class="fc" id="L61">        break;</span>
+      case 4:
+<span class="nc" id="L63">        timeFreeze.acquirePowerUp();</span>
+        break;
+    }
+<span class="fc" id="L66">    machines = shorterMachineTime.applyPowerUp(machines);</span>
+<span class="fc" id="L67">    doubleMoney.applyPowerUp(money);</span>
+<span class="fc" id="L68">    cheaperMachineUnlock.applyPowerUp(money.getUnlockDetails());</span>
+<span class="fc" id="L69">  }</span>
+
+  /**
+   * Runs method for all power-ups that will end the timer on them if this is required.
+   *
+   * @param delta Time since last render.
+   * @return The delta that should be used based upon whether time freeze is active.
+   */
+  public Float updateValues(Float delta) {
+<span class="fc" id="L78">    savePowerupStatus();</span>
+<span class="fc" id="L79">    shorterMachineTime.endPowerUp(machines);</span>
+<span class="fc" id="L80">    autoCook.applyPowerUp(machines);</span>
+<span class="fc" id="L81">    cheaperMachineUnlock.endPowerUp(money.getUnlockDetails());</span>
+<span class="fc" id="L82">    doubleMoney.endTime();</span>
+<span class="fc" id="L83">    return timeFreeze.getDelta(delta);</span>
+  }
+
+  /**
+   * Print method to display status of power-ups.
+   *
+   * @return Combination of pretty print strings along with a header.
+   */
+  public String displayText() {
+<span class="fc" id="L92">    return &quot;Current Active Powerups: \n&quot;</span>
+<span class="fc" id="L93">        + cheaperMachineUnlock.prettyPrint()</span>
+<span class="fc" id="L94">        + doubleMoney.prettyPrint()</span>
+<span class="fc" id="L95">        + shorterMachineTime.prettyPrint()</span>
+<span class="fc" id="L96">        + autoCook.prettyPrint()</span>
+<span class="fc" id="L97">        + timeFreeze.prettyPrint();</span>
+  }
+
+  /** Saves all power-ups within an object. */
+  public void savePowerupStatus() {
+<span class="fc" id="L102">    JSONObject powerupStatus = new JSONObject();</span>
+<span class="fc" id="L103">    powerupStatus.put(&quot;Cheaper Machine&quot;, cheaperMachineUnlock.savePowerUp());</span>
+<span class="fc" id="L104">    powerupStatus.put(&quot;Double Money&quot;, doubleMoney.savePowerUp());</span>
+<span class="fc" id="L105">    powerupStatus.put(&quot;Shorter Machine&quot;, shorterMachineTime.savePowerUp());</span>
+<span class="fc" id="L106">    powerupStatus.put(&quot;Skip Machine&quot;, autoCook.savePowerUp());</span>
+<span class="fc" id="L107">    powerupStatus.put(&quot;Time Freeze&quot;, timeFreeze.savePowerUp());</span>
+<span class="fc" id="L108">    this.saver.setPowerups(powerupStatus);</span>
+<span class="fc" id="L109">  }</span>
+
+  /**
+   * Loads in details of previous games power-ups.
+   *
+   * @param details Contains all the power-ups within the previous game and whether they have been
+   *     active and how long for if this is the case.
+   */
+  public void reloadPowerupStatus(JSONObject details) {
+<span class="fc" id="L118">    cheaperMachineUnlock.loadPowerup((JSONObject) details.get(&quot;Cheaper Machine&quot;));</span>
+<span class="fc" id="L119">    doubleMoney.loadPowerup((JSONObject) details.get(&quot;Double Money&quot;));</span>
+<span class="fc" id="L120">    shorterMachineTime.loadPowerup((JSONObject) details.get(&quot;Shorter Machine&quot;));</span>
+<span class="fc" id="L121">    autoCook.loadPowerup((JSONObject) details.get(&quot;Skip Machine&quot;));</span>
+<span class="fc" id="L122">    timeFreeze.loadPowerup((JSONObject) details.get(&quot;Time Freeze&quot;));</span>
+<span class="fc" id="L123">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

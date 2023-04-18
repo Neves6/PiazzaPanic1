@@ -20,6 +20,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   String continueTo;
   Boolean scenerio;
   Boolean disablePowerUp;
+  int custNo;
 
   public TutorialScreen(
       PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup) {
@@ -29,6 +30,26 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
     this.scenerio = endless;
     this.disablePowerUp = disablePowerup;
+    if (endless) {
+      custNo = -1;
+    } else {
+      custNo = 5;
+    }
+  }
+
+  public TutorialScreen(
+      PiazzaPanicGame game,
+      String continueTo,
+      Boolean endless,
+      Boolean disablePowerup,
+      Integer custNo) {
+    this.game = game;
+    this.continueTo = continueTo;
+    font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
+    tutorial = new Texture(Gdx.files.internal("tutorial.png"));
+    this.scenerio = endless;
+    this.disablePowerUp = disablePowerup;
+    this.custNo = custNo;
   }
 
   /** What to show when this screen is loaded. */
@@ -92,13 +113,13 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
         game.setScreen(new TitleScreen(game));
         break;
       case "easyGame":
-        game.setScreen(new GameScreen(game, 1, scenerio, disablePowerUp));
+        game.setScreen(new GameScreen(game, 1, scenerio, disablePowerUp, custNo));
         break;
       case "mediumGame":
-        game.setScreen(new GameScreen(game, 2, scenerio, disablePowerUp));
+        game.setScreen(new GameScreen(game, 2, scenerio, disablePowerUp, custNo));
         break;
       case "hardGame":
-        game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp));
+        game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp, custNo));
         break;
       case "resume":
         try {

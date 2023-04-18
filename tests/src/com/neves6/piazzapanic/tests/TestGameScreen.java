@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(GdxTestRunner.class)
 public class TestGameScreen {
-  GameScreen testGameScreen = new GameScreen(new PiazzaPanicGame(true), 1, false, false);
+  GameScreen testGameScreen = new GameScreen(new PiazzaPanicGame(true), 1, false, false, 5);
 
   @Test
   public void tryAttainChefOne() {

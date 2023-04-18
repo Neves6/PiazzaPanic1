@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.gamemechanisms</a> &gt; <span class="el_source">GameReader.java</span></div><h1>GameReader.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.gamemechanisms;
+
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.screens.PiazzaPanicGame;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
+import java.io.FileReader;
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+/** Class build to read game data. */
+public class GameReader {
+  JSONObject chefData;
+  JSONArray chefLocations;
+  JSONArray chefStacks;
+  JSONObject machineData;
+  JSONObject saveData;
+  JSONObject currencySystem;
+  JSONObject customerData;
+  JSONObject trayInventory;
+
+  /**
+   * Constructor method.
+   *
+   * @param filename String containing the name/path of the json file containing game data.
+   * @throws ParseException If the file entered does not follow the json format correctly.
+   * @throws IOException If the file entered does not exist.
+   */
+<span class="fc" id="L33">  public GameReader(String filename) throws ParseException, IOException {</span>
+<span class="fc" id="L34">    JSONParser parser = new JSONParser();</span>
+<span class="fc" id="L35">    saveData = (JSONObject) parser.parse(new FileReader(filename));</span>
+<span class="fc" id="L36">    currencySystem = (JSONObject) saveData.get(&quot;Currency System&quot;);</span>
+<span class="fc" id="L37">    machineData = (JSONObject) currencySystem.get(&quot;Machines&quot;);</span>
+<span class="fc" id="L38">    customerData = (JSONObject) saveData.get(&quot;Customer&quot;);</span>
+<span class="fc" id="L39">    chefData = (JSONObject) saveData.get(&quot;Chefs&quot;);</span>
+<span class="fc" id="L40">    chefLocations = (JSONArray) chefData.get(&quot;Chef Location&quot;);</span>
+<span class="fc" id="L41">    chefStacks = (JSONArray) chefData.get(&quot;Chef Stacks&quot;);</span>
+<span class="fc" id="L42">    trayInventory = (JSONObject) saveData.get(&quot;Trays&quot;);</span>
+<span class="fc" id="L43">  }</span>
+
+  /**
+   * Reads json file in order to create a loadable scenario game master class.
+   *
+   * @param game Instance of PiazzaPanicGame used to control the game.
+   * @param map Tiled map being used in the game.
+   * @param machineUnlockBalance Class used to control unlock-able machines.
+   * @param ingredientsHelper Class used to control staff member that can get ingredients for the
+   *     user.
+   * @param deliveryStaff Class used to control staff member that can take the order to the
+   *     customer.
+   * @return A configured scenario game master which represents the state of the previously saved
+   *     game.
+   */
+  public ScenarioGameMaster createGameMaster(
+      PiazzaPanicGame game,
+      TiledMap map,
+      Money machineUnlockBalance,
+      IngredientsStaff ingredientsHelper,
+      DeliveryStaff deliveryStaff) {
+<span class="fc" id="L64">    ScenarioGameMaster configuredMaster =</span>
+        new ScenarioGameMaster(
+            game,
+            map,
+<span class="fc" id="L68">            ((Long) chefData.get(&quot;Number of Chefs&quot;)).intValue(),</span>
+<span class="fc" id="L69">            ((Long) saveData.get(&quot;Customers remaining&quot;)).intValue(),</span>
+            machineUnlockBalance,
+            ingredientsHelper,
+            deliveryStaff,
+<span class="fc" id="L73">            ((Boolean) saveData.get(&quot;Power-ups&quot;)),</span>
+<span class="fc" id="L74">            ((Long) saveData.get(&quot;Difficulty&quot;)).intValue());</span>
+
+    // Customers are paced to release at random intervals so just wait till one exists.
+<span class="fc bfc" id="L77" title="All 2 branches covered.">    while (configuredMaster.getFirstCustomer() == null) {</span>
+<span class="fc" id="L78">      configuredMaster.tickUpdate(1f);</span>
+    }
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">    if (customerData != null) {</span>
+<span class="fc" id="L82">      configuredMaster.getFirstCustomer().setRecipe((String) customerData.get(&quot;Order&quot;));</span>
+<span class="fc" id="L83">      configuredMaster</span>
+<span class="fc" id="L84">          .getFirstCustomer()</span>
+<span class="fc" id="L85">          .setTimeArrived(((Double) customerData.get(&quot;Current Time&quot;)).floatValue());</span>
+    }
+
+    // JSON auto converts all int to a long and all float to a double.
+<span class="fc" id="L89">    configuredMaster.setSelectedChef(1 + ((Long) chefData.get(&quot;Selected Chef&quot;)).intValue());</span>
+<span class="fc" id="L90">    machineUnlockBalance.setBalance(((Double) currencySystem.get(&quot;Balance&quot;)).floatValue());</span>
+<span class="fc" id="L91">    machineUnlockBalance.loadPreviousValues(machineData);</span>
+<span class="fc" id="L92">    configuredMaster.setReputationPoints(((Long) saveData.get(&quot;Reputation Points&quot;)).intValue());</span>
+<span class="fc" id="L93">    configuredMaster.setTimeElapsed(((Double) saveData.get(&quot;Time Elapsed&quot;)).floatValue());</span>
+
+    // Go through all chefs and set coordinates then add everything
+    // from the old stack.
+<span class="fc bfc" id="L97" title="All 2 branches covered.">    for (int i = 0; i &lt; chefLocations.size(); i++) {</span>
+<span class="fc" id="L98">      JSONArray pairCoord = (JSONArray) chefLocations.get(i);</span>
+<span class="fc" id="L99">      configuredMaster.getChef(i + 1).setxCoord(((Long) pairCoord.get(0)).intValue());</span>
+<span class="fc" id="L100">      configuredMaster.getChef(i + 1).setyCoord(((Long) pairCoord.get(1)).intValue());</span>
+<span class="fc" id="L101">      JSONArray chefItems = (JSONArray) chefStacks.get(i);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">      for (int x = 0; x &lt; chefItems.size(); x++) {</span>
+<span class="fc" id="L103">        configuredMaster.getChef(i + 1).addToInventory((String) chefItems.get(x));</span>
+      }
+    }
+
+<span class="fc" id="L107">    JSONArray trayOne = (JSONArray) trayInventory.get(&quot;Tray 1&quot;);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">    for (int i = 0; i &lt; trayOne.size(); i++) {</span>
+<span class="fc" id="L109">      configuredMaster.addtoTray(1, (String) trayOne.get(i));</span>
+    }
+
+<span class="fc" id="L112">    JSONArray trayTwo = (JSONArray) trayInventory.get(&quot;Tray 2&quot;);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">    for (int i = 0; i &lt; trayTwo.size(); i++) {</span>
+<span class="fc" id="L114">      configuredMaster.addtoTray(1, (String) trayTwo.get(i));</span>
+    }
+
+<span class="fc" id="L117">    configuredMaster</span>
+<span class="fc" id="L118">        .getPowerUpRunner()</span>
+<span class="fc" id="L119">        .reloadPowerupStatus((JSONObject) saveData.get(&quot;Powerup Runner&quot;));</span>
+
+<span class="fc" id="L121">    return configuredMaster;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

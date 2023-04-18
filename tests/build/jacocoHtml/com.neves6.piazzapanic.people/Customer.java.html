@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.people</a> &gt; <span class="el_source">Customer.java</span></div><h1>Customer.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.people;
+
+import com.badlogic.gdx.graphics.Texture;
+
+/** Automated customers which extends the original person class in order to use movement. */
+public class Customer extends Person {
+
+  private String order;
+  private final Texture txUp;
+  private final Texture txLeft;
+  private float timeArrived;
+
+  /**
+   * Customer constructor.
+   *
+   * @param name Name of customer.
+   * @param xcoord logical x coordinate of customer.
+   * @param ycoord logical y coordinate of customer.
+   * @param order Order of customer.
+   */
+  public Customer(String name, int xcoord, int ycoord, String order, float timeArrived) {
+<span class="fc" id="L22">    super(name, xcoord, ycoord);</span>
+<span class="fc" id="L23">    this.order = order;</span>
+<span class="fc" id="L24">    this.txUp = new Texture(&quot;people/cust1up.png&quot;);</span>
+<span class="fc" id="L25">    this.txLeft = new Texture(&quot;people/cust1left.png&quot;);</span>
+<span class="fc" id="L26">    this.timeArrived = timeArrived;</span>
+<span class="fc" id="L27">  }</span>
+
+  /**
+   * Getter method for the order that the customer has.
+   *
+   * @return String that represents the customers order.
+   */
+  public String getOrder() {
+<span class="fc" id="L35">    return order;</span>
+  }
+
+  /**
+   * Getter method for the txUp variable.
+   *
+   * @return Texture representing the customer facing upwards.
+   */
+  public Texture getTxUp() {
+<span class="nc" id="L44">    return txUp;</span>
+  }
+
+  /**
+   * Getter method for the txDown variable.
+   *
+   * @return Texture representing the customer facing left.
+   */
+  public Texture getTxLeft() {
+<span class="nc" id="L53">    return txLeft;</span>
+  }
+
+  /**
+   * Getter method for time at which the customer was generated.
+   *
+   * @return Time customer arrived.
+   */
+  public float getTimeArrived() {
+<span class="fc" id="L62">    return timeArrived;</span>
+  }
+
+  /**
+   * Setter method for customer order.
+   *
+   * @param order Name of recipe to set order to.
+   */
+  public void setRecipe(String order) {
+<span class="fc" id="L71">    this.order = order;</span>
+<span class="fc" id="L72">  }</span>
+
+  /**
+   * Setter method for time at which the customer was generated.
+   *
+   * @param time Time customer arrived.
+   */
+  public void setTimeArrived(float time) {
+<span class="fc" id="L80">    this.timeArrived = time;</span>
+<span class="fc" id="L81">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

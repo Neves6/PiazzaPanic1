@@ -56,6 +56,7 @@ public class IngredientsStaff extends BaseStaff {
   public void setCurrentRecipe(String recipe) {
     if (this.generate) {
       this.currentRecipe = recipe;
+      this.stack.clear();
       generateStack();
       this.collect = true;
       this.generate = false;

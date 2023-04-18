@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextMaster.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.gamemaster</a> &gt; <span class="el_source">TextMaster.java</span></div><h1>TextMaster.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.gamemaster;
+
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.neves6.piazzapanic.people.Chef;
+import com.neves6.piazzapanic.people.Customer;
+import java.util.ArrayList;
+import java.util.Queue;
+
+public class TextMaster {
+<span class="fc" id="L10">  public TextMaster() {}</span>
+
+  /**
+   * Generates the display text for the chefs' inventories.
+   *
+   * @return String containing the display text.
+   */
+  public String generateHoldingsText(ArrayList&lt;Chef&gt; chefs) {
+<span class="fc" id="L18">    String comp = &quot;&quot;;</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">    for (int i = 0; i &lt; chefs.size(); i++) {</span>
+<span class="fc" id="L20">      comp += &quot;Chef &quot; + (i + 1) + &quot; is holding:\n&quot;;</span>
+<span class="fc" id="L21">      comp += chefs.get(i).getInventory().toString() + &quot;\n&quot;;</span>
+    }
+<span class="fc" id="L23">    return comp;</span>
+  }
+
+  /**
+   * Generates display text for customer having left.
+   *
+   * @return String containing the display text.
+   */
+  public String generateCustomerLeftText(float totalTimer, float lastRepPointLost) {
+<span class="nc" id="L32">    String comp = &quot;&quot;;</span>
+<span class="nc bnc" id="L33" title="All 4 branches missed.">    if (totalTimer &lt;= (lastRepPointLost + 3) &amp;&amp; lastRepPointLost != 0) {</span>
+<span class="nc" id="L34">      comp += &quot;A customer was tired of waiting&quot;;</span>
+<span class="nc" id="L35">      comp += &quot;\nReputation point lost&quot;;</span>
+    }
+<span class="nc" id="L37">    return comp;</span>
+  }
+
+  /**
+   * Generates the display text for reputation point count
+   *
+   * @return String containing the display text.
+   */
+  public String generateReputationPointText(
+      float totalTimer, float lastRepPointLost, int reputationPoints) {
+<span class="nc" id="L47">    String comp = &quot;&quot;;</span>
+<span class="nc" id="L48">    comp += &quot;Reputation points: &quot;;</span>
+<span class="nc" id="L49">    comp += reputationPoints;</span>
+<span class="nc bnc" id="L50" title="All 4 branches missed.">    if (totalTimer &lt;= (lastRepPointLost + 3) &amp;&amp; lastRepPointLost != 0) {</span>
+<span class="nc" id="L51">      comp += &quot; -1&quot;;</span>
+    }
+<span class="nc" id="L53">    return comp;</span>
+  }
+
+  /**
+   * Generates the display text for the timer.
+   *
+   * @return String containing the display text.
+   */
+  public String generateTimerText(float totalTimerDisplay) {
+<span class="fc" id="L62">    String comp = &quot;&quot;;</span>
+<span class="fc" id="L63">    comp += &quot;Time elapsed: &quot;;</span>
+<span class="fc" id="L64">    comp += (int) totalTimerDisplay;</span>
+<span class="fc" id="L65">    comp += &quot; s&quot;;</span>
+<span class="fc" id="L66">    return comp;</span>
+  }
+
+  /**
+   * Generates the display text for the customers' tray and order.
+   *
+   * @return String containing the display text.
+   */
+  public String generateCustomersTrayText(
+      Queue&lt;Customer&gt; customers, ArrayList&lt;String&gt; tray1, ArrayList&lt;String&gt; tray2) {
+<span class="nc" id="L76">    String comp = &quot;&quot;;</span>
+<span class="nc" id="L77">    comp += &quot;Customers remaining: &quot;;</span>
+<span class="nc" id="L78">    comp += customers.size();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">    if (customers.size() &gt; 0) {</span>
+<span class="nc" id="L80">      comp += &quot;\nOrder: &quot;;</span>
+<span class="nc" id="L81">      comp += customers.peek().getOrder();</span>
+    }
+<span class="nc bnc" id="L83" title="All 2 branches missed.">    if (!tray1.isEmpty()) {</span>
+<span class="nc" id="L84">      comp += &quot;\nTray 1 contents: &quot;;</span>
+<span class="nc" id="L85">      comp += tray1.toString();</span>
+    }
+<span class="nc bnc" id="L87" title="All 2 branches missed.">    if (!tray2.isEmpty()) {</span>
+<span class="nc" id="L88">      comp += &quot;\nTray 2 contents: &quot;;</span>
+<span class="nc" id="L89">      comp += tray2.toString();</span>
+    }
+<span class="nc" id="L91">    return comp;</span>
+  }
+
+  /**
+   * Generates the display text for the chef's timer.
+   *
+   * @param chefno chef number to check.
+   * @return String containing the display text.
+   */
+  public String getMachineTimerForChef(int chefno, ArrayList&lt;Chef&gt; chefs) {
+<span class="fc" id="L101">    Chef chef = chefs.get(chefno);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">    if (chef.getMachineInteractingWith() != null) {</span>
+<span class="fc" id="L103">      Machine machine = chef.getMachineInteractingWith();</span>
+<span class="fc" id="L104">      return ((int) (machine.getProcessingTime() - machine.getRuntime() + 1)) + &quot;&quot;;</span>
+    } else {
+<span class="fc" id="L106">      return &quot;&quot;;</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -51,36 +51,24 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param level The difficulty that the user has selected.
+   * @param custNo
    */
-  public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup) {
+  public GameScreen(
+      PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup, int custNo) {
     this.game = game;
     sharedSetup();
     map = new TmxMapLoader().load("tilemaps/level1.tmx");
-    if (scenerio) {
-      gm =
-          new ScenarioGameMaster(
-              game,
-              map,
-              3,
-              5,
-              machineUnlockBalance,
-              ingredientsHelper,
-              deliveryStaff,
-              disablePowerup,
-              level);
-    } else {
-      gm =
-          new ScenarioGameMaster(
-              game,
-              map,
-              3,
-              -1,
-              machineUnlockBalance,
-              ingredientsHelper,
-              deliveryStaff,
-              disablePowerup,
-              level);
-    }
+    gm =
+        new ScenarioGameMaster(
+            game,
+            map,
+            3,
+            custNo,
+            machineUnlockBalance,
+            ingredientsHelper,
+            deliveryStaff,
+            disablePowerup,
+            level);
   }
 
   public GameScreen(PiazzaPanicGame game) throws ParseException {
@@ -300,24 +288,59 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     // Any machines that are unlockable add here to draw a lock on top of it.
     if (!(machineUnlockBalance.isUnlocked("chopping"))) {
       game.getBatch().draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(
+          game.getBatch(),
+          Float.toString(machineUnlockBalance.getUnlockPrice("chopping")),
+          12 * wScale,
+          7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("forming"))) {
       game.getBatch().draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(
+          game.getBatch(),
+          Float.toString(machineUnlockBalance.getUnlockPrice("forming")),
+          10 * wScale,
+          7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("grill"))) {
       game.getBatch().draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(
+          game.getBatch(),
+          Float.toString(machineUnlockBalance.getUnlockPrice("grill")),
+          7 * wScale,
+          7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("potato"))) {
       game.getBatch().draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(
+          game.getBatch(),
+          Float.toString(machineUnlockBalance.getUnlockPrice("potato")),
+          14 * wScale,
+          6 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("pizza"))) {
       game.getBatch().draw(lock, 1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(
+          game.getBatch(),
+          Float.toString(machineUnlockBalance.getUnlockPrice("pizza")),
+          1 * wScale,
+          6 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
       game.getBatch().draw(lock, 2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(
+          game.getBatch(),
+          Float.toString(machineUnlockBalance.getUnlockPrice("ingredients-staff")),
+          2 * wScale,
+          7 * hScale);
     }
     if (!(machineUnlockBalance.isUnlocked("server-staff"))) {
       game.getBatch().draw(lock, 1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);
+      font.draw(
+          game.getBatch(),
+          Float.toString(machineUnlockBalance.getUnlockPrice("server-staff")),
+          1 * wScale,
+          3 * hScale);
     }
 
     game.getBatch().end();

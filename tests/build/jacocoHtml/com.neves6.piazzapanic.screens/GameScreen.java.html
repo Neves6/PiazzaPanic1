@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameScreen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.screens</a> &gt; <span class="el_source">GameScreen.java</span></div><h1>GameScreen.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.screens;
+
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.neves6.piazzapanic.gamemaster.ScenarioGameMaster;
+import com.neves6.piazzapanic.gamemaster.TextMaster;
+import com.neves6.piazzapanic.gamemechanisms.GameReader;
+import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.staff.BaseStaff;
+import com.neves6.piazzapanic.staff.DeliveryStaff;
+import com.neves6.piazzapanic.staff.IngredientsStaff;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.json.simple.parser.ParseException;
+
+/** A screen that displays the main game. */
+public class GameScreen extends ScreenAdapter implements InputProcessor {
+  DeliveryStaff deliveryStaff;
+  PiazzaPanicGame game;
+  OrthographicCamera camera;
+  SpriteBatch batch;
+  BitmapFont font;
+  int winWidth;
+  int winHeight;
+  TiledMap map;
+  OrthogonalTiledMapRenderer renderer;
+  ScenarioGameMaster gm;
+  float unitScale;
+  float wScale;
+  float hScale;
+  int INITIAL_WIDTH;
+  int INITIAL_HEIGHT;
+<span class="pc" id="L41">  int[] renderableLayers = {0, 1, 2};</span>
+  Texture selectedTexture;
+  Texture recipes;
+  Texture lock;
+  Money machineUnlockBalance;
+  IngredientsStaff ingredientsHelper;
+<span class="pc" id="L47">  ArrayList&lt;Boolean&gt; wasd = new ArrayList&lt;&gt;(Arrays.asList(false, false, false, false));</span>
+<span class="pc" id="L48">  TextMaster tm = new TextMaster();</span>
+  /**
+   * Constructor method.
+   *
+   * @param game   Instance of PiazzaPanicGame used to control screen transitions.
+   * @param level  The difficulty that the user has selected.
+   * @param custNo
+   */
+<span class="fc" id="L56">  public GameScreen(PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup, int custNo) {</span>
+<span class="fc" id="L57">    this.game = game;</span>
+<span class="fc" id="L58">    sharedSetup();</span>
+<span class="fc" id="L59">    map = new TmxMapLoader().load(&quot;tilemaps/level1.tmx&quot;);</span>
+<span class="fc" id="L60">      gm = new ScenarioGameMaster(</span>
+              game,
+              map,
+              3,
+              custNo,
+              machineUnlockBalance,
+              ingredientsHelper,
+              deliveryStaff,
+<span class="fc" id="L68">              disablePowerup,</span>
+              level);
+<span class="fc" id="L70">  }</span>
+
+<span class="nc" id="L72">  public GameScreen(PiazzaPanicGame game) throws ParseException {</span>
+<span class="nc" id="L73">    this.game = game;</span>
+<span class="nc" id="L74">    sharedSetup();</span>
+<span class="nc" id="L75">    GameReader gr = null;</span>
+    try {
+<span class="nc" id="L77">      gr = new GameReader(&quot;here.json&quot;);</span>
+<span class="nc" id="L78">    } catch (IOException e) {</span>
+<span class="nc" id="L79">      throw new RuntimeException(e);</span>
+<span class="nc" id="L80">    }</span>
+<span class="nc" id="L81">    map = new TmxMapLoader().load(&quot;tilemaps/level1.tmx&quot;);</span>
+<span class="nc" id="L82">    gm = gr.createGameMaster(game, map, machineUnlockBalance, ingredientsHelper, deliveryStaff);</span>
+<span class="nc" id="L83">  }</span>
+
+  public void sharedSetup() {
+<span class="fc" id="L86">    unitScale = Gdx.graphics.getHeight() / (12f * 32f);</span>
+<span class="fc" id="L87">    wScale = unitScale * 32f;</span>
+<span class="fc" id="L88">    hScale = unitScale * 32f;</span>
+<span class="fc" id="L89">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold_Black.fnt&quot;));</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">    if (!game.testMode) {</span>
+<span class="nc" id="L91">      font.getData().setScale(unitScale * 0.4F);</span>
+    }
+<span class="fc" id="L93">    this.INITIAL_WIDTH = Gdx.graphics.getWidth();</span>
+<span class="fc" id="L94">    this.INITIAL_HEIGHT = Gdx.graphics.getHeight();</span>
+<span class="fc" id="L95">    this.machineUnlockBalance = new Money();</span>
+<span class="fc" id="L96">    this.deliveryStaff =</span>
+        new DeliveryStaff(
+<span class="fc" id="L98">            new ArrayList&lt;&gt;(Arrays.asList(3, 4, 5, 6, 7, 8)),</span>
+<span class="fc" id="L99">            (new ArrayList&lt;&gt;(Arrays.asList(4, 4, 4, 4, 4, 4))));</span>
+<span class="fc" id="L100">    this.ingredientsHelper =</span>
+        new IngredientsStaff(
+<span class="fc" id="L102">            new ArrayList&lt;&gt;(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 2, 2, 2)),</span>
+<span class="fc" id="L103">            (new ArrayList&lt;&gt;(Arrays.asList(9, 9, 9, 9, 9, 9, 9, 9, 8, 9))));</span>
+<span class="fc" id="L104">    selectedTexture = new Texture(Gdx.files.internal(&quot;people/selected.png&quot;));</span>
+<span class="fc" id="L105">    recipes = new Texture(Gdx.files.internal(&quot;recipes.png&quot;));</span>
+<span class="fc" id="L106">    lock = new Texture(Gdx.files.internal(&quot;levellocked.png&quot;));</span>
+<span class="fc" id="L107">  }</span>
+
+  /** What to show when this screen is loaded. */
+  @Override
+  public void show() {
+<span class="fc" id="L112">    camera = new OrthographicCamera();</span>
+<span class="fc" id="L113">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+
+<span class="fc" id="L115">    Gdx.graphics.setResizable(false);</span>
+
+<span class="fc" id="L117">    Gdx.input.setInputProcessor(this);</span>
+<span class="fc" id="L118">  }</span>
+
+  /**
+   * What to process in every frame.
+   *
+   * @param delta The time in seconds since the last render.
+   */
+  @Override
+  public void render(float delta) {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">    if (wasd.get(0)) {</span>
+<span class="nc" id="L128">      gm.tryMove(&quot;up&quot;);</span>
+    }
+<span class="nc bnc" id="L130" title="All 2 branches missed.">    if (wasd.get(1)) {</span>
+<span class="nc" id="L131">      gm.tryMove(&quot;left&quot;);</span>
+    }
+<span class="nc bnc" id="L133" title="All 2 branches missed.">    if (wasd.get(2)) {</span>
+<span class="nc" id="L134">      gm.tryMove(&quot;down&quot;);</span>
+    }
+<span class="nc bnc" id="L136" title="All 2 branches missed.">    if (wasd.get(3)) {</span>
+<span class="nc" id="L137">      gm.tryMove(&quot;right&quot;);</span>
+    }
+<span class="nc" id="L139">    gm.tickUpdate(delta);</span>
+
+<span class="nc" id="L141">    gm.setRecipeToStaff();</span>
+
+<span class="nc" id="L143">    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="nc" id="L144">    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</span>
+
+<span class="nc" id="L146">    winWidth = Gdx.graphics.getWidth();</span>
+<span class="nc" id="L147">    winHeight = Gdx.graphics.getHeight();</span>
+
+<span class="nc" id="L149">    camera.update();</span>
+    // game.batch.setProjectionMatrix(camera.combined);
+
+<span class="nc" id="L152">    renderer.setView(camera);</span>
+<span class="nc" id="L153">    renderer.render(renderableLayers);</span>
+
+<span class="nc" id="L155">    game.getBatch().begin();</span>
+<span class="nc" id="L156">    game.getBatch()</span>
+<span class="nc" id="L157">        .draw(</span>
+<span class="nc" id="L158">            gm.getChef(1).getTxNow(),</span>
+<span class="nc" id="L159">            gm.getChef(1).getxCoord() * wScale,</span>
+<span class="nc" id="L160">            gm.getChef(1).getyCoord() * hScale,</span>
+            32 * unitScale,
+            32 * unitScale);
+<span class="nc" id="L163">    game.getBatch()</span>
+<span class="nc" id="L164">        .draw(</span>
+<span class="nc" id="L165">            gm.getChef(2).getTxNow(),</span>
+<span class="nc" id="L166">            gm.getChef(2).getxCoord() * wScale,</span>
+<span class="nc" id="L167">            gm.getChef(2).getyCoord() * hScale,</span>
+            32 * unitScale,
+            32 * unitScale);
+<span class="nc" id="L170">    game.getBatch()</span>
+<span class="nc" id="L171">        .draw(</span>
+<span class="nc" id="L172">            gm.getChef(3).getTxNow(),</span>
+<span class="nc" id="L173">            gm.getChef(3).getxCoord() * wScale,</span>
+<span class="nc" id="L174">            gm.getChef(3).getyCoord() * hScale,</span>
+            32 * unitScale,
+            32 * unitScale);
+<span class="nc" id="L177">    game.getBatch()</span>
+<span class="nc" id="L178">        .draw(</span>
+            selectedTexture,
+<span class="nc" id="L180">            gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,</span>
+<span class="nc" id="L181">            gm.getChef(gm.getSelectedChef()).getyCoord() * hScale,</span>
+            32 * unitScale,
+            32 * unitScale);
+
+<span class="nc bnc" id="L185" title="All 2 branches missed.">    if (gm.getCustomersRemaining() &gt;= 1) {</span>
+<span class="nc" id="L186">      game.getBatch()</span>
+<span class="nc" id="L187">          .draw(</span>
+<span class="nc" id="L188">              gm.getFirstCustomer().getTxUp(),</span>
+              8 * wScale,
+              2 * hScale,
+              32 * unitScale,
+              32 * unitScale);
+<span class="nc bnc" id="L193" title="All 2 branches missed.">      for (int i = 1; i &lt; gm.getCustomersRemaining(); i++) {</span>
+<span class="nc" id="L194">        game.getBatch()</span>
+<span class="nc" id="L195">            .draw(</span>
+<span class="nc" id="L196">                gm.getFirstCustomer().getTxLeft(),</span>
+                (8 + i) * wScale,
+                2 * hScale,
+                32 * unitScale,
+                32 * unitScale);
+      }
+    }
+<span class="nc" id="L203">    font.draw(</span>
+<span class="nc" id="L204">        game.getBatch(),</span>
+<span class="nc" id="L205">        tm.getMachineTimerForChef(0, gm.getChefs()),</span>
+<span class="nc" id="L206">        gm.getChef(1).getxCoord() * wScale,</span>
+<span class="nc" id="L207">        gm.getChef(1).getyCoord() * hScale + 2 * (hScale / 3f),</span>
+        32 * unitScale,
+        1,
+        true);
+<span class="nc" id="L211">    font.draw(</span>
+<span class="nc" id="L212">        game.getBatch(),</span>
+<span class="nc" id="L213">        tm.getMachineTimerForChef(1, gm.getChefs()),</span>
+<span class="nc" id="L214">        gm.getChef(2).getxCoord() * wScale,</span>
+<span class="nc" id="L215">        gm.getChef(2).getyCoord() * hScale + 2 * (hScale / 3f),</span>
+        32 * unitScale,
+        1,
+        true);
+<span class="nc" id="L219">    font.draw(</span>
+<span class="nc" id="L220">        game.getBatch(),</span>
+<span class="nc" id="L221">        tm.getMachineTimerForChef(2, gm.getChefs()),</span>
+<span class="nc" id="L222">        gm.getChef(3).getxCoord() * wScale,</span>
+<span class="nc" id="L223">        gm.getChef(3).getyCoord() * hScale + 2 * (hScale / 3f),</span>
+        32 * unitScale,
+        1,
+        true);
+<span class="nc" id="L227">    game.getBatch().draw(recipes, 20, 20);</span>
+<span class="nc" id="L228">    font.draw(</span>
+<span class="nc" id="L229">        game.getBatch(),</span>
+<span class="nc" id="L230">        tm.generateHoldingsText(gm.getChefs()),</span>
+        wScale * 8.25F,
+        hScale * 11.75F,
+        wScale * 6.5F,
+        -1,
+        true);
+<span class="nc" id="L236">    font.draw(</span>
+<span class="nc" id="L237">        game.getBatch(),</span>
+<span class="nc" id="L238">        tm.generateCustomersTrayText(gm.getCustomers(), gm.getTray1(), gm.getTray2()),</span>
+        wScale * 15F,
+        hScale * 11.75F,
+        wScale * 6F,
+        -1,
+        true);
+<span class="nc" id="L244">    font.draw(</span>
+<span class="nc" id="L245">        game.getBatch(),</span>
+<span class="nc" id="L246">        tm.generateTimerText(gm.getTotalTimerDisplay()),</span>
+        wScale * 15.25F,
+        hScale * 3.75F,
+        wScale * 6F,
+        -1,
+        true);
+<span class="nc" id="L252">    font.draw(</span>
+<span class="nc" id="L253">        game.getBatch(),</span>
+<span class="nc" id="L254">        tm.generateReputationPointText(</span>
+<span class="nc" id="L255">            gm.getTotalTimer(), gm.getLastRepPointLost(), gm.getReputationPoints()),</span>
+        wScale * 15.25F,
+        hScale * 4.25F,
+        wScale * 6F,
+        -1,
+        true);
+<span class="nc" id="L261">    font.draw(</span>
+<span class="nc" id="L262">        game.getBatch(),</span>
+<span class="nc" id="L263">        machineUnlockBalance.displayBalance(),</span>
+        wScale * 15.25F,
+        hScale * 4.75F,
+        wScale * 6F,
+        -1,
+        true);
+<span class="nc" id="L269">    font.draw(</span>
+<span class="nc" id="L270">        game.getBatch(),</span>
+<span class="nc" id="L271">        gm.getPowerUpRunner().displayText(),</span>
+        wScale * 14.25F,
+        hScale * 8.75F,
+        wScale * 8F,
+        -1,
+        true);
+<span class="nc" id="L277">    font.draw(</span>
+<span class="nc" id="L278">        game.getBatch(),</span>
+<span class="nc" id="L279">        tm.generateCustomerLeftText(gm.getTotalTimer(), gm.getLastRepPointLost()),</span>
+        wScale * 15.25F,
+        hScale * 6.75F,
+        wScale * 5.5F,
+        -1,
+        true);
+
+    // Any machines that are unlockable add here to draw a lock on top of it.
+<span class="nc bnc" id="L287" title="All 2 branches missed.">    if (!(machineUnlockBalance.isUnlocked(&quot;chopping&quot;))) {</span>
+<span class="nc" id="L288">      game.getBatch().draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);</span>
+    }
+<span class="nc bnc" id="L290" title="All 2 branches missed.">    if (!(machineUnlockBalance.isUnlocked(&quot;forming&quot;))) {</span>
+<span class="nc" id="L291">      game.getBatch().draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);</span>
+    }
+<span class="nc bnc" id="L293" title="All 2 branches missed.">    if (!(machineUnlockBalance.isUnlocked(&quot;grill&quot;))) {</span>
+<span class="nc" id="L294">      game.getBatch().draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);</span>
+    }
+<span class="nc bnc" id="L296" title="All 2 branches missed.">    if (!(machineUnlockBalance.isUnlocked(&quot;potato&quot;))) {</span>
+<span class="nc" id="L297">      game.getBatch().draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);</span>
+    }
+<span class="nc bnc" id="L299" title="All 2 branches missed.">    if (!(machineUnlockBalance.isUnlocked(&quot;pizza&quot;))) {</span>
+<span class="nc" id="L300">      game.getBatch().draw(lock, 1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);</span>
+    }
+<span class="nc bnc" id="L302" title="All 2 branches missed.">    if (!(machineUnlockBalance.isUnlocked(&quot;ingredients-staff&quot;))) {</span>
+<span class="nc" id="L303">      game.getBatch().draw(lock, 2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);</span>
+    }
+<span class="nc bnc" id="L305" title="All 2 branches missed.">    if (!(machineUnlockBalance.isUnlocked(&quot;server-staff&quot;))) {</span>
+<span class="nc" id="L306">      game.getBatch().draw(lock, 1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);</span>
+    }
+
+<span class="nc" id="L309">    game.getBatch().end();</span>
+
+<span class="nc" id="L311">    drawSequence(ingredientsHelper);</span>
+<span class="nc" id="L312">    drawSequence(deliveryStaff);</span>
+<span class="nc" id="L313">  }</span>
+
+  /**
+   * Gets a pair of coordinates and draws a chef.
+   *
+   * @param ob A baseStaff object type which path is getting drawn.
+   */
+  public void drawSequence(BaseStaff ob) {
+<span class="nc bnc" id="L321" title="All 2 branches missed.">    if (ob.getCollect()) {</span>
+<span class="nc" id="L322">      ArrayList&lt;Integer&gt; pairCoord = ob.getCoordInSeq();</span>
+<span class="nc" id="L323">      game.getBatch().begin();</span>
+<span class="nc" id="L324">      game.getBatch()</span>
+<span class="nc" id="L325">          .draw(</span>
+<span class="nc" id="L326">              new Texture(Gdx.files.internal(&quot;people/chef1down.png&quot;)),</span>
+<span class="nc" id="L327">              pairCoord.get(0) * wScale,</span>
+<span class="nc" id="L328">              pairCoord.get(1) * hScale,</span>
+              32 * unitScale,
+              32 * unitScale);
+<span class="nc" id="L331">      game.getBatch().end();</span>
+    }
+<span class="nc" id="L333">  }</span>
+
+  /**
+   * Changes size of input upon user adjustment.
+   *
+   * @param width Integer representing the horizontal size of the screen.
+   * @param height Integer representing the vertical size of the screen.
+   */
+  @Override
+  public void resize(int width, int height) {
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">    if (game.testMode) {</span>
+<span class="fc" id="L344">      return;</span>
+    }
+
+<span class="nc bnc" id="L347" title="All 4 branches missed.">    if (width == INITIAL_WIDTH &amp;&amp; height == INITIAL_HEIGHT) {</span>
+<span class="nc" id="L348">      super.resize(width, height);</span>
+<span class="nc" id="L349">      camera.setToOrtho(false, width, height);</span>
+<span class="nc" id="L350">      unitScale = Gdx.graphics.getHeight() / (12f * 32f);</span>
+<span class="nc" id="L351">      wScale = unitScale * 32f;</span>
+<span class="nc" id="L352">      hScale = unitScale * 32f;</span>
+<span class="nc" id="L353">      renderer = new OrthogonalTiledMapRenderer(map, unitScale);</span>
+    } else {
+<span class="nc" id="L355">      Gdx.graphics.setWindowedMode(INITIAL_WIDTH, INITIAL_HEIGHT);</span>
+    }
+<span class="nc" id="L357">  }</span>
+
+  /** Method which runs when the screen transitions to another. */
+  @Override
+  public void hide() {
+<span class="nc" id="L362">    super.dispose();</span>
+<span class="nc" id="L363">    game.dispose();</span>
+<span class="nc" id="L364">    font.dispose();</span>
+<span class="nc" id="L365">    map.dispose();</span>
+<span class="nc" id="L366">    renderer.dispose();</span>
+<span class="nc" id="L367">    selectedTexture.dispose();</span>
+<span class="nc" id="L368">    recipes.dispose();</span>
+<span class="nc" id="L369">  }</span>
+
+  /**
+   * Getter method for scenario game master.
+   *
+   * @return Instance of scenario game master which is currently being used to control the game.
+   */
+  public ScenarioGameMaster getGameMaster() {
+<span class="fc" id="L377">    return gm;</span>
+  }
+
+  /**
+   * Method which runs when user presses a key down.
+   *
+   * @param keycode one of the constants in Input.Keys
+   * @return true
+   */
+  @Override
+  public boolean keyDown(int keycode) {
+    // Detects which key is pressed by the user
+    // If WASD (movement keys) pressed, set appropriate variable to true for use in render method
+    // If action key pressed, attempt to perform action
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">    if (keycode == Input.Keys.W) {</span>
+<span class="nc" id="L392">      wasd.set(0, true);</span>
+    }
+<span class="pc bpc" id="L394" title="1 of 2 branches missed.">    if (keycode == Input.Keys.A) {</span>
+<span class="nc" id="L395">      wasd.set(1, true);</span>
+    }
+<span class="pc bpc" id="L397" title="1 of 2 branches missed.">    if (keycode == Input.Keys.S) {</span>
+<span class="nc" id="L398">      wasd.set(2, true);</span>
+    }
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">    if (keycode == Input.Keys.D) {</span>
+<span class="nc" id="L401">      wasd.set(3, true);</span>
+    }
+<span class="fc bfc" id="L403" title="All 2 branches covered.">    if (keycode == Input.Keys.NUM_1) {</span>
+<span class="fc" id="L404">      gm.setSelectedChef(1);</span>
+    }
+<span class="fc bfc" id="L406" title="All 2 branches covered.">    if (keycode == Input.Keys.NUM_2) {</span>
+<span class="fc" id="L407">      gm.setSelectedChef(2);</span>
+    }
+<span class="fc bfc" id="L409" title="All 2 branches covered.">    if (keycode == Input.Keys.NUM_3) {</span>
+<span class="fc" id="L410">      gm.setSelectedChef(3);</span>
+    }
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">    if (keycode == Input.Keys.E) {</span>
+<span class="nc" id="L413">      gm.tryInteract();</span>
+    }
+<span class="pc bpc" id="L415" title="1 of 2 branches missed.">    if (keycode == Input.Keys.ESCAPE) {</span>
+      try {
+<span class="nc" id="L417">        gm.getSave().closeClass();</span>
+<span class="nc" id="L418">        game.setScreen(new IntroScreen(game));</span>
+<span class="nc" id="L419">      } catch (IOException e) {</span>
+<span class="nc" id="L420">        throw new RuntimeException(e);</span>
+<span class="nc" id="L421">      }</span>
+    }
+<span class="fc" id="L423">    return true;</span>
+  }
+
+  /**
+   * Method which runs when user lifts a key up.
+   *
+   * @param keycode one of the constants in {@link Input.Keys}
+   * @return false
+   */
+  @Override
+  public boolean keyUp(int keycode) {
+    // Detects which key is released by the user
+    // If WASD (movement keys) released, set appropriate variable to false, stopping movement
+<span class="nc bnc" id="L436" title="All 2 branches missed.">    if (keycode == Input.Keys.W) {</span>
+<span class="nc" id="L437">      wasd.set(0, false);</span>
+    }
+<span class="nc bnc" id="L439" title="All 2 branches missed.">    if (keycode == Input.Keys.A) {</span>
+<span class="nc" id="L440">      wasd.set(1, false);</span>
+    }
+<span class="nc bnc" id="L442" title="All 2 branches missed.">    if (keycode == Input.Keys.S) {</span>
+<span class="nc" id="L443">      wasd.set(2, false);</span>
+    }
+<span class="nc bnc" id="L445" title="All 2 branches missed.">    if (keycode == Input.Keys.D) {</span>
+<span class="nc" id="L446">      wasd.set(3, false);</span>
+    }
+<span class="nc" id="L448">    return false;</span>
+  }
+
+  /**
+   * UNUSED METHOD
+   *
+   * @param character The character
+   * @return false
+   */
+  @Override
+  public boolean keyTyped(char character) {
+<span class="nc" id="L459">    return false;</span>
+  }
+
+  /**
+   * UNUSED METHOD
+   *
+   * @param screenX The x coordinate, origin is in the upper left corner
+   * @param screenY The y coordinate, origin is in the upper left corner
+   * @param pointer the pointer for the event.
+   * @param button the button
+   * @return false
+   */
+  @Override
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+<span class="nc" id="L473">    return false;</span>
+  }
+
+  /**
+   * UNUSED METHOD
+   *
+   * @param screenX
+   * @param screenY
+   * @param pointer the pointer for the event.
+   * @param button the button
+   * @return false
+   */
+  @Override
+  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+<span class="nc" id="L487">    return false;</span>
+  }
+
+  /**
+   * UNUSED METHOD
+   *
+   * @param screenX
+   * @param screenY
+   * @param pointer the pointer for the event.
+   * @return false
+   */
+  @Override
+  public boolean touchDragged(int screenX, int screenY, int pointer) {
+<span class="nc" id="L500">    return false;</span>
+  }
+
+  /**
+   * UNUSED METHOD
+   *
+   * @param screenX
+   * @param screenY
+   * @return false
+   */
+  @Override
+  public boolean mouseMoved(int screenX, int screenY) {
+<span class="nc" id="L512">    return false;</span>
+  }
+
+  /**
+   * UNUSED METHOD
+   *
+   * @param amountX the horizontal scroll amount, negative or positive depending on the direction
+   *     the wheel was scrolled.
+   * @param amountY the vertical scroll amount, negative or positive depending on the direction the
+   *     wheel was scrolled.
+   * @return false
+   */
+  @Override
+  public boolean scrolled(float amountX, float amountY) {
+<span class="nc" id="L526">    return false;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
