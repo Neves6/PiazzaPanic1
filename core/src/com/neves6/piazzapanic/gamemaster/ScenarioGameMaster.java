@@ -331,7 +331,7 @@ public class ScenarioGameMaster {
             customers,
             totalTimerDisplay,
             difficulty,
-            reputationPoints.getPoints(),
+            reputationPoints,
             customersServed,
             lastRepPointLost);
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
