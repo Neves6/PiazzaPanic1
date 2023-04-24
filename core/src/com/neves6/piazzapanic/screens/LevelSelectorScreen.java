@@ -45,7 +45,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
   Skin skin;
   TextureAtlas atlas;
   boolean resumeFlag = false;
-  Container<Slider> container;
   Skin skinSmall;
   TextureAtlas atlasSmall;
   TextButton.TextButtonStyle buttonStyleSmall;
@@ -192,7 +191,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
     minusButton = new TextButton("-", buttonStyleSmall);
     minusButton.setPosition(
-        Gdx.graphics.getWidth() / 2 - minusButton.getWidth(),
+        Gdx.graphics.getWidth() / 2f - minusButton.getWidth(),
         Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);
     minusButton.addListener(
         new ChangeListener() {
@@ -225,7 +224,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     if (json.exists() && json.length() != 0) {
       resumeButton = new TextButton("Resume", buttonStyle);
       resumeButton.setPosition(
-          Gdx.graphics.getWidth() / 2f - resumeButton.getWidth() / 2 + resumeButton.getWidth() * 2f,
+          hardButton.getX() + 3 * resumeButton.getWidth() / 4f,
           Gdx.graphics.getHeight() / 5.5f - resumeButton.getHeight() / 2);
       resumeButton.addListener(
           new ChangeListener() {
@@ -276,8 +275,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
       font.draw(
           game.getBatch(),
           "Customers: " + customers,
-          Gdx.graphics.getWidth() / 2 - (0.75f * minusButton.getWidth()),
-          Gdx.graphics.getHeight() / 10f,
+          Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
+          Gdx.graphics.getHeight() / 9.5f,
           winWidth / 5f,
           1,
           false);
@@ -297,32 +296,33 @@ public class LevelSelectorScreen extends ScreenAdapter {
   public void resize(int width, int height) {
     super.resize(width, height);
 
-    plusButton.setPosition(
-        Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),
-        Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);
     easyButton.setPosition(
         width / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,
         height / 2f - easyButton.getHeight() / 2);
     mediumButton.setPosition(
-        width / 2f - mediumButton.getWidth() / 2, height / 2f - mediumButton.getHeight() / 2);
+        width / 2f - mediumButton.getWidth() / 2,
+        height / 2f - mediumButton.getHeight() / 2);
     hardButton.setPosition(
         width / 2f - hardButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,
         height / 2f - hardButton.getHeight() / 2);
     customerGameModeButton.setPosition(
-        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 4f - easyButton.getHeight() / 2);
+        width / 2f - customerGameModeButton.getWidth() / 2,
+        height / 4f - easyButton.getHeight() / 2);
     powerupGameModeButton.setPosition(
-        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 3f - easyButton.getHeight() / 2);
+        width / 2f - powerupGameModeButton.getWidth() / 2,
+        height / 3f - easyButton.getHeight() / 2);
     returnButton.setPosition(
-        Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,
-        Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);
+        easyButton.getX() - 3 * returnButton.getWidth() / 4f,
+        height / 5.5f - returnButton.getHeight() / 2);
+    plusButton.setPosition(
+        hardButton.getX() + 3 * resumeButton.getWidth() / 4f - plusButton.getWidth(),
+        height / 10f - plusButton.getHeight() / 2);
     minusButton.setPosition(
-        Gdx.graphics.getWidth() / 2 - minusButton.getWidth() * 1.5f,
-        Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);
+        returnButton.getX() + returnButton.getWidth(),
+        height / 10f - minusButton.getHeight() / 2);
     textDisplay.setPosition(
-        Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,
-        Gdx.graphics.getHeight() / 2f + Gdx.graphics.getHeight() / 5f);
+        width / 2f - textDisplay.getWidth() / 2f,
+        height / 2f + Gdx.graphics.getHeight() / 5f);
 
     stage.clear();
     stage.addActor(easyButton);
