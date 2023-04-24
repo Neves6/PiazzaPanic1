@@ -553,7 +553,7 @@ public class ScenarioGameMaster {
   /**
    * Setter method for reputation points.
    *
-   * @param reputationPoints Number of reputation points.
+   * @param overwriteValue Number of reputation points.
    */
   public void setReputationPoints(int overwriteValue) {
     reputationPoints.overwritePoints(overwriteValue);
