@@ -328,7 +328,7 @@ public class ScenarioGameMaster {
             customersServed,
             lastRepPointLost);
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
-      createCustomers(
+      lastCustomer = createCustomers(
           customers,
           lastCustomer,
           customersServed,

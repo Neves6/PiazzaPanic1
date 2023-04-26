@@ -15,6 +15,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   OrthographicCamera camera;
   BitmapFont font;
   Texture tutorial;
+  Texture tutorial2;
   int winWidth;
   int winHeight;
   String continueTo;
@@ -28,6 +29,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     this.continueTo = continueTo;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
+    tutorial2 = new Texture(Gdx.files.internal("tutorialmap.png"));
     this.scenerio = endless;
     this.disablePowerUp = disablePowerup;
     if (endless) {
@@ -47,6 +49,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     this.continueTo = continueTo;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
+    tutorial2 = new Texture(Gdx.files.internal("tutorialmap.png"));
     this.scenerio = endless;
     this.disablePowerUp = disablePowerup;
     this.custNo = custNo;
@@ -108,6 +111,11 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
+    if (!(tutorial.equals(tutorial2))){
+      tutorial = tutorial2;
+      return true;
+    }
+
     switch (continueTo) {
       case "title":
         game.setScreen(new TitleScreen(game));
