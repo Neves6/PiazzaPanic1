@@ -34,11 +34,9 @@ public class ScenarioGameMaster {
   Tray tray2 = new Tray();
   int selectedChef;
   float totalTimer;
-  Sound grill;
-  Sound chopping;
+  Sound machineInteract;
   Sound serving;
   Sound fridge;
-  Sound forming;
   Sound trash;
   float soundVolume;
   ArrayList<String> settings;
@@ -48,9 +46,7 @@ public class ScenarioGameMaster {
   int customersServed;
   int maxCustomers;
   int customersGenerated;
-  int timeAllowed;
   float lastCustomer;
-  float waitTime;
   Boolean isPowerUp;
   PowerUpRunner powerups;
   ReputationPoints reputationPoints = new ReputationPoints(3);
@@ -159,12 +155,9 @@ public class ScenarioGameMaster {
         "oven-pizza-2", new Machine("oven-pizza-2", "raw pizza", "pizza", 3, true, "pizza"));
 
     // disposal and tray/serving handled separately
-
-    grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
-    chopping = Gdx.audio.newSound(Gdx.files.internal("sounds/chopping.mp3"));
     serving = Gdx.audio.newSound(Gdx.files.internal("sounds/serving.mp3"));
     fridge = Gdx.audio.newSound(Gdx.files.internal("sounds/fridge.mp3"));
-    forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
+    machineInteract = Gdx.audio.newSound(Gdx.files.internal("sounds/charging-machine-90403.mp3"));
     trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
 
     switch (settings.get(1).trim()) {
@@ -439,10 +432,12 @@ public class ScenarioGameMaster {
       if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)
           && machines.get(ob.getName()) == chef.getMachineInteractingWith()) {
         machines.get(ob.getName()).attemptCompleteAction();
+        machineInteract.play(soundVolume);
       } else if (map.detectInteractionFromTiledObject(map.loadRectangle(ob), targetx, targety)
           && chef.getMachineInteractingWith() == null
           && machines.get(ob.getName()).getInput().equals(invTop)) {
         machines.get(ob.getName()).process(chef, machineUnlockBalance);
+        machineInteract.play(soundVolume);
       }
     }
 
