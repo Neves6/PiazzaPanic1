@@ -182,4 +182,11 @@ public class Machine {
   public void changeProcessingTime(float newTime) {
     this.processingTime = newTime;
   }
+
+  /**
+   * Getter method for machine's unique ID.
+   *
+   * @return unlock ID of machine.
+   */
+  public String getUnlockID() {return unlockID;}
 }

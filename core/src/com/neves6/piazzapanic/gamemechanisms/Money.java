@@ -138,6 +138,12 @@ public class Money {
     return balance;
   }
 
+  /**
+   * Getter method for unlock price of a station.
+   *
+   * @param station name of station.
+   * @return cost of unlock.
+   */
   public float getUnlockPrice(String station) {
     return unlockDetails.get(station).get(0);
   }
