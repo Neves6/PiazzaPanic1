@@ -147,7 +147,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     winHeight = Gdx.graphics.getHeight();
 
     camera.update();
-    // game.batch.setProjectionMatrix(camera.combined);
+    game.getBatch().setProjectionMatrix(camera.combined);
 
     renderer.setView(camera);
     renderer.render(renderableLayers);
