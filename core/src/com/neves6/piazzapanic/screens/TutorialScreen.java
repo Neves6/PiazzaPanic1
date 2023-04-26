@@ -111,7 +111,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
-    if (!(tutorial.equals(tutorial2))){
+    if (!(tutorial.equals(tutorial2))) {
       tutorial = tutorial2;
       return true;
     }
