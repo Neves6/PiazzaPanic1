@@ -11,7 +11,7 @@ public class Person {
   /**
    * Person constructor.
    *
-   * @param name   Name of person.
+   * @param name Name of person.
    * @param xcoord logical x coordinate of person.
    * @param ycoord logical y coordinate of person.
    */

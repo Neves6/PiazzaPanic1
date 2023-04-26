@@ -23,6 +23,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   int custNo;
 
   public TutorialScreen(
+
 <span class="nc" id="L26">      PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup) {</span>
 <span class="nc" id="L27">    this.game = game;</span>
 <span class="nc" id="L28">    this.continueTo = continueTo;</span>
@@ -34,6 +35,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 <span class="nc" id="L34">      custNo = -1;</span>
     } else {
 <span class="nc" id="L36">      custNo = 5;</span>
+
     }
 <span class="nc" id="L38">  }</span>
 
@@ -55,6 +57,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   /** What to show when this screen is loaded. */
   @Override
   public void show() {
+
 <span class="nc" id="L58">    camera = new OrthographicCamera();</span>
 <span class="nc" id="L59">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
 <span class="nc" id="L60">    Gdx.input.setInputProcessor(this);</span>
@@ -89,9 +92,11 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void resize(int width, int height) {
+
 <span class="nc" id="L92">    super.resize(width, height);</span>
 <span class="nc" id="L93">    camera.setToOrtho(false, width, height);</span>
 <span class="nc" id="L94">  }</span>
+
 
   /** Method which runs when the screen transitions to another. */
   @Override
@@ -108,6 +113,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
+
 <span class="nc bnc" id="L111" title="All 6 branches missed.">    switch (continueTo) {</span>
       case &quot;title&quot;:
 <span class="nc" id="L113">        game.setScreen(new TitleScreen(game));</span>
@@ -121,6 +127,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
       case &quot;hardGame&quot;:
 <span class="nc" id="L122">        game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp, custNo));</span>
 <span class="nc" id="L123">        break;</span>
+
       case &quot;resume&quot;:
         try {
 <span class="nc" id="L126">          game.setScreen(new GameScreen(game));</span>
@@ -129,10 +136,12 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 <span class="nc" id="L129">        }</span>
         break;
       default:
+
 <span class="nc" id="L132">        game.setScreen(new TitleScreen(game));</span>
         break;
     }
 <span class="nc" id="L135">    return true;</span>
+
   }
 
   /**
