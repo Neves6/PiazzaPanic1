@@ -62,10 +62,8 @@ public class TestTray {
     testMoney.addGroup("server-staff", 100f);
 
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
-    assertTrue(
-        "add chefs inventory to the contents",
-        testTray.getList().equals(new ArrayList<>(Arrays.asList("tomato"))));
-  }
+    assertTrue("add chefs inventory to the contents", testTray.getList().equals(new ArrayList<>(Arrays.asList("tomato"))));
+    }
 
   @Test
   public void testAddToTrayRuined() {
@@ -88,10 +86,9 @@ public class TestTray {
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
-    assertTrue(
-        "creates ruined recipe due to too many ingredients",
-        testChef1.getInventory().pop().equals("ruined hamburger"));
+    assertTrue("creates ruined recipe due to too many ingredients", testChef1.getInventory().pop().equals("ruined hamburger"));
     assertTrue(testTray.getList().isEmpty());
+
   }
 
   @Test
@@ -109,7 +106,7 @@ public class TestTray {
     Queue<Customer> customers = new LinkedList<>();
     customers.add(new Customer("bob", 2, 2, "hamburger", 1));
     Money testMoney = new Money();
-    testMoney.addGroup("server-staff", 100f);
+    testMoney.addGroup("server-staff", 0f);
 
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
@@ -139,7 +136,11 @@ public class TestTray {
 
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
+    assertTrue("test empty", testTray.getList().isEmpty());
+    Queue<Customer> customers1 = new LinkedList<>();
+    testChef1.addToInventory("tomato");
+    testTray.addToTray(testChef1, testStaff, customers1, testMoney);
+    assertTrue("add chefs inventory to the contents", testTray.getList().equals(new ArrayList<>(Arrays.asList("tomato"))));
 
-    assertTrue(testChef1.getInventory().isEmpty());
   }
 }

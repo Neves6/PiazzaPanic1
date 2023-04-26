@@ -1,8 +1,5 @@
 package com.neves6.piazzapanic.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
@@ -11,11 +8,13 @@ import java.util.Stack;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.*;
+
 @RunWith(GdxTestRunner.class)
-public class MachineTest {
+public class TestMachine {
 
   @Test
-  public void testProcess() {
+  public void testProcessValid() {
     // test chef inventory and if sticky
     Stack<String> inventory = new Stack<>();
     Chef testChef = new Chef("Xavier", 0, 0, 5, 5, 5, false, inventory, 1);
@@ -33,6 +32,21 @@ public class MachineTest {
         Objects.equals(testChef.getInventory().peek(), "Cooked Patty")
             && testChef2.getIsStickied()
             && Objects.equals(testChef2.getInventory().peek(), "Burger"));
+  }
+
+  @Test
+  public void testProcessInvalid() {
+    // test chef inventory and if sticky
+    Stack<String> inventory = new Stack<>();
+    Chef testChef = new Chef("Xavier", 0, 0, 5, 5, 5, false, inventory, 1);
+    Machine testMachine = new Machine("Grill", "patty", "Cooked Patty", 0, true);
+    Money currency = new Money();
+    testChef.addToInventory("test");
+    currency.addGroup("Grill", 100f);
+    testMachine.process(testChef, currency);
+    assertEquals("Chef should not interact with locked machine", "test", testChef.getInventory().peek());
+    currency.unlockMachine(testMachine.getUnlockID());
+    assertFalse("Chef should not interact with machine if incorrect item is held", testChef.getIsStickied());
   }
 
   @Test

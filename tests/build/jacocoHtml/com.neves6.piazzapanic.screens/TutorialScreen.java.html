@@ -23,19 +23,21 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   int custNo;
 
   public TutorialScreen(
-<span class="fc" id="L26">      PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup) {</span>
-<span class="fc" id="L27">    this.game = game;</span>
-<span class="fc" id="L28">    this.continueTo = continueTo;</span>
-<span class="fc" id="L29">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
-<span class="fc" id="L30">    tutorial = new Texture(Gdx.files.internal(&quot;tutorial.png&quot;));</span>
-<span class="fc" id="L31">    this.scenerio = endless;</span>
-<span class="fc" id="L32">    this.disablePowerUp = disablePowerup;</span>
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">    if (endless) {</span>
+
+<span class="nc" id="L26">      PiazzaPanicGame game, String continueTo, Boolean endless, Boolean disablePowerup) {</span>
+<span class="nc" id="L27">    this.game = game;</span>
+<span class="nc" id="L28">    this.continueTo = continueTo;</span>
+<span class="nc" id="L29">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
+<span class="nc" id="L30">    tutorial = new Texture(Gdx.files.internal(&quot;tutorial.png&quot;));</span>
+<span class="nc" id="L31">    this.scenerio = endless;</span>
+<span class="nc" id="L32">    this.disablePowerUp = disablePowerup;</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">    if (endless) {</span>
 <span class="nc" id="L34">      custNo = -1;</span>
     } else {
-<span class="fc" id="L36">      custNo = 5;</span>
+<span class="nc" id="L36">      custNo = 5;</span>
+
     }
-<span class="fc" id="L38">  }</span>
+<span class="nc" id="L38">  }</span>
 
   public TutorialScreen(
       PiazzaPanicGame game,
@@ -55,10 +57,11 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   /** What to show when this screen is loaded. */
   @Override
   public void show() {
-<span class="fc" id="L58">    camera = new OrthographicCamera();</span>
-<span class="fc" id="L59">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
-<span class="fc" id="L60">    Gdx.input.setInputProcessor(this);</span>
-<span class="fc" id="L61">  }</span>
+
+<span class="nc" id="L58">    camera = new OrthographicCamera();</span>
+<span class="nc" id="L59">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="nc" id="L60">    Gdx.input.setInputProcessor(this);</span>
+<span class="nc" id="L61">  }</span>
 
   /**
    * What to process in every frame.
@@ -89,9 +92,11 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void resize(int width, int height) {
-<span class="fc" id="L92">    super.resize(width, height);</span>
-<span class="fc" id="L93">    camera.setToOrtho(false, width, height);</span>
-<span class="fc" id="L94">  }</span>
+
+<span class="nc" id="L92">    super.resize(width, height);</span>
+<span class="nc" id="L93">    camera.setToOrtho(false, width, height);</span>
+<span class="nc" id="L94">  }</span>
+
 
   /** Method which runs when the screen transitions to another. */
   @Override
@@ -108,19 +113,21 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public boolean keyDown(int keycode) {
-<span class="pc bpc" id="L111" title="1 of 6 branches missed.">    switch (continueTo) {</span>
+
+<span class="nc bnc" id="L111" title="All 6 branches missed.">    switch (continueTo) {</span>
       case &quot;title&quot;:
-<span class="fc" id="L113">        game.setScreen(new TitleScreen(game));</span>
-<span class="fc" id="L114">        break;</span>
+<span class="nc" id="L113">        game.setScreen(new TitleScreen(game));</span>
+<span class="nc" id="L114">        break;</span>
       case &quot;easyGame&quot;:
-<span class="fc" id="L116">        game.setScreen(new GameScreen(game, 1, scenerio, disablePowerUp, custNo));</span>
-<span class="fc" id="L117">        break;</span>
+<span class="nc" id="L116">        game.setScreen(new GameScreen(game, 1, scenerio, disablePowerUp, custNo));</span>
+<span class="nc" id="L117">        break;</span>
       case &quot;mediumGame&quot;:
-<span class="fc" id="L119">        game.setScreen(new GameScreen(game, 2, scenerio, disablePowerUp, custNo));</span>
-<span class="fc" id="L120">        break;</span>
+<span class="nc" id="L119">        game.setScreen(new GameScreen(game, 2, scenerio, disablePowerUp, custNo));</span>
+<span class="nc" id="L120">        break;</span>
       case &quot;hardGame&quot;:
-<span class="fc" id="L122">        game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp, custNo));</span>
-<span class="fc" id="L123">        break;</span>
+<span class="nc" id="L122">        game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp, custNo));</span>
+<span class="nc" id="L123">        break;</span>
+
       case &quot;resume&quot;:
         try {
 <span class="nc" id="L126">          game.setScreen(new GameScreen(game));</span>
@@ -129,10 +136,12 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
 <span class="nc" id="L129">        }</span>
         break;
       default:
-<span class="fc" id="L132">        game.setScreen(new TitleScreen(game));</span>
+
+<span class="nc" id="L132">        game.setScreen(new TitleScreen(game));</span>
         break;
     }
-<span class="fc" id="L135">    return true;</span>
+<span class="nc" id="L135">    return true;</span>
+
   }
 
   /**

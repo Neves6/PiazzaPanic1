@@ -16,7 +16,7 @@ import java.io.File;
 
 /** Screen used to select which level wants to be played. */
 public class LevelSelectorScreen extends ScreenAdapter {
-<span class="fc" id="L19">  int customers = 5;</span>
+<span class="nc" id="L19">  int customers = 5;</span>
   PiazzaPanicGame game;
   OrthographicCamera camera;
   BitmapFont font;
@@ -44,7 +44,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
   Button returnButton;
   Skin skin;
   TextureAtlas atlas;
-<span class="fc" id="L47">  boolean resumeFlag = false;</span>
+<span class="nc" id="L47">  boolean resumeFlag = false;</span>
   Container&lt;Slider&gt; container;
   Skin skinSmall;
   TextureAtlas atlasSmall;
@@ -56,57 +56,57 @@ public class LevelSelectorScreen extends ScreenAdapter {
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
-<span class="fc" id="L59">  public LevelSelectorScreen(PiazzaPanicGame game) {</span>
-<span class="fc" id="L60">    this.game = game;</span>
-<span class="fc" id="L61">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
-<span class="fc" id="L62">    bg = new Texture(Gdx.files.internal(&quot;title_screen_large-min.png&quot;));</span>
-<span class="fc" id="L63">    lock = new Texture(Gdx.files.internal(&quot;levellocked.png&quot;));</span>
-<span class="fc" id="L64">    leftCustomerMode = new Texture(Gdx.files.internal(&quot;left-scenario-slider.png&quot;));</span>
-<span class="fc" id="L65">    rightCustomerMode = new Texture(Gdx.files.internal(&quot;right-scenario-slider.png&quot;));</span>
-<span class="fc" id="L66">    leftPowerupMode = new Texture(Gdx.files.internal(&quot;left-powerup-slider.png&quot;));</span>
-<span class="fc" id="L67">    rightPowerupMode = new Texture(Gdx.files.internal(&quot;right-powerup-slider.png&quot;));</span>
-<span class="fc" id="L68">    knob = new Texture(Gdx.files.internal(&quot;buttons/knob.png&quot;));</span>
-<span class="fc" id="L69">    slider = new Texture(Gdx.files.internal(&quot;buttons/slider.png&quot;));</span>
-<span class="fc" id="L70">  }</span>
+<span class="nc" id="L59">  public LevelSelectorScreen(PiazzaPanicGame game) {</span>
+<span class="nc" id="L60">    this.game = game;</span>
+<span class="nc" id="L61">    font = new BitmapFont(Gdx.files.internal(&quot;fonts/IBM_Plex_Mono_SemiBold.fnt&quot;));</span>
+<span class="nc" id="L62">    bg = new Texture(Gdx.files.internal(&quot;title_screen_large-min.png&quot;));</span>
+<span class="nc" id="L63">    lock = new Texture(Gdx.files.internal(&quot;levellocked.png&quot;));</span>
+<span class="nc" id="L64">    leftCustomerMode = new Texture(Gdx.files.internal(&quot;left-scenario-slider.png&quot;));</span>
+<span class="nc" id="L65">    rightCustomerMode = new Texture(Gdx.files.internal(&quot;right-scenario-slider.png&quot;));</span>
+<span class="nc" id="L66">    leftPowerupMode = new Texture(Gdx.files.internal(&quot;left-powerup-slider.png&quot;));</span>
+<span class="nc" id="L67">    rightPowerupMode = new Texture(Gdx.files.internal(&quot;right-powerup-slider.png&quot;));</span>
+<span class="nc" id="L68">    knob = new Texture(Gdx.files.internal(&quot;buttons/knob.png&quot;));</span>
+<span class="nc" id="L69">    slider = new Texture(Gdx.files.internal(&quot;buttons/slider.png&quot;));</span>
+<span class="nc" id="L70">  }</span>
 
   /** What to show when this screen is loaded. */
   @Override
   public void show() {
-<span class="fc" id="L75">    camera = new OrthographicCamera();</span>
-<span class="fc" id="L76">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="nc" id="L75">    camera = new OrthographicCamera();</span>
+<span class="nc" id="L76">    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
 
-<span class="fc" id="L78">    skin = new Skin();</span>
-<span class="fc" id="L79">    atlas = new TextureAtlas(Gdx.files.internal(&quot;buttons/levelselector/levelselector.atlas&quot;));</span>
-<span class="fc" id="L80">    skin.addRegions(atlas);</span>
-<span class="fc" id="L81">    buttonStyle = new TextButton.TextButtonStyle();</span>
-<span class="fc" id="L82">    buttonStyle.font = font;</span>
-<span class="fc" id="L83">    buttonStyle.up = skin.getDrawable(&quot;black_alpha_square&quot;);</span>
-<span class="fc" id="L84">    buttonStyle.down = skin.getDrawable(&quot;black_alpha_square&quot;);</span>
-<span class="fc" id="L85">    buttonStyle.checked = skin.getDrawable(&quot;black_alpha_square&quot;);</span>
+<span class="nc" id="L78">    skin = new Skin();</span>
+<span class="nc" id="L79">    atlas = new TextureAtlas(Gdx.files.internal(&quot;buttons/levelselector/levelselector.atlas&quot;));</span>
+<span class="nc" id="L80">    skin.addRegions(atlas);</span>
+<span class="nc" id="L81">    buttonStyle = new TextButton.TextButtonStyle();</span>
+<span class="nc" id="L82">    buttonStyle.font = font;</span>
+<span class="nc" id="L83">    buttonStyle.up = skin.getDrawable(&quot;black_alpha_square&quot;);</span>
+<span class="nc" id="L84">    buttonStyle.down = skin.getDrawable(&quot;black_alpha_square&quot;);</span>
+<span class="nc" id="L85">    buttonStyle.checked = skin.getDrawable(&quot;black_alpha_square&quot;);</span>
 
-<span class="fc" id="L87">    skinSmall = new Skin();</span>
-<span class="fc" id="L88">    atlasSmall = new TextureAtlas(Gdx.files.internal(&quot;buttons/title/unnamed.atlas&quot;));</span>
-<span class="fc" id="L89">    skinSmall.addRegions(atlasSmall);</span>
-<span class="fc" id="L90">    buttonStyleSmall = new TextButton.TextButtonStyle();</span>
-<span class="fc" id="L91">    buttonStyleSmall.font = font;</span>
-<span class="fc" id="L92">    buttonStyleSmall.up = skinSmall.getDrawable(&quot;black_alpha_mid&quot;);</span>
-<span class="fc" id="L93">    buttonStyleSmall.down = skinSmall.getDrawable(&quot;black_alpha_mid&quot;);</span>
-<span class="fc" id="L94">    buttonStyleSmall.checked = skinSmall.getDrawable(&quot;black_alpha_mid&quot;);</span>
+<span class="nc" id="L87">    skinSmall = new Skin();</span>
+<span class="nc" id="L88">    atlasSmall = new TextureAtlas(Gdx.files.internal(&quot;buttons/title/unnamed.atlas&quot;));</span>
+<span class="nc" id="L89">    skinSmall.addRegions(atlasSmall);</span>
+<span class="nc" id="L90">    buttonStyleSmall = new TextButton.TextButtonStyle();</span>
+<span class="nc" id="L91">    buttonStyleSmall.font = font;</span>
+<span class="nc" id="L92">    buttonStyleSmall.up = skinSmall.getDrawable(&quot;black_alpha_mid&quot;);</span>
+<span class="nc" id="L93">    buttonStyleSmall.down = skinSmall.getDrawable(&quot;black_alpha_mid&quot;);</span>
+<span class="nc" id="L94">    buttonStyleSmall.checked = skinSmall.getDrawable(&quot;black_alpha_mid&quot;);</span>
 
-<span class="fc" id="L96">    easyButton = new TextButton(&quot;Easy&quot;, buttonStyle);</span>
-<span class="fc" id="L97">    easyButton.setPosition(</span>
-<span class="fc" id="L98">        Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,</span>
-<span class="fc" id="L99">        Gdx.graphics.getHeight() / 2f - easyButton.getHeight() / 2);</span>
-<span class="fc" id="L100">    mediumButton = new TextButton(&quot;Medium&quot;, buttonStyle);</span>
-<span class="fc" id="L101">    mediumButton.setPosition(</span>
-<span class="fc" id="L102">        Gdx.graphics.getWidth() / 2f - mediumButton.getWidth() / 2,</span>
-<span class="fc" id="L103">        Gdx.graphics.getHeight() / 2f - mediumButton.getHeight() / 2);</span>
-<span class="fc" id="L104">    hardButton = new TextButton(&quot;Hard&quot;, buttonStyle);</span>
-<span class="fc" id="L105">    hardButton.setPosition(</span>
-<span class="fc" id="L106">        Gdx.graphics.getWidth() / 2f - hardButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,</span>
-<span class="fc" id="L107">        Gdx.graphics.getHeight() / 2f - hardButton.getHeight() / 2);</span>
-<span class="fc" id="L108">    easyButton.addListener(</span>
-<span class="fc" id="L109">        new ChangeListener() {</span>
+<span class="nc" id="L96">    easyButton = new TextButton(&quot;Easy&quot;, buttonStyle);</span>
+<span class="nc" id="L97">    easyButton.setPosition(</span>
+<span class="nc" id="L98">        Gdx.graphics.getWidth() / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,</span>
+<span class="nc" id="L99">        Gdx.graphics.getHeight() / 2f - easyButton.getHeight() / 2);</span>
+<span class="nc" id="L100">    mediumButton = new TextButton(&quot;Medium&quot;, buttonStyle);</span>
+<span class="nc" id="L101">    mediumButton.setPosition(</span>
+<span class="nc" id="L102">        Gdx.graphics.getWidth() / 2f - mediumButton.getWidth() / 2,</span>
+<span class="nc" id="L103">        Gdx.graphics.getHeight() / 2f - mediumButton.getHeight() / 2);</span>
+<span class="nc" id="L104">    hardButton = new TextButton(&quot;Hard&quot;, buttonStyle);</span>
+<span class="nc" id="L105">    hardButton.setPosition(</span>
+<span class="nc" id="L106">        Gdx.graphics.getWidth() / 2f - hardButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,</span>
+<span class="nc" id="L107">        Gdx.graphics.getHeight() / 2f - hardButton.getHeight() / 2);</span>
+<span class="nc" id="L108">    easyButton.addListener(</span>
+<span class="nc" id="L109">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc" id="L112">            game.setScreen(</span>
@@ -118,8 +118,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
 <span class="nc" id="L118">                    customers));</span>
 <span class="nc" id="L119">          }</span>
         });
-<span class="fc" id="L121">    mediumButton.addListener(</span>
-<span class="fc" id="L122">        new ChangeListener() {</span>
+<span class="nc" id="L121">    mediumButton.addListener(</span>
+<span class="nc" id="L122">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc" id="L125">            game.setScreen(</span>
@@ -131,8 +131,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
 <span class="nc" id="L131">                    customers));</span>
 <span class="nc" id="L132">          }</span>
         });
-<span class="fc" id="L134">    hardButton.addListener(</span>
-<span class="fc" id="L135">        new ChangeListener() {</span>
+<span class="nc" id="L134">    hardButton.addListener(</span>
+<span class="nc" id="L135">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc" id="L138">            game.setScreen(</span>
@@ -146,106 +146,103 @@ public class LevelSelectorScreen extends ScreenAdapter {
         });
 
     // New assessment two buttons.
-<span class="fc" id="L149">    customerGameModeButton =</span>
+<span class="nc" id="L149">    customerGameModeButton =</span>
         new ImageButton(
             new TextureRegionDrawable(leftCustomerMode),
             new TextureRegionDrawable(rightCustomerMode),
             new TextureRegionDrawable(rightCustomerMode));
-<span class="fc" id="L154">    customerGameModeButton.setPosition(</span>
-<span class="fc" id="L155">        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,</span>
-<span class="fc" id="L156">        Gdx.graphics.getHeight() / 4f - easyButton.getHeight() / 2);</span>
+<span class="nc" id="L154">    customerGameModeButton.setPosition(</span>
+<span class="nc" id="L155">        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,</span>
+<span class="nc" id="L156">        Gdx.graphics.getHeight() / 4f - easyButton.getHeight() / 2);</span>
 
-<span class="fc" id="L158">    powerupGameModeButton =</span>
+<span class="nc" id="L158">    powerupGameModeButton =</span>
         new ImageButton(
             new TextureRegionDrawable(leftPowerupMode),
             new TextureRegionDrawable(rightPowerupMode),
             new TextureRegionDrawable(rightPowerupMode));
-<span class="fc" id="L163">    powerupGameModeButton.setPosition(</span>
-<span class="fc" id="L164">        Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,</span>
-<span class="fc" id="L165">        Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);</span>
+<span class="nc" id="L163">    powerupGameModeButton.setPosition(</span>
+<span class="nc" id="L164">        Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,</span>
+<span class="nc" id="L165">        Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);</span>
 
-<span class="fc" id="L167">    returnButton = new TextButton(&quot;Back&quot;, buttonStyle);</span>
-<span class="fc" id="L168">    returnButton.setPosition(</span>
-<span class="fc" id="L169">        Gdx.graphics.getWidth() / 2f - returnButton.getWidth() / 2 + returnButton.getWidth() * 2f,</span>
-<span class="fc" id="L170">        Gdx.graphics.getHeight() / 5.5f - returnButton.getHeight() / 2);</span>
-<span class="fc" id="L171">    returnButton.addListener(</span>
-<span class="fc" id="L172">        new ChangeListener() {</span>
+<span class="nc" id="L167">    returnButton = new TextButton(&quot;Back&quot;, buttonStyle);</span>
+<span class="nc" id="L168">    returnButton.setPosition(</span>
+<span class="nc" id="L169">        Gdx.graphics.getWidth() / 2f - returnButton.getWidth() / 2 + returnButton.getWidth() * 2f,</span>
+<span class="nc" id="L170">        Gdx.graphics.getHeight() / 5.5f - returnButton.getHeight() / 2);</span>
+<span class="nc" id="L171">    returnButton.addListener(</span>
+<span class="nc" id="L172">        new ChangeListener() {</span>
           @Override
           public void changed(ChangeEvent event, Actor actor) {
 <span class="nc" id="L175">            game.setScreen(new TitleScreen(game));</span>
 <span class="nc" id="L176">          }</span>
         });
 
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">    if (game.testMode) {</span>
-<span class="fc" id="L180">      return;</span>
-    }
+<span class="nc" id="L179">    plusButton = new TextButton(&quot;+&quot;, buttonStyleSmall);</span>
+<span class="nc" id="L180">    plusButton.setPosition(</span>
+<span class="nc" id="L181">        Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),</span>
+<span class="nc" id="L182">        Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);</span>
+<span class="nc" id="L183">    plusButton.addListener(</span>
+<span class="nc" id="L184">        new ChangeListener() {</span>
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            if (!(customers &gt;= 5)) {</span>
+<span class="nc" id="L188">              customers++;</span>
+            }
+<span class="nc" id="L190">          }</span>
+        });
 
-<span class="nc" id="L183">    plusButton = new TextButton(&quot;+&quot;, buttonStyleSmall);</span>
-<span class="nc" id="L184">    plusButton.setPosition(</span>
-<span class="nc" id="L185">            Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),</span>
-<span class="nc" id="L186">            Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);</span>
-<span class="nc" id="L187">    plusButton.addListener(new ChangeListener() {</span>
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-<span class="nc bnc" id="L190" title="All 2 branches missed.">        if (!(customers &gt;= 5)){</span>
-<span class="nc" id="L191">          customers ++;</span>
-        }
-<span class="nc" id="L193">      }</span>
-    });
+<span class="nc" id="L193">    minusButton = new TextButton(&quot;-&quot;, buttonStyleSmall);</span>
+<span class="nc" id="L194">    minusButton.setPosition(</span>
+<span class="nc" id="L195">        Gdx.graphics.getWidth() / 2 - minusButton.getWidth(),</span>
+<span class="nc" id="L196">        Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);</span>
+<span class="nc" id="L197">    minusButton.addListener(</span>
+<span class="nc" id="L198">        new ChangeListener() {</span>
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+<span class="nc bnc" id="L201" title="All 2 branches missed.">            if (!(customers &lt;= 1)) {</span>
+<span class="nc" id="L202">              customers--;</span>
+            }
+<span class="nc" id="L204">          }</span>
+        });
 
-<span class="nc" id="L196">    minusButton = new TextButton(&quot;-&quot;, buttonStyleSmall);</span>
-<span class="nc" id="L197">    minusButton.setPosition(</span>
-<span class="nc" id="L198">            Gdx.graphics.getWidth() / 2 - minusButton.getWidth(),</span>
-<span class="nc" id="L199">            Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);</span>
-<span class="nc" id="L200">    minusButton.addListener(new ChangeListener() {</span>
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (!(customers &lt;= 1)){</span>
-<span class="nc" id="L204">          customers --;</span>
-        }
-<span class="nc" id="L206">      }</span>
-    });
+<span class="nc" id="L207">    textDisplay = new TextButton(&quot;LEVEL SELECTION&quot;, buttonStyleSmall);</span>
+<span class="nc" id="L208">    textDisplay.setPosition(</span>
+<span class="nc" id="L209">        Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,</span>
+<span class="nc" id="L210">        Gdx.graphics.getHeight() / 2f + Gdx.graphics.getHeight() / 5f);</span>
 
-<span class="nc" id="L209">    textDisplay = new TextButton(&quot;LEVEL SELECTION&quot;, buttonStyleSmall);</span>
-<span class="nc" id="L210">    textDisplay.setPosition(Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,</span>
-<span class="nc" id="L211">            Gdx.graphics.getHeight() / 2f +  Gdx.graphics.getHeight() / 5f);</span>
+<span class="nc" id="L212">    stage = new Stage();</span>
+<span class="nc" id="L213">    Gdx.input.setInputProcessor(stage);</span>
+<span class="nc" id="L214">    stage.addActor(easyButton);</span>
+<span class="nc" id="L215">    stage.addActor(mediumButton);</span>
+<span class="nc" id="L216">    stage.addActor(hardButton);</span>
+<span class="nc" id="L217">    stage.addActor(customerGameModeButton);</span>
+<span class="nc" id="L218">    stage.addActor(powerupGameModeButton);</span>
+<span class="nc" id="L219">    stage.addActor(returnButton);</span>
+<span class="nc" id="L220">    stage.addActor(plusButton);</span>
+<span class="nc" id="L221">    stage.addActor(minusButton);</span>
+<span class="nc" id="L222">    stage.addActor(textDisplay);</span>
 
-
-<span class="nc" id="L214">    stage = new Stage();</span>
-<span class="nc" id="L215">    Gdx.input.setInputProcessor(stage);</span>
-<span class="nc" id="L216">    stage.addActor(easyButton);</span>
-<span class="nc" id="L217">    stage.addActor(mediumButton);</span>
-<span class="nc" id="L218">    stage.addActor(hardButton);</span>
-<span class="nc" id="L219">    stage.addActor(customerGameModeButton);</span>
-<span class="nc" id="L220">    stage.addActor(powerupGameModeButton);</span>
-<span class="nc" id="L221">    stage.addActor(returnButton);</span>
-<span class="nc" id="L222">    stage.addActor(plusButton);</span>
-<span class="nc" id="L223">    stage.addActor(minusButton);</span>
-<span class="nc" id="L224">    stage.addActor(textDisplay);</span>
-
-
-<span class="nc" id="L227">    File json = new File(&quot;here.json&quot;);</span>
-<span class="nc bnc" id="L228" title="All 4 branches missed.">    if (json.exists() &amp;&amp; json.length() != 0) {</span>
-<span class="nc" id="L229">      resumeButton = new TextButton(&quot;Resume&quot;, buttonStyle);</span>
-<span class="nc" id="L230">      resumeButton.setPosition(</span>
-<span class="nc" id="L231">          Gdx.graphics.getWidth() / 2f - resumeButton.getWidth() / 2 + resumeButton.getWidth() * 2f,</span>
-<span class="nc" id="L232">          Gdx.graphics.getHeight() / 5.5f - resumeButton.getHeight() / 2);</span>
-<span class="nc" id="L233">      resumeButton.addListener(</span>
-<span class="nc" id="L234">          new ChangeListener() {</span>
+<span class="nc" id="L224">    File json = new File(&quot;here.json&quot;);</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">    if (json.exists() &amp;&amp; json.length() != 0) {</span>
+<span class="nc" id="L226">      resumeButton = new TextButton(&quot;Resume&quot;, buttonStyle);</span>
+<span class="nc" id="L227">      resumeButton.setPosition(</span>
+<span class="nc" id="L228">          Gdx.graphics.getWidth() / 2f - resumeButton.getWidth() / 2 + resumeButton.getWidth() * 2f,</span>
+<span class="nc" id="L229">          Gdx.graphics.getHeight() / 5.5f - resumeButton.getHeight() / 2);</span>
+<span class="nc" id="L230">      resumeButton.addListener(</span>
+<span class="nc" id="L231">          new ChangeListener() {</span>
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-<span class="nc" id="L237">              game.setScreen(</span>
+<span class="nc" id="L234">              game.setScreen(</span>
                   new TutorialScreen(
                       game,
                       &quot;resume&quot;,
-<span class="nc" id="L241">                      customerGameModeButton.isChecked(),</span>
-<span class="nc" id="L242">                      powerupGameModeButton.isChecked()));</span>
-<span class="nc" id="L243">            }</span>
+<span class="nc" id="L238">                      customerGameModeButton.isChecked(),</span>
+<span class="nc" id="L239">                      powerupGameModeButton.isChecked()));</span>
+<span class="nc" id="L240">            }</span>
           });
-<span class="nc" id="L245">      stage.addActor(resumeButton);</span>
-<span class="nc" id="L246">      resumeFlag = true;</span>
+<span class="nc" id="L242">      stage.addActor(resumeButton);</span>
+<span class="nc" id="L243">      resumeFlag = true;</span>
     }
-<span class="nc" id="L248">  }</span>
+<span class="nc" id="L245">  }</span>
 
   /**
    * What to process in every frame.
@@ -254,41 +251,41 @@ public class LevelSelectorScreen extends ScreenAdapter {
    */
   @Override
   public void render(float delta) {
-<span class="nc" id="L257">    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
-<span class="nc" id="L258">    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</span>
+<span class="nc" id="L254">    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="nc" id="L255">    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</span>
 
-<span class="nc" id="L260">    winWidth = Gdx.graphics.getWidth();</span>
-<span class="nc" id="L261">    winHeight = Gdx.graphics.getHeight();</span>
-<span class="nc" id="L262">    bgScaleFactor = (float) winHeight / (float) bg.getHeight();</span>
+<span class="nc" id="L257">    winWidth = Gdx.graphics.getWidth();</span>
+<span class="nc" id="L258">    winHeight = Gdx.graphics.getHeight();</span>
+<span class="nc" id="L259">    bgScaleFactor = (float) winHeight / (float) bg.getHeight();</span>
 
-<span class="nc" id="L264">    camera.update();</span>
-<span class="nc" id="L265">    game.getBatch().setProjectionMatrix(camera.combined);</span>
+<span class="nc" id="L261">    camera.update();</span>
+<span class="nc" id="L262">    game.getBatch().setProjectionMatrix(camera.combined);</span>
 
-<span class="nc" id="L267">    game.getBatch().begin();</span>
-<span class="nc" id="L268">    game.getBatch()</span>
-<span class="nc" id="L269">        .draw(</span>
+<span class="nc" id="L264">    game.getBatch().begin();</span>
+<span class="nc" id="L265">    game.getBatch()</span>
+<span class="nc" id="L266">        .draw(</span>
             bg,
-<span class="nc" id="L271">            -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,</span>
+<span class="nc" id="L268">            -((bg.getWidth() * bgScaleFactor) - winWidth) / 2,</span>
             0,
-<span class="nc" id="L273">            bg.getWidth() * bgScaleFactor,</span>
-<span class="nc" id="L274">            bg.getHeight() * bgScaleFactor);</span>
-<span class="nc" id="L275">    game.getBatch().end();</span>
+<span class="nc" id="L270">            bg.getWidth() * bgScaleFactor,</span>
+<span class="nc" id="L271">            bg.getHeight() * bgScaleFactor);</span>
+<span class="nc" id="L272">    game.getBatch().end();</span>
 
-<span class="nc" id="L277">    game.getBatch().begin();</span>
-<span class="nc bnc" id="L278" title="All 2 branches missed.">    if (customerGameModeButton.isChecked()) {</span>
-<span class="nc" id="L279">      font.draw(</span>
-<span class="nc" id="L280">              game.getBatch(),</span>
-              &quot;Customers: &quot; + customers,
-<span class="nc" id="L282">              Gdx.graphics.getWidth() / 2 - (0.75f * minusButton.getWidth()),</span>
-<span class="nc" id="L283">              Gdx.graphics.getHeight() / 10f,</span>
-              winWidth / 5f,
-              1,
-              false);
+<span class="nc" id="L274">    game.getBatch().begin();</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">    if (customerGameModeButton.isChecked()) {</span>
+<span class="nc" id="L276">      font.draw(</span>
+<span class="nc" id="L277">          game.getBatch(),</span>
+          &quot;Customers: &quot; + customers,
+<span class="nc" id="L279">          Gdx.graphics.getWidth() / 2 - (0.75f * minusButton.getWidth()),</span>
+<span class="nc" id="L280">          Gdx.graphics.getHeight() / 10f,</span>
+          winWidth / 5f,
+          1,
+          false);
     }
 
-<span class="nc" id="L289">    stage.draw();</span>
-<span class="nc" id="L290">    game.getBatch().end();</span>
-<span class="nc" id="L291">  }</span>
+<span class="nc" id="L286">    stage.draw();</span>
+<span class="nc" id="L287">    game.getBatch().end();</span>
+<span class="nc" id="L288">  }</span>
 
   /**
    * Changes size of input upon user adjustment.
@@ -298,66 +295,63 @@ public class LevelSelectorScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-<span class="pc bpc" id="L301" title="1 of 2 branches missed.">    if (game.testMode) {</span>
-<span class="fc" id="L302">      return;</span>
+<span class="nc" id="L298">    super.resize(width, height);</span>
+
+<span class="nc" id="L300">    plusButton.setPosition(</span>
+<span class="nc" id="L301">        Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),</span>
+<span class="nc" id="L302">        Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);</span>
+<span class="nc" id="L303">    easyButton.setPosition(</span>
+<span class="nc" id="L304">        width / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,</span>
+<span class="nc" id="L305">        height / 2f - easyButton.getHeight() / 2);</span>
+<span class="nc" id="L306">    mediumButton.setPosition(</span>
+<span class="nc" id="L307">        width / 2f - mediumButton.getWidth() / 2, height / 2f - mediumButton.getHeight() / 2);</span>
+<span class="nc" id="L308">    hardButton.setPosition(</span>
+<span class="nc" id="L309">        width / 2f - hardButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,</span>
+<span class="nc" id="L310">        height / 2f - hardButton.getHeight() / 2);</span>
+<span class="nc" id="L311">    customerGameModeButton.setPosition(</span>
+<span class="nc" id="L312">        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,</span>
+<span class="nc" id="L313">        Gdx.graphics.getHeight() / 4f - easyButton.getHeight() / 2);</span>
+<span class="nc" id="L314">    powerupGameModeButton.setPosition(</span>
+<span class="nc" id="L315">        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,</span>
+<span class="nc" id="L316">        Gdx.graphics.getHeight() / 3f - easyButton.getHeight() / 2);</span>
+<span class="nc" id="L317">    returnButton.setPosition(</span>
+<span class="nc" id="L318">        Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,</span>
+<span class="nc" id="L319">        Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);</span>
+<span class="nc" id="L320">    minusButton.setPosition(</span>
+<span class="nc" id="L321">        Gdx.graphics.getWidth() / 2 - minusButton.getWidth() * 1.5f,</span>
+<span class="nc" id="L322">        Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);</span>
+<span class="nc" id="L323">    textDisplay.setPosition(</span>
+<span class="nc" id="L324">        Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,</span>
+<span class="nc" id="L325">        Gdx.graphics.getHeight() / 2f + Gdx.graphics.getHeight() / 5f);</span>
+
+<span class="nc" id="L327">    stage.clear();</span>
+<span class="nc" id="L328">    stage.addActor(easyButton);</span>
+<span class="nc" id="L329">    stage.addActor(mediumButton);</span>
+<span class="nc" id="L330">    stage.addActor(hardButton);</span>
+<span class="nc" id="L331">    stage.addActor(customerGameModeButton);</span>
+<span class="nc" id="L332">    stage.addActor(powerupGameModeButton);</span>
+<span class="nc" id="L333">    stage.addActor(returnButton);</span>
+<span class="nc" id="L334">    stage.addActor(plusButton);</span>
+<span class="nc" id="L335">    stage.addActor(minusButton);</span>
+<span class="nc" id="L336">    stage.addActor(textDisplay);</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">    if (resumeFlag) {</span>
+<span class="nc" id="L338">      stage.addActor(resumeButton);</span>
     }
-
-<span class="nc" id="L305">    super.resize(width, height);</span>
-
-<span class="nc" id="L307">    plusButton.setPosition(</span>
-<span class="nc" id="L308">            Gdx.graphics.getWidth() / 2f + easyButton.getWidth() * 1.5f - plusButton.getWidth(),</span>
-<span class="nc" id="L309">            Gdx.graphics.getHeight() / 10f - plusButton.getHeight() / 2);</span>
-<span class="nc" id="L310">    easyButton.setPosition(</span>
-<span class="nc" id="L311">        width / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,</span>
-<span class="nc" id="L312">        height / 2f - easyButton.getHeight() / 2);</span>
-<span class="nc" id="L313">    mediumButton.setPosition(</span>
-<span class="nc" id="L314">        width / 2f - mediumButton.getWidth() / 2, height / 2f - mediumButton.getHeight() / 2);</span>
-<span class="nc" id="L315">    hardButton.setPosition(</span>
-<span class="nc" id="L316">        width / 2f - hardButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,</span>
-<span class="nc" id="L317">        height / 2f - hardButton.getHeight() / 2);</span>
-<span class="nc" id="L318">    customerGameModeButton.setPosition(</span>
-<span class="nc" id="L319">        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,</span>
-<span class="nc" id="L320">        Gdx.graphics.getHeight() / 4f - easyButton.getHeight() / 2);</span>
-<span class="nc" id="L321">    powerupGameModeButton.setPosition(</span>
-<span class="nc" id="L322">        Gdx.graphics.getWidth() / 3f - easyButton.getWidth() / 2,</span>
-<span class="nc" id="L323">        Gdx.graphics.getHeight() / 3f - easyButton.getHeight() / 2);</span>
-<span class="nc" id="L324">    returnButton.setPosition(</span>
-<span class="nc" id="L325">        Gdx.graphics.getWidth() / 6f - easyButton.getWidth() / 2,</span>
-<span class="nc" id="L326">        Gdx.graphics.getHeight() / 5.5f - easyButton.getHeight() / 2);</span>
-<span class="nc" id="L327">    minusButton.setPosition(</span>
-<span class="nc" id="L328">            Gdx.graphics.getWidth() / 2 - minusButton.getWidth() * 1.5f,</span>
-<span class="nc" id="L329">            Gdx.graphics.getHeight() / 10f - minusButton.getHeight() / 2);</span>
-<span class="nc" id="L330">    textDisplay.setPosition(    Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 10f,</span>
-<span class="nc" id="L331">            Gdx.graphics.getHeight() / 2f +  Gdx.graphics.getHeight() / 5f);</span>
-
-<span class="nc" id="L333">    stage.clear();</span>
-<span class="nc" id="L334">    stage.addActor(easyButton);</span>
-<span class="nc" id="L335">    stage.addActor(mediumButton);</span>
-<span class="nc" id="L336">    stage.addActor(hardButton);</span>
-<span class="nc" id="L337">    stage.addActor(customerGameModeButton);</span>
-<span class="nc" id="L338">    stage.addActor(powerupGameModeButton);</span>
-<span class="nc" id="L339">    stage.addActor(returnButton);</span>
-<span class="nc" id="L340">    stage.addActor(plusButton);</span>
-<span class="nc" id="L341">    stage.addActor(minusButton);</span>
-<span class="nc" id="L342">    stage.addActor(textDisplay);</span>
-<span class="nc bnc" id="L343" title="All 2 branches missed.">    if (resumeFlag) {</span>
-<span class="nc" id="L344">      stage.addActor(resumeButton);</span>
-    }
-<span class="nc" id="L346">    stage.getViewport().update(width, height);</span>
-<span class="nc" id="L347">    camera.setToOrtho(false, width, height);</span>
-<span class="nc" id="L348">  }</span>
+<span class="nc" id="L340">    stage.getViewport().update(width, height);</span>
+<span class="nc" id="L341">    camera.setToOrtho(false, width, height);</span>
+<span class="nc" id="L342">  }</span>
 
   /** Method which runs when the screen transitions to another. */
   @Override
   public void hide() {
-<span class="nc" id="L353">    super.dispose();</span>
-<span class="nc" id="L354">    game.dispose();</span>
-<span class="nc" id="L355">    font.dispose();</span>
-<span class="nc" id="L356">    bg.dispose();</span>
-<span class="nc" id="L357">    lock.dispose();</span>
-<span class="nc" id="L358">    stage.dispose();</span>
-<span class="nc" id="L359">    skin.dispose();</span>
-<span class="nc" id="L360">    atlas.dispose();</span>
-<span class="nc" id="L361">  }</span>
+<span class="nc" id="L347">    super.dispose();</span>
+<span class="nc" id="L348">    game.dispose();</span>
+<span class="nc" id="L349">    font.dispose();</span>
+<span class="nc" id="L350">    bg.dispose();</span>
+<span class="nc" id="L351">    lock.dispose();</span>
+<span class="nc" id="L352">    stage.dispose();</span>
+<span class="nc" id="L353">    skin.dispose();</span>
+<span class="nc" id="L354">    atlas.dispose();</span>
+<span class="nc" id="L355">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

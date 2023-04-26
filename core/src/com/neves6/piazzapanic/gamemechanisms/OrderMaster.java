@@ -21,14 +21,14 @@ public final class OrderMaster {
       Queue<Customer> customers,
       float totalTimerDisplay,
       int difficulty,
-      int reputationPoints,
+      ReputationPoints reputationPoints,
       int customersServed,
       float lastRepPointLost) {
     int timeAllowed = Math.max(110 - 15 * (customersServed / 5), 90) - (10 * difficulty);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.peek().getTimeArrived() + timeAllowed < totalTimerDisplay) {
         customers.poll();
-        reputationPoints -= 1;
+        reputationPoints.decrement();
         lastRepPointLost = totalTimerDisplay;
       }
     }

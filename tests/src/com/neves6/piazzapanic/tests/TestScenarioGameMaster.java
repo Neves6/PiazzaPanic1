@@ -141,11 +141,11 @@ public class TestScenarioGameMaster {
           testGame,
           map,
           2,
-          1,
+          5,
           new Money(),
           new IngredientsStaff(defValues, defValues),
           new DeliveryStaff(defValues, defValues),
-          false,
+          true,
           1);
 
   ScenarioGameMaster testMasterIV =
@@ -565,4 +565,57 @@ public class TestScenarioGameMaster {
         testMasterIV.getChef(1).getInventory().peek(),
         "keep");
   }
+
+  ScenarioGameMaster testMasterV = new ScenarioGameMaster(testGame, map, 3, 0, new Money(), new IngredientsStaff(defValues, defValues), new DeliveryStaff(defValues, defValues), false, 1);
+  @Test
+  public void testServeFoodNoCust(){
+    testMasterIV.serveFood();
+    assertTrue(testMasterIV.getChef(testMasterIV.getSelectedChef()).getInventory().size() == 0);
+  }
+
+  @Test
+  public void testServeFoodEmptyChefInv(){
+    while (testMasterIV.getCustomers().size() < 1) {
+      testMasterIV.tickUpdate(1);
+    }
+    testMasterIV.serveFood();
+    assertTrue(testMasterIV.getChef(testMasterIV.getSelectedChef()).getInventory().size() == 0);
+  }
+
+  @Test
+  public void testServeFood(){
+    while (testMasterIV.getCustomers().size() < 1) {
+      testMasterIV.tickUpdate(1);
+    }
+    int custOriginal = testMasterIV.getCustomers().size();
+    testMasterIV.getChef(testMasterIV.getSelectedChef()).addToInventory(testMasterIV.getFirstCustomer().getOrder());
+    testMasterIV.serveFood();
+    assertTrue(testMasterIV.getCustomers().size() == custOriginal - 1);
+  }
+
+  @Test
+  public void testServeFoodJunk(){
+    while (testMasterIV.getCustomers().size() < 1) {
+      testMasterIV.tickUpdate(1);
+    }
+    int custOriginal = testMasterIV.getCustomers().size();
+    testMasterIV.getChef(testMasterIV.getSelectedChef()).addToInventory("Junk");
+    testMasterIV.serveFood();
+    assertTrue(testMasterIV.getCustomers().size() == custOriginal);
+  }
+
+  @Test
+  public void testServeFoodNoPowerUp(){
+    while (testMasterII.getCustomers().size() < 1) {
+      testMasterII.tickUpdate(1);
+    }
+    testMasterII.getChef(testMasterII.getSelectedChef()).addToInventory(testMasterII.getFirstCustomer().getOrder());
+    testMasterII.serveFood();
+    assertTrue(testMasterII.getChef(testMasterII.getSelectedChef()).getInventory().size() == 0);
+    assertTrue(
+            "If no powerup has been activated, text must just contain Current Active Powerups: '",
+            testMasterII.getPowerUpRunner().displayText().equals("Current Active Powerups: \n"));
+  }
+
+
 }

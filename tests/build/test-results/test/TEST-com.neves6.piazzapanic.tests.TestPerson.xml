@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.neves6.piazzapanic.tests.TestPerson" tests="9" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:14" hostname="HP-PAV14" time="0.132">
+<testsuite name="com.neves6.piazzapanic.tests.TestPerson" tests="9" skipped="0" failures="0" errors="0" timestamp="2023-04-26T10:00:59" hostname="DESKTOP-79QNHGP" time="0.161">
   <properties/>
-  <testcase name="testXSetErroneous" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.001"/>
-  <testcase name="testMoveForward" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
-  <testcase name="testXSet" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.001"/>
-  <testcase name="testYSet" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
-  <testcase name="testPersonConstructorValid" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
-  <testcase name="testYSetErronous" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
-  <testcase name="testMoveBackwards" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
-  <testcase name="testMoveLeft" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
-  <testcase name="testMoveRight" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
+  <testcase name="testXSetErroneous" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.002"/>
+  <testcase name="testXSet" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.002"/>
+  <testcase name="testYSet" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.002"/>
+  <testcase name="testPersonConstructorValid" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.006"/>
+  <testcase name="testMoveDown" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
+  <testcase name="testMoveLeft" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.021"/>
+  <testcase name="testYSSetErroneous" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.011"/>
+  <testcase name="testMoveUp" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.0"/>
+  <testcase name="testMoveRight" classname="com.neves6.piazzapanic.tests.TestPerson" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

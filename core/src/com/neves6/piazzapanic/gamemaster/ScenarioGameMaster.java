@@ -331,7 +331,7 @@ public class ScenarioGameMaster {
             customers,
             totalTimerDisplay,
             difficulty,
-            reputationPoints.getPoints(),
+            reputationPoints,
             customersServed,
             lastRepPointLost);
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
@@ -395,12 +395,8 @@ public class ScenarioGameMaster {
         targetx = chef.getxCoord() - 1;
         targety = chef.getyCoord();
         break;
-      case "right":
+      default: // Right
         targetx = chef.getxCoord() + 1;
-        targety = chef.getyCoord();
-        break;
-      default:
-        targetx = chef.getxCoord();
         targety = chef.getyCoord();
         break;
     }
@@ -553,7 +549,7 @@ public class ScenarioGameMaster {
   /**
    * Setter method for reputation points.
    *
-   * @param reputationPoints Number of reputation points.
+   * @param overwriteValue Number of reputation points.
    */
   public void setReputationPoints(int overwriteValue) {
     reputationPoints.overwritePoints(overwriteValue);
@@ -624,4 +620,6 @@ public class ScenarioGameMaster {
   public ArrayList<String> getTray2() {
     return tray2.getList();
   }
+
+  public IngredientsStaff getIngredientsStaff() { return staffOne; }
 }

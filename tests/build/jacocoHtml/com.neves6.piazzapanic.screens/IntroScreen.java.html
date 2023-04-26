@@ -71,46 +71,42 @@ public class IntroScreen extends ScreenAdapter {
    */
   @Override
   public void render(float delta) {
-<span class="fc" id="L74">    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
-<span class="fc" id="L75">    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen</span>
-<span class="fc" id="L76">    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time</span>
-<span class="fc" id="L77">    winWidth = Gdx.graphics.getWidth();</span>
-<span class="fc" id="L78">    winHeight = Gdx.graphics.getHeight();</span>
+<span class="nc" id="L74">    Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span>
+<span class="nc" id="L75">    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen</span>
+<span class="nc" id="L76">    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time</span>
+<span class="nc" id="L77">    winWidth = Gdx.graphics.getWidth();</span>
+<span class="nc" id="L78">    winHeight = Gdx.graphics.getHeight();</span>
 
     // Get current frame of animation for the current stateTime
-<span class="fc" id="L81">    TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);</span>
+<span class="nc" id="L81">    TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);</span>
 
-<span class="fc" id="L83">    camera.update();</span>
+<span class="nc" id="L83">    camera.update();</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">    if (stateTime &gt; 2f) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">    if (stateTime &gt; 2f) {</span>
       // dispose();
-<span class="fc" id="L87">      game.setScreen(new TitleScreen(game));</span>
+<span class="nc" id="L87">      game.setScreen(new TitleScreen(game));</span>
     }
 
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">    if (game.testMode) {</span>
-<span class="fc" id="L91">      return;</span>
-    }
+<span class="nc" id="L90">    game.getBatch().setProjectionMatrix(camera.combined);</span>
 
-<span class="nc" id="L94">    game.getBatch().setProjectionMatrix(camera.combined);</span>
-
-<span class="nc" id="L96">    game.getBatch().begin();</span>
-<span class="nc" id="L97">    game.getBatch()</span>
-<span class="nc" id="L98">        .draw(</span>
+<span class="nc" id="L92">    game.getBatch().begin();</span>
+<span class="nc" id="L93">    game.getBatch()</span>
+<span class="nc" id="L94">        .draw(</span>
             currentFrame,
             winWidth / 2f - winWidth / 10f,
             winHeight / 2f - winWidth / 10f,
             winWidth / 5f,
             winWidth / 5f);
-<span class="nc" id="L104">    font.draw(</span>
-<span class="nc" id="L105">        game.getBatch(),</span>
+<span class="nc" id="L100">    font.draw(</span>
+<span class="nc" id="L101">        game.getBatch(),</span>
         &quot;NEVES6\nAssessment 1\nIndev Build&quot;,
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f - winWidth / 9f,
         winWidth / 5f,
         1,
         false);
-<span class="nc" id="L112">    game.getBatch().end();</span>
-<span class="nc" id="L113">  }</span>
+<span class="nc" id="L108">    game.getBatch().end();</span>
+<span class="nc" id="L109">  }</span>
 
   /**
    * Changes size of input upon user adjustment.
@@ -120,17 +116,17 @@ public class IntroScreen extends ScreenAdapter {
    */
   @Override
   public void resize(int width, int height) {
-<span class="fc" id="L123">    super.resize(width, height);</span>
-<span class="fc" id="L124">    camera.setToOrtho(false, width, height);</span>
-<span class="fc" id="L125">  }</span>
+<span class="fc" id="L119">    super.resize(width, height);</span>
+<span class="fc" id="L120">    camera.setToOrtho(false, width, height);</span>
+<span class="fc" id="L121">  }</span>
 
   /** Method which runs when the screen transitions to another. */
   @Override
   public void hide() {
-<span class="nc" id="L130">    super.dispose();</span>
-<span class="nc" id="L131">    game.dispose();</span>
-<span class="nc" id="L132">    introSheet.dispose();</span>
-<span class="nc" id="L133">    font.dispose();</span>
-<span class="nc" id="L134">  }</span>
+<span class="nc" id="L126">    super.dispose();</span>
+<span class="nc" id="L127">    game.dispose();</span>
+<span class="nc" id="L128">    introSheet.dispose();</span>
+<span class="nc" id="L129">    font.dispose();</span>
+<span class="nc" id="L130">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

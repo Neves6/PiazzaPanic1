@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /** Main class handling screen input. */
 public class PiazzaPanicGame extends Game {
   SpriteBatch _batch;
-  Boolean testMode;
 
   /**
    * A function which create a batch if it is null and returns it. If it is already created, return
@@ -15,32 +14,22 @@ public class PiazzaPanicGame extends Game {
    * @return A batch object that can be used to draw and place items.
    */
   public SpriteBatch getBatch() {
-<span class="nc bnc" id="L18" title="All 2 branches missed.">    if (_batch == null) {</span>
-<span class="nc" id="L19">      _batch = new SpriteBatch();</span>
+<span class="nc bnc" id="L17" title="All 2 branches missed.">    if (_batch == null) {</span>
+<span class="nc" id="L18">      _batch = new SpriteBatch();</span>
     }
-<span class="nc" id="L21">    return _batch;</span>
+<span class="nc" id="L20">    return _batch;</span>
   }
 
   /** Default constructor method. */
   public PiazzaPanicGame() {
-<span class="fc" id="L26">    super();</span>
-<span class="fc" id="L27">    testMode = false;</span>
-<span class="fc" id="L28">  }</span>
-
-  /**
-   * Constructor method where you can set your test flag.
-   *
-   * @param tf Boolean value representing whether we are running in test mode or not.
-   */
-<span class="fc" id="L35">  public PiazzaPanicGame(Boolean tf) {</span>
-<span class="fc" id="L36">    testMode = tf;</span>
-<span class="fc" id="L37">  }</span>
+<span class="fc" id="L25">    super();</span>
+<span class="fc" id="L26">  }</span>
 
   /** What to show when this screen is loaded. */
   @Override
   public void create() {
-<span class="fc" id="L42">    setScreen(new IntroScreen(this));</span>
-<span class="fc" id="L43">  }</span>
+<span class="fc" id="L31">    setScreen(new IntroScreen(this));</span>
+<span class="fc" id="L32">  }</span>
 
   /**
    * Changes size of input upon user adjustment.
@@ -49,23 +38,14 @@ public class PiazzaPanicGame extends Game {
    * @param height Integer representing the vertical size of the screen.
    */
   public void resize(int width, int height) {
-<span class="nc" id="L52">    super.resize(width, height);</span>
-<span class="nc" id="L53">  }</span>
-
-  /**
-   * Getter method for whether test mode is active.
-   *
-   * @return Whether or not test mode is active.
-   */
-  public Boolean getTestMode() {
-<span class="fc" id="L61">    return testMode;</span>
-  }
+<span class="nc" id="L41">    super.resize(width, height);</span>
+<span class="nc" id="L42">  }</span>
 
   /** UNUSED METHOD * */
-<span class="nc" id="L65">  public void render(float delta) {}</span>
+<span class="nc" id="L45">  public void render(float delta) {}</span>
 
   /** UNUSED METHOD * */
   @Override
-<span class="nc" id="L69">  public void dispose() {}</span>
+<span class="nc" id="L49">  public void dispose() {}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

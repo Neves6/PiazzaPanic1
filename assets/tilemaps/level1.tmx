@@ -36,9 +36,9 @@
  <layer id="4" name="obj" width="21" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,43,45,42,44,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,43,45,42,44,52,54,51,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,41,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,41,0,0,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,34,0,0,0,8,8,11,46,46,35,35,13,0,0,0,0,0,0,0,
 0,8,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,
 0,8,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,
@@ -49,7 +49,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="collision" width="21" height="12">
+ <layer id="7" name="collision" width="21" height="12" visible="0">
   <data encoding="csv">
 37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
 37,39,39,39,39,39,39,39,37,37,37,37,37,37,37,37,37,37,37,37,37,
@@ -65,7 +65,7 @@
 37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,38,38,37,37,37
 </data>
  </layer>
- <objectgroup id="8" name="Unlock Layer">
+ <objectgroup id="8" name="Unlock Layer" visible="0">
   <object id="7" name="ingredients-staff" x="65.3333" y="128.667" width="29.3333" height="30"/>
   <object id="8" name="pizza" x="33.3333" y="160.667" width="28" height="28"/>
   <object id="10" name="server-staff" x="30.6667" y="257.333" width="32.6667" height="28.6667"/>
@@ -85,7 +85,7 @@
   <object id="22" name="fridge-beans" x="224.667" y="35.3333" width="30" height="26.6667"/>
   <object id="23" name="fridge-dough" x="127.333" y="96.6667" width="30.6667" height="29.3333"/>
  </objectgroup>
- <objectgroup id="11" name="Cooking Layer">
+ <objectgroup id="11" name="Cooking Layer" visible="0">
   <object id="24" name="grill-patty-1" x="191.333" y="128" width="32" height="30.6667"/>
   <object id="28" name="grill-bun-1" x="191.333" y="128" width="32.6667" height="29.3333"/>
   <object id="29" name="grill-patty-2" x="224" y="126.667" width="32" height="32"/>
@@ -103,7 +103,7 @@
   <object id="42" name="oven-pizza-2" x="32.6667" y="160" width="30" height="25.3333"/>
   <object id="43" name="forming-1" x="286" y="126" width="32.6667" height="33.3333"/>
  </objectgroup>
- <objectgroup id="13" name="Misc Layer">
+ <objectgroup id="13" name="Misc Layer" visible="0">
   <object id="44" name="serving" x="255.333" y="255.333" width="33.3333" height="30.6667"/>
   <object id="45" name="tray-2" x="60.6667" y="255.333" width="35.3333" height="32.6667"/>
   <object id="46" name="tray-1" x="96.6667" y="256" width="30.6667" height="30.6667"/>
