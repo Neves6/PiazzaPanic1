@@ -395,12 +395,8 @@ public class ScenarioGameMaster {
         targetx = chef.getxCoord() - 1;
         targety = chef.getyCoord();
         break;
-      case "right":
+      default: // Right
         targetx = chef.getxCoord() + 1;
-        targety = chef.getyCoord();
-        break;
-      default:
-        targetx = chef.getxCoord();
         targety = chef.getyCoord();
         break;
     }
@@ -624,4 +620,6 @@ public class ScenarioGameMaster {
   public ArrayList<String> getTray2() {
     return tray2.getList();
   }
+
+  public IngredientsStaff getIngredientsStaff() { return staffOne; }
 }
