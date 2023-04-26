@@ -103,9 +103,9 @@ public class BasePowerUp {
    *     activated.
    */
   public void loadPowerup(JSONObject details) {
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">    if ((Boolean) details.get(&quot;active&quot;)) {</span>
-<span class="nc" id="L107">      this.acquired = true;</span>
-<span class="nc" id="L108">      this.startTime = System.currentTimeMillis() - (Long) details.get(&quot;active time&quot;);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">    if ((Boolean) details.get(&quot;active&quot;)) {</span>
+<span class="fc" id="L107">      this.acquired = true;</span>
+<span class="fc" id="L108">      this.startTime = System.currentTimeMillis() - (Long) details.get(&quot;active time&quot;);</span>
     }
 <span class="fc" id="L110">  }</span>
 }

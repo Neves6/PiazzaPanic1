@@ -71,7 +71,7 @@ public class Chef extends Person {
    * @return Texture being used to render the chef.
    */
   public Texture getTxNow() {
-<span class="nc" id="L74">    return txNow;</span>
+<span class="fc" id="L74">    return txNow;</span>
   }
 
   /**
@@ -139,24 +139,27 @@ public class Chef extends Person {
    * @param facing sprite facing direction.
    */
   public void setFacing(String facing) {
-<span class="fc" id="L142">    this.facing = facing;</span>
-<span class="pc bpc" id="L143" title="1 of 5 branches missed.">    switch (facing) {</span>
+<span class="fc bfc" id="L142" title="All 5 branches covered.">    switch (facing) {</span>
       case &quot;up&quot;:
+<span class="fc" id="L144">        this.facing = facing;</span>
 <span class="fc" id="L145">        this.txNow = txUp;</span>
 <span class="fc" id="L146">        break;</span>
       case &quot;down&quot;:
-<span class="fc" id="L148">        this.txNow = txDown;</span>
-<span class="fc" id="L149">        break;</span>
+<span class="fc" id="L148">        this.facing = facing;</span>
+<span class="fc" id="L149">        this.txNow = txDown;</span>
+<span class="fc" id="L150">        break;</span>
       case &quot;left&quot;:
-<span class="fc" id="L151">        this.txNow = txLeft;</span>
-<span class="fc" id="L152">        break;</span>
+<span class="fc" id="L152">        this.facing = facing;</span>
+<span class="fc" id="L153">        this.txNow = txLeft;</span>
+<span class="fc" id="L154">        break;</span>
       case &quot;right&quot;:
-<span class="fc" id="L154">        this.txNow = txRight;</span>
-<span class="fc" id="L155">        break;</span>
+<span class="fc" id="L156">        this.facing = facing;</span>
+<span class="fc" id="L157">        this.txNow = txRight;</span>
+<span class="fc" id="L158">        break;</span>
       default:
         break;
     }
-<span class="fc" id="L159">  }</span>
+<span class="fc" id="L162">  }</span>
 
   /**
    * Getter method for the last time the chef moved.
@@ -164,7 +167,7 @@ public class Chef extends Person {
    * @return Time of the last attempted move action of the chef.
    */
   public float getLastMove() {
-<span class="nc" id="L167">    return lastMove;</span>
+<span class="fc" id="L170">    return lastMove;</span>
   }
 
   /**
@@ -173,7 +176,7 @@ public class Chef extends Person {
    * @param lastMove Time of last move action.
    */
   public void setLastMove(float lastMove) {
-<span class="fc" id="L176">    this.lastMove = lastMove;</span>
-<span class="fc" id="L177">  }</span>
+<span class="fc" id="L179">    this.lastMove = lastMove;</span>
+<span class="fc" id="L180">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

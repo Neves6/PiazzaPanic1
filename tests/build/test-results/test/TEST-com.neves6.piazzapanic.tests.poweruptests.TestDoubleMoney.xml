@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestDoubleMoney" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:35" hostname="HP-PAV14" time="0.017">
+<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestDoubleMoney" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-26T10:01:21" hostname="DESKTOP-79QNHGP" time="0.018">
   <properties/>
   <testcase name="testApplyActive" classname="com.neves6.piazzapanic.tests.poweruptests.TestDoubleMoney" time="0.0"/>
-  <testcase name="testApplyInactive" classname="com.neves6.piazzapanic.tests.poweruptests.TestDoubleMoney" time="0.0"/>
+  <testcase name="testApplyInactive" classname="com.neves6.piazzapanic.tests.poweruptests.TestDoubleMoney" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

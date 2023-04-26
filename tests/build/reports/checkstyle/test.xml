@@ -1,88 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="8.37">
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\ChefTests.java">
-<error line="42" column="9" severity="warning" message="&apos;method call rparen&apos; has incorrect indentation level 8, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck"/>
-<error line="47" column="5" severity="warning" message="Distance between variable &apos;testMachine&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
-</file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\CustomerTests.java">
-<error line="9" severity="warning" message="First sentence of Javadoc is missing an ending period." source="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck"/>
-</file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\GdxTestRunner.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\GdxTestRunner.java">
 <error line="3" severity="warning" message="Empty line should be followed by &lt;p&gt; tag on the next line." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck"/>
 <error line="7" severity="warning" message="Empty line should be followed by &lt;p&gt; tag on the next line." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck"/>
 <error line="9" severity="warning" message="Empty line should be followed by &lt;p&gt; tag on the next line." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck"/>
 <error line="87" column="11" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\MachineTest.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\MachineTest.java">
+<error line="70" column="5" severity="warning" message="Distance between variable &apos;testChef&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestAsset.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestAsset.java">
 <error line="20" column="15" severity="warning" message="Abbreviation in name &apos;testfontsIBMPlexMonoSemiBoldExists&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
 <error line="76" column="15" severity="warning" message="Abbreviation in name &apos;testfontsIBMPlexMonoSemiBoldBlackExists&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestBaseStaff.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestChef.java">
+<error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="42" column="9" severity="warning" message="&apos;method call rparen&apos; has incorrect indentation level 8, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck"/>
+<error line="47" column="5" severity="warning" message="Distance between variable &apos;testMachine&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="228" column="5" severity="warning" message="Distance between variable &apos;txDown&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="229" column="5" severity="warning" message="Distance between variable &apos;txLeft&apos; declaration and its first usage is 6, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="230" column="5" severity="warning" message="Distance between variable &apos;txRight&apos; declaration and its first usage is 8, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestDeliveryServer.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestCustomer.java">
+<error line="11" severity="warning" message="First sentence of Javadoc is missing an ending period." source="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestGameScreen.java">
-</file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestIngredientStaff.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestMoney.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestMoney.java">
-<error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-</file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestPerson.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestPerson.java">
 <error line="27" column="9" severity="warning" message="Local variable name &apos;xOld&apos; must match pattern &apos;^[a-z]([a-z0-9][a-zA-Z0-9]*)?$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck"/>
 <error line="28" column="9" severity="warning" message="Local variable name &apos;yOld&apos; must match pattern &apos;^[a-z]([a-z0-9][a-zA-Z0-9]*)?$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck"/>
 <error line="38" column="9" severity="warning" message="Local variable name &apos;xOld&apos; must match pattern &apos;^[a-z]([a-z0-9][a-zA-Z0-9]*)?$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck"/>
 <error line="39" column="9" severity="warning" message="Local variable name &apos;yOld&apos; must match pattern &apos;^[a-z]([a-z0-9][a-zA-Z0-9]*)?$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck"/>
+<error line="55" column="15" severity="warning" message="Abbreviation in name &apos;testYSSetErroneous&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestScenarioGameMaster.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestReputationPoints.java">
+</file>
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestScenarioGameMaster.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="164" column="5" severity="warning" message="Distance between variable &apos;testTextMaster&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
-<error line="193" severity="warning" message="Line is longer than 100 characters (found 131)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="277" severity="warning" message="Line is longer than 100 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="395" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_X&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
-<error line="396" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_Y&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
+<error line="77" column="1" severity="warning" message="Comment has incorrect indentation level 0, expected is 2, indentation should be the same level as line 79." source="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck"/>
+<error line="164" severity="warning" message="Line is longer than 100 characters (found 131)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="218" severity="warning" message="Line is longer than 100 characters (found 130)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="336" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_X&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
+<error line="337" column="15" severity="warning" message="Abbreviation in name &apos;ORIGINAL_Y&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestScreenTransitions.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestScreenTransitions.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 <error line="6" column="38" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - com.neves6.piazzapanic.screens.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
-<error line="98" severity="warning" message="Summary javadoc is missing." source="com.puppycrawl.tools.checkstyle.checks.javadoc.SummaryJavadocCheck"/>
-<error line="100" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
-<error line="101" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
-<error line="102" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
-<error line="103" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
-<error line="104" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
-<error line="105" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
-<error line="106" severity="warning" message="Line continuation have incorrect indentation level, expected level should be 4." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck"/>
-<error line="108" column="3" severity="warning" message="&apos;METHOD_DEF&apos; should be separated from previous statement." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
+<error line="45" severity="warning" message="Line is longer than 100 characters (found 101)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="157" column="1" severity="warning" message="Comment has incorrect indentation level 0, expected is 2, indentation should be the same level as line 14." source="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\UtilityTests.java">
-<error line="31" severity="warning" message="Javadoc comment at column 67 has parse error. Missed HTML close tag &apos;String&apos;. Sometimes it means that close tag missed for one of previous tags." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocParagraphCheck"/>
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestTray.java">
+<error line="10" column="17" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - java.util.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="26" column="5" severity="warning" message="Distance between variable &apos;testChef3&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="27" column="5" severity="warning" message="Distance between variable &apos;testChef4&apos; declaration and its first usage is 6, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="50" column="5" severity="warning" message="Distance between variable &apos;testTray&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="72" column="5" severity="warning" message="Distance between variable &apos;testTray&apos; declaration and its first usage is 6, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="99" column="5" severity="warning" message="Distance between variable &apos;testTray&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="122" column="5" severity="warning" message="Distance between variable &apos;testTray&apos; declaration and its first usage is 7, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="126" column="5" severity="warning" message="Distance between variable &apos;testChef1&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="131" column="5" severity="warning" message="Distance between variable &apos;testStaff&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\gamemechanisms\TestGameReader.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\TestUtility.java">
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\gamemechanisms\TestGameSaver.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\gamemastertests\TestTextMaster.java">
+<error line="78" column="5" severity="warning" message="Distance between variable &apos;testTextMaster&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+</file>
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\gamemechanisms\TestGameReader.java">
+</file>
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\gamemechanisms\TestGameSaver.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 <error line="15" column="17" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - java.util.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 <error line="93" column="19" severity="warning" message="Abbreviation in name &apos;testPURunner&apos; must contain no more than &apos;2&apos; consecutive capital letters." source="com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestAutoCook.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestAutoCook.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestBasePowerUp.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestBasePowerUp.java">
 <error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestCheaperMachineUnlock.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestCheaperMachineUnlock.java">
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestDoubleMoney.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestDoubleMoney.java">
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestPowerUpRunner.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestPowerUpRunner.java">
 <error line="11" column="17" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - java.util.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestShorterMachineTime.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestShorterMachineTime.java">
 </file>
-<file name="C:\Users\Uni Profile\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestTimeFreeze.java">
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\poweruptests\TestTimeFreeze.java">
+</file>
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\stafftests\TestBaseStaff.java">
+<error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\stafftests\TestDeliveryServer.java">
+</file>
+<file name="C:\Users\USER\Documents\GitHub\ENG1-ASSESSMENT-TWO\tests\src\com\neves6\piazzapanic\tests\stafftests\TestIngredientStaff.java">
+<error line="3" column="31" severity="warning" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
 </file>
 </checkstyle>

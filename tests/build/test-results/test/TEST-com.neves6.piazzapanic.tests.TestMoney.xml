@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.neves6.piazzapanic.tests.TestMoney" tests="8" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:14" hostname="HP-PAV14" time="0.117">
+<testsuite name="com.neves6.piazzapanic.tests.TestMoney" tests="9" skipped="0" failures="0" errors="0" timestamp="2023-04-26T10:00:59" hostname="DESKTOP-79QNHGP" time="0.153">
   <properties/>
-  <testcase name="testValidPurchaseBorder" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
-  <testcase name="testValidPurchase" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
-  <testcase name="testAddGroupValid" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
-  <testcase name="testIncrement" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.002"/>
+  <testcase name="testValidPurchaseBorder" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.002"/>
+  <testcase name="testValidPurchase" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.001"/>
+  <testcase name="testAddGroupValid" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.004"/>
+  <testcase name="testIncrement" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.008"/>
   <testcase name="testAddGroupAuto" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
-  <testcase name="testAutoGeneration" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
-  <testcase name="testInvalidPurchase" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.001"/>
+  <testcase name="testAutoGeneration" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.003"/>
+  <testcase name="testInvalidPurchase" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.004"/>
   <testcase name="testInitialValue" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.0"/>
+  <testcase name="testGetUnlockPrice" classname="com.neves6.piazzapanic.tests.TestMoney" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

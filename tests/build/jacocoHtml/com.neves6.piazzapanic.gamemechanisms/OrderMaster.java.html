@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderMaster.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tests</a> &gt; <a href="index.source.html" class="el_package">com.neves6.piazzapanic.gamemechanisms</a> &gt; <span class="el_source">OrderMaster.java</span></div><h1>OrderMaster.java</h1><pre class="source lang-java linenums">package com.neves6.piazzapanic.gamemechanisms;
 
-import com.neves6.piazzapanic.people.Customer;
+import static java.util.Arrays.asList;
 
+import com.neves6.piazzapanic.people.Customer;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static java.util.Arrays.asList;
-
 public final class OrderMaster {
-<span class="fc" id="L12">    final static ArrayList&lt;String&gt; RECIPES =</span>
-<span class="fc" id="L13">            new ArrayList&lt;&gt;(asList(&quot;salad&quot;, &quot;hamburger&quot;, &quot;jacket potato&quot;, &quot;pizza&quot;));</span>
-     /** Utility constructor. SHOULD NOT BE INITIALIZED! */
-<span class="nc" id="L15">    public OrderMaster(){}</span>
+<span class="fc" id="L11">  static final ArrayList&lt;String&gt; RECIPES =</span>
+<span class="fc" id="L12">      new ArrayList&lt;&gt;(asList(&quot;salad&quot;, &quot;hamburger&quot;, &quot;jacket potato&quot;, &quot;pizza&quot;));</span>
+  /** Utility constructor. SHOULD NOT BE INITIALIZED! */
+<span class="nc" id="L14">  public OrderMaster() {}</span>
 
-    /**
-     * Checks if time allowed to complete any customer orders has elapsed Removes customers whose
-     * order expired and removes a reputation point
-     */
-public static float checkOrderExpired(Queue&lt;Customer&gt; customers, float totalTimerDisplay, int difficulty, int reputationPoints, int customersServed, float lastRepPointLost) {
-<span class="fc" id="L22">        int timeAllowed = Math.max(110 - 15 * (customersServed / 5), 90) - (10 * difficulty);</span>
-<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        for (int i = 0; i &lt; customers.size(); i++) {</span>
-<span class="nc bnc" id="L24" title="All 2 branches missed.">            if (customers.peek().getTimeArrived() + timeAllowed &lt; totalTimerDisplay) {</span>
-<span class="nc" id="L25">                customers.poll();</span>
-<span class="nc" id="L26">                reputationPoints -= 1;</span>
-<span class="nc" id="L27">                lastRepPointLost = totalTimerDisplay;</span>
-            }
-        }
-<span class="fc" id="L30">        return lastRepPointLost;</span>
+  /**
+   * Checks if time allowed to complete any customer orders has elapsed Removes customers whose
+   * order expired and removes a reputation point
+   */
+  public static float checkOrderExpired(
+      Queue&lt;Customer&gt; customers,
+      float totalTimerDisplay,
+      int difficulty,
+      int reputationPoints,
+      int customersServed,
+      float lastRepPointLost) {
+<span class="fc" id="L27">    int timeAllowed = Math.max(110 - 15 * (customersServed / 5), 90) - (10 * difficulty);</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">    for (int i = 0; i &lt; customers.size(); i++) {</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">      if (customers.peek().getTimeArrived() + timeAllowed &lt; totalTimerDisplay) {</span>
+<span class="nc" id="L30">        customers.poll();</span>
+<span class="nc" id="L31">        reputationPoints -= 1;</span>
+<span class="nc" id="L32">        lastRepPointLost = totalTimerDisplay;</span>
+      }
     }
+<span class="fc" id="L35">    return lastRepPointLost;</span>
+  }
 
-    /**
-     * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of
-     * customers served increases Will occasionally 0.5s stalls to vary customer arrival times
-     */
-    public static float createCustomers(Queue&lt;Customer&gt; customers, float lastCustomer, int customersServed, int customersGenerated, int maxCustomers, int difficulty, float totalTimer) {
-<span class="fc" id="L38">        float waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5F), 0.5);</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (lastCustomer + waitTime &lt;= totalTimer) {</span>
+  /**
+   * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of
+   * customers served increases Will occasionally 0.5s stalls to vary customer arrival times
+   */
+  public static float createCustomers(
+      Queue&lt;Customer&gt; customers,
+      float lastCustomer,
+      int customersServed,
+      int customersGenerated,
+      int maxCustomers,
+      int difficulty,
+      float totalTimer) {
+<span class="fc" id="L50">    float waitTime = (float) Math.max(2.5 - 0.5 * (customersServed / 5F), 0.5);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">    if (lastCustomer + waitTime &lt;= totalTimer) {</span>
       /*
       Random chance to stall next customer's arrival to vary customer arrival times
       Stalls scaled by difficulty to make harder difficulties slightly faster paced
@@ -46,42 +58,42 @@ public static float checkOrderExpired(Queue&lt;Customer&gt; customers, float tot
           Hard    10%   0.5s
       */
 
-<span class="fc" id="L49">            float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
-<span class="pc bpc" id="L50" title="3 of 4 branches missed.">            if (customers.size() != 0 &amp;&amp; randomFloat &gt; (0.9 - 0.1 * (3 - difficulty))) {</span>
-<span class="nc" id="L51">                lastCustomer += 0.5 + 0.25 * (3 - difficulty);</span>
-            } else {
-<span class="fc" id="L53">                int partySize = generatePartySize(customersServed);</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">                for (int i = 0; i &lt; partySize; i++) {</span>
-                    // Max number of customers in the queue starts at 5, increases by 1 every 5 served
-                    // Queue caps at 10 customers
-<span class="pc bpc" id="L57" title="4 of 8 branches missed.">                    if (customers.size() &lt; Math.min(5 + (customersServed / 5), 10)</span>
-                            &amp;&amp; (maxCustomers == -1 || (maxCustomers &gt; 0 &amp;&amp; customersGenerated &lt; maxCustomers))) {
-<span class="fc" id="L59">                        int randomInt = ThreadLocalRandom.current().nextInt(0, 4);</span>
-<span class="fc" id="L60">                        customers.add(</span>
-                                new Customer(
-<span class="fc" id="L62">                                        &quot;Customer&quot; + (customers.size() + 1),</span>
-                                        -1,
-                                        -1,
-<span class="fc" id="L65">                                        RECIPES.get(randomInt),</span>
-                                        totalTimer));
-<span class="fc" id="L67">                        customersGenerated += 1;</span>
-                    } else {
-                        break;
-                    }
-                }
-<span class="fc" id="L72">                lastCustomer = totalTimer;</span>
-            }
+<span class="fc" id="L61">      float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
+<span class="pc bpc" id="L62" title="3 of 4 branches missed.">      if (customers.size() != 0 &amp;&amp; randomFloat &gt; (0.9 - 0.1 * (3 - difficulty))) {</span>
+<span class="nc" id="L63">        lastCustomer += 0.5 + 0.25 * (3 - difficulty);</span>
+      } else {
+<span class="fc" id="L65">        int partySize = generatePartySize(customersServed);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        for (int i = 0; i &lt; partySize; i++) {</span>
+          // Max number of customers in the queue starts at 5, increases by 1 every 5 served
+          // Queue caps at 10 customers
+<span class="pc bpc" id="L69" title="4 of 8 branches missed.">          if (customers.size() &lt; Math.min(5 + (customersServed / 5), 10)</span>
+              &amp;&amp; (maxCustomers == -1 || (maxCustomers &gt; 0 &amp;&amp; customersGenerated &lt; maxCustomers))) {
+<span class="fc" id="L71">            int randomInt = ThreadLocalRandom.current().nextInt(0, 4);</span>
+<span class="fc" id="L72">            customers.add(</span>
+                new Customer(
+<span class="fc" id="L74">                    &quot;Customer&quot; + (customers.size() + 1),</span>
+                    -1,
+                    -1,
+<span class="fc" id="L77">                    RECIPES.get(randomInt),</span>
+                    totalTimer));
+<span class="fc" id="L79">            customersGenerated += 1;</span>
+          } else {
+            break;
+          }
         }
-<span class="fc" id="L75">        return lastCustomer;</span>
+<span class="fc" id="L84">        lastCustomer = totalTimer;</span>
+      }
     }
+<span class="fc" id="L87">    return lastCustomer;</span>
+  }
 
-    /**
-     * Randomly generates a value 1 to 3 dependent on the number of customers served to be used as
-     * group sizes Initially biased towards 1 but gradually shifts in favour of 3
-     *
-     * @return integer value 1 to 3
-     */
-    private static int generatePartySize(int customersServed) {
+  /**
+   * Randomly generates a value 1 to 3 dependent on the number of customers served to be used as
+   * group sizes Initially biased towards 1 but gradually shifts in favour of 3
+   *
+   * @return integer value 1 to 3
+   */
+  private static int generatePartySize(int customersServed) {
     /*
     Creates a random party size of 1-3 customers
     The more customers that have been served, the more likely a larger group becomes
@@ -93,18 +105,17 @@ public static float checkOrderExpired(Queue&lt;Customer&gt; customers, float tot
         20-24:  1 = 0%,     2 = 20%,    3 = 80%
         25+:    1 = 0%,     2 = 0%,     3 = 100%
     */
-<span class="fc" id="L96">        float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
-        int partySize;
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (randomFloat &lt;= (0.8 - 0.4 * (customersServed / 5F))) {</span>
-<span class="fc" id="L99">            partySize = 1;</span>
-<span class="nc bnc" id="L100" title="All 4 branches missed.">        } else if (randomFloat &gt; (0.8 - 0.4 * (customersServed / 5F))</span>
-                &amp;&amp; randomFloat &lt;= (1 - 0.2 * (customersServed / 5F))) {
-<span class="nc" id="L102">            partySize = 2;</span>
-        } else {
-<span class="nc" id="L104">            partySize = 3;</span>
-        }
-<span class="fc" id="L106">        return partySize;</span>
+<span class="fc" id="L108">    float randomFloat = ThreadLocalRandom.current().nextFloat();</span>
+    int partySize;
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">    if (randomFloat &lt;= (0.8 - 0.4 * (customersServed / 5F))) {</span>
+<span class="fc" id="L111">      partySize = 1;</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">    } else if (randomFloat &gt; (0.8 - 0.4 * (customersServed / 5F))</span>
+        &amp;&amp; randomFloat &lt;= (1 - 0.2 * (customersServed / 5F))) {
+<span class="nc" id="L114">      partySize = 2;</span>
+    } else {
+<span class="nc" id="L116">      partySize = 3;</span>
     }
-
+<span class="fc" id="L118">    return partySize;</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

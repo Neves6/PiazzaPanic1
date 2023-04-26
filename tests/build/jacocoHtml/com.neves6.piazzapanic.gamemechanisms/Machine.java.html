@@ -88,11 +88,11 @@ public class Machine {
    * @param currency Money instance used in game.
    */
   public void processStaffInteraction(Chef chef, Money currency) {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">    if (!(currency.isUnlocked(this.unlockID))) {</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">    if (!(currency.isUnlocked(this.unlockID))) {</span>
 <span class="nc" id="L92">      return;</span>
     }
-<span class="nc" id="L94">    chef.addToInventory(output);</span>
-<span class="nc" id="L95">  }</span>
+<span class="fc" id="L94">    chef.addToInventory(output);</span>
+<span class="fc" id="L95">  }</span>
 
   /**
    * Checks if the machine is done processing and adds the output to the chef's inventory if it is.
@@ -100,20 +100,20 @@ public class Machine {
    */
   public void attemptGetOutput() {
 <span class="fc" id="L102">    Chef chef = operator;</span>
-<span class="pc bpc" id="L103" title="3 of 6 branches missed.">    if (active &amp;&amp; actionComplete &amp;&amp; runtime &gt;= processingTime) {</span>
+<span class="pc bpc" id="L103" title="2 of 6 branches missed.">    if (active &amp;&amp; actionComplete &amp;&amp; runtime &gt;= processingTime) {</span>
 <span class="fc" id="L104">      chef.addToInventory(output);</span>
 <span class="fc" id="L105">      chef.setIsStickied(false);</span>
 <span class="fc" id="L106">      chef.setMachineInteractingWith(null);</span>
 <span class="fc" id="L107">      active = false;</span>
 <span class="fc" id="L108">      actionComplete = false;</span>
 <span class="fc" id="L109">      runtime = 0;</span>
-<span class="nc bnc" id="L110" title="All 4 branches missed.">    } else if (!actionComplete &amp;&amp; runtime &gt; (processingTime * 2 / 3F)) {</span>
-<span class="nc" id="L111">      chef.addToInventory(&quot;ruined &quot; + output);</span>
-<span class="nc" id="L112">      chef.setIsStickied(false);</span>
-<span class="nc" id="L113">      chef.setMachineInteractingWith(null);</span>
-<span class="nc" id="L114">      active = false;</span>
-<span class="nc" id="L115">      actionComplete = false;</span>
-<span class="nc" id="L116">      runtime = 0;</span>
+<span class="pc bpc" id="L110" title="2 of 4 branches missed.">    } else if (!actionComplete &amp;&amp; runtime &gt; (processingTime * 2 / 3F)) {</span>
+<span class="fc" id="L111">      chef.addToInventory(&quot;ruined &quot; + output);</span>
+<span class="fc" id="L112">      chef.setIsStickied(false);</span>
+<span class="fc" id="L113">      chef.setMachineInteractingWith(null);</span>
+<span class="fc" id="L114">      active = false;</span>
+<span class="fc" id="L115">      actionComplete = false;</span>
+<span class="fc" id="L116">      runtime = 0;</span>
     }
 <span class="fc" id="L118">  }</span>
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-17T17:18:35" hostname="HP-PAV14" time="0.017">
+<testsuite name="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-04-26T10:01:21" hostname="DESKTOP-79QNHGP" time="0.035">
   <properties/>
+  <testcase name="testActivatedFreezeExpired" classname="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" time="0.009"/>
   <testcase name="testActivatedFreeze" classname="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" time="0.0"/>
   <testcase name="testUnactivatedFreeze" classname="com.neves6.piazzapanic.tests.poweruptests.TestTimeFreeze" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

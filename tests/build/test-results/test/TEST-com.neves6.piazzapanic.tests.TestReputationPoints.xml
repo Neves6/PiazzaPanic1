@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.neves6.piazzapanic.tests.TestReputationPoints" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-26T10:00:59" hostname="DESKTOP-79QNHGP" time="0.004">
+  <properties/>
+  <testcase name="testDecrement" classname="com.neves6.piazzapanic.tests.TestReputationPoints" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
