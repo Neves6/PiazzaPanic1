@@ -175,7 +175,7 @@ public class ScenarioGameMaster {
     }
 
     machineUnlockBalance.addGroup("ingredients-staff", 150f);
-    machineUnlockBalance.addGroup("server-staff", 50f);
+    machineUnlockBalance.addGroup("server-staff", 0f);
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance, save);
 
@@ -452,9 +452,17 @@ public class ScenarioGameMaster {
     } else if (map.detectInteractionFromTiledObject(
         map.loadRectangle(miscObjects.get("tray-1")), targetx, targety)) {
       tray1.addToTray(chefs.get(selectedChef), deliveryStaff, customers, machineUnlockBalance);
+      if (machineUnlockBalance.isUnlocked("server-staff")
+              && !(customers.peek().getOrder().equals("pizza"))) {
+        serveFood();
+      }
     } else if (map.detectInteractionFromTiledObject(
         map.loadRectangle(miscObjects.get("tray-2")), targetx, targety)) {
       tray2.addToTray(chefs.get(selectedChef), deliveryStaff, customers, machineUnlockBalance);
+      if (machineUnlockBalance.isUnlocked("server-staff")
+              && !(customers.peek().getOrder().equals("pizza"))) {
+        serveFood();
+      }
     } else if (map.detectInteractionFromTiledObject(
         map.loadRectangle(miscObjects.get("fast-track-collect")), targetx, targety)) {
       String item = staffOne.collectItem();
