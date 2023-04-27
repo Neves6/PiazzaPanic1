@@ -221,23 +221,23 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(textDisplay);
 
     File json = new File("here.json");
+    resumeButton = new TextButton("Resume", buttonStyle);
+    resumeButton.setPosition(
+              hardButton.getX() + 3 * resumeButton.getWidth() / 4f,
+              Gdx.graphics.getHeight() / 5.5f - resumeButton.getHeight() / 2);
+    resumeButton.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent event, Actor actor) {
+                      game.setScreen(
+                              new TutorialScreen(
+                                      game,
+                                      "resume",
+                                      customerGameModeButton.isChecked(),
+                                      powerupGameModeButton.isChecked()));
+                  }
+              });
     if (json.exists() && json.length() != 0) {
-      resumeButton = new TextButton("Resume", buttonStyle);
-      resumeButton.setPosition(
-          hardButton.getX() + 3 * resumeButton.getWidth() / 4f,
-          Gdx.graphics.getHeight() / 5.5f - resumeButton.getHeight() / 2);
-      resumeButton.addListener(
-          new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-              game.setScreen(
-                  new TutorialScreen(
-                      game,
-                      "resume",
-                      customerGameModeButton.isChecked(),
-                      powerupGameModeButton.isChecked()));
-            }
-          });
       stage.addActor(resumeButton);
       resumeFlag = true;
     }
