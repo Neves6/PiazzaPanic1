@@ -188,5 +188,7 @@ public class Machine {
    *
    * @return unlock ID of machine.
    */
-  public String getUnlockID() {return unlockID;}
+  public String getUnlockID() {
+    return unlockID;
+  }
 }

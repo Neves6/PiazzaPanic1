@@ -625,5 +625,7 @@ public class ScenarioGameMaster {
     return tray2.getList();
   }
 
-  public IngredientsStaff getIngredientsStaff() { return staffOne; }
+  public IngredientsStaff getIngredientsStaff() {
+    return staffOne;
+  }
 }
