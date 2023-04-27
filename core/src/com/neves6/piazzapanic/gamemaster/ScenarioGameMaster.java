@@ -91,7 +91,7 @@ public class ScenarioGameMaster {
     this.save = new GameSaver("here.json");
 
     this.save.setDifficulty(difficulty);
-    this.save.setPowerUp(disablePowerup);
+    this.save.setPowerUp(!(disablePowerup));
     this.save.setCustomersRemaining(custno);
 
     for (int i = 0; i < chefno; i++) {
@@ -175,7 +175,7 @@ public class ScenarioGameMaster {
     }
 
     machineUnlockBalance.addGroup("ingredients-staff", 150f);
-    machineUnlockBalance.addGroup("server-staff", 0f);
+    machineUnlockBalance.addGroup("server-staff", 50f);
 
     this.powerups = new PowerUpRunner(chefs, machines, machineUnlockBalance, save);
 

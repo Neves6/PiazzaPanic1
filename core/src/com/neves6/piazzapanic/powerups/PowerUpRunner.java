@@ -120,5 +120,8 @@ public class PowerUpRunner {
     shorterMachineTime.loadPowerup((JSONObject) details.get("Shorter Machine"));
     autoCook.loadPowerup((JSONObject) details.get("Skip Machine"));
     timeFreeze.loadPowerup((JSONObject) details.get("Time Freeze"));
+    machines = shorterMachineTime.applyPowerUp(machines);
+    doubleMoney.applyPowerUp(money);
+    cheaperMachineUnlock.applyPowerUp(money.getUnlockDetails());
   }
 }
