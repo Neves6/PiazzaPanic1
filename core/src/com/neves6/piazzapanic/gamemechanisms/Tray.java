@@ -5,7 +5,12 @@ import com.neves6.piazzapanic.people.Customer;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import java.util.*;
 
+/**
+ * The class which handles all operation upon the tray used to assembly items
+ * by the chef.
+ */
 public class Tray {
+  // LIST ALL RECIPES AND THEIR INGREDIENTS HERE.
   static final ArrayList<String> SALAD =
       new ArrayList<>(Arrays.asList("chopped tomato", "chopped onion", "chopped lettuce"));
   static final ArrayList<String> JACKETPOTATO = new ArrayList<>(Arrays.asList("jacket", "beans"));
@@ -17,6 +22,10 @@ public class Tray {
 
   ArrayList<String> content;
 
+  /**
+   * Constructor method which adds all recipes to a list.
+   * Create an list to store content of trays.
+   */
   public Tray() {
     content = new ArrayList<>();
     recipes.put("salad", SALAD);
@@ -25,6 +34,10 @@ public class Tray {
     recipes.put("raw pizza", RAWPIZZA);
   }
 
+  /**
+   * Getter method to get items on tray.
+   * @return Items on the tray.
+   */
   public ArrayList<String> getList() {
     return content;
   }
@@ -32,7 +45,9 @@ public class Tray {
   /**
    * Adds the top item from the currently selected chef's inventory to the tray.
    *
-   * @param station Indicates which tray station is being used.
+   * @param customers The queue of customers who are waiting to be served.
+   * @param deliveryStaff The member of staff which can take items to the counter.
+   * @param machineUnlockBalance The money that the player has earned so far.
    * @return
    */
   public void addToTray(

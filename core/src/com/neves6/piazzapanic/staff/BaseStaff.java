@@ -54,8 +54,4 @@ public class BaseStaff {
   public boolean getCollect() {
     return this.collect;
   }
-
-  public void setCollect(Boolean collect) {
-    this.collect = collect;
-  }
 }

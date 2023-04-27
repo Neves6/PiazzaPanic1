@@ -317,8 +317,6 @@ public class ScenarioGameMaster {
    * @param delta time since last frame.
    */
   public void tickUpdate(float delta) {
-    // TODO: play test and adjust difficulty scaling according to feedback
-
     lastRepPointLost =
         checkOrderExpired(
             customers,
@@ -593,39 +591,67 @@ public class ScenarioGameMaster {
     }
   }
 
+  /**
+   * Getter method for list of chefs.
+   * @return List of chefs
+   */
   public ArrayList<Chef> getChefs() {
     return chefs;
   }
 
+  /**
+   * Getter method for the total time elapsed with power ups added.
+   * @return The total time elapsed with power ups added.
+   */
   public float getTotalTimerDisplay() {
     return totalTimerDisplay;
   }
 
+  /**
+   * Getter method for the total time elapsed.
+   * @return The total time elapsed.
+   */
   public float getTotalTimer() {
     return totalTimer;
   }
 
+  /**
+   * Getter method for the time the last reputation point was lost.
+   * @return The time the last reputation point was lost.
+   */
   public float getLastRepPointLost() {
     return lastRepPointLost;
   }
 
+  /**
+   * Getter method for number of reputation points that the player current has.
+   * @return Number of reputation points that the player current has.
+   */
   public int getReputationPoints() {
     return reputationPoints.getPoints();
   }
 
+  /**
+   * Getter method for the queue of customers.
+   * @return The queue of customers.
+   */
   public Queue<Customer> getCustomers() {
     return customers;
   }
 
+  /**
+   * Getter method for the contents for the first tray.
+   * @return Contents of the first tray.
+   */
   public ArrayList<String> getTray1() {
     return tray1.getList();
   }
 
+  /**
+   * Getter method for the contents for the first tray.
+   * @return Contents of the first tray.
+   */
   public ArrayList<String> getTray2() {
     return tray2.getList();
-  }
-
-  public IngredientsStaff getIngredientsStaff() {
-    return staffOne;
   }
 }
