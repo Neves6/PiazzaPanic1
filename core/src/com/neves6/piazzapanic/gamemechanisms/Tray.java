@@ -5,10 +5,7 @@ import com.neves6.piazzapanic.people.Customer;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import java.util.*;
 
-/**
- * The class which handles all operation upon the tray used to assembly items
- * by the chef.
- */
+/** The class which handles all operation upon the tray used to assembly items by the chef. */
 public class Tray {
   // LIST ALL RECIPES AND THEIR INGREDIENTS HERE.
   static final ArrayList<String> SALAD =
@@ -23,8 +20,7 @@ public class Tray {
   ArrayList<String> content;
 
   /**
-   * Constructor method which adds all recipes to a list.
-   * Create an list to store content of trays.
+   * Constructor method which adds all recipes to a list. Create an list to store content of trays.
    */
   public Tray() {
     content = new ArrayList<>();
@@ -36,6 +32,7 @@ public class Tray {
 
   /**
    * Getter method to get items on tray.
+   *
    * @return Items on the tray.
    */
   public ArrayList<String> getList() {

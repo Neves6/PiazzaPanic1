@@ -6,7 +6,7 @@ import com.neves6.piazzapanic.people.Customer;
 import java.util.ArrayList;
 import java.util.Queue;
 
-/** Class to handle all text displayed to the user.*/
+/** Class to handle all text displayed to the user. */
 public class TextMaster {
   public TextMaster() {}
 

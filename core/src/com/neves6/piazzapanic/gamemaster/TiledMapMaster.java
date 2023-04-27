@@ -14,6 +14,7 @@ public class TiledMapMaster {
 
   /**
    * Constructor method.
+   *
    * @param map The map that shows the items for the game.
    */
   public TiledMapMaster(TiledMap map) {
