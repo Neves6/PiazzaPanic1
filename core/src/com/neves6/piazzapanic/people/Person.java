@@ -58,7 +58,7 @@ public class Person {
     if (xcoord > -1) {
       this.xcoord = xcoord;
     } else {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException(); // UPDATE: added error checking
     }
   }
 
@@ -71,7 +71,7 @@ public class Person {
     if (ycoord > -1) {
       this.ycoord = ycoord;
     } else {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException(); // UPDATE: added error checking
     }
   }
 
