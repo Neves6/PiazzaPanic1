@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-
 /** Helper/convenience class. Currently only handles retrieving and saving settings. */
 public final class Utility {
   public static String settingsFilepath = "./settings.txt";
