@@ -45,10 +45,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   OrthogonalTiledMapRenderer renderer;
   ScenarioGameMaster gm;
   float unitScale;
-  float wScale;
-  float hScale;
-  int INITIAL_WIDTH;
-  int INITIAL_HEIGHT;
+  float wscale;
+  float hscale;
+  int initialWidth;
+  int initialHeight;
   int[] renderableLayers = {0, 1, 2};
   Texture selectedTexture;
   Texture recipes;
@@ -57,6 +57,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   IngredientsStaff ingredientsHelper;
   ArrayList<Boolean> wasd = new ArrayList<>(Arrays.asList(false, false, false, false));
   TextMaster tm = new TextMaster();
+
   /**
    * Constructor method.
    *
@@ -105,12 +106,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
   public void sharedSetup() {
     unitScale = Gdx.graphics.getHeight() / (12f * 32f);
-    wScale = unitScale * 32f;
-    hScale = unitScale * 32f;
+    wscale = unitScale * 32f;
+    hscale = unitScale * 32f;
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
     font.getData().setScale(unitScale * 0.4F);
-    this.INITIAL_WIDTH = Gdx.graphics.getWidth();
-    this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
+    this.initialWidth = Gdx.graphics.getWidth();
+    this.initialHeight = Gdx.graphics.getHeight();
     this.machineUnlockBalance = new Money();
     this.deliveryStaff =
         new DeliveryStaff(
@@ -175,29 +176,29 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     game.getBatch()
         .draw(
             gm.getChef(1).getTxNow(),
-            gm.getChef(1).getxCoord() * wScale,
-            gm.getChef(1).getyCoord() * hScale,
+            gm.getChef(1).getxCoord() * wscale,
+            gm.getChef(1).getyCoord() * hscale,
             32 * unitScale,
             32 * unitScale);
     game.getBatch()
         .draw(
             gm.getChef(2).getTxNow(),
-            gm.getChef(2).getxCoord() * wScale,
-            gm.getChef(2).getyCoord() * hScale,
+            gm.getChef(2).getxCoord() * wscale,
+            gm.getChef(2).getyCoord() * hscale,
             32 * unitScale,
             32 * unitScale);
     game.getBatch()
         .draw(
             gm.getChef(3).getTxNow(),
-            gm.getChef(3).getxCoord() * wScale,
-            gm.getChef(3).getyCoord() * hScale,
+            gm.getChef(3).getxCoord() * wscale,
+            gm.getChef(3).getyCoord() * hscale,
             32 * unitScale,
             32 * unitScale);
     game.getBatch()
         .draw(
             selectedTexture,
-            gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,
-            gm.getChef(gm.getSelectedChef()).getyCoord() * hScale,
+            gm.getChef(gm.getSelectedChef()).getxCoord() * wscale,
+            gm.getChef(gm.getSelectedChef()).getyCoord() * hscale,
             32 * unitScale,
             32 * unitScale);
 
@@ -205,16 +206,16 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
       game.getBatch()
           .draw(
               gm.getFirstCustomer().getTxUp(),
-              8 * wScale,
-              2 * hScale,
+              8 * wscale,
+              2 * hscale,
               32 * unitScale,
               32 * unitScale);
       for (int i = 1; i < gm.getCustomersRemaining(); i++) {
         game.getBatch()
             .draw(
                 gm.getFirstCustomer().getTxLeft(),
-                (8 + i) * wScale,
-                2 * hScale,
+                (8 + i) * wscale,
+                2 * hscale,
                 32 * unitScale,
                 32 * unitScale);
       }
@@ -222,24 +223,24 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     font.draw(
         game.getBatch(),
         tm.getMachineTimerForChef(0, gm.getChefs()),
-        gm.getChef(1).getxCoord() * wScale,
-        gm.getChef(1).getyCoord() * hScale + 2 * (hScale / 3f),
+        gm.getChef(1).getxCoord() * wscale,
+        gm.getChef(1).getyCoord() * hscale + 2 * (hscale / 3f),
         32 * unitScale,
         1,
         true);
     font.draw(
         game.getBatch(),
         tm.getMachineTimerForChef(1, gm.getChefs()),
-        gm.getChef(2).getxCoord() * wScale,
-        gm.getChef(2).getyCoord() * hScale + 2 * (hScale / 3f),
+        gm.getChef(2).getxCoord() * wscale,
+        gm.getChef(2).getyCoord() * hscale + 2 * (hscale / 3f),
         32 * unitScale,
         1,
         true);
     font.draw(
         game.getBatch(),
         tm.getMachineTimerForChef(2, gm.getChefs()),
-        gm.getChef(3).getxCoord() * wScale,
-        gm.getChef(3).getyCoord() * hScale + 2 * (hScale / 3f),
+        gm.getChef(3).getxCoord() * wscale,
+        gm.getChef(3).getyCoord() * hscale + 2 * (hscale / 3f),
         32 * unitScale,
         1,
         true);
@@ -247,117 +248,117 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     font.draw(
         game.getBatch(),
         tm.generateHoldingsText(gm.getChefs()),
-        wScale * 8.25F,
-        hScale * 11.75F,
-        wScale * 6.5F,
+        wscale * 8.25F,
+        hscale * 11.75F,
+        wscale * 6.5F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         tm.generateCustomersTrayText(gm.getCustomers(), gm.getTray1(), gm.getTray2()),
-        wScale * 15F,
-        hScale * 11.75F,
-        wScale * 6F,
+        wscale * 15F,
+        hscale * 11.75F,
+        wscale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         tm.generateTimerText(gm.getTotalTimerDisplay()),
-        wScale * 15.25F,
-        hScale * 3.75F,
-        wScale * 6F,
+        wscale * 15.25F,
+        hscale * 3.75F,
+        wscale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         tm.generateReputationPointText(
             gm.getTotalTimer(), gm.getLastRepPointLost(), gm.getReputationPoints()),
-        wScale * 15.25F,
-        hScale * 4.25F,
-        wScale * 6F,
+        wscale * 15.25F,
+        hscale * 4.25F,
+        wscale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         machineUnlockBalance.displayBalance(),
-        wScale * 15.25F,
-        hScale * 4.75F,
-        wScale * 6F,
+        wscale * 15.25F,
+        hscale * 4.75F,
+        wscale * 6F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         gm.getPowerUpRunner().displayText(),
-        wScale * 14.25F,
-        hScale * 8.75F,
-        wScale * 8F,
+        wscale * 14.25F,
+        hscale * 8.75F,
+        wscale * 8F,
         -1,
         true);
     font.draw(
         game.getBatch(),
         tm.generateCustomerLeftText(gm.getTotalTimer(), gm.getLastRepPointLost()),
-        wScale * 15.25F,
-        hScale * 6.75F,
-        wScale * 5.5F,
+        wscale * 15.25F,
+        hscale * 6.75F,
+        wscale * 5.5F,
         -1,
         true);
 
     // Any machines that are unlockable add here to draw a lock on top of it.
     if (!(machineUnlockBalance.isUnlocked("chopping"))) {
-      game.getBatch().draw(lock, 12 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 12 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
       font.draw(
           game.getBatch(),
           Float.toString(machineUnlockBalance.getUnlockPrice("chopping")),
-          12 * wScale,
-          7 * hScale);
+          12 * wscale,
+          7 * hscale);
     }
     if (!(machineUnlockBalance.isUnlocked("forming"))) {
-      game.getBatch().draw(lock, 10 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 10 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
       font.draw(
           game.getBatch(),
           Float.toString(machineUnlockBalance.getUnlockPrice("forming")),
-          10 * wScale,
-          7 * hScale);
+          10 * wscale,
+          7 * hscale);
     }
     if (!(machineUnlockBalance.isUnlocked("grill"))) {
-      game.getBatch().draw(lock, 7 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 7 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
       font.draw(
           game.getBatch(),
           Float.toString(machineUnlockBalance.getUnlockPrice("grill")),
-          7 * wScale,
-          7 * hScale);
+          7 * wscale,
+          7 * hscale);
     }
     if (!(machineUnlockBalance.isUnlocked("potato"))) {
-      game.getBatch().draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 14 * wscale, 6 * hscale, 32 * unitScale, 32 * unitScale);
       font.draw(
           game.getBatch(),
           Float.toString(machineUnlockBalance.getUnlockPrice("potato")),
-          14 * wScale,
-          6 * hScale);
+          14 * wscale,
+          6 * hscale);
     }
     if (!(machineUnlockBalance.isUnlocked("pizza"))) {
-      game.getBatch().draw(lock, 1 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 1 * wscale, 6 * hscale, 32 * unitScale, 32 * unitScale);
       font.draw(
           game.getBatch(),
           Float.toString(machineUnlockBalance.getUnlockPrice("pizza")),
-          1 * wScale,
-          6 * hScale);
+          1 * wscale,
+          6 * hscale);
     }
     if (!(machineUnlockBalance.isUnlocked("ingredients-staff"))) {
-      game.getBatch().draw(lock, 2 * wScale, 7 * hScale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 2 * wscale, 7 * hscale, 32 * unitScale, 32 * unitScale);
       font.draw(
           game.getBatch(),
           Float.toString(machineUnlockBalance.getUnlockPrice("ingredients-staff")),
-          2 * wScale,
-          7 * hScale);
+          2 * wscale,
+          7 * hscale);
     }
     if (!(machineUnlockBalance.isUnlocked("server-staff"))) {
-      game.getBatch().draw(lock, 1 * wScale, 3 * hScale, 32 * unitScale, 32 * unitScale);
+      game.getBatch().draw(lock, 1 * wscale, 3 * hscale, 32 * unitScale, 32 * unitScale);
       font.draw(
           game.getBatch(),
           Float.toString(machineUnlockBalance.getUnlockPrice("server-staff")),
-          1 * wScale,
-          3 * hScale);
+          1 * wscale,
+          3 * hscale);
     }
 
     game.getBatch().end();
@@ -378,8 +379,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
       game.getBatch()
           .draw(
               new Texture(Gdx.files.internal("people/chef1down.png")),
-              pairCoord.get(0) * wScale,
-              pairCoord.get(1) * hScale,
+              pairCoord.get(0) * wscale,
+              pairCoord.get(1) * hscale,
               32 * unitScale,
               32 * unitScale);
       game.getBatch().end();
@@ -394,15 +395,15 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    */
   @Override
   public void resize(int width, int height) {
-    if (width == INITIAL_WIDTH && height == INITIAL_HEIGHT) {
+    if (width == initialWidth && height == initialHeight) {
       super.resize(width, height);
       camera.setToOrtho(false, width, height);
       unitScale = Gdx.graphics.getHeight() / (12f * 32f);
-      wScale = unitScale * 32f;
-      hScale = unitScale * 32f;
+      wscale = unitScale * 32f;
+      hscale = unitScale * 32f;
       renderer = new OrthogonalTiledMapRenderer(map, unitScale);
     } else {
-      Gdx.graphics.setWindowedMode(INITIAL_WIDTH, INITIAL_HEIGHT);
+      Gdx.graphics.setWindowedMode(initialWidth, initialHeight);
     }
   }
 

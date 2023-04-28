@@ -3,8 +3,9 @@
  *
  * <p>REQUIREMENT: recall user screen settings
  *
- * <p>FEATURE ADDITION
+ * <p>FEATURE ADDITION.
  */
+
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
@@ -26,8 +27,8 @@ public class IntroScreen extends ScreenAdapter {
   Texture introSheet;
   BitmapFont font;
   float stateTime;
-  int FRAME_COLS;
-  int FRAME_ROWS;
+  int frameCols;
+  int frameRows;
   int winWidth;
   int winHeight;
   ArrayList<String> settings;
@@ -54,16 +55,16 @@ public class IntroScreen extends ScreenAdapter {
   /** What to show when this screen is loaded. */
   public void show() {
     // INTRO ANIMATION
-    FRAME_COLS = 8;
-    FRAME_ROWS = 1;
+    frameCols = 8;
+    frameRows = 1;
     introSheet = new Texture(Gdx.files.internal("intro_sheet.png"));
     TextureRegion[][] tmp =
         TextureRegion.split(
-            introSheet, introSheet.getWidth() / FRAME_COLS, introSheet.getHeight() / FRAME_ROWS);
-    TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+            introSheet, introSheet.getWidth() / frameCols, introSheet.getHeight() / frameRows);
+    TextureRegion[] walkFrames = new TextureRegion[frameCols * frameRows];
     int index = 0;
-    for (int i = 0; i < FRAME_ROWS; i++) {
-      for (int j = 0; j < FRAME_COLS; j++) {
+    for (int i = 0; i < frameRows; i++) {
+      for (int j = 0; j < frameCols; j++) {
         walkFrames[index++] = tmp[i][j];
       }
     }
