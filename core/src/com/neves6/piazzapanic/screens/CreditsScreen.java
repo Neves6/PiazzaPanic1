@@ -142,7 +142,7 @@ public class CreditsScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
    * @param screenX The x coordinate, origin is in the upper left corner
    * @param screenY The y coordinate, origin is in the upper left corner

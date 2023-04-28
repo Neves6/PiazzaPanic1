@@ -84,9 +84,10 @@ public class Machine {
     }
   }
 
-  // UPDATE for FR_SERVICE_STAFF: added staff interactions
+  // UPDATE for FR_SERVICE_STAFF: added staff interactions.
+
   /**
-   * Performs output process of machine
+   * Performs output process of machine.
    *
    * @param chef Which chef is using the machine.
    * @param currency Money instance used in game.
@@ -125,6 +126,7 @@ public class Machine {
       runtime = 0;
     }
   }
+
   // UPDATE: added a way to attempt action completion
   /** Checks if process is within valid time window, if so the action is marked as complete. */
   public void attemptCompleteAction() {

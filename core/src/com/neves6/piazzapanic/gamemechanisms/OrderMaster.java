@@ -11,12 +11,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class OrderMaster {
   static final ArrayList<String> RECIPES =
       new ArrayList<>(asList("salad", "hamburger", "jacket potato", "pizza"));
+
   /** Utility constructor. SHOULD NOT BE INITIALIZED! */
   public OrderMaster() {}
 
   /**
    * Checks if time allowed to complete any customer orders has elapsed Removes customers whose
-   * order expired and removes a reputation point
+   * order expired and removes a reputation point.
    */
   public static float checkOrderExpired(
       Queue<Customer> customers,
@@ -90,7 +91,7 @@ public final class OrderMaster {
 
   /**
    * Randomly generates a value 1 to 3 dependent on the number of customers served to be used as
-   * group sizes Initially biased towards 1 but gradually shifts in favour of 3
+   * group sizes Initially biased towards 1 but gradually shifts in favour of 3.
    *
    * @param customersServed number of customers served so far.
    * @return number of customers (value 1 to 3).

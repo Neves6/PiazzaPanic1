@@ -1,10 +1,11 @@
 /**
- * ADDED BACK BUTTON
+ * ADDED BACK BUTTON.
  *
  * <p>REQUIREMENT: usability
  *
  * <p>USER EXPERIENCE
  */
+
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;

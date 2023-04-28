@@ -3,7 +3,11 @@ package com.neves6.piazzapanic.gamemechanisms;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
 
 /** The class which handles all operation upon the tray used to assembly items by the chef. */
 public class Tray {
@@ -45,7 +49,6 @@ public class Tray {
    * @param customers The queue of customers who are waiting to be served.
    * @param deliveryStaff The member of staff which can take items to the counter.
    * @param machineUnlockBalance The money that the player has earned so far.
-   * @return
    */
   public void addToTray(
       Chef chef,

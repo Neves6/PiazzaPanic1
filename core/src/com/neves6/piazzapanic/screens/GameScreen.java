@@ -3,11 +3,15 @@
  *
  * <p>REQUIREMENTS: LOAD FROM NEW GAME OR SAVED GAME
  *
- * <p>FEATURE ADDITION, INCREASE CODE EFFICIENCY
+ * <p>FEATURE ADDITION, INCREASE CODE EFFICIENCY.
  */
+
 package com.neves6.piazzapanic.screens;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -58,7 +62,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    * @param level The difficulty that the user has selected.
-   * @param custNo
+   * @param scenario The boolean variable to indicate whether the game is time limited.
+   * @param disablePowerup Should power ups be disabled or not.
+   * @param custNo Number of customers that are needed to initialise the game.
    */
   public GameScreen(
       PiazzaPanicGame game, int level, boolean scenario, boolean disablePowerup, int custNo) {
@@ -78,6 +84,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             level);
   }
 
+  /**
+   * Constructor method for loading a previously saved game.
+   *
+   * @param game An instance of PiazzaPanicGame.
+   * @throws ParseException If the file containing the save data, cannot be parsed.
+   */
   public GameScreen(PiazzaPanicGame game) throws ParseException {
     this.game = game;
     sharedSetup();
@@ -464,7 +476,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   /**
    * Method which runs when user lifts a key up.
    *
-   * @param keycode one of the constants in {@link Input.Keys}
+   * @param keycode one of the constants in {@link Input.Keys}.
    * @return false
    */
   @Override
@@ -487,9 +499,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
-   * @param character The character
+   * @param character The character.
    * @return false
    */
   @Override
@@ -498,10 +510,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
-   * @param screenX The x coordinate, origin is in the upper left corner
-   * @param screenY The y coordinate, origin is in the upper left corner
+   * @param screenX The x coordinate, origin is in the upper left corner.
+   * @param screenY The y coordinate, origin is in the upper left corner.
    * @param pointer the pointer for the event.
    * @param button the button
    * @return false
@@ -512,12 +524,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner.
+   * @param screenY The y coordinate, origin is in the upper left corner.
    * @param pointer the pointer for the event.
-   * @param button the button
+   * @param button the button.
    * @return false
    */
   @Override
@@ -526,10 +538,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner.
+   * @param screenY The y coordinate, origin is in the upper left corner.
    * @param pointer the pointer for the event.
    * @return false
    */
@@ -539,10 +551,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The x coordinate, origin is in the upper left corner.
+   * @param screenY The y coordinate, origin is in the upper left corner.
    * @return false
    */
   @Override
@@ -551,7 +563,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
-   * UNUSED METHOD
+   * UNUSED METHOD.
    *
    * @param amountX the horizontal scroll amount, negative or positive depending on the direction
    *     the wheel was scrolled.

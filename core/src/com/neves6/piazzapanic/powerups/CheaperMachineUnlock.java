@@ -1,4 +1,5 @@
-/** NEW FEATURE */
+/** NEW FEATURE. */
+
 package com.neves6.piazzapanic.powerups;
 
 import java.util.ArrayList;
@@ -27,8 +28,9 @@ public class CheaperMachineUnlock extends BasePowerUp {
   public Map<String, ArrayList<Float>> applyPowerUp(Map<String, ArrayList<Float>> machineStatus) {
     if (getAcquiredStatus()) {
       setStartTime();
-      for (String status : machineStatus.keySet())
+      for (String status : machineStatus.keySet()) {
         machineStatus.get(status).set(0, machineStatus.get(status).get(0) / 2);
+      }
     }
     return machineStatus;
   }

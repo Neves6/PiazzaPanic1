@@ -1,9 +1,9 @@
 /**
- * INTEGRATED OTHER FEATURES
+ * INTEGRATED OTHER FEATURES.
  *
- * <p>REQUIREMENT: game difficulties, powerups
+ * <p>REQUIREMENT: game difficulties, powerups.
  *
- * <p>FEATURE ADDITION/INCREASE CODE EFFICIENCY
+ * <p>FEATURE ADDITION/INCREASE CODE EFFICIENCY.
  */
 package com.neves6.piazzapanic.screens;
 

@@ -10,7 +10,12 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.neves6.piazzapanic.gamemechanisms.*;
+import com.neves6.piazzapanic.gamemechanisms.GameSaver;
+import com.neves6.piazzapanic.gamemechanisms.Machine;
+import com.neves6.piazzapanic.gamemechanisms.Money;
+import com.neves6.piazzapanic.gamemechanisms.ReputationPoints;
+import com.neves6.piazzapanic.gamemechanisms.Tray;
+import com.neves6.piazzapanic.gamemechanisms.Utility;
 import com.neves6.piazzapanic.people.Chef;
 import com.neves6.piazzapanic.people.Customer;
 import com.neves6.piazzapanic.powerups.PowerUpRunner;
@@ -18,7 +23,12 @@ import com.neves6.piazzapanic.screens.GameWinScreen;
 import com.neves6.piazzapanic.screens.PiazzaPanicGame;
 import com.neves6.piazzapanic.staff.DeliveryStaff;
 import com.neves6.piazzapanic.staff.IngredientsStaff;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
 
 /** A class designed to handle all in game processing. */
 public class ScenarioGameMaster {

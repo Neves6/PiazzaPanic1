@@ -1,10 +1,11 @@
 /**
- * INTEGRATED LEVEL OPTIONS
+ * INTEGRATED LEVEL OPTIONS.
  *
  * <p>REQUIREMENT: level options
  *
  * <p>FEATURE ADDITION
  */
+
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
@@ -113,6 +114,8 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   }
 
   /**
+   * Controls what happens when you press a key.
+   *
    * @param keycode one of the constants in {@link Input.Keys}
    * @return true
    */

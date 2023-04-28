@@ -1,4 +1,5 @@
-/** NEW FEATURE */
+/** NEW FEATURE. */
+
 package com.neves6.piazzapanic.powerups;
 
 import static java.lang.Math.random;
@@ -60,7 +61,7 @@ public class PowerUpRunner {
       case 3:
         autoCook.acquirePowerUp();
         break;
-      case 4:
+      default:
         timeFreeze.acquirePowerUp();
         break;
     }

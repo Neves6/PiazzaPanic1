@@ -38,7 +38,7 @@ public class TiledMapMaster {
    * Converts the tiled map coordinates into the game coordinates then compares it to the target x
    * and target y, to check whether the rectangle is being interacted with.
    *
-   * @param object A tiled map representation of an point on the map.
+   * @param object A tiled map representation of a point on the map.
    * @param xcoord A game x coordinate.
    * @param ycoord A game y coordinate.
    * @return Boolean value representing whether the coordinates passed in are the coordinates of the
