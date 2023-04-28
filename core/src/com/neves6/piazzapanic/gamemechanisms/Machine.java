@@ -116,7 +116,7 @@ public class Machine {
             > (processingTime
                 * 2
                 / 3F)) { // UPDATE for FR_ACTION_TIMER_BAR: added a way to get ruined of an
-                         // ingredient
+      // ingredient
       chef.addToInventory("ruined " + output);
       chef.setIsStickied(false);
       chef.setMachineInteractingWith(null);
