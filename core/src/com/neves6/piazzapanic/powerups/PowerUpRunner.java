@@ -1,5 +1,4 @@
-/** 
- * NEW FEATURE*/
+/** NEW FEATURE */
 package com.neves6.piazzapanic.powerups;
 
 import static java.lang.Math.random;

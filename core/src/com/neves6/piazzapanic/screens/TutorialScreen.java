@@ -1,8 +1,10 @@
-/**INTEGRATED LEVEL OPTIONS
- * 
- *REQUIREMENT: level options
- * 
- *FEATURE ADDITION*/
+/**
+ * INTEGRATED LEVEL OPTIONS
+ *
+ * <p>REQUIREMENT: level options
+ *
+ * <p>FEATURE ADDITION
+ */
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;

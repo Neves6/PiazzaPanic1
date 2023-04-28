@@ -1,8 +1,10 @@
-/**ADDED OPTIONS FOR LEVEL SELECTION
- * 
- * REQUIREMENT: easy, medium, and hard difficulties. powerup options
- * 
- * FEATURE ADDITION, INCREASED EFFICIENCY*/
+/**
+ * ADDED OPTIONS FOR LEVEL SELECTION
+ *
+ * <p>REQUIREMENT: easy, medium, and hard difficulties. powerup options
+ *
+ * <p>FEATURE ADDITION, INCREASED EFFICIENCY
+ */
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
