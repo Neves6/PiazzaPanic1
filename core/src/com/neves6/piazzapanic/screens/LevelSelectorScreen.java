@@ -16,7 +16,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import java.io.File;
@@ -56,9 +59,10 @@ public class LevelSelectorScreen extends ScreenAdapter {
   TextureAtlas atlasSmall;
   TextButton.TextButtonStyle buttonStyleSmall;
   TextButton textDisplay;
+  final File json = new File("here.json");
 
   /**
-   * Constructor method
+   * Constructor method.
    *
    * @param game Instance of PiazzaPanicGame used to control screen transitions.
    */
@@ -227,7 +231,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
     stage.addActor(minusButton);
     stage.addActor(textDisplay);
 
-    File json = new File("here.json");
     resumeButton = new TextButton("Resume", buttonStyle);
     resumeButton.setPosition(
         hardButton.getX() + 3 * resumeButton.getWidth() / 4f,

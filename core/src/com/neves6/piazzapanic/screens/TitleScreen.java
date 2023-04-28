@@ -154,7 +154,7 @@ public class TitleScreen extends ScreenAdapter {
             bg.getHeight() * bgScaleFactor);
     font.draw(
         game.getBatch(),
-        "PIAZZA PANIC 1",
+        "PIAZZA PANIC 2",
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f + winHeight / 5f,
         winWidth / 5f,

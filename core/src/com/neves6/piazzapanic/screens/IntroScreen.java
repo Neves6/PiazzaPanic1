@@ -31,6 +31,7 @@ public class IntroScreen extends ScreenAdapter {
   int winWidth;
   int winHeight;
   ArrayList<String> settings;
+  TextureRegion currentFrame;
 
   /**
    * Constructor method.
@@ -85,7 +86,7 @@ public class IntroScreen extends ScreenAdapter {
     winHeight = Gdx.graphics.getHeight();
 
     // Get current frame of animation for the current stateTime
-    TextureRegion currentFrame = introAnimation.getKeyFrame(stateTime, true);
+    currentFrame = introAnimation.getKeyFrame(stateTime, true);
 
     camera.update();
 
@@ -106,7 +107,7 @@ public class IntroScreen extends ScreenAdapter {
             winWidth / 5f);
     font.draw(
         game.getBatch(),
-        "NEVES6\nAssessment 1\nIndev Build",
+        "GEORGE\nAssessment 2\nFinal Build",
         winWidth / 2f - winWidth / 10f,
         winHeight / 2f - winWidth / 9f,
         winWidth / 5f,
