@@ -5,7 +5,6 @@
  *
  * <p>FEATURE ADDITION.
  */
-
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
