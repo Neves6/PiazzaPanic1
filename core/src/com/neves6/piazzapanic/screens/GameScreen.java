@@ -1,3 +1,8 @@
+/**ADDED SHARED SETUP, INTEGRATED OTHER FEATURES
+ * 
+ * REQUIREMENTS: LOAD FROM NEW GAME OR SAVED GAME
+ * 
+ * FEATURE ADDITION, INCREASE CODE EFFICIENCY*/
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.*;
@@ -54,7 +59,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
    * @param custNo
    */
   public GameScreen(
-      PiazzaPanicGame game, int level, boolean scenerio, boolean disablePowerup, int custNo) {
+      PiazzaPanicGame game, int level, boolean scenario, boolean disablePowerup, int custNo) {
     this.game = game;
     sharedSetup();
     map = new TmxMapLoader().load("tilemaps/level1.tmx");

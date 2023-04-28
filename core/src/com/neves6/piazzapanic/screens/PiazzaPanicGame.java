@@ -1,3 +1,8 @@
+/**INTEGRATED FEATURE
+ * 
+ * REQUIREMENTS: save game/new game drawing game screen
+ * 
+ * ADDED FEATURE*/
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Game;

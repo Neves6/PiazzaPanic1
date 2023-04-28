@@ -1,3 +1,5 @@
+/** 
+ * NEW FEATURE*/
 package com.neves6.piazzapanic.powerups;
 
 import java.util.ArrayList;

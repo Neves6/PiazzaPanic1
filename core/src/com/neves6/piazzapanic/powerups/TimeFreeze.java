@@ -1,3 +1,5 @@
+/** 
+ * NEW FEATURE*/
 package com.neves6.piazzapanic.powerups;
 
 /** Implements a power up which makes the timer freeze. */

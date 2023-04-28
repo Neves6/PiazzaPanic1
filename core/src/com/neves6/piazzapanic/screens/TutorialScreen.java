@@ -1,3 +1,8 @@
+/**INTEGRATED LEVEL OPTIONS
+ * 
+ *REQUIREMENT: level options
+ * 
+ *FEATURE ADDITION*/
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
@@ -19,7 +24,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
   int winWidth;
   int winHeight;
   String continueTo;
-  Boolean scenerio;
+  Boolean scenario;
   Boolean disablePowerUp;
   int custNo;
 
@@ -30,7 +35,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
     tutorial2 = new Texture(Gdx.files.internal("tutorialmap.png"));
-    this.scenerio = endless;
+    this.scenario = endless;
     this.disablePowerUp = disablePowerup;
     if (endless) {
       custNo = -1;
@@ -50,7 +55,7 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
     font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     tutorial = new Texture(Gdx.files.internal("tutorial.png"));
     tutorial2 = new Texture(Gdx.files.internal("tutorialmap.png"));
-    this.scenerio = endless;
+    this.scenario = endless;
     this.disablePowerUp = disablePowerup;
     this.custNo = custNo;
   }
@@ -121,13 +126,13 @@ public class TutorialScreen extends ScreenAdapter implements InputProcessor {
         game.setScreen(new TitleScreen(game));
         break;
       case "easyGame":
-        game.setScreen(new GameScreen(game, 1, scenerio, disablePowerUp, custNo));
+        game.setScreen(new GameScreen(game, 1, scenario, disablePowerUp, custNo));
         break;
       case "mediumGame":
-        game.setScreen(new GameScreen(game, 2, scenerio, disablePowerUp, custNo));
+        game.setScreen(new GameScreen(game, 2, scenario, disablePowerUp, custNo));
         break;
       case "hardGame":
-        game.setScreen(new GameScreen(game, 3, scenerio, disablePowerUp, custNo));
+        game.setScreen(new GameScreen(game, 3, scenario, disablePowerUp, custNo));
         break;
       case "resume":
         try {
