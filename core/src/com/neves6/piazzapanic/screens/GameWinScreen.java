@@ -1,8 +1,10 @@
-/**INTEGRATED OTHER FEATURES 
- * 
- * REQUIREMENT: game difficulties, powerups
- * 
- * FEATURE ADDITION/INCREASE CODE EFFICIENCY*/
+/**
+ * INTEGRATED OTHER FEATURES
+ *
+ * <p>REQUIREMENT: game difficulties, powerups
+ *
+ * <p>FEATURE ADDITION/INCREASE CODE EFFICIENCY
+ */
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;

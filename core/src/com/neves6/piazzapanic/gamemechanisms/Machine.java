@@ -12,8 +12,10 @@ public class Machine {
   private Boolean active;
   private float runtime;
   private Chef operator;
-  private final String unlockID;  // UPDATE for UR_MONEY: Added in unlock id to unlock machines with money
-  private boolean actionComplete = false; // UPDATE: added actionComplete to tell whether an action has finished or not
+  private final String
+      unlockID; // UPDATE for UR_MONEY: Added in unlock id to unlock machines with money
+  private boolean actionComplete =
+      false; // UPDATE: added actionComplete to tell whether an action has finished or not
 
   /**
    * Machine constructor.
@@ -65,7 +67,8 @@ public class Machine {
    * @param chef Which chef is using the machine.
    * @param currency Money instance used in game.
    */
-  public void process(Chef chef, Money currency) { // UPDATE for UR_MONEY: added currency to process machine unlocks
+  public void process(
+      Chef chef, Money currency) { // UPDATE for UR_MONEY: added currency to process machine unlocks
     if (!(currency.isUnlocked(this.unlockID))) {
       return;
     }
@@ -108,7 +111,12 @@ public class Machine {
       active = false;
       actionComplete = false;
       runtime = 0;
-    } else if (!actionComplete && runtime > (processingTime * 2 / 3F)) { // UPDATE for FR_ACTION_TIMER_BAR: added a way to get ruined of an ingredient
+    } else if (!actionComplete
+        && runtime
+            > (processingTime
+                * 2
+                / 3F)) { // UPDATE for FR_ACTION_TIMER_BAR: added a way to get ruined of an
+                         // ingredient
       chef.addToInventory("ruined " + output);
       chef.setIsStickied(false);
       chef.setMachineInteractingWith(null);
