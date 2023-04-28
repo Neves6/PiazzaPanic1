@@ -223,20 +223,20 @@ public class LevelSelectorScreen extends ScreenAdapter {
     File json = new File("here.json");
     resumeButton = new TextButton("Resume", buttonStyle);
     resumeButton.setPosition(
-              hardButton.getX() + 3 * resumeButton.getWidth() / 4f,
-              Gdx.graphics.getHeight() / 5.5f - resumeButton.getHeight() / 2);
+        hardButton.getX() + 3 * resumeButton.getWidth() / 4f,
+        Gdx.graphics.getHeight() / 5.5f - resumeButton.getHeight() / 2);
     resumeButton.addListener(
-              new ChangeListener() {
-                  @Override
-                  public void changed(ChangeEvent event, Actor actor) {
-                      game.setScreen(
-                              new TutorialScreen(
-                                      game,
-                                      "resume",
-                                      customerGameModeButton.isChecked(),
-                                      powerupGameModeButton.isChecked()));
-                  }
-              });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+            game.setScreen(
+                new TutorialScreen(
+                    game,
+                    "resume",
+                    customerGameModeButton.isChecked(),
+                    powerupGameModeButton.isChecked()));
+          }
+        });
     if (json.exists() && json.length() != 0) {
       stage.addActor(resumeButton);
       resumeFlag = true;
@@ -300,8 +300,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
         width / 2f - easyButton.getWidth() / 2 - easyButton.getWidth() * 1.5f,
         height / 2f - easyButton.getHeight() / 2);
     mediumButton.setPosition(
-        width / 2f - mediumButton.getWidth() / 2,
-        height / 2f - mediumButton.getHeight() / 2);
+        width / 2f - mediumButton.getWidth() / 2, height / 2f - mediumButton.getHeight() / 2);
     hardButton.setPosition(
         width / 2f - hardButton.getWidth() / 2 + hardButton.getWidth() * 1.5f,
         height / 2f - hardButton.getHeight() / 2);
@@ -318,11 +317,9 @@ public class LevelSelectorScreen extends ScreenAdapter {
         hardButton.getX() + 3 * resumeButton.getWidth() / 4f - plusButton.getWidth(),
         height / 10f - plusButton.getHeight() / 2);
     minusButton.setPosition(
-        returnButton.getX() + returnButton.getWidth(),
-        height / 10f - minusButton.getHeight() / 2);
+        returnButton.getX() + returnButton.getWidth(), height / 10f - minusButton.getHeight() / 2);
     textDisplay.setPosition(
-        width / 2f - textDisplay.getWidth() / 2f,
-        height / 2f + Gdx.graphics.getHeight() / 5f);
+        width / 2f - textDisplay.getWidth() / 2f, height / 2f + Gdx.graphics.getHeight() / 5f);
 
     stage.clear();
     stage.addActor(easyButton);

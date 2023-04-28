@@ -7,15 +7,22 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 
+/** Class to control the data saved on Tiled Maps. */
 public class TiledMapMaster {
   TiledMap map;
   int tileWidth;
 
+  /**
+   * Constructor method.
+   *
+   * @param map The map that shows the items for the game.
+   */
   public TiledMapMaster(TiledMap map) {
     this.map = map;
     // It is a square hence, width = height, just get one.
     tileWidth = (int) map.getProperties().get("tilewidth");
   }
+
   /**
    * Helper method used to get the objects from a layer using its key.
    *

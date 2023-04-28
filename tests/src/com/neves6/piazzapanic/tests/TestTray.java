@@ -62,8 +62,10 @@ public class TestTray {
     testMoney.addGroup("server-staff", 100f);
 
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
-    assertTrue("add chefs inventory to the contents", testTray.getList().equals(new ArrayList<>(Arrays.asList("tomato"))));
-    }
+    assertTrue(
+        "add chefs inventory to the contents",
+        testTray.getList().equals(new ArrayList<>(Arrays.asList("tomato"))));
+  }
 
   @Test
   public void testAddToTrayRuined() {
@@ -86,9 +88,10 @@ public class TestTray {
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
     testTray.addToTray(testChef1, testStaff, customers, testMoney);
-    assertTrue("creates ruined recipe due to too many ingredients", testChef1.getInventory().pop().equals("ruined hamburger"));
+    assertTrue(
+        "creates ruined recipe due to too many ingredients",
+        testChef1.getInventory().pop().equals("ruined hamburger"));
     assertTrue(testTray.getList().isEmpty());
-
   }
 
   @Test
@@ -140,7 +143,8 @@ public class TestTray {
     Queue<Customer> customers1 = new LinkedList<>();
     testChef1.addToInventory("tomato");
     testTray.addToTray(testChef1, testStaff, customers1, testMoney);
-    assertTrue("add chefs inventory to the contents", testTray.getList().equals(new ArrayList<>(Arrays.asList("tomato"))));
-
+    assertTrue(
+        "add chefs inventory to the contents",
+        testTray.getList().equals(new ArrayList<>(Arrays.asList("tomato"))));
   }
 }

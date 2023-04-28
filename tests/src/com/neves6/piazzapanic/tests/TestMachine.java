@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic.tests;
 
+import static org.junit.Assert.*;
+
 import com.neves6.piazzapanic.gamemechanisms.Machine;
 import com.neves6.piazzapanic.gamemechanisms.Money;
 import com.neves6.piazzapanic.people.Chef;
@@ -7,8 +9,6 @@ import java.util.Objects;
 import java.util.Stack;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class TestMachine {
@@ -44,9 +44,12 @@ public class TestMachine {
     testChef.addToInventory("test");
     currency.addGroup("Grill", 100f);
     testMachine.process(testChef, currency);
-    assertEquals("Chef should not interact with locked machine", "test", testChef.getInventory().peek());
+    assertEquals(
+        "Chef should not interact with locked machine", "test", testChef.getInventory().peek());
     currency.unlockMachine(testMachine.getUnlockID());
-    assertFalse("Chef should not interact with machine if incorrect item is held", testChef.getIsStickied());
+    assertFalse(
+        "Chef should not interact with machine if incorrect item is held",
+        testChef.getIsStickied());
   }
 
   @Test
@@ -56,6 +59,7 @@ public class TestMachine {
     Chef testChef = new Chef("Xavier", 0, 0, 5, 5, 5, false, inventory, 1);
     Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 0, true);
     testMachine.process(testChef, new Money());
+    testMachine.attemptCompleteAction();
     testMachine.attemptCompleteAction();
     testMachine.attemptGetOutput();
     assertTrue(
