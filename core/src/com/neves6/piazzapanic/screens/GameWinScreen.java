@@ -5,6 +5,7 @@
  *
  * <p>FEATURE ADDITION/INCREASE CODE EFFICIENCY.
  */
+
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;

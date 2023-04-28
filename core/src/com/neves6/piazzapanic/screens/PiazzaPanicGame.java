@@ -1,10 +1,11 @@
 /**
- * INTEGRATED FEATURE
+ * INTEGRATED FEATURE.
  *
  * <p>REQUIREMENTS: save game/new game drawing game screen
  *
  * <p>ADDED FEATURE
  */
+
 package com.neves6.piazzapanic.screens;
 
 import com.badlogic.gdx.Game;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /** Main class handling screen input. */
 public class PiazzaPanicGame extends Game {
-  SpriteBatch _batch;
+  SpriteBatch batch;
 
   /**
    * A function which create a batch if it is null and returns it. If it is already created, return
@@ -21,10 +22,10 @@ public class PiazzaPanicGame extends Game {
    * @return A batch object that can be used to draw and place items.
    */
   public SpriteBatch getBatch() {
-    if (_batch == null) {
-      _batch = new SpriteBatch();
+    if (batch == null) {
+      batch = new SpriteBatch();
     }
-    return _batch;
+    return batch;
   }
 
   /** Default constructor method. */
@@ -48,10 +49,10 @@ public class PiazzaPanicGame extends Game {
     super.resize(width, height);
   }
 
-  /** UNUSED METHOD * */
+  /** UNUSED METHOD. * */
   public void render(float delta) {}
 
-  /** UNUSED METHOD * */
+  /** UNUSED METHOD. * */
   @Override
   public void dispose() {}
 }
