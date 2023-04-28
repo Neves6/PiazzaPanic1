@@ -41,7 +41,7 @@ public class TextMaster {
   }
 
   /**
-   * Generates the display text for reputation point count
+   * Generates the display text for reputation point count.
    *
    * @param reputationPoints The number of points that the player has left.
    * @param lastRepPointLost The time when the last reputation point was lost.
