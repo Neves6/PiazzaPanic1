@@ -78,6 +78,7 @@ public class Tray {
 
     if (machineUnlockBalance.isUnlocked("server-staff")
         && customers.size() > 0
+        && !(chef.getInventory().isEmpty())
         && customers.peek().getOrder().equals(chef.getInventory().peek())) {
       deliveryStaff.collectItem(customers.peek().getOrder());
       chef.getInventory().pop();
