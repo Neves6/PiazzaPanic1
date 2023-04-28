@@ -1,5 +1,5 @@
 buildscript {
-    
+
 
     repositories {
         mavenLocal()
@@ -9,9 +9,13 @@ buildscript {
         google()
     }
     dependencies {
-        
 
     }
+}
+
+plugins {
+    id 'java-library'
+    id 'jacoco'
 }
 
 allprojects {
@@ -47,16 +51,144 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
+    }
+
+    processResources {
+        from sourceSets.main.java.srcDirs
+        exclude '**/*.java'
+    }
+}
+
+
+project(":tests") {
+    apply plugin: "java"
+    apply plugin: "jacoco"
+    apply plugin: "checkstyle"
+
+    sourceSets.test.java.srcDirs = ["src"]
+    sourceSets.main.java.srcDirs = ["src"]
+
+    dependencies {
+
+        implementation project(":core")
+
+        implementation "org.mockito:mockito-core:5.1.1"
+
+        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+        testImplementation "org.mockito:mockito-core:5.1.1"
+        testImplementation "org.junit.vintage:junit-vintage-engine:5.6.2"
+
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    }
+
+    test {
+        useJUnitPlatform()
+        finalizedBy jacocoTestReport
+    }
+
+    jacoco {
+        toolVersion = "0.8.8"
+        reportsDirectory = layout.buildDirectory.dir('jacococoverage')
+    }
+
+    jacocoTestReport {
+        def sourceDirs = ["${project.rootDir}\\core\\src"]
+        def classDirs = ["${project.rootDir}\\core\\build\\classes\\"]
+        additionalSourceDirs.from = files(sourceDirs)
+        additionalClassDirs.from = files(classDirs)
+        dependsOn test // tests are required to run before generating the report
+
+
+        reports {
+            xml.required = false
+            csv.required = false
+            html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        }
+
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree( dir: "${project.rootDir}\\core\\build\\classes\\" , exclude: [
+                        "${project.rootDir}\\tests\\build\\classes\\"
+                ])
+            }))
+        }
+
+        jacocoTestCoverageVerification {
+            violationRules {
+                failOnViolation = true
+                rule {
+                    limit {
+                        counter = 'LINE'
+                        minimum = 0.5
+                    }
+                    limit {
+                        counter = 'BRANCH'
+                        minimum = 0.5
+                    }
+                }
+            }
+        }
+
+        // to run coverage verification during the build (and fail when appropriate)
+        check.dependsOn jacocoTestCoverageVerification
+
+        finalizedBy checkstyleTest
     }
 }
 
 project(":core") {
     apply plugin: "java-library"
-
+    apply plugin: "checkstyle"
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api 'com.googlecode.json-simple:json-simple:1.1.1'
+    }
+}
+
+apply plugin: "java"
+apply plugin: "checkstyle"
+
+checkstyle {
+
+    project.ext.checkstyleVersion = '10.7.0'
+    project.ext.sevntuChecksVersion = '1.44.1'
+    config = resources.text.fromFile('config/checkstyle/checkstyle.xml')
+
+    configurations {
+        checkstyle
+    }
+
+    dependencies{
+        assert project.hasProperty("checkstyleVersion")
+
+        checkstyle "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
+        checkstyle "com.github.sevntu-checkstyle:sevntu-checks:${sevntuChecksVersion}"
+    }
+}
+
+checkstyleMain {
+    resources.text.fromFile('config/checkstyle/checkstyle.xml')
+}
+
+checkstyleTest {
+    resources.text.fromFile('config/checkstyle/checkstyle.xml')
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet resources.text.fromFile('config/checkstyle/checkstyle.xml')
     }
 }

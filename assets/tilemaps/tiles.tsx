@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="tiles" tilewidth="32" tileheight="32" tilecount="46" columns="0">
+<tileset version="1.9" tiledversion="1.9.2" name="tiles" tilewidth="32" tileheight="32" tilecount="52" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="36">
   <image width="32" height="32" source="tiles/collide.png"/>
@@ -138,5 +138,23 @@
  </tile>
  <tile id="1">
   <image width="32" height="32" source="tiles/cleaver.png"/>
+ </tile>
+ <tile id="46">
+  <image width="32" height="32" source="tiles/wallouterbottomrightinnertopleft.png"/>
+ </tile>
+ <tile id="48">
+  <image width="32" height="32" source="tiles/walloutertopleftinnerbottom.png"/>
+ </tile>
+ <tile id="50">
+  <image width="32" height="32" source="tiles/fridgebeans.png"/>
+ </tile>
+ <tile id="51">
+  <image width="32" height="32" source="tiles/fridgecheese.png"/>
+ </tile>
+ <tile id="52">
+  <image width="32" height="32" source="tiles/fridgedough.png"/>
+ </tile>
+ <tile id="53">
+  <image width="32" height="32" source="tiles/fridgepotato.png"/>
  </tile>
 </tileset>
