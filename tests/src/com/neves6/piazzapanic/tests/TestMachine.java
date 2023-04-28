@@ -60,6 +60,7 @@ public class TestMachine {
     Machine testMachine = new Machine("Grill", "Patty", "Cooked Patty", 0, true);
     testMachine.process(testChef, new Money());
     testMachine.attemptCompleteAction();
+    testMachine.attemptCompleteAction();
     testMachine.attemptGetOutput();
     assertTrue(
         "Input must be popped from stack and output pushed to stack",

@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 
 import com.neves6.piazzapanic.people.Customer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -39,7 +40,7 @@ public final class OrderMaster {
    * Creates 1-3 customers, initially skewed towards 1 but favours 3 as the total number of
    * customers served increases Will occasionally 0.5s stalls to vary customer arrival times
    */
-  public static float createCustomers(
+  public static ArrayList<Float> createCustomers(
       Queue<Customer> customers,
       float lastCustomer,
       int customersServed,
@@ -84,14 +85,15 @@ public final class OrderMaster {
         lastCustomer = totalTimer;
       }
     }
-    return lastCustomer;
+    return new ArrayList<>(Arrays.asList((float) lastCustomer, (float) customersGenerated));
   }
 
   /**
    * Randomly generates a value 1 to 3 dependent on the number of customers served to be used as
    * group sizes Initially biased towards 1 but gradually shifts in favour of 3
    *
-   * @return integer value 1 to 3
+   * @param customersServed number of customers served so far.
+   * @return number of customers (value 1 to 3).
    */
   private static int generatePartySize(int customersServed) {
     /*

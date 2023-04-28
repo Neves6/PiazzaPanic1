@@ -44,7 +44,7 @@ public class TestOrderMaster {
   public void testCreateCustomersValidScenario() {
     Queue<Customer> customers = new LinkedList<>();
     float lastCustomer = 0;
-    lastCustomer = OrderMaster.createCustomers(customers, 2, 1, 1, 10, 1, 5);
+    lastCustomer = OrderMaster.createCustomers(customers, 2, 1, 1, 10, 1, 5).get(0);
     assertTrue("Customer has not been created", customers.size() > 0);
     assertEquals("Time of last customer creation has not been updated", 5, lastCustomer, 0.0);
   }
@@ -53,7 +53,7 @@ public class TestOrderMaster {
   public void testCreateCustomersValidEndless() {
     Queue<Customer> customers = new LinkedList<>();
     float lastCustomer = 0;
-    lastCustomer = OrderMaster.createCustomers(customers, 2, 1, 1, -1, 3, 5);
+    lastCustomer = OrderMaster.createCustomers(customers, 2, 1, 1, -1, 3, 5).get(0);
     assertTrue("Customer has not been created", customers.size() > 0);
     assertEquals("Time of last customer creation has not been updated", 5, lastCustomer, 0.0);
   }
@@ -65,7 +65,7 @@ public class TestOrderMaster {
       customers.add(new Customer("" + i, 1, 1, "test", 1));
     }
     float lastCustomer = 0;
-    lastCustomer = OrderMaster.createCustomers(customers, 2, 1, 11, 20, 1, 5);
+    lastCustomer = OrderMaster.createCustomers(customers, 2, 1, 11, 20, 1, 5).get(0);
     assertTrue("Customer should not have been created", customers.size() <= 11);
     // Will return 5 if it enters the "else" of the stall clause, will return 3 if generation is
     // stalled instead

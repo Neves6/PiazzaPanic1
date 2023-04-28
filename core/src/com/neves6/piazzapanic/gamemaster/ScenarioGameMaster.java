@@ -54,6 +54,7 @@ public class ScenarioGameMaster {
   int difficulty;
   GameSaver save;
   float totalTimerDisplay;
+  ArrayList<Float> createCustomerOutput;
 
   /**
    * ScenarioGameMaster constructor.
@@ -326,7 +327,7 @@ public class ScenarioGameMaster {
             customersServed,
             lastRepPointLost);
     if (maxCustomers == -1 || (maxCustomers > 0 && customersGenerated < maxCustomers)) {
-      lastCustomer =
+      createCustomerOutput =
           createCustomers(
               customers,
               lastCustomer,
@@ -335,6 +336,8 @@ public class ScenarioGameMaster {
               maxCustomers,
               difficulty,
               totalTimer);
+      lastCustomer = createCustomerOutput.get(0);
+      customersGenerated = Math.round(createCustomerOutput.get(1));
     }
 
     if ((customersGenerated == maxCustomers && customers.size() == 0)
