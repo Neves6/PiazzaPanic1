@@ -243,11 +243,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         32 * unitScale,
         1,
         true);
-    game.getBatch().draw(recipes,
-            wscale * 0.1f,
-            hscale * 0.1f,
-            32 * unitScale * 5f,
-            32 * unitScale * 2.5f);
+    game.getBatch()
+        .draw(recipes, wscale * 0.1f, hscale * 0.1f, 32 * unitScale * 5f, 32 * unitScale * 2.5f);
     font.draw(
         game.getBatch(),
         tm.generateHoldingsText(gm.getChefs()),
