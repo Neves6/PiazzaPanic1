@@ -33,7 +33,9 @@ public class TestBaseStaff {
     BaseStaff test =
         new BaseStaff(new ArrayList<>(Arrays.asList(1, 2)), new ArrayList<>(Arrays.asList(1, 3)));
     test.getCoordInSeq();
-    TimeUnit.MILLISECONDS.sleep(500);
+    TimeUnit.MILLISECONDS.sleep(250);
+    test.getCoordInSeq();
+    TimeUnit.MILLISECONDS.sleep(250);
     test.getCoordInSeq();
     TimeUnit.MILLISECONDS.sleep(500);
     test.getCoordInSeq();

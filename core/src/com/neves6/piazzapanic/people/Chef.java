@@ -81,7 +81,7 @@ public class Chef extends Person {
    */
   public void setIsStickied(boolean flag) {
     this.isStickied = flag;
-  }
+  } // UPDATE: added to help with testing
 
   /**
    * Setter method to show what the chef is currently using.
@@ -90,7 +90,7 @@ public class Chef extends Person {
    */
   public void setMachineInteractingWith(Machine machine) {
     this.machineInteractingWith = machine;
-  }
+  } // UPDATE: added to help with testing
 
   /**
    * Getter method to see what machine the chef is using.
@@ -99,7 +99,7 @@ public class Chef extends Person {
    */
   public Machine getMachineInteractingWith() {
     return machineInteractingWith;
-  }
+  } // UPDATE: helps with testing and game mechanisms
 
   /**
    * Getter method to see what items the chef has.
@@ -138,7 +138,7 @@ public class Chef extends Person {
    *
    * @param facing sprite facing direction.
    */
-  public void setFacing(String facing) {
+  public void setFacing(String facing) { // UPDATE: shows which direction the chef is facing
     switch (facing) {
       case "up":
         this.facing = facing;

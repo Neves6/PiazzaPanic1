@@ -6,6 +6,7 @@ import com.neves6.piazzapanic.people.Customer;
 import java.util.ArrayList;
 import java.util.Queue;
 
+/** Class to handle all text displayed to the user. */
 public class TextMaster {
   public TextMaster() {}
 
@@ -26,6 +27,8 @@ public class TextMaster {
   /**
    * Generates display text for customer having left.
    *
+   * @param lastRepPointLost The time when the last reputation point was lost.
+   * @param totalTimer The time that has elapsed since the game started.
    * @return String containing the display text.
    */
   public String generateCustomerLeftText(float totalTimer, float lastRepPointLost) {
@@ -40,6 +43,9 @@ public class TextMaster {
   /**
    * Generates the display text for reputation point count
    *
+   * @param reputationPoints The number of points that the player has left.
+   * @param lastRepPointLost The time when the last reputation point was lost.
+   * @param totalTimer The time that has elapsed since the game started.
    * @return String containing the display text.
    */
   public String generateReputationPointText(
@@ -56,6 +62,7 @@ public class TextMaster {
   /**
    * Generates the display text for the timer.
    *
+   * @param totalTimerDisplay The time that has elapsed since the game started.
    * @return String containing the display text.
    */
   public String generateTimerText(float totalTimerDisplay) {
@@ -69,6 +76,9 @@ public class TextMaster {
   /**
    * Generates the display text for the customers' tray and order.
    *
+   * @param customers The queue containing customer who are yet to be served.
+   * @param tray1 The contents of the items in the first tray.
+   * @param tray2 The contents of the items in the second tray.
    * @return String containing the display text.
    */
   public String generateCustomersTrayText(
@@ -94,6 +104,7 @@ public class TextMaster {
   /**
    * Generates the display text for the chef's timer.
    *
+   * @param chefs chefs that are controllable by the user.
    * @param chefno chef number to check.
    * @return String containing the display text.
    */

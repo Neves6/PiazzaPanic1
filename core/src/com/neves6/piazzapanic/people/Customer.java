@@ -69,7 +69,7 @@ public class Customer extends Person {
    */
   public void setRecipe(String order) {
     this.order = order;
-  }
+  } // UPDATE: added to set a recipe from the customer
 
   /**
    * Setter method for time at which the customer was generated.
@@ -80,3 +80,4 @@ public class Customer extends Person {
     this.timeArrived = time;
   }
 }
+// UPDATE: time arrived of the customer
